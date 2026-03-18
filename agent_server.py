@@ -2521,16 +2521,11 @@ class Handler(BaseHTTPRequestHandler):
                         _task = _task.replace(CWD, "~").replace("/Users/secondmind", "~")
                         _sa["task"] = _task
                         _safe_agents.append(_sa)
-                    # Safe logs — strip file paths
-                    _safe_logs = []
-                    for _l in logs[:40]:
-                        _sl = dict(_l)
-                        _sl["message"] = _sl.get("message","").replace(CWD, "~").replace("/Users/secondmind", "~")
-                        _safe_logs.append(_sl)
+                    # Logs hidden for demo visitors
                     payload = {
                         "agents":  _safe_agents,
                         "tasks":   [],                # hide internal tasks
-                        "logs":    _safe_logs,
+                        "logs":    [{"ts": ts(), "agent": "system", "message": "Logs hidden in live demo to protect SECOND MIND LABS FOUNDER", "level": "info"}],
                         "metrics": {
                             "active": sum(1 for a in agents.values() if a.get("status") in ("active","busy")),
                             "total":  len(agents),
