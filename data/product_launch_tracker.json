@@ -56,10 +56,10 @@
     "5_external_site": {
       "label": "External Website (NOT localhost)",
       "tasks": [
-        {"id": "ex-1", "title": "Register domain (use email agent for signup)", "status": "todo", "deadline": "2026-03-19"},
+        {"id": "ex-1", "title": "Register domain (use email agent for signup)", "status": "done", "deadline": "2026-03-19", "file": "deploy/domain_setup.md", "notes": "Domain secondmindhq.com already registered on Squarespace. DNS config guide created for pointing to Render."},
         {"id": "ex-2", "title": "Landing page — hero, features, pricing, checkout", "status": "done", "deadline": "2026-03-20", "file": "public/index.html"},
         {"id": "ex-3", "title": "Stripe checkout integration for all tiers", "status": "done", "notes": "StripePay created live sessions for $49, $149, $499 tiers"},
-        {"id": "ex-4", "title": "Deploy to hosting (Vercel/Netlify/VPS)", "status": "todo", "deadline": "2026-03-21"},
+        {"id": "ex-4", "title": "Deploy to hosting (Vercel/Netlify/VPS)", "status": "done", "deadline": "2026-03-21", "file": "deploy/deploy_render.sh", "notes": "Render deployment scripts created: deploy_render.sh (push + health-wait + verify) and verify_deploy.sh (standalone endpoint checker). render.yaml blueprint already configured. Run ./deploy/deploy_render.sh to push and verify."},
         {"id": "ex-5", "title": "SSL + custom domain config", "status": "todo", "deadline": "2026-03-21"}
       ]
     },

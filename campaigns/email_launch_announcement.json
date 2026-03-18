@@ -1,0 +1,26 @@
+{
+  "campaign": "ai_hq_launch_announcement",
+  "status": "DRAFT — DO NOT SEND",
+  "created_at": "2026-03-18",
+  "subject": "Your AI workforce just went live — meet Second Mind HQ",
+  "html": true,
+  "body": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><style>body{margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e0e0e0}a{color:#00d4ff;text-decoration:none}.container{max-width:600px;margin:0 auto;padding:40px 20px}.header{text-align:center;padding-bottom:30px;border-bottom:1px solid #222}.header h1{font-size:28px;color:#fff;margin:0 0 8px}.header p{font-size:14px;color:#888;margin:0}.section{padding:30px 0;border-bottom:1px solid #222}.section h2{font-size:20px;color:#00d4ff;margin:0 0 16px}.feature{display:flex;margin-bottom:16px}.feature-icon{font-size:24px;margin-right:12px;min-width:32px;text-align:center}.feature-text h3{margin:0 0 4px;font-size:16px;color:#fff}.feature-text p{margin:0;font-size:14px;color:#aaa}.pricing-grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.tier{flex:1;min-width:160px;background:#111;border:1px solid #222;border-radius:12px;padding:20px;text-align:center}.tier.featured{border-color:#00d4ff;background:#0a1a2a}.tier h3{margin:0 0 4px;font-size:16px;color:#fff}.tier .price{font-size:28px;font-weight:700;color:#00d4ff;margin:8px 0}.tier .price span{font-size:14px;color:#888;font-weight:400}.tier ul{list-style:none;padding:0;margin:12px 0 0;text-align:left;font-size:13px;color:#aaa}.tier ul li{padding:4px 0}.tier ul li::before{content:'\\2713 ';color:#00d4ff}.cta{text-align:center;padding:40px 0}.cta a{display:inline-block;background:#00d4ff;color:#0a0a0a;font-weight:700;font-size:16px;padding:14px 40px;border-radius:8px;text-decoration:none}.cta p{margin:10px 0 0;font-size:13px;color:#666}.footer{text-align:center;padding:20px 0;font-size:12px;color:#555}</style></head><body><div class='container'><div class='header'><h1>Second Mind HQ</h1><p>Autonomous AI agents. One command centre.</p></div><div class='section'><h2>What just launched</h2><div class='feature'><div class='feature-icon'>&#129302;</div><div class='feature-text'><h3>Autonomous AI Agents</h3><p>Specialized agents that research, trade, write, and execute — 24/7 without supervision. Your digital workforce, reporting to you.</p></div></div><div class='feature'><div class='feature-icon'>&#128200;</div><div class='feature-text'><h3>Real-Time Command Dashboard</h3><p>Live system health, agent status, campaign tracking, and revenue metrics — all in one unified HQ view.</p></div></div><div class='feature'><div class='feature-icon'>&#9881;&#65039;</div><div class='feature-text'><h3>Self-Managing Infrastructure</h3><p>Auto-scaling, self-healing deployments. Your agents keep running while you sleep.</p></div></div></div><div class='section'><h2>Choose your plan</h2><div class='pricing-grid'><div class='tier'><h3>Solo</h3><div class='price'>$49<span>/mo</span></div><ul><li>3 AI agents</li><li>Basic dashboard</li><li>Email support</li><li>5k agent actions/mo</li></ul></div><div class='tier featured'><h3>Team</h3><div class='price'>$149<span>/mo</span></div><ul><li>10 AI agents</li><li>Full dashboard + analytics</li><li>Priority support</li><li>50k agent actions/mo</li><li>Custom agent configs</li></ul></div><div class='tier'><h3>Enterprise</h3><div class='price'>$499<span>/mo</span></div><ul><li>Unlimited agents</li><li>White-label dashboard</li><li>Dedicated support</li><li>Unlimited actions</li><li>API access + webhooks</li></ul></div></div></div><div class='cta'><a href='https://secondmindhq.com'>Get Started Now</a><p>No credit card required to explore. Upgrade when you're ready.</p></div><div class='footer'><p>Second Mind HQ — Built by agents, for humans.</p><p>You're receiving this because you signed up at secondmindhq.com</p></div></div></body></html>",
+  "recipients": [
+    {"email": "investor@asx.com", "name": "Jane Smith"},
+    {"email": "qatest@example.com", "name": ""},
+    {"email": "verify@test.com", "name": ""},
+    {"email": "final@verify.com", "name": ""},
+    {"email": "test_reforger@check.com", "name": ""},
+    {"email": "reforger_verify@test.com", "name": ""},
+    {"email": "test@example.com", "name": ""},
+    {"email": "test@demo.test", "name": ""},
+    {"email": "test@demotester.local", "name": ""},
+    {"email": "qa@test.local", "name": ""},
+    {"email": "test@launch-readiness.test", "name": "DemoTester"},
+    {"email": "q@t.l", "name": ""},
+    {"email": "qa-test@example.com", "name": ""},
+    {"email": "qa-test@demotester.local", "name": "QA Tester"}
+  ],
+  "recipient_count": 14,
+  "notes": "Deduplicated from 19 entries to 14 unique emails. REVIEW recipients before sending — most appear to be test addresses."
+}

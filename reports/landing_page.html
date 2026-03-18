@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI HQ — Autonomous AI Agent Headquarters That Runs Your Business 24/7 | SecondMind Ops</title>
+<meta name="description" content="28 AI agents handle research, reporting, outreach, and ops 24/7. Replace $200K/yr in ops costs. Solo $49/mo, Team $149/mo, Enterprise $499/mo. 14-day free trial.">
+<meta name="theme-color" content="#050810">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -231,6 +233,7 @@ nav a:hover { color: var(--text-bright); }
   text-align: center;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(0,200,255,0.015) 0%, transparent 100%);
 }
 .proof-stats {
   display: flex;
@@ -357,8 +360,8 @@ nav a:hover { color: var(--text-bright); }
 }
 .price-card.featured {
   border-color: var(--cyan);
-  box-shadow: 0 0 50px rgba(0,200,255,0.12), 0 0 100px rgba(0,200,255,0.05), inset 0 1px 0 rgba(0,200,255,0.25);
-  background: rgba(0,200,255,0.03);
+  box-shadow: 0 0 60px rgba(0,200,255,0.15), 0 0 120px rgba(0,200,255,0.06), inset 0 1px 0 rgba(0,200,255,0.3);
+  background: linear-gradient(170deg, rgba(0,200,255,0.06) 0%, rgba(168,85,247,0.03) 50%, rgba(0,200,255,0.02) 100%);
 }
 .price-badge {
   position: absolute;
@@ -490,8 +493,13 @@ nav a:hover { color: var(--text-bright); }
   background-clip: text;
 }
 .price-card.featured {
-  transform: scale(1.04);
+  transform: scale(1.05);
   z-index: 2;
+  animation: featured-glow 3s ease-in-out infinite;
+}
+@keyframes featured-glow {
+  0%, 100% { box-shadow: 0 0 60px rgba(0,200,255,0.15), 0 0 120px rgba(0,200,255,0.06), inset 0 1px 0 rgba(0,200,255,0.3); }
+  50% { box-shadow: 0 0 80px rgba(0,200,255,0.22), 0 0 140px rgba(0,200,255,0.08), inset 0 1px 0 rgba(0,200,255,0.4); }
 }
 .price-card.featured:hover {
   transform: scale(1.04) translateY(-4px);
@@ -734,16 +742,17 @@ table.comp-table {
   padding: 100px 0;
   text-align: center;
   position: relative;
+  border-top: 1px solid var(--border);
 }
 .final-cta::before {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(0,200,255,0.06) 0%, transparent 70%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(0,200,255,0.08) 0%, rgba(168,85,247,0.04) 40%, transparent 70%);
   pointer-events: none;
 }
 .final-cta h2 {
@@ -1031,8 +1040,9 @@ button.price-cta {
   padding: 11px 0;
   text-align: center;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-body);
+  letter-spacing: 0.01em;
 }
 .countdown-strip strong { color: var(--yellow); }
 .countdown-strip .cd-num {
@@ -1101,13 +1111,15 @@ button.price-cta {
   width: 100%;
   padding: 14px;
   border-radius: 10px;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 15px;
   border: none;
   cursor: pointer;
   font-family: inherit;
-  background: var(--cyan);
+  background: linear-gradient(135deg, #00c8ff, #00e0ff);
   color: #050810;
+  box-shadow: 0 -4px 20px rgba(0,200,255,0.2);
+  letter-spacing: 0.01em;
 }
 @media (max-width: 600px) {
   .sticky-cta { display: block; }
@@ -1268,7 +1280,7 @@ button.price-cta {
     <h1>Your Autonomous AI HQ.<br><span>Runs Your Business 24/7.</span></h1>
     <p>28 specialized AI agents handle research, reports, outreach, and ops around the clock — so you can focus on building, not operating. Most founders reclaim 40+ hours in week one.</p>
     <div class="hero-ctas">
-      <a href="/api/pay?tier=team" class="btn-primary">Start Free 14-Day Trial &rarr;</a>
+      <button onclick="openCheckout('team')" class="btn-primary">Start Free 14-Day Trial &rarr;</button>
       <a href="#features" class="btn-secondary">See How It Works</a>
     </div>
     <p style="font-size:12px;color:var(--text-muted);margin-top:16px;margin-bottom:0;">No credit card required &middot; Cancel anytime &middot; 14-day money-back guarantee</p>
@@ -1378,7 +1390,7 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Basic dashboard access</li>
           <li><span class="check">&#10003;</span>48-hour turnaround</li>
         </ul>
-        <a href="/api/pay?tier=solo" class="price-cta price-cta-outline">Start Free Trial &mdash; $49/mo</a>
+        <button onclick="openCheckout('solo')" class="price-cta price-cta-outline">Start Free Trial &mdash; $49/mo</button>
       </div>
 
       <!-- TEAM (Featured) -->
@@ -1402,7 +1414,7 @@ button.price-cta {
           <li><span class="check">&#10003;</span>24-hour turnaround</li>
           <li><span class="check">&#10003;</span>Campaign automation</li>
         </ul>
-        <a href="/api/pay?tier=team" class="price-cta price-cta-fill">Start 14-Day Free Trial &rarr;</a>
+        <button onclick="openCheckout('team')" class="price-cta price-cta-fill">Start 14-Day Free Trial &rarr;</button>
       </div>
 
       <!-- ENTERPRISE -->
@@ -1426,14 +1438,14 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Strategy consulting</li>
           <li><span class="check">&#10003;</span>White-glove onboarding</li>
         </ul>
-        <a href="/api/pay?tier=enterprise" class="price-cta price-cta-outline price-cta-enterprise">Start Free Trial &mdash; $499/mo &rarr;</a>
+        <button onclick="openCheckout('enterprise')" class="price-cta price-cta-outline price-cta-enterprise">Start Free Trial &mdash; $499/mo &rarr;</button>
       </div>
     </div>
 
-    <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--text-muted);">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <div style="text-align:center;margin-top:28px;padding:14px 24px;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:10px;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-body);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       Secured by Stripe &middot; 256-bit SSL &middot; 14-day money-back guarantee &middot; Cancel anytime
-    </p>
+    </div>
 
     <!-- Lifetime + Hardware Specials -->
     <div class="specials-row">
@@ -1599,9 +1611,9 @@ button.price-cta {
     <h2>You Build the Product.<br>Your AI HQ Runs Everything Else.</h2>
     <p>Join early access today — limited spots at launch pricing. Lock in your rate before it doubles.</p>
     <div class="hero-ctas" style="margin-bottom:16px;">
-      <a href="/api/pay?tier=solo" class="btn-secondary">Solo — $49/mo</a>
-      <a href="/api/pay?tier=team" class="btn-primary">Team — $149/mo &rarr;</a>
-      <a href="/api/pay?tier=enterprise" class="btn-secondary">Enterprise — $499/mo</a>
+      <button onclick="openCheckout('solo')" class="btn-secondary">Solo — $49/mo</button>
+      <button onclick="openCheckout('team')" class="btn-primary">Team — $149/mo &rarr;</button>
+      <button onclick="openCheckout('enterprise')" class="btn-secondary">Enterprise — $499/mo</button>
     </div>
     <div class="hero-ctas" style="margin-bottom:16px;margin-top:12px;">
       <button onclick="checkoutSpecial('lifetime','AI HQ Lifetime Access',29900,event)" class="btn-gold">Lifetime — $299 one-time</button>
@@ -1620,7 +1632,7 @@ button.price-cta {
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
-  <a href="/api/pay?tier=team" style="display:block;text-align:center;text-decoration:none;color:#050810;">Start Free Trial &mdash; $149/mo (was $249) &rarr;</a>
+  <button onclick="openCheckout('team')">Start Free Trial &mdash; $149/mo (was $249) &rarr;</button>
 </div>
 
 <!-- CHECKOUT MODAL -->

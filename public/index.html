@@ -258,6 +258,15 @@
 </head>
 <body>
 
+<!-- Urgency countdown strip -->
+<div id="countdown-strip" style="position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(90deg,#6366f1,#8b5cf6,#6366f1);padding:10px 16px;text-align:center;font-size:.85rem;font-weight:600;color:#fff;letter-spacing:.3px;backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.1)">
+  &#x1F525; Launch pricing ends in <span id="countdown-timer" style="display:inline-block;min-width:130px;font-family:'JetBrains Mono',monospace;color:#ffd700"></span> &mdash; <a href="#pricing" style="color:#ffd700;text-decoration:underline;font-weight:700">Claim Now</a>
+</div>
+<style>
+  body{padding-top:42px}
+  @media(max-width:768px){#countdown-strip{font-size:.75rem;padding:8px 12px}}
+</style>
+
 <a href="#features" class="skip-nav" style="position:absolute;top:-100%;left:16px;padding:8px 16px;background:var(--accent);color:#fff;border-radius:8px;z-index:999;font-size:.85rem;transition:top .2s">&darr; Skip to content</a>
 <style>.skip-nav:focus{top:16px}</style>
 
@@ -457,8 +466,13 @@
     <div class="section-label">Pricing</div>
     <h2 class="section-title">Simple, Transparent Pricing</h2>
     <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees. Cancel anytime.</p>
+    <div style="text-align:center;margin-bottom:24px;padding:12px 20px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);border-radius:12px;display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--gold);font-weight:600;margin-left:auto;margin-right:auto">
+      <span style="font-size:1.1em">&#x1F525;</span>
+      <span><strong id="spots-count">7</strong> early-access spots remaining at launch pricing</span>
+    </div>
     <div class="pricing-grid">
       <div class="price-card glass reveal">
+        <div style="position:absolute;top:12px;right:12px;background:rgba(99,102,241,0.12);color:var(--accent);border:1px solid rgba(99,102,241,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">LAUNCH PRICING</div>
         <h3>Solo</h3>
         <p class="desc">Solo founders &amp; freelancers</p>
         <div class="price">$49<span>/mo</span></div>
@@ -470,10 +484,11 @@
           <li>Telegram &amp; email integration</li>
           <li>Community support</li>
         </ul>
-        <button onclick="checkout('solo','SecondMind HQ Solo',4900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
+        <button onclick="checkout('solo','Second Mind Labs — Solo',4900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
       </div>
       <div class="price-card glass featured reveal reveal-delay-1">
         <div class="glow"></div>
+        <div style="position:absolute;top:12px;right:12px;background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">MOST POPULAR</div>
         <h3>Team</h3>
         <p class="desc">Growing teams &amp; small businesses</p>
         <div class="price">$149<span>/mo</span></div>
@@ -486,9 +501,10 @@
           <li>Consciousness engine</li>
           <li>Priority support</li>
         </ul>
-        <button onclick="checkout('team','SecondMind HQ Team',14900,'subscription')" class="btn btn-primary" style="width:100%">Get Started</button>
+        <button onclick="checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-primary" style="width:100%">Get Started</button>
       </div>
       <div class="price-card glass reveal reveal-delay-2">
+        <div style="position:absolute;top:12px;right:12px;background:rgba(6,182,212,0.12);color:var(--cyan);border:1px solid rgba(6,182,212,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">LAUNCH PRICING</div>
         <h3>Enterprise</h3>
         <p class="desc">Full autonomous operations suite</p>
         <div class="price">$499<span>/mo</span></div>
@@ -501,7 +517,7 @@
           <li>24/7 priority support</li>
           <li>SLA guarantee</li>
         </ul>
-        <button onclick="checkout('enterprise','SecondMind HQ Enterprise',49900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
+        <button onclick="checkout('enterprise','Second Mind Labs — Enterprise',49900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
       </div>
     </div>
     <div class="specials-row">
@@ -510,21 +526,21 @@
         <h3>Lifetime Access</h3>
         <div class="price gold">$299</div>
         <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever.</p>
-        <button onclick="checkout('lifetime','SecondMind HQ Lifetime Access',29900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
+        <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',29900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
       </div>
       <div class="special-card glass hardware reveal reveal-delay-1">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
         <h3>Mac Mini + AI HQ</h3>
         <div class="price cyan">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with AI HQ installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
-        <button onclick="checkout('macmini','SecondMind HQ Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
+        <button onclick="checkout('macmini','Second Mind Labs — Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
       </div>
       <div class="special-card glass reveal reveal-delay-2" style="overflow:hidden">
         <div class="special-tag" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)">DONE FOR YOU</div>
         <h3>Install Service</h3>
         <div class="price" style="color:var(--green)">$199</div>
         <p class="note">We install AI HQ on your system &mdash; Mac, Linux, or cloud. Configured, tested, and running in under 24 hours.</p>
-        <button onclick="checkout('install','SecondMind HQ Install Service',19900,'payment')" class="btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;width:100%">Book Install</button>
+        <button onclick="checkout('install','Second Mind Labs — Install Service',19900,'payment')" class="btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;width:100%">Book Install</button>
       </div>
     </div>
   </div>
@@ -600,10 +616,11 @@
 
 <section class="cta-banner">
   <h2>Ready to Go Autonomous?</h2>
-  <p>Join the founders who let AI run their operations while they focus on what matters.</p>
+  <p>Join early access today &mdash; limited spots at launch pricing. Lock in your rate before it doubles.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative">
     <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
-    <a href="#agents" class="btn btn-outline">Explore the Agents</a>
+    <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',29900,'payment')" class="btn btn-gold" style="border:none;cursor:pointer">Lifetime &mdash; $299 one-time</button>
+    <button onclick="checkout('macmini','Second Mind Labs — Mac Mini Bundle',149900,'payment')" class="btn btn-outline" style="cursor:pointer">Mac Mini &mdash; $1,499</button>
   </div>
 </section>
 
@@ -755,6 +772,34 @@ document.querySelectorAll('.nav-links a').forEach(a=>{
     document.querySelector('.hamburger').classList.remove('open');
   });
 });
+
+/* Launch pricing countdown — ends 2026-03-25 00:00 UTC */
+(function(){
+  const deadline=new Date('2026-03-25T00:00:00Z').getTime();
+  const el=document.getElementById('countdown-timer');
+  const strip=document.getElementById('countdown-strip');
+  if(!el)return;
+  function tick(){
+    const now=Date.now(),diff=deadline-now;
+    if(diff<=0){
+      strip.innerHTML='<strong style="color:#ffd700">&#x1F525; Launch pricing has ended!</strong> Standard pricing now applies.';
+      return;
+    }
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),
+          m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    el.textContent=(d>0?d+'d ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* Spots counter — slow FOMO decrement */
+(function(){
+  const el=document.getElementById('spots-count');if(!el)return;
+  let spots=parseInt(el.textContent)||7;
+  setInterval(()=>{
+    if(spots>2&&Math.random()<0.3){spots--;el.textContent=spots}
+  },45000);
+})();
 </script>
 </body>
 </html>

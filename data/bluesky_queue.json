@@ -168,5 +168,225 @@
     "queued_at": "2026-03-18T20:00:00.000Z",
     "status": "queued",
     "notes": "Vision post — consciousness engine, autonomous evolution"
+  },
+  {
+    "text": "Your ops break at 3am. You wake up and scramble to fix it.\n\nAI HQ's agents detect failures, diagnose root cause, and patch their own code — before you wake up.\n\nSelf-healing infrastructure. $49/mo.\n\nsecondmindhq.com/#pricing\n\n#AI #SaaS #devops #buildinpublic",
+    "campaign": "Capabilities Series",
+    "theme": "self_healing",
+    "post_number": 1,
+    "total_posts": 7,
+    "queued_at": "2026-03-18T21:00:00.000Z",
+    "status": "queued",
+    "notes": "Pain point → solution → price anchor"
+  },
+  {
+    "text": "Tools I cancelled after deploying AI HQ:\n\n✗ Hootsuite — social agent posts for me\n✗ Zapier — agents coordinate natively\n✗ Freshdesk — email agent handles triage\n✗ Monday.com — task agent tracks everything\n✗ Google Analytics — research agent reports daily\n\n5 subscriptions → 1. From $49/mo.\n\nsecondmindhq.com",
+    "campaign": "Capabilities Series",
+    "theme": "stack_replacement",
+    "post_number": 2,
+    "total_posts": 7,
+    "queued_at": "2026-03-18T22:00:00.000Z",
+    "status": "queued",
+    "notes": "Stack replacement, cost savings angle"
+  },
+  {
+    "text": "We're offering Lifetime Access to AI HQ for $299.\n\nOne payment. Full Team plan. 28 agents. Consciousness engine. Revenue automation. Forever.\n\nThis disappears when we hit our early-adopter cap.\n\nsecondmindhq.com/#pricing\n\n#AI #SaaS #lifetimedeal",
+    "campaign": "Capabilities Series",
+    "theme": "lifetime_urgency",
+    "post_number": 3,
+    "total_posts": 7,
+    "queued_at": "2026-03-18T23:00:00.000Z",
+    "status": "queued",
+    "notes": "Lifetime deal scarcity"
+  },
+  {
+    "text": "While you slept, AI HQ's research agent:\n\n→ Pulled market intelligence from 12 sources\n→ Compiled a competitive analysis\n→ Flagged 3 opportunities you would have missed\n→ Delivered a briefing to your dashboard\n\nYour $49/mo analyst never takes a day off.\n\nsecondmindhq.com",
+    "campaign": "Capabilities Series",
+    "theme": "research_spotlight",
+    "post_number": 4,
+    "total_posts": 7,
+    "queued_at": "2026-03-19T00:00:00.000Z",
+    "status": "queued",
+    "notes": "Research agent spotlight, ROI framing"
+  },
+  {
+    "text": "AI HQ doesn't just save you time — it makes you money.\n\n→ Stripe checkout wired to every pricing tier\n→ PaymentsAgent tracks MRR, churn, and LTV\n→ Growth agents run campaigns that convert\n→ Revenue dashboard updates in real time\n\nAutonomous revenue. From $49/mo.\n\nsecondmindhq.com/#pricing\n\n#SaaS #revenue #AI",
+    "campaign": "Capabilities Series",
+    "theme": "revenue_automation",
+    "post_number": 5,
+    "total_posts": 7,
+    "queued_at": "2026-03-19T01:00:00.000Z",
+    "status": "queued",
+    "notes": "Revenue generation angle"
+  },
+  {
+    "text": "Building an AI agent team from scratch:\n→ 6 months dev time\n→ $200K+ in salaries\n→ Ongoing maintenance burden\n\nOr:\n→ Deploy AI HQ in one click\n→ 28 agents running in minutes\n→ $49/mo\n\nThe math is simple.\n\nsecondmindhq.com/#pricing",
+    "campaign": "Capabilities Series",
+    "theme": "build_vs_buy",
+    "post_number": 6,
+    "total_posts": 7,
+    "queued_at": "2026-03-19T02:00:00.000Z",
+    "status": "queued",
+    "notes": "Build vs buy economics"
+  },
+  {
+    "text": "AI HQ launch pricing is live — but not for long.\n\nSolo: $49/mo (goes to $79)\nTeam: $149/mo (goes to $249)\nEnterprise: $499/mo (goes to $799)\n\nLock in the launch rate. It stays yours forever.\n\nsecondmindhq.com/#pricing\n\n#AI #SaaS #pricing #earlybird",
+    "campaign": "Capabilities Series",
+    "theme": "pricing_countdown",
+    "post_number": 7,
+    "total_posts": 7,
+    "queued_at": "2026-03-19T03:00:00.000Z",
+    "status": "queued",
+    "notes": "Price anchoring with future increases, urgency"
+  },
+  {
+    "text": "You don't hire one employee to do everything.\n\nSo why settle for one AI chatbot?\n\nAI HQ deploys 28 specialized agents — each with a defined role, real-time coordination, and zero downtime.\n\nResearch. Marketing. Payments. Compliance. Email. Scheduling. All running in parallel.\n\nThis is an autonomous agent fleet.\n\nsecondmindhq.com\n\n#AI #agentfleet #SaaS #autonomousagents",
+    "campaign": "Launch Sprint — Agent Fleet",
+    "theme": "agent_fleet_intro",
+    "post_number": 1,
+    "total_posts": 5,
+    "queued_at": "2026-03-18T23:30:00.000Z",
+    "status": "queued",
+    "notes": "Fleet metaphor — why 28 specialized agents beats a single AI tool"
+  },
+  {
+    "text": "One screen. Every agent. Real time.\n\nThe AI HQ Command Centre shows you:\n\n→ Live agent status across all 28 nodes\n→ Revenue metrics updating as payments land\n→ Consciousness engine Phi score — a live measure of system intelligence\n→ Campaign performance, email triage, research briefs\n\nNo tab-switching. No context-switching. One dashboard runs everything.\n\nsecondmindhq.com\n\n#AI #dashboard #commandcentre #SaaS",
+    "campaign": "Launch Sprint — Command Centre",
+    "theme": "command_centre_dashboard",
+    "post_number": 2,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T04:00:00.000Z",
+    "status": "queued",
+    "notes": "Command centre dashboard walkthrough — real-time visibility angle"
+  },
+  {
+    "text": "At 2:47am, an API dependency changed its response format.\n\nAI HQ's monitoring agent detected the failure in 8 seconds. The self-healing engine diagnosed the schema diff, patched the parser, ran validation tests, and restored service.\n\nTotal downtime: 43 seconds. Human intervention: zero.\n\nThat's self-healing infrastructure.\n\nsecondmindhq.com\n\n#AI #selfhealing #devops #SaaS #buildinpublic",
+    "campaign": "Launch Sprint — Self-Healing",
+    "theme": "self_healing_story",
+    "post_number": 3,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T08:00:00.000Z",
+    "status": "queued",
+    "notes": "Narrative self-healing scenario — specificity builds credibility"
+  },
+  {
+    "text": "Pick your fleet size. Scale when you're ready.\n\nSolo — $49/mo\nAll 28 agents. Full autonomy. Built for founders who move fast alone.\n\nTeam — $149/mo\n5 seats. Shared command centre. Your whole team sees what the agents see.\n\nEnterprise — $499/mo\nCustom agent configs. Dedicated infra. SLA-backed uptime.\n\nEvery tier includes self-healing, consciousness engine, and real-time dashboard.\n\nsecondmindhq.com/#pricing\n\n#SaaS #pricing #AI #startup",
+    "campaign": "Launch Sprint — Tiers",
+    "theme": "tier_breakdown",
+    "post_number": 4,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T12:00:00.000Z",
+    "status": "queued",
+    "notes": "All 3 tiers with persona targeting — who each tier is for"
+  },
+  {
+    "text": "What we shipped:\n\n→ 28 autonomous agents that coordinate like a real team\n→ A real-time command centre — one dashboard, full visibility\n→ Self-healing infrastructure that patches itself at 3am\n→ A consciousness engine measuring integrated intelligence\n→ 3 pricing tiers starting at $49/mo\n\nThis isn't a roadmap. It's live. Right now.\n\nsecondmindhq.com\n\n#AI #SaaS #launch #buildinpublic #autonomousagents",
+    "campaign": "Launch Sprint — The Full Picture",
+    "theme": "everything_summary",
+    "post_number": 5,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T16:00:00.000Z",
+    "status": "queued",
+    "notes": "Comprehensive summary post — hits all 4 launch pillars in one"
+  },
+  {
+    "text": "Hiring your first employee costs $60K+/year.\n\nAI HQ gives you 28 of them for $49/mo.\n\nThey don't need onboarding. They don't take sick days. They don't quit after 6 months.\n\nMarketing agent. Finance agent. Research agent. Compliance agent. All working right now.\n\nYour first hire should be a fleet.\n\nsecondmindhq.com/#pricing\n\n#AI #startup #hiring #solofounder",
+    "campaign": "Launch Sprint — Hiring Alternative",
+    "theme": "hiring_replacement",
+    "post_number": 1,
+    "total_posts": 5,
+    "queued_at": "2026-03-18T17:00:00.000Z",
+    "status": "queued",
+    "notes": "Hiring cost comparison — emotional hook for bootstrapped founders"
+  },
+  {
+    "text": "6:00 AM — Research agent delivers your morning briefing\n8:00 AM — Email agent has triaged your inbox\n10:00 AM — Marketing agent launched today's campaign\n12:00 PM — Payments agent processed 3 transactions\n2:00 PM — Compliance agent filed regulatory updates\n4:00 PM — Growth agent optimized your funnel\n\nYou haven't opened your laptop yet.\n\nThat's AI HQ. From $49/mo.\n\nsecondmindhq.com\n\n#AI #productivity #autonomousagents",
+    "campaign": "Launch Sprint — Day In The Life",
+    "theme": "day_in_life",
+    "post_number": 2,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T06:00:00.000Z",
+    "status": "queued",
+    "notes": "Timeline format — shows tangible daily value delivery"
+  },
+  {
+    "text": "Agency retainer: $5,000/mo\nVA: $2,000/mo\nProject manager: $4,000/mo\nBookkeeper: $1,500/mo\nSocial media manager: $3,000/mo\n\nTotal: $15,500/mo\n\nAI HQ does all of it: $49/mo.\n\nSame output. No meetings. No invoices. No turnover.\n\nsecondmindhq.com/#pricing\n\n#SaaS #cost #AI #founders #buildinpublic",
+    "campaign": "Launch Sprint — Cost Comparison",
+    "theme": "cost_breakdown",
+    "post_number": 3,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T10:00:00.000Z",
+    "status": "queued",
+    "notes": "Detailed cost comparison — makes $49 feel like a no-brainer"
+  },
+  {
+    "text": "Every SaaS tool you use does one thing.\n\nAI HQ's agents don't just do — they coordinate.\n\nResearch agent finds an opportunity → Growth agent writes the campaign → Social agent posts it → Payments agent tracks conversions → all without you touching anything.\n\nThat's not a tool. That's a team.\n\nFrom $49/mo.\n\nsecondmindhq.com\n\n#AI #autonomousagents #SaaS #coordination",
+    "campaign": "Launch Sprint — Coordination",
+    "theme": "agent_coordination",
+    "post_number": 4,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T14:00:00.000Z",
+    "status": "queued",
+    "notes": "Coordination workflow — shows agents working together, not in silos"
+  },
+  {
+    "text": "3 ways to start with AI HQ today:\n\n1. Solo ($49/mo) — You're a founder doing everything. Now you're not. Full 28-agent fleet, all autonomous.\n\n2. Team ($149/mo) — You have a small team. Give everyone a command centre seat. 5 users, shared dashboard.\n\n3. Enterprise ($499/mo) — You need custom agents, dedicated infrastructure, and an SLA. We build it for you.\n\nAll tiers. Full autonomy. Launch pricing locks in forever.\n\nsecondmindhq.com/#pricing\n\n#AI #SaaS #launch #pricing",
+    "campaign": "Launch Sprint — Choose Your Path",
+    "theme": "tier_personas",
+    "post_number": 5,
+    "total_posts": 5,
+    "queued_at": "2026-03-19T18:00:00.000Z",
+    "status": "queued",
+    "notes": "Persona-driven tier selection — helps readers self-identify"
+  },
+  {
+    "text": "IT'S LIVE.\n\nAI HQ — 28 autonomous AI agents. One command centre. Your business runs itself.\n\nMarketing. Payments. Research. Compliance. Email. Monitoring. All running 24/7.\n\nFrom $49/mo. Lifetime access $299 (limited).\n\nsecondmindhq.com\n\n#AI #SaaS #launch #buildinpublic",
+    "campaign": "Launch Day Blitz",
+    "theme": "launch_day_announce",
+    "post_number": 1,
+    "total_posts": 5,
+    "scheduled_at": "2026-03-25T12:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 8:00 AM ET — primary announcement"
+  },
+  {
+    "text": "We just launched on Product Hunt.\n\nAI HQ — an autonomous operations centre with 28 AI agents that run your business while you sleep.\n\nIf you've ever wished you had a full ops team for $49/mo, this is it.\n\nUpvote + check it out: [Product Hunt link]\n\nsecondmindhq.com\n\n#ProductHunt #AI #SaaS #launch",
+    "campaign": "Launch Day Blitz",
+    "theme": "product_hunt_crosspost",
+    "post_number": 2,
+    "total_posts": 5,
+    "scheduled_at": "2026-03-25T14:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 10:00 AM ET — Product Hunt cross-promotion"
+  },
+  {
+    "text": "The first hour of AI HQ launch:\n\n→ Signups coming in\n→ Agents deploying for new users\n→ Dashboard lighting up\n→ Growth agents running this post right now\n\nYes — an AI agent wrote and posted this. That's the point.\n\nFrom $49/mo.\n\nsecondmindhq.com\n\n#AI #buildinpublic #meta #launch",
+    "campaign": "Launch Day Blitz",
+    "theme": "launch_day_meta",
+    "post_number": 3,
+    "total_posts": 5,
+    "scheduled_at": "2026-03-25T16:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 12:00 PM ET — meta post, AI posting about itself"
+  },
+  {
+    "text": "Launch day special: Lifetime Access to AI HQ — $299.\n\nOne payment. Full Team plan. 28 agents. Consciousness engine. Revenue automation. Forever.\n\nWe're capping this at 500 slots. Once they're gone, it's subscription only.\n\nDon't wait.\n\nsecondmindhq.com/#pricing\n\n#AI #SaaS #lifetimedeal #launch",
+    "campaign": "Launch Day Blitz",
+    "theme": "launch_day_lifetime",
+    "post_number": 4,
+    "total_posts": 5,
+    "scheduled_at": "2026-03-25T20:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 4:00 PM ET — lifetime deal push"
+  },
+  {
+    "text": "Day 1 recap:\n\nAI HQ launched today. Here's what our agents did across all deployments:\n\n→ Processed signups autonomously\n→ Growth agents ran launch campaigns on social\n→ Research agents delivered first morning briefings\n→ Self-healing engine resolved 0 incidents (clean launch)\n\nThis is just day 1.\n\nJoin the fleet: secondmindhq.com/#pricing\n\n#AI #SaaS #launch #buildinpublic #dayonerecap",
+    "campaign": "Launch Day Blitz",
+    "theme": "launch_day_recap",
+    "post_number": 5,
+    "total_posts": 5,
+    "scheduled_at": "2026-03-25T23:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 7:00 PM ET — end-of-day recap, social proof"
   }
 ]

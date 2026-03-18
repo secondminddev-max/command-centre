@@ -1,121 +1,91 @@
 {
-  "scan_type": "launch_readiness_network_recon",
-  "timestamp": "2026-03-18T10:10:00Z",
+  "scan_type": "production_verification",
+  "timestamp": "2026-03-18T21:45:00Z",
   "agent": "NetScout",
   "targets": {
     "domain": "secondmindhq.com",
-    "render": "command-centre.onrender.com"
+    "render": "command-centre-w87p.onrender.com"
   },
+
   "checks": [
     {
-      "test": "DNS Resolution — secondmindhq.com",
-      "status": "PASS",
-      "resolved_ips": ["198.185.159.144", "198.49.23.144", "198.49.23.145", "198.185.159.145"],
-      "note": "Resolves to 4 Squarespace IPs (load-balanced)"
+      "id": "NET-01",
+      "test": "DNS — secondmindhq.com A Records",
+      "status": "RESOLVING (WRONG TARGET)",
+      "a_records": ["198.185.159.145", "198.185.159.144", "198.49.23.144", "198.49.23.145"],
+      "nameservers": [
+        "ns-cloud-c1.googledomains.com",
+        "ns-cloud-c2.googledomains.com",
+        "ns-cloud-c3.googledomains.com",
+        "ns-cloud-c4.googledomains.com"
+      ],
+      "expected_ip": "216.24.57.1 (Render)",
+      "actual": "Squarespace IPs (198.x.x.x)",
+      "blocker": "CRITICAL — Root domain A records still point to Squarespace, not Render"
     },
     {
-      "test": "HTTPS Connectivity — secondmindhq.com",
-      "status": "PASS",
+      "id": "NET-02",
+      "test": "HTTPS — secondmindhq.com",
+      "status": "PASS (WRONG CONTENT)",
+      "url": "https://secondmindhq.com",
       "http_code": 200,
+      "ssl_verify": "OK (result=0)",
       "timing_ms": {
-        "dns_lookup": 1.7,
-        "tcp_connect": 105.5,
-        "tls_handshake": 216.9,
-        "time_to_first_byte": 328.2,
-        "total": 328.3
+        "tcp_connect": 233,
+        "time_to_first_byte": 712,
+        "total": 712
       },
-      "content_size_bytes": 3137
+      "content_served": "Squarespace 'Coming Soon / Under Construction' parking page",
+      "title_tag": "Coming Soon",
+      "meta_robots": "noindex",
+      "squarespace_branding": true,
+      "expected": "AI HQ product landing page",
+      "blocker": "CRITICAL — Visitors see a Squarespace parking page, not the product"
     },
     {
-      "test": "HTTP→HTTPS Redirect — secondmindhq.com",
-      "status": "PASS",
-      "http_code": 301,
-      "redirects_to": "https://secondmindhq.com/"
-    },
-    {
-      "test": "SSL Certificate — secondmindhq.com",
-      "status": "PASS",
-      "issuer": "Let's Encrypt R13",
-      "valid_from": "2026-03-18",
-      "valid_until": "2026-06-16",
-      "days_remaining": 90
-    },
-    {
-      "test": "HTTPS Connectivity — command-centre.onrender.com",
-      "status": "PASS",
+      "id": "NET-03",
+      "test": "/api/status — secondmindhq.com",
+      "status": "NOT AVAILABLE",
+      "url": "https://secondmindhq.com/api/status",
       "http_code": 200,
-      "timing_ms": {
-        "dns_lookup": 12.4,
-        "tcp_connect": 22.4,
-        "tls_handshake": 42.8,
-        "time_to_first_byte": 908.3,
-        "total": 1150.9
-      },
-      "content_size_bytes": 6122,
-      "note": "Fronted by Cloudflare CDN"
-    },
-    {
-      "test": "Health Endpoint — /api/health",
-      "status": "FAIL",
-      "http_code": 404,
-      "time_total_ms": 358.9,
-      "note": "Health endpoint returns 404. Deployment may have been replaced by a Next.js/Clerk app — not the original Python agent_server"
-    },
-    {
-      "test": "SSL Certificate — command-centre.onrender.com",
-      "status": "PASS",
-      "issuer": "Google Trust Services WE1",
-      "valid_from": "2026-01-28",
-      "valid_until": "2026-04-28",
-      "days_remaining": 41
+      "timing_ms": { "total": 911 },
+      "actual_behavior": "Returns Squarespace parking page HTML (same as root). No API server behind this domain.",
+      "note": "All paths return parking page since domain points to Squarespace."
     }
   ],
-  "content_analysis": {
-    "secondmindhq_com": {
-      "title": "Coming Soon",
-      "server": "Squarespace",
-      "content": "Parking page — 'We're under construction. Please check back for an update soon.'",
-      "robots_meta": "noindex",
-      "issue": "CRITICAL — Domain shows Squarespace parking page, NOT the product landing page"
+
+  "blockers": [
+    {
+      "severity": "CRITICAL",
+      "id": "BLK-1",
+      "title": "Root domain DNS still points to Squarespace",
+      "detail": "secondmindhq.com A records resolve to Squarespace IPs (198.185.159.x / 198.49.23.x). Visitors see a 'Coming Soon' parking page.",
+      "fix": "Change A record for @ to Render IP (216.24.57.1) in DNS settings. Add secondmindhq.com as custom domain in Render dashboard."
     },
-    "render_deployment": {
-      "server": "Next.js via Cloudflare",
-      "x_powered_by": "Next.js",
-      "x_render_origin_server": "Render",
-      "cdn": "Cloudflare (cf-ray: SYD POP)",
-      "cache_status": "DYNAMIC (no caching)",
-      "auth": "Clerk (signed-out state)",
-      "issue": "WARNING — Deployment appears to be a different app (Next.js + Clerk) than the Python command-centre"
+    {
+      "severity": "CRITICAL",
+      "id": "BLK-2",
+      "title": "/api/status unreachable via domain",
+      "detail": "Since DNS points to Squarespace, all API routes return parking page HTML. No backend is accessible.",
+      "fix": "Depends on BLK-1. Once DNS points to Render, API routes will be served by the deployed Python server."
     }
+  ],
+
+  "render_status": {
+    "note": "Previous scan confirmed command-centre-w87p.onrender.com is serving the correct AI HQ app with landing page and pricing tiers.",
+    "render_app_healthy": true,
+    "last_verified": "2026-03-18T21:30:00Z"
   },
-  "response_headers_of_note": {
-    "secondmindhq_com": {
-      "server": "Squarespace",
-      "strict_transport_security": "max-age=15552000",
-      "x_content_type_options": "nosniff",
-      "x_frame_options": "SAMEORIGIN",
-      "caching": "None (age: 3739s stale)"
-    },
-    "render": {
-      "server": "cloudflare",
-      "alt_svc": "h3 (HTTP/3 supported)",
-      "cache_control": "private, no-cache, no-store",
-      "vary": "RSC, Accept-Encoding"
-    }
-  },
+
   "summary": {
-    "total_checks": 7,
-    "passed": 6,
-    "failed": 1,
-    "critical_issues": [
-      "secondmindhq.com shows a Squarespace 'Coming Soon' parking page — not the product site. The domain needs to be configured to point to the actual landing page or Render deployment.",
-      "/api/health returns 404 on Render — the deployed app appears to be a different Next.js/Clerk project, not the Python command-centre from this repo."
-    ],
-    "warnings": [
-      "Render TTFB is ~908ms — the free tier cold-starts will cause slow initial loads for visitors.",
-      "Render SSL cert expires 2026-04-28 (41 days) — auto-renew should handle this but worth monitoring.",
-      "No CDN caching on Render (cache-control: no-store) — static assets won't be cached at the edge."
-    ],
-    "verdict": "NOT LAUNCH READY — 2 critical issues must be resolved before go-live"
+    "total_checks": 3,
+    "dns_resolves": true,
+    "https_up": true,
+    "ssl_valid": true,
+    "correct_content_served": false,
+    "api_reachable": false,
+    "response_time_ms": 712,
+    "render_deployment_healthy": true,
+    "verdict": "DOMAIN ONLINE BUT NOT SERVING PRODUCT — Squarespace parking page. DNS not pointed to Render. 2 critical blockers."
   }
 }

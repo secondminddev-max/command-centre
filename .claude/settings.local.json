@@ -20,7 +20,9 @@
       "Bash(tmutil listlocalsnapshots:*)",
       "Bash(git:*)",
       "Bash(chmod:*)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(brew install:*)",
+      "Bash(dig:*)"
     ]
   }
 }
