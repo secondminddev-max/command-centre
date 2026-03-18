@@ -1,56 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" width="120" height="140">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
   <defs>
-    <linearGradient id="body-grad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#c084fc"/>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d8b4fe"/>
       <stop offset="100%" stop-color="#7c3aed"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <filter id="gl"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
   <style>
-    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    @keyframes blink { 0%,42%,46%,100% { ry: 5; } 44% { ry: 0.5; } }
-    @keyframes wave { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
-    .ghost-body { animation: bob 2.5s ease-in-out infinite; }
-    .eye-l, .eye-r { animation: blink 4s ease-in-out infinite; }
-    .eye-r { animation-delay: 0.15s; }
-    .arm-r { animation: wave 3s ease-in-out infinite; transform-origin: 85px 62px; }
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @keyframes blink{0%,40%,44%,100%{ry:6}42%{ry:0.8}}
+    @keyframes shadow{0%,100%{rx:22;opacity:0.15}50%{rx:18;opacity:0.1}}
+    .b{animation:bob 2s ease-in-out infinite}
+    .el{animation:blink 3.5s ease-in-out infinite}
+    .er{animation:blink 3.5s ease-in-out infinite 0.1s}
+    .sh{animation:shadow 2s ease-in-out infinite}
   </style>
-  <!-- Shadow -->
-  <ellipse cx="60" cy="128" rx="26" ry="5" fill="rgba(0,0,0,0.15)">
-    <animate attributeName="rx" values="26;22;26" dur="2.5s" repeatCount="indefinite"/>
-  </ellipse>
-  <g class="ghost-body" filter="url(#glow)">
-    <!-- Ghost body with wavy bottom -->
-    <path d="M30,65 Q30,18 60,16 Q90,18 90,65 L90,100 Q85,90 80,100 Q75,90 70,100 Q65,90 60,100 Q55,90 50,100 Q45,90 40,100 Q35,90 30,100 Z" fill="url(#body-grad)" opacity="0.92"/>
-    <!-- Highlight arc -->
-    <path d="M40,28 Q52,20 70,26" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
-    <!-- Eyes -->
-    <ellipse class="eye-l" cx="47" cy="48" rx="5.5" ry="5.5" fill="#fff"/>
-    <ellipse class="eye-r" cx="73" cy="48" rx="5.5" ry="5.5" fill="#fff"/>
-    <!-- Pupils -->
-    <ellipse cx="49" cy="49" rx="2.8" ry="3" fill="#1e1b4b"/>
-    <ellipse cx="75" cy="49" rx="2.8" ry="3" fill="#1e1b4b"/>
-    <!-- Eye sparkle -->
-    <circle cx="45.5" cy="46" r="1.5" fill="rgba(255,255,255,0.9)"/>
-    <circle cx="71.5" cy="46" r="1.5" fill="rgba(255,255,255,0.9)"/>
-    <!-- Happy smile -->
-    <path d="M50,60 Q60,70 70,60" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
-    <!-- Rosy cheeks -->
-    <ellipse cx="39" cy="57" rx="5" ry="3" fill="rgba(251,113,133,0.25)"/>
-    <ellipse cx="81" cy="57" rx="5" ry="3" fill="rgba(251,113,133,0.25)"/>
-    <!-- Left arm + tiny laptop -->
-    <path d="M30,55 Q18,52 16,64" fill="none" stroke="#9b6dfa" stroke-width="4.5" stroke-linecap="round"/>
-    <rect x="8" y="61" width="14" height="9" rx="1.5" fill="#1e1b4b" stroke="#a78bfa" stroke-width="0.7"/>
-    <rect x="9.5" y="62.5" width="11" height="6" rx="0.8" fill="#0f172a"/>
-    <rect x="10" y="63" width="10" height="5" rx="0.5" fill="rgba(0,200,255,0.25)"/>
-    <line x1="11" y1="64.5" x2="17" y2="64.5" stroke="rgba(0,255,136,0.5)" stroke-width="0.5"/>
-    <line x1="11" y1="66" x2="15" y2="66" stroke="rgba(99,102,241,0.5)" stroke-width="0.5"/>
-    <!-- Right arm waving -->
-    <g class="arm-r">
-      <path d="M90,55 Q102,50 104,42" fill="none" stroke="#9b6dfa" stroke-width="4.5" stroke-linecap="round"/>
-    </g>
+  <ellipse class="sh" cx="50" cy="112" rx="22" ry="5" fill="rgba(0,0,0,0.15)"/>
+  <g class="b" filter="url(#gl)">
+    <path d="M22,55 Q22,12 50,10 Q78,12 78,55 L78,88 Q74,78 69,88 Q64,78 59,88 Q54,78 50,88 Q46,78 41,88 Q36,78 31,88 Q26,78 22,88 Z" fill="url(#g)" opacity="0.93"/>
+    <path d="M35,22 Q45,15 62,20" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse class="el" cx="40" cy="42" rx="6" ry="6" fill="#fff"/>
+    <ellipse class="er" cx="62" cy="42" rx="6" ry="6" fill="#fff"/>
+    <ellipse cx="42" cy="43" rx="3" ry="3.2" fill="#1e1b4b"/>
+    <ellipse cx="64" cy="43" rx="3" ry="3.2" fill="#1e1b4b"/>
+    <circle cx="38.5" cy="40" r="1.8" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="60.5" cy="40" r="1.8" fill="rgba(255,255,255,0.85)"/>
+    <path d="M43,55 Q50,63 57,55" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity="0.7"/>
+    <ellipse cx="32" cy="52" rx="5" ry="3.5" fill="rgba(251,113,133,0.22)"/>
+    <ellipse cx="68" cy="52" rx="5" ry="3.5" fill="rgba(251,113,133,0.22)"/>
   </g>
 </svg>
