@@ -1278,10 +1278,13 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:
             self.close_connection = True
             return
-        # ── TUNNEL LOCKDOWN: block ALL POST/PUT/DELETE from external visitors ──
+        # ── TUNNEL LOCKDOWN: block most POST/PUT/DELETE from external visitors ──
+        _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay"}
         if self.command in ("POST", "PUT", "DELETE") and self._is_tunnel_request():
-            self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
-            return
+            _req_path = urlparse(self.path).path
+            if _req_path not in _TUNNEL_ALLOWED_POSTS:
+                self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
+                return
         # Normal dispatch
         mname = 'do_' + self.command
         if not hasattr(self, mname):
@@ -2453,6 +2456,37 @@ class Handler(BaseHTTPRequestHandler):
             with open(_rlf, "w") as _f: json.dump(_rl, _f, indent=2)
             add_log("newsletter", f"New subscriber: {_email}", "ok")
             self._json({"ok": True, "message": "Subscribed successfully"}); return
+
+        elif path == "/api/reserve":
+            # Unified reservation system — customers, investors, affiliates, installers
+            _email = body.get("email", "").strip().lower()
+            _name = body.get("name", "").strip()
+            _type = body.get("type", "customer").strip().lower()  # customer|investor|affiliate|installer
+            _tier = body.get("tier", "").strip()
+            _message = body.get("message", "").strip()
+            if not _email or "@" not in _email:
+                self._json({"ok": False, "error": "Valid email required"}, 400); return
+            if _type not in ("customer", "investor", "affiliate", "installer"):
+                _type = "customer"
+            _ts = datetime.now().isoformat()
+            _rf = os.path.join(CWD, "data", "reservations.json")
+            try:
+                with open(_rf) as _f: _reservations = json.load(_f)
+            except Exception:
+                _reservations = []
+            # Check for duplicate
+            if any(r.get("email") == _email and r.get("type") == _type for r in _reservations):
+                self._json({"ok": True, "message": "You're already registered! We'll be in touch."}); return
+            _reservations.append({
+                "email": _email, "name": _name, "type": _type,
+                "tier": _tier, "message": _message,
+                "reserved_at": _ts, "status": "pending",
+            })
+            with open(_rf, "w") as _f: json.dump(_reservations, _f, indent=2)
+            add_log("system", f"New {_type} reservation: {_email}", "ok")
+            _labels = {"customer": "Your spot is reserved!", "investor": "We'll send you the full investor package.",
+                        "affiliate": "Welcome to the affiliate program!", "installer": "You're on the installer team list!"}
+            self._json({"ok": True, "message": _labels.get(_type, "Registered!")}); return
 
         elif path == "/api/premarket/subscribe":
             _email = body.get("email", "").strip().lower()

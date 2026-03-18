@@ -328,6 +328,7 @@
     <a href="#office-floor" data-nav>Office Floor</a>
     <a href="#consciousness" data-nav>Engine</a>
     <a href="#pricing" data-nav>Pricing</a>
+    <a href="#reserve" data-nav style="color:#22c55e">Join</a>
     <a href="#investor-access" data-nav style="color:#f59e0b">Investors</a>
     <a href="https://secondmindhq.com" target="_blank" class="nav-cta" style="background:linear-gradient(135deg,#a78bfa,#6366f1)">See Live Demo &rarr;</a>
   </div>
@@ -893,6 +894,99 @@ function unlockInvestor() {
   } else {
     document.getElementById('investor-error').style.display = 'block';
     document.getElementById('investor-pw').style.borderColor = 'rgba(239,68,68,0.5)';
+  }
+}
+</script>
+
+<!-- ── Reserve Your Spot / Join the Team ────────────────────────────── -->
+<section id="reserve" style="padding:100px 0;position:relative">
+  <div class="container">
+    <div class="section-label">Reserve &amp; Join</div>
+    <h2 class="section-title">Get Early Access</h2>
+    <p class="section-sub">Whether you're a customer, investor, affiliate partner, or installation specialist &mdash; reserve your spot now.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1000px;margin:0 auto">
+
+      <!-- Customer Reserve -->
+      <div class="glass" style="padding:28px;text-align:center">
+        <div style="font-size:2.2rem;margin-bottom:10px">🚀</div>
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:6px">Reserve as Customer</h3>
+        <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px">Lock in launch pricing. Be first to deploy when we open access.</p>
+        <input type="text" id="res-cust-name" placeholder="Name" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <input type="email" id="res-cust-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <select id="res-cust-tier" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:12px;box-sizing:border-box">
+          <option value="solo">Solo — $79/mo</option>
+          <option value="team" selected>Team — $199/mo</option>
+          <option value="enterprise">Enterprise — $699/mo</option>
+          <option value="lifetime">Lifetime — $499 one-time</option>
+          <option value="mac_mini">Mac Mini Bundle — $2,499</option>
+        </select>
+        <button onclick="submitReserve('customer','res-cust')" class="btn btn-primary" style="width:100%;padding:12px">Reserve My Spot</button>
+        <div id="res-cust-msg" style="margin-top:8px;font-size:.78rem;display:none"></div>
+      </div>
+
+      <!-- Investor Interest -->
+      <div class="glass" style="padding:28px;text-align:center;border-color:rgba(245,158,11,0.2)">
+        <div style="font-size:2.2rem;margin-bottom:10px">💰</div>
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:6px;color:#f59e0b">Investor Interest</h3>
+        <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px">Register your interest. We'll send the full investor package &mdash; pitch deck, whitepaper, financials.</p>
+        <input type="text" id="res-inv-name" placeholder="Name / Fund" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(245,158,11,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <input type="email" id="res-inv-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(245,158,11,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <textarea id="res-inv-message" placeholder="Tell us about your interest (optional)" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(245,158,11,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.82rem;margin-bottom:12px;box-sizing:border-box;min-height:60px;resize:vertical"></textarea>
+        <button onclick="submitReserve('investor','res-inv')" class="btn btn-gold" style="width:100%;padding:12px;border:none;cursor:pointer">Register Interest</button>
+        <div id="res-inv-msg" style="margin-top:8px;font-size:.78rem;display:none"></div>
+      </div>
+
+      <!-- Affiliate Program -->
+      <div class="glass" style="padding:28px;text-align:center;border-color:rgba(34,197,94,0.2)">
+        <div style="font-size:2.2rem;margin-bottom:10px">🤝</div>
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:6px;color:#22c55e">Affiliate Program</h3>
+        <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px">Earn 20% recurring commission on every customer you refer. No cap, paid monthly.</p>
+        <input type="text" id="res-aff-name" placeholder="Name" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(34,197,94,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <input type="email" id="res-aff-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(34,197,94,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <textarea id="res-aff-message" placeholder="How do you plan to promote? (audience, channels, etc)" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(34,197,94,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.82rem;margin-bottom:12px;box-sizing:border-box;min-height:60px;resize:vertical"></textarea>
+        <button onclick="submitReserve('affiliate','res-aff')" class="btn" style="width:100%;padding:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;border:none;cursor:pointer;border-radius:12px;font-family:inherit;font-size:1rem">Join Affiliate Program</button>
+        <div id="res-aff-msg" style="margin-top:8px;font-size:.78rem;display:none"></div>
+      </div>
+
+      <!-- Installation Team -->
+      <div class="glass" style="padding:28px;text-align:center;border-color:rgba(6,182,212,0.2)">
+        <div style="font-size:2.2rem;margin-bottom:10px">🔧</div>
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:6px;color:#06b6d4">Installation Team</h3>
+        <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px">Join our certified installer network. Help customers deploy Command Centre on their systems. Earn per install.</p>
+        <input type="text" id="res-inst-name" placeholder="Name" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <input type="email" id="res-inst-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <textarea id="res-inst-message" placeholder="Technical background (Mac/Linux experience, location, etc)" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.82rem;margin-bottom:12px;box-sizing:border-box;min-height:60px;resize:vertical"></textarea>
+        <button onclick="submitReserve('installer','res-inst')" class="btn btn-cyan" style="width:100%;padding:12px;border:none;cursor:pointer">Apply to Install Team</button>
+        <div id="res-inst-msg" style="margin-top:8px;font-size:.78rem;display:none"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+async function submitReserve(type, prefix) {
+  const name = document.getElementById(prefix+'-name').value.trim();
+  const email = document.getElementById(prefix+'-email').value.trim();
+  const tierEl = document.getElementById(prefix+'-tier');
+  const msgEl = document.getElementById(prefix+'-message');
+  const feedback = document.getElementById(prefix+'-msg');
+  if (!email || !email.includes('@')) {
+    feedback.style.display='block'; feedback.style.color='#ef4444'; feedback.textContent='Please enter a valid email.'; return;
+  }
+  const payload = {type, email, name, tier: tierEl ? tierEl.value : '', message: msgEl ? msgEl.value.trim() : ''};
+  feedback.style.display='block'; feedback.style.color='var(--muted)'; feedback.textContent='Submitting...';
+  try {
+    const res = await fetch('/api/reserve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    const data = await res.json();
+    if (data.ok) {
+      feedback.style.color='#22c55e'; feedback.textContent=data.message || 'Done!';
+    } else {
+      feedback.style.color='#ef4444'; feedback.textContent=data.error || 'Something went wrong.';
+    }
+  } catch(e) {
+    feedback.style.color='#ef4444'; feedback.textContent='Network error. Try again.';
   }
 }
 </script>
