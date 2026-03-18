@@ -6949,15 +6949,19 @@ function _computeDesks(W, H, agents) {
   };
   const _BRANCH_HEADS = new Set(Object.values(_BRANCH_MAP).map(b => b.head).filter(Boolean));
 
-  // Zone positions (matching _drawFloor _ZONE_LAYOUT) — center + bounds for placing agents
+  // Zone positions — center point and spread area for each branch room
+  // Must match the _drawFloor _ZONE_LAYOUT grid:
+  //   bed(0-10%) | executive(10-40%, 0-36%) | governance(40-62%, 0-50%) | monitor(87-100%)
+  //              | engineering(10-27%, 36-64%) | intelligence(27-40%, 36-64%)
+  //              | revenue(10-30%, 64-100%) | comms(30-48%, 64-100%) | operations(48-87%, 50-100%)
   const _ZONE_POS = {
-    executive:      { cx: 0.25, cy: 0.18, w: 0.30, h: 0.36 },
-    engineering:    { cx: 0.185, cy: 0.50, w: 0.17, h: 0.28 },
-    intelligence:   { cx: 0.335, cy: 0.50, w: 0.13, h: 0.28 },
-    revenue:        { cx: 0.20, cy: 0.82, w: 0.20, h: 0.36 },
-    communications: { cx: 0.39, cy: 0.82, w: 0.18, h: 0.36 },
-    operations:     { cx: 0.67, cy: 0.75, w: 0.39, h: 0.50 },
-    governance:     { cx: 0.51, cy: 0.25, w: 0.22, h: 0.50 },
+    executive:      { cx: 0.25, cy: 0.18, w: 0.26, h: 0.28 },
+    engineering:    { cx: 0.185, cy: 0.50, w: 0.14, h: 0.22 },
+    intelligence:   { cx: 0.335, cy: 0.50, w: 0.10, h: 0.22 },
+    revenue:        { cx: 0.20, cy: 0.82, w: 0.16, h: 0.28 },
+    communications: { cx: 0.39, cy: 0.82, w: 0.14, h: 0.28 },
+    operations:     { cx: 0.67, cy: 0.76, w: 0.34, h: 0.40 },
+    governance:     { cx: 0.51, cy: 0.25, w: 0.18, h: 0.40 },
   };
 
   // Build agent->branch lookup
@@ -6987,26 +6991,34 @@ function _computeDesks(W, H, agents) {
       .filter(i => i >= 0 && !bedSet.has(i));
     if (memberIdxs.length === 0) continue;
 
-    // Head gets center position, others spread around
+    // Head gets center-top position, team spreads below
     const headIdx = info.head ? agents.findIndex(a => a.id === info.head) : -1;
-    const zoneLeft = W * (zp.cx - zp.w * 0.35);
-    const zoneTop  = H * (zp.cy - zp.h * 0.25);
-    const zoneW    = W * zp.w * 0.7;
-    const zoneH    = H * zp.h * 0.5;
+    // Zone bounds with padding for desk size (~70px wide, ~50px tall)
+    const pad = 40;
+    const zoneLeft = W * (zp.cx - zp.w * 0.45) + pad;
+    const zoneRight = W * (zp.cx + zp.w * 0.45) - pad;
+    const zoneTop  = H * (zp.cy - zp.h * 0.40) + pad;
+    const zoneBot  = H * (zp.cy + zp.h * 0.40) - pad;
+    const zoneW = Math.max(zoneRight - zoneLeft, 80);
+    const zoneH = Math.max(zoneBot - zoneTop, 60);
+    const zoneCX = (zoneLeft + zoneRight) / 2;
 
     if (headIdx >= 0 && !bedSet.has(headIdx)) {
-      results[headIdx] = { x: W * zp.cx, y: H * zp.cy - zoneH * 0.2, zone: branchName };
+      results[headIdx] = { x: zoneCX, y: zoneTop + 20, zone: branchName };
     }
     const nonHead = memberIdxs.filter(i => i !== headIdx);
-    const cols = Math.min(nonHead.length, 3);
+    if (nonHead.length === 0) continue;
+    // Spread team members in a grid below the head
+    const cols = Math.min(nonHead.length, Math.max(1, Math.floor(zoneW / 80)));
     const rows = Math.ceil(nonHead.length / Math.max(cols, 1));
-    const spacingX = cols > 1 ? zoneW / (cols - 1) : 0;
-    const spacingY = rows > 1 ? zoneH / (rows - 1) : 0;
+    const teamTop = headIdx >= 0 && !bedSet.has(headIdx) ? zoneTop + 60 : zoneTop + 10;
+    const spacingX = cols > 1 ? zoneW / cols : 0;
+    const spacingY = rows > 1 ? Math.min((zoneBot - teamTop) / rows, 70) : 0;
     nonHead.forEach((idx, n) => {
       const col = n % cols;
       const row = Math.floor(n / cols);
-      const ax = cols === 1 ? W * zp.cx : zoneLeft + col * spacingX;
-      const ay = rows === 1 ? H * zp.cy + zoneH * 0.2 : zoneTop + zoneH * 0.4 + row * spacingY;
+      const ax = cols === 1 ? zoneCX : zoneLeft + spacingX * (col + 0.5);
+      const ay = rows === 1 ? teamTop + 20 : teamTop + spacingY * (row + 0.5);
       results[idx] = { x: ax, y: ay, zone: branchName };
     });
   }
