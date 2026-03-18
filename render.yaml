@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: command-centre
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python agent_server.py
+    envVars:
+      - key: PORT
+        value: 5050
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+    healthCheckPath: /api/health
+    plan: free
