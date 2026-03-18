@@ -5478,7 +5478,9 @@ function drawSparkline() {
 // ─────────────────────────────────────────────
 //  REAL API POLLING
 // ─────────────────────────────────────────────
-const API = 'http://localhost:5050/api/status';
+// On deployed site, poll via Cloudflare tunnel to local Mac mini for real-time data
+const _TUNNEL_URL = 'https://hq.secondmindhq.com';
+let API = _isLocalhost ? 'http://localhost:5050/api/status' : _TUNNEL_URL + '/api/status';
 let lastTaskCount = 0;
 let lastLogCount  = 0;
 let serverOnline  = false;
