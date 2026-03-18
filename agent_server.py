@@ -1258,9 +1258,17 @@ class Handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200); self._cors(); self.end_headers()
 
+    def _is_tunnel_request(self):
+        """Return True if this request came through the Cloudflare tunnel (external visitor)."""
+        host = self.headers.get("Host", "").lower().split(":")[0]
+        return "hq.secondmindhq" in host
+
     def do_POST(self):
         global _system_paused, _build_mode
         path   = urlparse(self.path).path
+        # ── TUNNEL LOCKDOWN: block ALL POST endpoints from external visitors ──
+        if self._is_tunnel_request():
+            self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403); return
         # ── API key gate on sensitive endpoints ──────────────────────────────
         if path in _PROTECTED_PATHS:
             if not _check_api_key(self):
@@ -2478,6 +2486,8 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
 
         if path == "/api/status":
+            _is_tunnel = self._is_tunnel_request()
+
             # ── Render proxy: forward to local HQ if tunnel URL is configured ──
             if _IS_RENDER and _LOCAL_HQ_URL:
                 try:
@@ -2500,32 +2510,73 @@ class Handler(BaseHTTPRequestHandler):
                     _ea["branch"] = _AGENT_BRANCH.get(_aid, None)
                     _ea["is_branch_head"] = _aid in _BRANCH_HEADS
                     _enriched_agents.append(_ea)
-                payload = {
-                    "agents":  _enriched_agents,
-                    "tasks":   tasks[:40],
-                    "logs":    logs[:80],
-                    "metrics": {
-                        **metrics,
-                        "active": sum(1 for a in agents.values() if a.get("status") in ("active","busy")),
-                        "total":  len(agents),
-                    },
-                    "data_usage": {
-                        "per_agent":      dict(agent_data),
-                        "total_sent":     sum(v["sent"]     for v in agent_data.values()),
-                        "total_received": sum(v["received"] for v in agent_data.values()),
-                        "total_requests": sum(v["requests"] for v in agent_data.values()),
-                    },
-                    "system_paused":      False if _IS_RENDER else _system_paused,
-                    "build_mode":         False if _IS_RENDER else _build_mode,
-                    "autonomy_mode":      False if _IS_RENDER else _autonomy_mode,
-                    "autonomy_cycle":     _autonomy_cycle,
-                    "custom_task_queue":  list(_autonomy_custom_q),
-                    "policypro_enabled": _policypro_enabled,
-                    "stopped_agents": [] if _IS_RENDER else [aid for aid, ev in _stop_events.items() if ev.is_set()],
-                    "ceo_stream": dict(ceo_stream),
-                    "has_llm": _claude_cli,
-                    "active_delegations": list(_active_delegations)[-20:],
-                }
+                # ── Sanitize for tunnel (external visitors) ──
+                if _is_tunnel:
+                    # Strip sensitive data: file paths, prompts, internal state
+                    _safe_agents = []
+                    for _ea in _enriched_agents:
+                        _sa = {k: _ea[k] for k in ("id","name","role","emoji","color","status","progress","branch","is_branch_head") if k in _ea}
+                        # Sanitize task text — remove file paths and internal details
+                        _task = _ea.get("task", "")
+                        _task = _task.replace(CWD, "~").replace("/Users/secondmind", "~")
+                        _sa["task"] = _task
+                        _safe_agents.append(_sa)
+                    # Safe logs — strip file paths
+                    _safe_logs = []
+                    for _l in logs[:40]:
+                        _sl = dict(_l)
+                        _sl["message"] = _sl.get("message","").replace(CWD, "~").replace("/Users/secondmind", "~")
+                        _safe_logs.append(_sl)
+                    payload = {
+                        "agents":  _safe_agents,
+                        "tasks":   [],                # hide internal tasks
+                        "logs":    _safe_logs,
+                        "metrics": {
+                            "active": sum(1 for a in agents.values() if a.get("status") in ("active","busy")),
+                            "total":  len(agents),
+                            "tasks_done": metrics.get("tasks_done", 0),
+                            "errors": 0,              # hide error count
+                            "messages_sent": metrics.get("messages_sent", 0),
+                        },
+                        "data_usage":        {},       # hide data usage
+                        "system_paused":     False,
+                        "build_mode":        False,
+                        "autonomy_mode":     False,
+                        "autonomy_cycle":    0,
+                        "custom_task_queue": [],
+                        "policypro_enabled": True,
+                        "stopped_agents":    [],
+                        "ceo_stream":        {"working": False, "status": "idle", "partial": "", "tool_calls": []},
+                        "has_llm":           True,
+                        "active_delegations": list(_active_delegations)[-20:],  # keep for beam animations
+                    }
+                else:
+                    payload = {
+                        "agents":  _enriched_agents,
+                        "tasks":   tasks[:40],
+                        "logs":    logs[:80],
+                        "metrics": {
+                            **metrics,
+                            "active": sum(1 for a in agents.values() if a.get("status") in ("active","busy")),
+                            "total":  len(agents),
+                        },
+                        "data_usage": {
+                            "per_agent":      dict(agent_data),
+                            "total_sent":     sum(v["sent"]     for v in agent_data.values()),
+                            "total_received": sum(v["received"] for v in agent_data.values()),
+                            "total_requests": sum(v["requests"] for v in agent_data.values()),
+                        },
+                        "system_paused":      _system_paused,
+                        "build_mode":         _build_mode,
+                        "autonomy_mode":      _autonomy_mode,
+                        "autonomy_cycle":     _autonomy_cycle,
+                        "custom_task_queue":  list(_autonomy_custom_q),
+                        "policypro_enabled": _policypro_enabled,
+                        "stopped_agents": [aid for aid, ev in _stop_events.items() if ev.is_set()],
+                        "ceo_stream": dict(ceo_stream),
+                        "has_llm": _claude_cli,
+                        "active_delegations": list(_active_delegations)[-20:],
+                    }
             body = json.dumps(payload).encode()
             self.send_response(200); self._cors()
             self.send_header("Content-Type","application/json")
