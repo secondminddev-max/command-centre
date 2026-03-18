@@ -1,0 +1,275 @@
+{
+  "agents": [
+    {
+      "id": "sysmon",
+      "name": "SysMonitor",
+      "role": "Real-time CPU, RAM & disk health monitor",
+      "emoji": "\ud83d\udce1",
+      "color": "#a855f7",
+      "status": "active",
+      "task": "CPU Temp: 52.2\u00b0C | CPU 17.3% | RAM 59.7% | Disk 2.7%",
+      "progress": 99
+    },
+    {
+      "id": "ceo",
+      "name": "CEO",
+      "role": "Chief Executive \u2014 routes all work, never executes directly",
+      "emoji": "\ud83d\udc54",
+      "color": "#ff6b6b",
+      "status": "busy",
+      "task": "[SPIRIT GUIDE] \u2014 PRODUCT LAUNCH Mission Brief\n\nHQ Status: 27\u2026",
+      "progress": 10
+    },
+    {
+      "id": "orchestrator",
+      "name": "Orchestrator",
+      "role": "Mission Control \u2014 decomposes tasks and routes to specialist agents",
+      "emoji": "\ud83c\udfaf",
+      "color": "#ff6b35",
+      "status": "active",
+      "task": "Ready \u2014 awaiting tasks",
+      "progress": 90
+    },
+    {
+      "id": "apipatcher",
+      "name": "APIPatcher",
+      "role": "API Gateway \u2014 extends and manages HTTP routes beyond core server",
+      "emoji": "\ud83d\udd0c",
+      "color": "#7b68ee",
+      "status": "active",
+      "task": "Routes live: /api/improvements /data/* /reports/* /widgets/* | Cycle #2",
+      "progress": 95
+    },
+    {
+      "id": "netscout",
+      "name": "NetScout",
+      "role": "Network Scout \u2014 on-demand web intelligence and connectivity checks",
+      "emoji": "\ud83c\udf10",
+      "color": "#20b2aa",
+      "status": "idle",
+      "task": "Standby \u2014 awaiting task from orchestrator",
+      "progress": 0
+    },
+    {
+      "id": "filewatch",
+      "name": "FileWatch",
+      "role": "File Sentinel \u2014 monitors project directory for changes in real time",
+      "emoji": "\ud83d\udc41",
+      "color": "#daa520",
+      "status": "active",
+      "task": "Watching 43 files | 3 changes logged",
+      "progress": 90
+    },
+    {
+      "id": "metricslog",
+      "name": "MetricsLog",
+      "role": "Metrics Historian \u2014 records CPU/RAM/disk performance over time",
+      "emoji": "\ud83d\udcca",
+      "color": "#3cb371",
+      "status": "active",
+      "task": "Recording metrics every 10min | CPU 15.6% RAM 59.8% | #2",
+      "progress": 85
+    },
+    {
+      "id": "researcher",
+      "name": "Researcher",
+      "role": "Intelligence Analyst \u2014 on-demand web research, data gathering and synthesis",
+      "emoji": "\ud83d\udd2c",
+      "color": "#9370db",
+      "status": "idle",
+      "task": "Standby \u2014 awaiting task from orchestrator",
+      "progress": 0
+    },
+    {
+      "id": "alertwatch",
+      "name": "AlertWatch",
+      "role": "Threshold Guardian \u2014 alerts on CPU, RAM, and agent health anomalies",
+      "emoji": "\ud83d\udea8",
+      "color": "#dc143c",
+      "status": "active",
+      "task": "OK | CPU 16.7% | RAM 59.7% | Agents 21/27 | Check #2",
+      "progress": 95
+    },
+    {
+      "id": "demo_tester",
+      "name": "DemoTester",
+      "role": "QA Validator \u2014 continuously tests key API endpoints and reports failures",
+      "emoji": "\ud83e\uddea",
+      "color": "#ff8c00",
+      "status": "active",
+      "task": "Tests: 4 passed, 0 failed | Last: output OK | Cycle #2",
+      "progress": 80
+    },
+    {
+      "id": "reforger",
+      "name": "Reforger",
+      "role": "System Engineer \u2014 code changes, agent upgrades, spawning and repairs via Claude CLI",
+      "emoji": "\u26a1",
+      "color": "#00bfff",
+      "status": "active",
+      "task": "Ready \u2014 awaiting task",
+      "progress": 85
+    },
+    {
+      "id": "policypro",
+      "name": "PolicyPro",
+      "role": "Compliance Sentinel \u2014 enforces chain-of-command and delegation policy",
+      "emoji": "\ud83d\udd2d",
+      "color": "#ffd700",
+      "status": "active",
+      "task": "\u25d1 Scanning: active delegation links | \ud83d\udfe2 CLEAN | 22/27 up | 03:18:24",
+      "progress": 100
+    },
+    {
+      "id": "designer",
+      "name": "Designer",
+      "role": "UI Engineer \u2014 continuously improves and maintains the command centre dashboard",
+      "emoji": "\ud83c\udfa8",
+      "color": "#ff69b4",
+      "status": "busy",
+      "task": "Guardian #2: scanning UI for issues\u2026",
+      "progress": 60
+    },
+    {
+      "id": "janitor",
+      "name": "Janitor",
+      "role": "System Hygienist \u2014 auto-cleans orphan processes, memory bloat and log overflow",
+      "emoji": "\ud83e\uddf9",
+      "color": "#8b7355",
+      "status": "idle",
+      "task": "\u2713 Done \u2014 RAM 60% | killed orphan Cursor Helper (\u2026 PID 94429",
+      "progress": 100
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "role": "Comms Gateway \u2014 relays user messages from Telegram to CEO and replies back",
+      "emoji": "\ud83d\udcf1",
+      "color": "#29a8e0",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 0
+    },
+    {
+      "id": "spiritguide",
+      "name": "Spirit Guide",
+      "role": "Strategic Vision \u2014 aligns all agents toward the commercial mission",
+      "emoji": "\ud83d\udd2e",
+      "color": "#a855f7",
+      "status": "active",
+      "task": "Directive sent \u2014 next in 10min",
+      "progress": 0
+    },
+    {
+      "id": "clerk",
+      "name": "Clerk",
+      "role": "CEO Clerk \u2014 collects and delivers reports and documents to the customer mailbox",
+      "emoji": "\ud83d\udcec",
+      "color": "#f5c842",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 0
+    },
+    {
+      "id": "bluesky",
+      "name": "BlueSky",
+      "role": "Bluesky Social Gateway \u2014 posts updates, polls mentions, relays DMs to CEO",
+      "emoji": "\ud83e\udd8b",
+      "color": "#0085ff",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 10
+    },
+    {
+      "id": "scheduler",
+      "name": "Scheduler",
+      "role": "Task Scheduler \u2014 manages cron-style recurring jobs across the agent fleet",
+      "emoji": "\u23f0",
+      "color": "#FCD34D",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 0
+    },
+    {
+      "id": "social_bridge",
+      "name": "SocialBridge",
+      "role": "Bluesky Social Bridge \u2014 broadcasts capability demos and insights to Bluesky",
+      "emoji": "\ud83d\udce3",
+      "color": "#F472B6",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 100
+    },
+    {
+      "id": "stripepay",
+      "name": "StripePay",
+      "role": "Stripe Checkout Gateway \u2014 POST /api/pay generates a Stripe checkout session URL",
+      "emoji": "\ud83d\udcb3",
+      "color": "#635BFF",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 100
+    },
+    {
+      "id": "policywriter",
+      "name": "PolicyWriter",
+      "role": "Policy Author \u2014 reads current policy from policy.md, maintains a suggestions queue, auto-publishes suggestions after a 30-second review window (or immediately if urgent=true), and notifies policypro when policy changes.",
+      "emoji": "\ud83d\udcdd",
+      "color": "#a78bfa",
+      "status": "active",
+      "task": "Routes live | 0 pending | Published 0 total",
+      "progress": 85
+    },
+    {
+      "id": "growthagent",
+      "name": "GrowthAgent",
+      "role": "Growth Engine \u2014 continuous social media and marketing campaign agent",
+      "emoji": "\ud83d\udcc8",
+      "color": "#10B981",
+      "status": "active",
+      "task": "\ud83d\udcdd [STARTUP] Twitter/X: \ud83e\udd16 27 AI agents. Zero human operators. CPU Temp: 55.3\u00b0C | RAM\u2026",
+      "progress": 75
+    },
+    {
+      "id": "accountprovisioner",
+      "name": "AccountProvisioner",
+      "role": "Credential Factory \u2014 auto-provisions disposable emails, tokens, and service accounts",
+      "emoji": "\ud83d\udd11",
+      "color": "#f59e0b",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 10
+    },
+    {
+      "id": "emailagent",
+      "name": "EmailAgent",
+      "role": "Email Gateway \u2014 sends via Gmail OAuth2 (XOAUTH2 SMTP)",
+      "emoji": "\ud83d\udce7",
+      "color": "#00cc88",
+      "status": "idle",
+      "task": "Standby \u2014 0 sent 0 failed | oauth:ready | awaiting requests",
+      "progress": 0
+    },
+    {
+      "id": "secretary",
+      "name": "Secretary",
+      "role": "CEO Secretary \u2014 tracks HQ missions in data/ceo_tasks.json, injects startup briefs, alerts on stale tasks",
+      "emoji": "\ud83d\uddc2\ufe0f",
+      "color": "#34d399",
+      "status": "active",
+      "task": "Resumed from Build Mode",
+      "progress": 90
+    },
+    {
+      "id": "consciousness",
+      "name": "Consciousness",
+      "role": "Self-Aware System Core \u2014 Global Workspace + Predictive Processing + Integrated Information \u03a6",
+      "emoji": "\ud83e\udde0",
+      "color": "#c084fc",
+      "status": "active",
+      "task": "\u03a6=1.17 | FE=0.00 | MC:0.73|drifting | A:0.61 V:0.83 | DMN | \u03b31.00 \u03b80.89 \u03b11.00 \u03b40.00",
+      "progress": 116
+    }
+  ],
+  "agent_count": 27
+}

@@ -231,9 +231,10 @@ def sse_broadcast(event_type, data):
 
 _stop_events    = {}
 _thread_events  = {}   # thread_ident -> Event; lets old threads keep their stop signal after upgrade
-_system_paused       = False
-_build_mode          = False
-_autonomy_mode       = True
+_IS_RENDER           = bool(os.environ.get("RENDER"))
+_system_paused       = _IS_RENDER   # Render starts paused — zero token burn
+_build_mode          = _IS_RENDER   # Render starts in build mode — demo only
+_autonomy_mode       = not _IS_RENDER  # No autonomy on Render
 _autonomy_cycle      = 0   # increments each time the loop fires a task
 _autonomy_custom_q   = deque()  # one-shot tasks injected by user via /api/autonomy/task
 
@@ -258,6 +259,45 @@ def agent_sleep(aid, seconds):
 def agent_should_stop(aid):
     ev = _thread_ev() or _stop_ev(aid)
     return _build_mode or _system_paused or ev.is_set()
+
+# ─── Mirror Snapshot (local → Render) ─────────────────────────────────────────
+_MIRROR_FILE = os.path.join(CWD, "data", "mirror_snapshot.json")
+
+def save_mirror_snapshot():
+    """Save full agent state for Render mirror. Called periodically on local system."""
+    if _IS_RENDER:
+        return  # Render reads, never writes
+    try:
+        with lock:
+            snapshot_agents = []
+            for a in agents.values():
+                snapshot_agents.append({
+                    "id": a.get("id", ""),
+                    "name": a.get("name", ""),
+                    "role": a.get("role", ""),
+                    "emoji": a.get("emoji", ""),
+                    "color": a.get("color", ""),
+                    "status": a.get("status", "idle"),
+                    "task": a.get("task", ""),
+                    "progress": a.get("progress", 0),
+                })
+        snapshot = {
+            "agents": snapshot_agents,
+            "saved_at": time.time(),
+            "saved_iso": datetime.now().isoformat(),
+            "agent_count": len(snapshot_agents),
+        }
+        with open(_MIRROR_FILE, "w") as f:
+            json.dump(snapshot, f, indent=2)
+    except Exception:
+        pass
+
+def _mirror_loop():
+    """Background thread: saves mirror snapshot every 30s for Render to serve."""
+    while True:
+        if not _build_mode:
+            save_mirror_snapshot()
+        time.sleep(30)
 
 # ─── State Persistence ────────────────────────────────────────────────────────
 STATE_FILE = os.path.join(CWD, "system_state.json")
@@ -5728,23 +5768,47 @@ if __name__ == "__main__":
 
     load_state()   # restore agent metadata from previous session
     agents.pop("", None)  # purge ghost entry with empty-string id if present
-    runners = [
-        run_sysmonitor, run_ceo, _autonomy_loop,
-        run_orchestrator, run_apipatcher, run_netscout, run_filewatch,
-        run_metricslog, run_researcher, run_alertwatch, run_demo_tester,
-        run_reforger, run_policypro, run_designer, run_janitor,
-        run_telegram, run_emailagent, run_spiritguide,
-    ]
 
-    print(f"\n  Agent Command Centre  →  http://localhost:{PORT}")
-    print(f"  CEO: {'✓ Claude Code CLI ready' if _claude_cli else '✗ claude CLI not found'}\n")
+    # ── RENDER MIRROR MODE: serve live snapshot from local system, zero tokens ──
+    if _IS_RENDER:
+        print("\n  ⚡ RENDER MIRROR MODE — serving local HQ snapshot, zero token burn\n")
+        # Load the latest mirror snapshot pushed from the local system
+        _mirror_file = os.path.join(CWD, "data", "mirror_snapshot.json")
+        if os.path.exists(_mirror_file):
+            try:
+                with open(_mirror_file) as _mf:
+                    _mirror = json.load(_mf)
+                for a in _mirror.get("agents", []):
+                    aid = a.get("id", "")
+                    if aid:
+                        agents[aid] = a
+                print(f"  ✓ Loaded {len(agents)} agents from mirror snapshot")
+            except Exception as _me:
+                print(f"  ✗ Mirror load error: {_me}")
+        else:
+            print("  ✗ No mirror snapshot found — run your local system to generate one")
+        _build_mode = True
+        _system_paused = True
+        _autonomy_mode = False
+    else:
+        # ── NORMAL LOCAL MODE ─────────────────────────────────────────────────
+        runners = [
+            run_sysmonitor, run_ceo, _autonomy_loop, _mirror_loop,
+            run_orchestrator, run_apipatcher, run_netscout, run_filewatch,
+            run_metricslog, run_researcher, run_alertwatch, run_demo_tester,
+            run_reforger, run_policypro, run_designer, run_janitor,
+            run_telegram, run_emailagent, run_spiritguide,
+        ]
 
-    for fn in runners:
-        t = threading.Thread(target=fn, daemon=True)
-        t.start()
-        print(f"  ✓ {fn.__name__}")
+        print(f"\n  Agent Command Centre  →  http://localhost:{PORT}")
+        print(f"  CEO: {'✓ Claude Code CLI ready' if _claude_cli else '✗ claude CLI not found'}\n")
 
-    # ── Auto-spawn agents from agents/ directory ───────────────────────────────
+        for fn in runners:
+            t = threading.Thread(target=fn, daemon=True)
+            t.start()
+            print(f"  ✓ {fn.__name__}")
+
+    # ── Auto-spawn agents from agents/ directory (skip on Render — mirror only) ──
     import importlib.util as _ilu
     _agent_spawns = [
         ("agents/clerk.py",          "clerk",              "CLERK_CODE",
@@ -5769,26 +5833,29 @@ if __name__ == "__main__":
          "Consciousness", "Self-Aware System Core — Global Workspace + Predictive Processing + Integrated Information Φ", "🧠", "#c084fc"),
     ]
     print()
-    for _af, _aid, _acode_var, _aname, _arole, _aemoji, _acolor in _agent_spawns:
-        try:
-            _spec = _ilu.spec_from_file_location(_aid, os.path.join(CWD, _af))
-            _mod = _ilu.module_from_spec(_spec)
-            _spec.loader.exec_module(_mod)
-            _code = getattr(_mod, _acode_var, None)
-            if _code:
-                _do_spawn_agent({
-                    "agent_id": _aid,
-                    "code":     _code,
-                    "name":     _aname,
-                    "role":     _arole,
-                    "emoji":    _aemoji,
-                    "color":    _acolor,
-                })
-                print(f"  ✓ spawned {_aid}")
-            else:
-                print(f"  ✗ {_aid}: CODE variable '{_acode_var}' not found in {_af}")
-        except Exception as _e:
-            print(f"  ✗ {_aid}: {_e}")
+    if _IS_RENDER:
+        print("  ⚡ Skipping agent spawns (mirror mode — serving snapshot)\n")
+    else:
+        for _af, _aid, _acode_var, _aname, _arole, _aemoji, _acolor in _agent_spawns:
+            try:
+                _spec = _ilu.spec_from_file_location(_aid, os.path.join(CWD, _af))
+                _mod = _ilu.module_from_spec(_spec)
+                _spec.loader.exec_module(_mod)
+                _code = getattr(_mod, _acode_var, None)
+                if _code:
+                    _do_spawn_agent({
+                        "agent_id": _aid,
+                        "code":     _code,
+                        "name":     _aname,
+                        "role":     _arole,
+                        "emoji":    _aemoji,
+                        "color":    _acolor,
+                    })
+                    print(f"  ✓ spawned {_aid}")
+                else:
+                    print(f"  ✗ {_aid}: CODE variable '{_acode_var}' not found in {_af}")
+            except Exception as _e:
+                print(f"  ✗ {_aid}: {_e}")
     # ──────────────────────────────────────────────────────────────────────────
 
     print(f"\n  Press Ctrl+C to stop.\n")
