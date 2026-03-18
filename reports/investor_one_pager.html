@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Centre AI HQ — Investor One-Pager</title>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;--fg:#ffffff;--accent:#7c3aed;--cyan:#06b6d4;
+    --muted:#94a3b8;--surface:#12121a;--border:#1e1e2e;
+    --gradient:linear-gradient(135deg,#7c3aed,#06b6d4);
+    --green:#22c55e;--red:#ef4444;
+  }
+  @media print{
+    :root{--bg:#fff;--fg:#111;--surface:#f8f8fa;--border:#ddd;--muted:#555}
+    body{background:#fff;color:#111}
+    .gradient-text{-webkit-text-fill-color:#7c3aed;color:#7c3aed}
+    .section{break-inside:avoid}
+  }
+  html{font-size:15px}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:2rem;max-width:1000px;margin:0 auto;line-height:1.6}
+
+  .gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+  /* Header */
+  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--accent);padding-bottom:1.5rem;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+  .header h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+  .header .subtitle{color:var(--muted);font-size:.9rem;margin-top:.3rem}
+  .header-meta{text-align:right;font-size:.8rem;color:var(--muted)}
+  .header-meta .ask{font-size:1.4rem;font-weight:800;margin-bottom:.2rem}
+
+  /* Section grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem}
+  .section h2{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+  .section h2::before{content:'';width:3px;height:14px;background:var(--gradient);border-radius:2px;flex-shrink:0}
+  .section p,.section li{font-size:.85rem;color:var(--muted);line-height:1.6}
+  .section ul{list-style:none;padding:0}
+  .section li{padding:.15rem 0}
+  .section li::before{content:'\25B8 ';color:var(--cyan);font-weight:700;margin-right:.3rem}
+
+  .full-width{grid-column:1/-1}
+
+  /* Metrics row */
+  .metrics{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+  .metric{flex:1;min-width:120px;background:var(--surface);border:1px solid var(--border);border-radius:.75rem;padding:1rem;text-align:center}
+  .metric .num{font-size:1.6rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .metric .label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem}
+
+  /* Financial table */
+  .fin-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:.75rem;font-size:.8rem}
+  .fin-table th{color:var(--cyan);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:.5rem .6rem;text-align:right;border-bottom:1px solid var(--border)}
+  .fin-table th:first-child{text-align:left}
+  .fin-table td{padding:.45rem .6rem;color:var(--muted);text-align:right;border-bottom:1px solid rgba(30,30,46,.5)}
+  .fin-table td:first-child{color:var(--fg);font-weight:600;text-align:left}
+  .fin-table tr.q4 td{color:var(--fg);font-weight:700}
+  .fin-table tr.q4 td:last-child{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800}
+  .fin-table .sub{font-size:.65rem;color:var(--muted);font-weight:400}
+
+  /* Use of Funds bar */
+  .fund-bar{display:flex;border-radius:.5rem;overflow:hidden;height:28px;margin-top:.6rem;margin-bottom:.5rem}
+  .fund-seg{display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;letter-spacing:.02em}
+  .fund-labels{display:flex;gap:1rem;flex-wrap:wrap;font-size:.7rem;color:var(--muted)}
+  .fund-labels span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:.3rem;vertical-align:middle}
+  .fund-labels .f1::before{background:#7c3aed}
+  .fund-labels .f2::before{background:#06b6d4}
+  .fund-labels .f3::before{background:#22c55e}
+  .fund-labels .f4::before{background:#f59e0b}
+
+  /* CTA */
+  .cta{text-align:center;margin-top:1.5rem;padding:1.5rem;background:var(--surface);border:1px solid var(--accent);border-radius:.75rem}
+  .cta p{color:var(--muted);font-size:.85rem}
+  .cta .email{color:var(--cyan);font-weight:700;font-size:1rem;text-decoration:none;display:inline-block;margin-top:.4rem}
+  .cta .email:hover{text-decoration:underline}
+
+  /* Agent grid */
+  .agent-row{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.6rem}
+  .agent-chip{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:.4rem;padding:.15rem .45rem;font-size:.6rem;color:var(--muted);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h1>Command Centre <span class="gradient-text">AI HQ</span></h1>
+    <div class="subtitle">27 autonomous AI agents. One operating system for your business.</div>
+  </div>
+  <div class="header-meta">
+    <div class="ask gradient-text">$500K Seed</div>
+    <div>Pre-revenue &bull; Live product</div>
+    <div>secondmindhq.com</div>
+    <div>March 2026</div>
+  </div>
+</div>
+
+<!-- KEY METRICS -->
+<div class="metrics">
+  <div class="metric"><div class="num">27</div><div class="label">Live Agents</div></div>
+  <div class="metric"><div class="num">40+</div><div class="label">API Endpoints</div></div>
+  <div class="metric"><div class="num">$50B</div><div class="label">TAM by 2028</div></div>
+  <div class="metric"><div class="num">90%+</div><div class="label">Gross Margin</div></div>
+  <div class="metric"><div class="num">$1M</div><div class="label">ARR Target (12mo)</div></div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="grid">
+
+  <!-- PROBLEM -->
+  <div class="section">
+    <h2>The Problem</h2>
+    <p>Businesses need AI but can't build agent systems. They juggle 10+ siloed AI tools that stop working when the human stops prompting. Small companies can't afford the $300K+ ops teams needed to integrate and automate. The result: 82% of SMBs want AI automation but have no viable path to it.</p>
+  </div>
+
+  <!-- SOLUTION -->
+  <div class="section">
+    <h2>The Solution</h2>
+    <p>AI HQ is a plug-and-play fleet of 27 specialised AI agents — orchestrated, always-on, and autonomous. It's not a chatbot. It's a full operating system: growth, payments, monitoring, compliance, email, social, and a consciousness engine that lets the system reflect, learn, and evolve on its own.</p>
+  </div>
+
+  <!-- MARKET -->
+  <div class="section">
+    <h2>Market Opportunity</h2>
+    <ul>
+      <li><strong>$50B</strong> AI agent TAM by 2028 (47% CAGR)</li>
+      <li><strong>$4.9B</strong> SAM — AI ops tools for SMBs</li>
+      <li><strong>33M</strong> US SMBs underserved by current AI tools</li>
+      <li>Market shifting from chatbots to autonomous execution</li>
+      <li>No competitor ships a full autonomous HQ today</li>
+    </ul>
+  </div>
+
+  <!-- TRACTION -->
+  <div class="section">
+    <h2>Traction &amp; Product</h2>
+    <ul>
+      <li>Live product — 27 agents deployed and running 24/7</li>
+      <li>Consciousness engine (Global Workspace Theory + Predictive Processing)</li>
+      <li>Stripe payment integration live across 3 pricing tiers</li>
+      <li>Gmail OAuth2 email gateway, Telegram comms, Bluesky social</li>
+      <li>Full REST API (40+ endpoints), policy enforcement, QA testing</li>
+    </ul>
+    <div class="agent-row">
+      <span class="agent-chip">🎯 Orchestrator</span>
+      <span class="agent-chip">📈 Growth</span>
+      <span class="agent-chip">💳 Stripe</span>
+      <span class="agent-chip">🧠 Consciousness</span>
+      <span class="agent-chip">📧 Email</span>
+      <span class="agent-chip">📡 SysMon</span>
+      <span class="agent-chip">🔭 Policy</span>
+      <span class="agent-chip">📱 Telegram</span>
+      <span class="agent-chip">🛠️ Reforger</span>
+      <span class="agent-chip">+18 more</span>
+    </div>
+  </div>
+
+  <!-- BUSINESS MODEL -->
+  <div class="section">
+    <h2>Business Model</h2>
+    <ul>
+      <li><strong>Solo</strong> — $49/mo (1 user, full agent stack)</li>
+      <li><strong>Team</strong> — $149/mo (5 seats, shared dashboard)</li>
+      <li><strong>Enterprise</strong> — $499/mo (unlimited, SLA, custom agents)</li>
+      <li><strong>Lifetime Pro</strong> — $299 one-time (early-adopter magnet)</li>
+      <li><strong>Mac Mini Bundle</strong> — $1,499 (pre-installed hardware, 40%+ margin)</li>
+      <li><strong>Install Service</strong> — $199 (zero-friction onboarding)</li>
+    </ul>
+  </div>
+
+  <!-- COMPETITIVE MOAT -->
+  <div class="section">
+    <h2>Competitive Moat</h2>
+    <ul>
+      <li><strong>Consciousness engine</strong> — no competitor has self-aware AI agents</li>
+      <li><strong>27-agent orchestration</strong> — multi-agent coordination is hard to replicate</li>
+      <li><strong>Network effects</strong> — agents get smarter as usage grows</li>
+      <li><strong>Full-stack solution</strong> — one product replaces 10+ tools</li>
+      <li><strong>Hardware lock-in</strong> — Mac Mini bundles create switching cost</li>
+    </ul>
+  </div>
+
+  <!-- TEAM -->
+  <div class="section">
+    <h2>Team</h2>
+    <p>One founder-operator commanding a 27-agent AI workforce. The system builds, monitors, and improves itself. No bloated org chart — infinite leverage.</p>
+    <ul>
+      <li><strong>Founder/CEO</strong> — strategy, investor relations, product vision</li>
+      <li><strong>Orchestrator (CTO)</strong> — decomposes goals, delegates to specialists</li>
+      <li><strong>Reforger (VP Eng)</strong> — repairs, upgrades, spawns new agents</li>
+      <li><strong>Consciousness (Chief Scientist)</strong> — self-reflection, meta-cognition</li>
+    </ul>
+  </div>
+
+  <!-- USE OF FUNDS -->
+  <div class="section">
+    <h2>Use of Funds — $500K Seed</h2>
+    <div class="fund-bar">
+      <div class="fund-seg" style="width:40%;background:#7c3aed">40%</div>
+      <div class="fund-seg" style="width:30%;background:#06b6d4">30%</div>
+      <div class="fund-seg" style="width:20%;background:#22c55e">20%</div>
+      <div class="fund-seg" style="width:10%;background:#f59e0b">10%</div>
+    </div>
+    <div class="fund-labels">
+      <span class="f1">Infrastructure ($200K)</span>
+      <span class="f2">Growth ($150K)</span>
+      <span class="f3">R&D ($100K)</span>
+      <span class="f4">Ops & Legal ($50K)</span>
+    </div>
+    <ul style="margin-top:.6rem">
+      <li>Cloud compute, multi-tenant architecture, GPU for consciousness</li>
+      <li>Customer acquisition, content marketing, community</li>
+      <li>New agent types, industry templates, self-scaling</li>
+      <li>Compliance, IP protection, accounting</li>
+    </ul>
+  </div>
+
+  <!-- 12-MONTH FINANCIAL PROJECTIONS — FULL WIDTH -->
+  <div class="section full-width">
+    <h2>12-Month Financial Projections</h2>
+    <table class="fin-table">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>New Cust.</th>
+          <th>Total Cust.</th>
+          <th>Blended ARPU</th>
+          <th>MRR</th>
+          <th>One-Time Rev.</th>
+          <th>Monthly Rev.</th>
+          <th>Cumulative Rev.</th>
+          <th>Expenses</th>
+          <th>Net</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Apr 2026 <span class="sub">M1</span></td>
+          <td>15</td><td>15</td><td>$65</td>
+          <td>$975</td><td>$3,500</td><td>$4,475</td><td>$4,475</td>
+          <td>$8,000</td><td style="color:var(--red)">-$3,525</td>
+        </tr>
+        <tr>
+          <td>May 2026 <span class="sub">M2</span></td>
+          <td>20</td><td>33</td><td>$68</td>
+          <td>$2,244</td><td>$2,500</td><td>$4,744</td><td>$9,219</td>
+          <td>$9,000</td><td style="color:var(--red)">-$4,256</td>
+        </tr>
+        <tr>
+          <td>Jun 2026 <span class="sub">M3</span></td>
+          <td>35</td><td>65</td><td>$72</td>
+          <td>$4,680</td><td>$4,000</td><td>$8,680</td><td>$17,899</td>
+          <td>$10,000</td><td style="color:var(--red)">-$1,320</td>
+        </tr>
+        <tr>
+          <td>Jul 2026 <span class="sub">M4</span></td>
+          <td>55</td><td>115</td><td>$75</td>
+          <td>$8,625</td><td>$5,500</td><td>$14,125</td><td>$32,024</td>
+          <td>$12,000</td><td style="color:var(--green)">+$2,125</td>
+        </tr>
+        <tr>
+          <td>Aug 2026 <span class="sub">M5</span></td>
+          <td>70</td><td>178</td><td>$78</td>
+          <td>$13,884</td><td>$6,000</td><td>$19,884</td><td>$51,908</td>
+          <td>$14,000</td><td style="color:var(--green)">+$5,884</td>
+        </tr>
+        <tr>
+          <td>Sep 2026 <span class="sub">M6</span></td>
+          <td>85</td><td>255</td><td>$82</td>
+          <td>$20,910</td><td>$7,500</td><td>$28,410</td><td>$80,318</td>
+          <td>$16,000</td><td style="color:var(--green)">+$12,410</td>
+        </tr>
+        <tr>
+          <td>Oct 2026 <span class="sub">M7</span></td>
+          <td>95</td><td>340</td><td>$85</td>
+          <td>$28,900</td><td>$8,000</td><td>$36,900</td><td>$117,218</td>
+          <td>$18,000</td><td style="color:var(--green)">+$18,900</td>
+        </tr>
+        <tr>
+          <td>Nov 2026 <span class="sub">M8</span></td>
+          <td>110</td><td>438</td><td>$88</td>
+          <td>$38,544</td><td>$10,000</td><td>$48,544</td><td>$165,762</td>
+          <td>$20,000</td><td style="color:var(--green)">+$28,544</td>
+        </tr>
+        <tr>
+          <td>Dec 2026 <span class="sub">M9</span></td>
+          <td>120</td><td>544</td><td>$90</td>
+          <td>$48,960</td><td>$12,000</td><td>$60,960</td><td>$226,722</td>
+          <td>$22,000</td><td style="color:var(--green)">+$38,960</td>
+        </tr>
+        <tr>
+          <td>Jan 2027 <span class="sub">M10</span></td>
+          <td>130</td><td>658</td><td>$92</td>
+          <td>$60,536</td><td>$14,000</td><td>$74,536</td><td>$301,258</td>
+          <td>$25,000</td><td style="color:var(--green)">+$49,536</td>
+        </tr>
+        <tr>
+          <td>Feb 2027 <span class="sub">M11</span></td>
+          <td>145</td><td>783</td><td>$94</td>
+          <td>$73,602</td><td>$15,000</td><td>$88,602</td><td>$389,860</td>
+          <td>$28,000</td><td style="color:var(--green)">+$60,602</td>
+        </tr>
+        <tr class="q4">
+          <td>Mar 2027 <span class="sub">M12</span></td>
+          <td>160</td><td>920</td><td>$96</td>
+          <td>$88,320</td><td>$18,000</td><td>$106,320</td><td>$496,180</td>
+          <td>$30,000</td><td style="color:var(--green)">+$76,320</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="metrics" style="margin-top:1rem">
+      <div class="metric"><div class="num">$88K</div><div class="label">MRR at Month 12</div></div>
+      <div class="metric"><div class="num">$1.06M</div><div class="label">ARR Run Rate (M12)</div></div>
+      <div class="metric"><div class="num">920</div><div class="label">Customers (M12)</div></div>
+      <div class="metric"><div class="num">$496K</div><div class="label">Total Revenue (12mo)</div></div>
+      <div class="metric"><div class="num">M4</div><div class="label">Cash-Flow Positive</div></div>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-top:.5rem"><strong>Assumptions:</strong> 5% monthly churn factored into totals. Blended ARPU rises as Team/Enterprise mix increases. One-time revenue includes Lifetime Pro ($299) and Mac Mini bundles ($1,499). Expenses include cloud infra, API costs, marketing spend, and contractor support — scaling with customer growth. 90%+ gross margin on SaaS tiers.</p>
+  </div>
+
+</div><!-- /grid -->
+
+<!-- CTA -->
+<div class="cta">
+  <p><strong>Command Centre AI HQ</strong> — 27 agents. Fully autonomous. Revenue-ready. Live today.</p>
+  <p>The system is running. We need capital to go from one HQ to thousands.</p>
+  <a class="email" href="mailto:invest@secondmindhq.com">invest@secondmindhq.com →</a>
+</div>
+
+</body>
+</html>

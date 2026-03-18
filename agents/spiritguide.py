@@ -31,7 +31,7 @@ def _safe_post(url, payload, timeout=5):
     return None
 
 AID = "spiritguide"
-CWD_PATH = "/Users/secondmind/claudecodetest"
+CWD_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROADMAP_FILE        = os.path.join(CWD_PATH, "data", "spiritguide_roadmap.json")
 BACKUP_DIR          = os.path.join(CWD_PATH, "data", "spiritguide_backups")
 HTML_FILE           = os.path.join(CWD_PATH, "agent-command-centre.html")

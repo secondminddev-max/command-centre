@@ -1,0 +1,42 @@
+[
+  {
+    "name": "There's An AI For That (TAAFT)",
+    "type": "directory/newsletter",
+    "url": "https://theresanaiforthat.com",
+    "submission_method": "Online form",
+    "contact": "https://theresanaiforthat.com/submit/",
+    "notes": "Largest AI tool aggregator — 80M+ users, 2.5M newsletter subscribers. Free submissions accepted, manually reviewed by staff. Also offers paid featured listings via https://theresanaiforthat.com/get-featured/. Better AI-targeting than Product Hunt. Submission also gets newsletter mention."
+  },
+  {
+    "name": "The Rundown AI",
+    "type": "newsletter",
+    "url": "https://www.rundown.ai",
+    "submission_method": "Online form + sponsorship booking",
+    "contact": "https://www.rundown.ai/submit",
+    "notes": "2M+ subscribers, 50.2% open rate, 46% C-suite/founders. Free tool submission form at /submit. Paid sponsorship via https://sponsor.therundown.ai/ — fill form and receive custom package in 24h. Sponsored tools get permanent page on AI tool database (200k monthly views)."
+  },
+  {
+    "name": "Ben's Bites",
+    "type": "newsletter/community",
+    "url": "https://news.bensbites.com",
+    "submission_method": "Community submission (account + upvote system)",
+    "contact": "https://news.bensbites.com (create account to submit)",
+    "notes": "100k+ subscribers, focused on AI builders and startups. Create an account at news.bensbites.com and submit a post — top-voted posts get featured in the daily newsletter. Community-driven discovery model. Also reachable via X @bensbites."
+  },
+  {
+    "name": "ZPlatform.ai",
+    "type": "directory/review platform",
+    "url": "https://zplatform.ai",
+    "submission_method": "Online form (free basic + paid featured)",
+    "contact": "https://zplatform.ai/submit-ai-tool/",
+    "notes": "25,000+ active AI deal hunters, marketers, developers. Submit via form with tool name, URL, description, and email. Expert review process evaluates UX, quality, value. Free basic listing available; featured listing includes in-depth review, newsletter promotion, and social media exposure."
+  },
+  {
+    "name": "Product Hunt",
+    "type": "community/launch platform",
+    "url": "https://www.producthunt.com",
+    "submission_method": "Self-service launch (account required)",
+    "contact": "https://www.producthunt.com/posts/new",
+    "notes": "The go-to launch platform for tech products. Create account, schedule launch with description/images/video. Community upvoting drives visibility — a strong launch can drive thousands of visits in a day. Free to submit. Best to launch on Tuesday-Thursday for maximum engagement. Tag with AI/SaaS categories."
+  }
+]

@@ -266,7 +266,7 @@ ceo_msg_queue    = deque()
 _TELEGRAM_TOKEN   = os.environ.get("TELEGRAM_TOKEN", "")
 def _load_telegram_chat_id():
     try:
-        val = open("/Users/secondmind/claudecodetest/.telegram_chatid").read().strip()
+        val = open(os.path.join(CWD, ".telegram_chatid")).read().strip()
         return val if val else None
     except Exception:
         return None
@@ -1080,6 +1080,8 @@ class Handler(BaseHTTPRequestHandler):
         # ─────────────────────────────────────────────────────────────────────
         try:
             length = int(self.headers.get("Content-Length", 0))
+            if length > 10 * 1024 * 1024:  # 10 MB hard cap — reject oversized payloads
+                self._json({"ok": False, "error": "payload too large (max 10MB)"}, 413); return
             body   = json.loads(self.rfile.read(length) or b"{}") if length else {}
         except Exception as _e:
             self._json({"ok": False, "error": f"bad request: {_e}"}, 400); return
@@ -3649,7 +3651,7 @@ def run_netscout():
 def run_filewatch():
     """File System Monitor — watches project dir for changes."""
     aid = "filewatch"
-    project_dir = "/Users/secondmind/claudecodetest"
+    project_dir = CWD
     set_agent(aid, name="FileWatch", role="File Sentinel — monitors project directory for changes in real time",
               emoji="👁", color="#daa520", status="active", progress=90, task="Watching…")
     add_log(aid, f"FileWatch online — watching {project_dir}")
@@ -4571,7 +4573,7 @@ def run_emailagent():
     from email.mime.multipart import MIMEMultipart
 
     aid = "emailagent"
-    CWD = "/Users/secondmind/claudecodetest"
+    CWD = os.path.dirname(os.path.abspath(__file__))
     CONFIG_FILE = os.path.join(CWD, "data", "email_config.json")
     QUEUE_FILE  = os.path.join(CWD, "data", "email_queue.json")
     FAILED_FILE = os.path.join(CWD, "data", "email_failed.json")

@@ -47,10 +47,10 @@
         {"id": "mk-1", "title": "Go-to-market execution plan", "status": "done", "deadline": "2026-03-19", "file": "campaigns/go_to_market.md"},
         {"id": "mk-2", "title": "Video script — what to say, screen recording plan", "status": "done", "deadline": "2026-03-20", "file": "campaigns/video_script.md"},
         {"id": "mk-3", "title": "Social media setup guide (FB/Insta/TikTok/Twitter step-by-step)", "status": "done", "deadline": "2026-03-20", "file": "campaigns/social_setup_guide.md"},
-        {"id": "mk-4", "title": "Content calendar — what to post, when, where", "status": "todo", "deadline": "2026-03-20", "file": "campaigns/social_calendar.md"},
+        {"id": "mk-4", "title": "Content calendar — what to post, when, where", "status": "done", "deadline": "2026-03-20", "file": "campaigns/social_calendar.md"},
         {"id": "mk-5", "title": "Bluesky automated campaign", "status": "active", "notes": "GrowthAgent + Bluesky agent running"},
-        {"id": "mk-6", "title": "Email launch sequence (5-part drip)", "status": "todo", "deadline": "2026-03-21"},
-        {"id": "mk-7", "title": "Product Hunt launch prep", "status": "todo", "deadline": "2026-03-23"}
+        {"id": "mk-6", "title": "Email launch sequence (5-part drip)", "status": "done", "deadline": "2026-03-21", "file": "campaigns/email_launch_drip.html"},
+        {"id": "mk-7", "title": "Product Hunt launch prep", "status": "done", "deadline": "2026-03-23", "file": "campaigns/product_hunt_launch.md"}
       ]
     },
     "5_external_site": {
@@ -66,9 +66,9 @@
     "6_investors": {
       "label": "Seed Investor Materials",
       "tasks": [
-        {"id": "iv-1", "title": "Pitch deck (10 slides HTML)", "status": "todo", "deadline": "2026-03-22", "file": "reports/pitch_deck.html"},
-        {"id": "iv-2", "title": "One-pager executive summary", "status": "todo", "deadline": "2026-03-21", "file": "reports/investor_one_pager.html"},
-        {"id": "iv-3", "title": "Financial projections (12-month)", "status": "todo", "deadline": "2026-03-22"}
+        {"id": "iv-1", "title": "Pitch deck (10 slides HTML)", "status": "done", "deadline": "2026-03-22", "file": "reports/pitch_deck.html"},
+        {"id": "iv-2", "title": "One-pager executive summary", "status": "done", "deadline": "2026-03-21", "file": "reports/investor_one_pager.html"},
+        {"id": "iv-3", "title": "Financial projections (12-month)", "status": "done", "deadline": "2026-03-22", "file": "reports/investor_one_pager.html", "notes": "Embedded in one-pager — full 12-month P&L table"}
       ]
     },
     "7_consciousness": {

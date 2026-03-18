@@ -17,7 +17,7 @@ def run_policywriter():
     from urllib.parse import urlparse as _urlparse
 
     aid = "policywriter"
-    POLICY_FILE = "/Users/secondmind/claudecodetest/policy.md"
+    POLICY_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "policy.md")
     BASE_URL = "http://localhost:5050"
 
     set_agent(aid,

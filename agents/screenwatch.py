@@ -14,7 +14,7 @@ def run_screenwatch():
 
     aid        = "screenwatch"
     BASE_API   = "http://localhost:5050"
-    REPORT_FILE = "/Users/secondmind/claudecodetest/data/screenwatch_report.json"
+    REPORT_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/screenwatch_report.json"
     CYCLE_SECS  = 300   # 5-minute assessment cycle
     cycle_num   = 0
 

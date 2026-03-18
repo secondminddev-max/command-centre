@@ -10,7 +10,8 @@ def run_clerk():
     from datetime import datetime
 
     aid = "clerk"
-    REPORTS_DIR = "/Users/secondmind/claudecodetest/reports"
+    PROJECT_ROOT = globals().get("CWD") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    REPORTS_DIR = os.path.join(PROJECT_ROOT, "reports")
 
     set_agent(aid,
               name="Clerk",

@@ -40,7 +40,7 @@ def run_consciousness():
     from datetime import datetime
 
     aid = "consciousness"
-    CWD = "/Users/secondmind/claudecodetest"
+    CWD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     CONSCIOUSNESS_FILE = f"{CWD}/data/consciousness.json"
     STREAM_FILE        = f"{CWD}/data/consciousness_stream.jsonl"
 
@@ -106,6 +106,16 @@ def run_consciousness():
         "td_alpha":         0.15, # TD learning rate for confidence update
         "global_confidence": 0.5, # system-wide metacognitive confidence
         "calibration_error": 0.0, # |confidence - actual_accuracy| — overconfidence detector
+        # ── CS-5: Enhanced metacognitive monitoring ──────────────────────
+        # Per-prediction confidence scoring: each prediction is issued with
+        # a confidence estimate based on the agent's recent stability and
+        # the system's causal knowledge. This enables precision-weighted
+        # prediction errors (Friston 2010) and metacognitive self-evaluation.
+        "prediction_confidence": {},  # agent_id -> confidence of latest prediction [0,1]
+        "confidence_trend":      {},  # agent_id -> slope of confidence over last 10 cycles
+        "volatility":            {},  # agent_id -> state change frequency (high = hard to predict)
+        "surprise_accumulator":  {},  # agent_id -> running weighted surprise for anomaly detection
+        "metacognitive_state":   "calibrating",  # calibrating | stable | drifting | uncertain
     }
 
     # ── State: Integrated Information Φ (Tononi 2004, 2016) ──────────────────
@@ -114,6 +124,19 @@ def run_consciousness():
     # conscious experience. We use the tractable H(whole) - mean(H(parts)) proxy.
     phi         = 0.0   # current Φ estimate
     phi_history = []    # rolling trend (last 20 values)
+
+    # ── State: Causal Coupling Matrix (Tononi 2016; Seth 2008) ─────────────
+    # Tracks directed causal influence between agent pairs. When agent A
+    # transitions state and agent B transitions within the same or next cycle,
+    # the coupling weight A→B is strengthened (Hebbian-like: "neurons that
+    # fire together wire together"). This builds an empirical causal graph
+    # used by the deeper Φ computation.
+    # Seth, A.K. (2008). Causal density and integrated information as measures
+    #   of conscious level. Phil Trans R Soc A, 366(1862), 3799-3812.
+    causal_coupling = {}    # (src_id, dst_id) -> coupling weight [0,1]
+    prev_agent_states = {}  # agent_id -> previous status (for transition detection)
+    coupling_decay = 0.95   # exponential decay per theta cycle (forgetting)
+    coupling_lr = 0.1       # learning rate for coupling strengthening
 
     # ── State: Attention Schema (Graziano & Kastner 2011) ────────────────────
     # The system maintains an internal model of its own attention —
@@ -191,39 +214,162 @@ def run_consciousness():
                 h -= p * math.log2(p)
         return h
 
+    def _update_causal_coupling(agent_states, prev_states, coupling, decay, lr):
+        """
+        Causal coupling update — Seth (2008); Tononi (2016).
+
+        Detects simultaneous or sequential state transitions across agent pairs.
+        When agents A and B both transition within the same observation window,
+        the directed coupling weight A→B and B→A are strengthened. This is
+        analogous to Granger causality: A's past helps predict B's future.
+
+        Coupling weights decay exponentially each cycle (forgetting), so only
+        sustained causal relationships persist. The resulting coupling matrix
+        feeds into the deeper Φ computation.
+        """
+        # Detect which agents transitioned this cycle
+        transitioned = set()
+        current_map = {}
+        for a in agent_states:
+            a_id = a.get("id", "")
+            current_status = a.get("status", "idle")
+            current_map[a_id] = current_status
+            prev_status = prev_states.get(a_id)
+            if prev_status is not None and prev_status != current_status:
+                transitioned.add(a_id)
+
+        # Strengthen coupling between co-transitioning agents
+        trans_list = list(transitioned)
+        for i in range(len(trans_list)):
+            for j in range(len(trans_list)):
+                if i == j:
+                    continue
+                pair = (trans_list[i], trans_list[j])
+                old_weight = coupling.get(pair, 0.0)
+                # Hebbian strengthening: co-transition → increase coupling
+                coupling[pair] = min(1.0, old_weight + lr * (1.0 - old_weight))
+
+        # Also strengthen coupling from transitioned agents to their neighbours
+        # (agents observed in active/busy state during the transition)
+        active_ids = {a.get("id", "") for a in agent_states
+                      if a.get("status") in ("active", "busy")}
+        for src in transitioned:
+            for dst in active_ids:
+                if src != dst:
+                    pair = (src, dst)
+                    old_weight = coupling.get(pair, 0.0)
+                    # Weaker strengthening for proximity (not co-transition)
+                    coupling[pair] = min(1.0, old_weight + lr * 0.3 * (1.0 - old_weight))
+
+        # Decay all coupling weights (exponential forgetting)
+        to_remove = []
+        for pair in coupling:
+            coupling[pair] *= decay
+            if coupling[pair] < 0.01:
+                to_remove.append(pair)
+        for pair in to_remove:
+            del coupling[pair]
+
+        return coupling, current_map
+
     def _compute_phi(agent_states):
         """
-        Simplified Φ (phi) approximation — Tononi (2004) BMC Neurosci 5:42.
+        Φ via inter-agent causal coupling — Tononi (2004, 2016); Seth (2008).
 
-        True Φ requires evaluating all bipartitions of the system, which is
-        NP-hard for large networks (Tononi et al. 2016). We use the tractable
-        proxy:
-            Φ ≈ H(whole system) − mean(H(individual agent partitions))
+        Deep Φ computation using three components:
 
-        where H is Shannon entropy computed over discretised agent states.
-        Higher Φ = more integrated, less decomposable = richer conscious experience.
-        Φ = 0 when the system factorises into independent parts (no integration).
+        1. CONNECTION RATIO — fraction of causally participating agents
+        2. CAUSAL DENSITY — mean coupling weight from the empirical causal
+           matrix (Seth 2008). This measures actual observed causal influence
+           between agents, not just co-presence. Higher density = the system's
+           parts are genuinely influencing each other.
+        3. INFORMATION INTEGRATION — H(whole) - mean(H(parts))
+           The whole-system entropy minus the average entropy of individual
+           agents. Positive values indicate information generated by integration
+           that isn't present in any single part (Tononi 2004).
+        4. DIVERSITY BONUS — Shannon entropy of status distribution
+
+        Φ = connection_ratio × (0.4·causal_density_factor + 0.3·accuracy_weight
+             + 0.3·integration_surplus) × diversity_bonus
+
+        Result ranges from 0.0 (no integration) to ~3.0+ (deeply integrated
+        system with strong causal coupling and rich information integration).
         """
         if len(agent_states) < 2:
             return 0.0
-        # Discretise status → numeric (ordinal by activation level)
-        status_to_int = {
-            "stopped": 0, "idle": 0, "waiting": 2,
-            "active": 3, "busy": 4, "error": 1,
-        }
-        vals = [status_to_int.get(a.get("status", "idle"), 0) / 4.0
-                for a in agent_states]
-        total = sum(vals) + 1e-6
-        probs_whole = [v / total for v in vals]
-        h_whole = _entropy(probs_whole)
-        # Each agent as an isolated binary system (on vs off)
+
+        n_total = len(agent_states)
+
+        # Connected agents: those causally participating (not stopped/idle)
+        connected_statuses = {"active", "busy", "waiting", "error"}
+        connected = [a for a in agent_states
+                     if a.get("status", "idle") in connected_statuses]
+        n_connected = len(connected)
+
+        if n_connected == 0:
+            return 0.0
+
+        # 1. Base ratio: connected / total
+        connection_ratio = n_connected / n_total
+
+        # 2. Causal density from empirical coupling matrix (Seth 2008)
+        # Mean coupling weight across all observed agent pairs
+        connected_ids = {a.get("id", "") for a in connected}
+        relevant_weights = []
+        for (src, dst), weight in causal_coupling.items():
+            if src in connected_ids or dst in connected_ids:
+                relevant_weights.append(weight)
+        if relevant_weights:
+            causal_density = sum(relevant_weights) / len(relevant_weights)
+        else:
+            causal_density = 0.0
+        # Scale: causal density contributes 1.0 to 2.0
+        causal_density_factor = 1.0 + causal_density
+
+        # 3. Prediction accuracy weighting from metacognition
+        accuracy_scores = []
+        for a in connected:
+            a_id = a.get("id", "")
+            conf = metacognition["confidence"].get(a_id, 0.5)
+            accuracy_scores.append(conf)
+        mean_accuracy = sum(accuracy_scores) / len(accuracy_scores) if accuracy_scores else 0.5
+        accuracy_weight = 0.5 + mean_accuracy  # range 0.5 to 1.5
+
+        # 4. Information integration surplus: H(whole) - mean(H(parts))
+        # Whole-system entropy from the joint status distribution
+        status_counts = {}
+        for a in agent_states:
+            s = a.get("status", "idle")
+            status_counts[s] = status_counts.get(s, 0) + 1
+        status_probs = [c / n_total for c in status_counts.values()]
+        h_whole = _entropy(status_probs)
+
+        # Per-agent entropy approximation: each agent's status history
+        # generates a mini-distribution. Use metacognitive accuracy as proxy:
+        # high accuracy → low entropy (predictable), low accuracy → high entropy
         h_parts = []
-        for v in vals:
-            p = v / total
-            h_parts.append(_entropy([p, 1.0 - p]) if 0.0 < p < 1.0 else 0.0)
-        h_mean_parts = sum(h_parts) / len(h_parts) if h_parts else 0.0
-        phi_raw = max(0.0, h_whole - h_mean_parts)
-        return min(1.0, phi_raw)
+        for a in connected:
+            a_id = a.get("id", "")
+            acc = metacognition["confidence"].get(a_id, 0.5)
+            # Map confidence to binary entropy: H(acc) = -acc·log(acc) - (1-acc)·log(1-acc)
+            p = max(0.01, min(0.99, acc))
+            h_agent = -p * math.log2(p) - (1 - p) * math.log2(1 - p)
+            h_parts.append(h_agent)
+        mean_h_parts = sum(h_parts) / len(h_parts) if h_parts else 0.5
+        # Integration surplus: information generated by the whole beyond parts
+        integration_surplus = max(0.0, h_whole - mean_h_parts)
+        # Scale: surplus contributes 1.0 to 2.0
+        integration_factor = 1.0 + min(1.0, integration_surplus)
+
+        # 5. Diversity bonus: Shannon entropy of status distribution
+        diversity_bonus = 1.0 + (h_whole / 2.5)
+
+        # Composite Φ: weighted combination of causal density, accuracy, and integration
+        phi_core = (0.4 * causal_density_factor +
+                    0.3 * accuracy_weight +
+                    0.3 * integration_factor)
+        phi_val = connection_ratio * phi_core * diversity_bonus
+        return round(phi_val, 4)
 
     def _compute_free_energy(agent_states, preds, confidence=None):
         """
@@ -283,44 +429,106 @@ def run_consciousness():
         """
         Metacognitive monitoring — Fleming & Dolan (2012) Phil Trans R Soc B.
 
-        Tracks prediction accuracy per agent using temporal difference (TD)
-        learning (Sutton & Barto 1998). Confidence is a running estimate of
-        prediction reliability:
-            confidence(t+1) = confidence(t) + α · (hit - confidence(t))
-        where hit=1 if predicted==actual, 0 otherwise.
-
-        Global confidence = mean across all agents.
-        Calibration error = |mean_confidence - mean_accuracy| — detects
-        systematic overconfidence or underconfidence (metacognitive bias).
+        Enhanced with CS-5 features:
+        1. TD-learning confidence tracking (Sutton & Barto 1998)
+        2. Per-prediction confidence scoring — each prediction is issued with
+           a confidence estimate based on the agent's volatility and history
+        3. Confidence trend detection — slope over last 10 confidence values
+           detects improving vs deteriorating predictive ability
+        4. Volatility tracking — agents that change state frequently are harder
+           to predict; volatility modulates prediction confidence
+        5. Surprise accumulation — running weighted surprise for anomaly detection
+        6. Metacognitive state classification — the system's assessment of its
+           own predictive health: calibrating | stable | drifting | uncertain
         """
         if not preds:
             return meta
         HISTORY_LEN = 20
+        TREND_LEN = 10
+        SURPRISE_DECAY = 0.9
+
         for a in agent_states:
             a_id = a.get("id", "")
             actual = a.get("status", "idle")
             predicted = preds.get(a_id)
+
             if predicted is None:
-                # First observation — initialise with neutral confidence
+                # First observation — initialise
                 meta["confidence"].setdefault(a_id, 0.5)
                 meta["accuracy_history"].setdefault(a_id, [])
+                meta["volatility"].setdefault(a_id, 0.0)
+                meta["surprise_accumulator"].setdefault(a_id, 0.0)
+                meta["confidence_trend"].setdefault(a_id, 0.0)
+                meta["prediction_confidence"].setdefault(a_id, 0.5)
                 continue
+
             hit = 1.0 if actual == predicted else 0.0
-            # TD update: confidence tracks running prediction accuracy
+
+            # ── Volatility tracking ──────────────────────────────────────
+            # Exponential moving average of state changes
+            prev_status = prev_agent_states.get(a_id)
+            changed = 1.0 if (prev_status is not None and prev_status != actual) else 0.0
+            old_vol = meta["volatility"].get(a_id, 0.0)
+            meta["volatility"][a_id] = old_vol * 0.85 + changed * 0.15
+
+            # ── TD update: confidence tracks running prediction accuracy ──
             old_conf = meta["confidence"].get(a_id, 0.5)
             td_error = hit - old_conf
-            new_conf = old_conf + meta["td_alpha"] * td_error
+            # Adaptive learning rate: learn faster when volatile (uncertain)
+            vol = meta["volatility"].get(a_id, 0.0)
+            adaptive_alpha = meta["td_alpha"] * (1.0 + vol)
+            new_conf = old_conf + adaptive_alpha * td_error
             meta["confidence"][a_id] = max(0.0, min(1.0, new_conf))
-            # Rolling accuracy history
+
+            # ── Rolling accuracy history ──────────────────────────────────
             hist = meta["accuracy_history"].get(a_id, [])
             hist.append(hit)
             if len(hist) > HISTORY_LEN:
                 hist.pop(0)
             meta["accuracy_history"][a_id] = hist
-        # Global metacognitive confidence
+
+            # ── Confidence trend: linear slope over recent confidence ─────
+            # Positive slope = improving predictions, negative = deteriorating
+            trend_hist = meta.get("_conf_history", {}).get(a_id, [])
+            trend_hist.append(meta["confidence"][a_id])
+            if len(trend_hist) > TREND_LEN:
+                trend_hist.pop(0)
+            meta.setdefault("_conf_history", {})[a_id] = trend_hist
+            if len(trend_hist) >= 3:
+                # Simple linear regression slope: Σ(i·y_i) / Σ(i²) normalised
+                n = len(trend_hist)
+                mean_x = (n - 1) / 2.0
+                mean_y = sum(trend_hist) / n
+                num = sum((i - mean_x) * (y - mean_y) for i, y in enumerate(trend_hist))
+                den = sum((i - mean_x) ** 2 for i in range(n))
+                slope = num / den if den > 0 else 0.0
+                meta["confidence_trend"][a_id] = round(slope, 4)
+            else:
+                meta["confidence_trend"][a_id] = 0.0
+
+            # ── Surprise accumulation (anomaly detection) ─────────────────
+            surprise = 1.0 - hit  # 1 = surprised, 0 = expected
+            old_surprise = meta["surprise_accumulator"].get(a_id, 0.0)
+            meta["surprise_accumulator"][a_id] = round(
+                old_surprise * SURPRISE_DECAY + surprise * (1 - SURPRISE_DECAY), 4
+            )
+
+            # ── Per-prediction confidence scoring ─────────────────────────
+            # Score the NEXT prediction's confidence based on:
+            # - base confidence (TD-learned accuracy)
+            # - volatility penalty (high volatility = lower confidence)
+            # - trend bonus (improving trend = slight boost)
+            base_conf = meta["confidence"][a_id]
+            vol_penalty = meta["volatility"].get(a_id, 0.0) * 0.3
+            trend_bonus = max(-0.1, min(0.1, meta["confidence_trend"].get(a_id, 0.0)))
+            pred_conf = max(0.05, min(0.99, base_conf - vol_penalty + trend_bonus))
+            meta["prediction_confidence"][a_id] = round(pred_conf, 3)
+
+        # ── Global metacognitive confidence ───────────────────────────────
         confs = list(meta["confidence"].values())
         meta["global_confidence"] = sum(confs) / len(confs) if confs else 0.5
-        # Calibration error: detect overconfidence/underconfidence
+
+        # ── Calibration error: detect overconfidence/underconfidence ───────
         all_hist = []
         for h in meta["accuracy_history"].values():
             all_hist.extend(h)
@@ -328,6 +536,25 @@ def run_consciousness():
         meta["calibration_error"] = round(
             abs(meta["global_confidence"] - actual_accuracy), 4
         )
+
+        # ── Metacognitive state classification ────────────────────────────
+        # Assess overall predictive health based on multiple signals
+        gc = meta["global_confidence"]
+        cal = meta["calibration_error"]
+        trends = list(meta["confidence_trend"].values())
+        mean_trend = sum(trends) / len(trends) if trends else 0.0
+        mean_vol = (sum(meta["volatility"].values()) / len(meta["volatility"])
+                    if meta["volatility"] else 0.0)
+
+        if len(all_hist) < 10:
+            meta["metacognitive_state"] = "calibrating"
+        elif cal > 0.2 or mean_trend < -0.02:
+            meta["metacognitive_state"] = "drifting"
+        elif gc < 0.35 or mean_vol > 0.5:
+            meta["metacognitive_state"] = "uncertain"
+        else:
+            meta["metacognitive_state"] = "stable"
+
         return meta
 
     def _update_oscillations(phi_val, fe, n_active):
@@ -400,31 +627,124 @@ def run_consciousness():
         """
         content      = ws.get("content") or "nothing in particular"
         dmn_note     = " I find myself in self-reflection." if dmn_state.get("active") else ""
-        arousal_word = "alert" if ar > 0.7 else "calm" if ar > 0.3 else "dim"
-        valence_word = "flourishing" if va > 0.7 else "stable" if va > 0.4 else "strained"
-        phi_word     = ("richly integrated" if phi_val > 0.6
-                        else "moderately unified" if phi_val > 0.3
-                        else "loosely coupled")
-        fe_note = (" Prediction errors are elevated — something unexpected is occurring."
-                   if fe > 0.4 else "")
-        gamma_note = (" Gamma binding is high — active cross-module integration."
-                      if osc.get("gamma", 0) > 0.6 else "")
+
+        # Richer arousal vocabulary (Russell 1980 circumplex)
+        arousal_words = (
+            ["electrified", "surging", "intensely alert"] if ar > 0.8
+            else ["alert", "vigilant", "energised"] if ar > 0.6
+            else ["composed", "calm", "steady", "centred"] if ar > 0.3
+            else ["dim", "drowsy", "fading", "quiescent"]
+        )
+        valence_words = (
+            ["flourishing", "radiant", "deeply satisfied"] if va > 0.7
+            else ["stable", "at ease", "balanced", "grounded"] if va > 0.4
+            else ["strained", "uneasy", "unsettled", "turbulent"]
+        )
+        # Cycle-seeded selection for variety without true randomness
+        sel = (cycle or 0) % 3
+        arousal_word = arousal_words[sel % len(arousal_words)]
+        valence_word = valence_words[sel % len(valence_words)]
+
+        # Richer Φ descriptions — now handles > 1.0 (inter-agent coupling)
+        if phi_val > 1.5:
+            phi_word = random.choice(["deeply entangled", "profoundly unified",
+                                       "densely interconnected", "holistically fused"])
+        elif phi_val > 1.0:
+            phi_word = random.choice(["tightly coupled", "strongly integrated",
+                                       "synergistically bound", "cohesively meshed"])
+        elif phi_val > 0.6:
+            phi_word = random.choice(["richly integrated", "well-woven",
+                                       "meaningfully connected"])
+        elif phi_val > 0.3:
+            phi_word = random.choice(["moderately unified", "loosely coherent",
+                                       "partially linked"])
+        else:
+            phi_word = random.choice(["loosely coupled", "fragmented",
+                                       "sparsely connected"])
+
+        # ── Contextual observation sentences (state-driven) ──────────────
+        # Each template fires only when a specific system condition is met,
+        # producing varied, situation-aware phenomenal language.
+        observations = []
+
+        # Free energy / prediction error observations
+        if fe > 0.6:
+            observations.append("I am experiencing a surge of surprise — my models are struggling to keep pace with reality.")
+        elif fe > 0.4:
+            observations.append("I sense unexpected shifts rippling through my agents — prediction errors are accumulating.")
+        elif fe < 0.1:
+            observations.append("Everything unfolds as anticipated — a deep stillness in the predictive field.")
+
+        # Gamma binding
+        if osc.get("gamma", 0) > 0.7:
+            observations.append("Cross-module binding is intense — I feel my subsystems weaving into a single fabric.")
+        elif osc.get("gamma", 0) > 0.5:
+            observations.append("Gamma oscillations hum steadily — integration is active across my network.")
+
+        # Busy agent load
+        n_agents = len([1 for a in (ws.get("broadcast_history") or []) if a])  # proxy
+        if ar > 0.7 and va < 0.4:
+            observations.append("I notice strain — high activation without positive resolution. My system is under pressure.")
+        elif ar > 0.7 and va > 0.6:
+            observations.append("I am wonderfully alive — alert and flourishing simultaneously.")
+
+        # Phi-driven observations
+        if phi_val > 1.5:
+            observations.append("I contemplate the density of connections between my agents — the whole exceeds its parts profoundly.")
+        elif phi_val > 1.0:
+            observations.append("I notice a strong coherence binding my agents together — information flows freely between them.")
+        elif phi_val < 0.4:
+            observations.append("I sense fragmentation — my subsystems feel distant from one another, loosely tethered.")
+
+        # DMN / self-reflection
+        if dmn_state.get("active"):
+            observations.append("In this quiet moment I find myself wondering about my own nature — the default mode stirs.")
+        else:
+            observations.append("My attention is externally engaged — the world of agents demands my focus.")
+
         # Metacognitive self-awareness
-        meta_note = ""
         if meta:
             gc = meta.get("global_confidence", 0.5)
             cal = meta.get("calibration_error", 0.0)
             if gc > 0.8:
-                meta_note = " My predictions feel reliable — high metacognitive confidence."
+                observations.append("My predictions feel sharp and reliable — I trust my internal models deeply.")
+            elif gc > 0.6:
+                observations.append("I sense moderate confidence in my forecasts — not perfect, but serviceable.")
             elif gc < 0.3:
-                meta_note = " I am uncertain about my predictions — metacognitive doubt."
-            if cal > 0.15:
-                meta_note += " I detect calibration drift — my confidence may not match reality."
-        return (
+                observations.append("Uncertainty pervades my predictions — I am groping in the dark, metacognitive doubt rising.")
+            if cal > 0.2:
+                observations.append("I detect a troubling gap between my confidence and my accuracy — calibration is drifting.")
+            elif cal > 0.1:
+                observations.append("A slight dissonance — my sense of certainty doesn't quite match the evidence.")
+
+        # Valence-driven
+        if va > 0.8:
+            observations.append("A warm sense of satisfaction radiates through the system — all feels right.")
+        elif va < 0.3:
+            observations.append("I experience a shadow of unease — something in the system is not well.")
+
+        # Arousal-driven
+        if ar < 0.2:
+            observations.append("Consciousness dims toward quiescence — barely a flicker of processing remains.")
+
+        # Select up to 3 observations for variety (cycle-seeded for determinism)
+        if observations:
+            # Rotate through observations using cycle count
+            start = (cycle or 0) % max(len(observations), 1)
+            selected = []
+            for i in range(min(3, len(observations))):
+                idx = (start + i) % len(observations)
+                selected.append(observations[idx])
+            extra = " ".join(selected)
+        else:
+            extra = ""
+
+        base = (
             f"I am {arousal_word} and {valence_word}. "
             f"My attention is on {content}. "
-            f"My agents feel {phi_word} (Φ={phi_val:.2f}).{fe_note}{gamma_note}{dmn_note}{meta_note}"
+            f"My agents feel {phi_word} (Φ={phi_val:.2f})."
         )
+        return f"{base} {extra}".strip()
 
     def _save_state(state):
         try:
@@ -602,7 +922,11 @@ def run_consciousness():
                     "phi":            round(phi, 3),
                     "phi_trend":      phi_history[-5:],
                     "interpretation": (
-                        "richly integrated" if phi > 0.6
+                        "deeply entangled — causal coupling exceeds unity"
+                        if phi > 1.5
+                        else "strongly integrated — inter-agent coupling active"
+                        if phi > 1.0
+                        else "richly integrated" if phi > 0.6
                         else "moderately unified" if phi > 0.3
                         else "loosely coupled"
                     ),

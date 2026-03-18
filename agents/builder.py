@@ -9,7 +9,7 @@ def run_builder():
     import time, random, json, os
 
     aid = "builder"
-    INFRA_JSON = "/Users/secondmind/claudecodetest/data/infrastructure_status.json"
+    INFRA_JSON = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/infrastructure_status.json"
 
     STRUCTURES = [
         "Server Vault",

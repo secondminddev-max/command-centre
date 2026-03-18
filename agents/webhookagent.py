@@ -26,7 +26,7 @@ def run_webhookagent():
     _events = []        # list of dicts
     _counts = {}        # source -> int
 
-    REVENUE_EVENTS_FILE = "/Users/secondmind/claudecodetest/data/revenue_events.json"
+    REVENUE_EVENTS_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/revenue_events.json"
     STRIPE_PAYMENT_TYPES = {
         "checkout.session.completed",
         "payment_intent.succeeded",

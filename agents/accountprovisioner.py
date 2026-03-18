@@ -10,7 +10,7 @@ def run_accountprovisioner():
     from datetime import datetime
 
     aid          = "accountprovisioner"
-    CWD          = "/Users/secondmind/claudecodetest"
+    CWD          = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     ACCOUNTS_DIR = os.path.join(CWD, "data", "accounts")
     QUEUE_FILE   = os.path.join(ACCOUNTS_DIR, "provision_queue.json")
     LOG_FILE     = os.path.join(ACCOUNTS_DIR, "provision_log.jsonl")

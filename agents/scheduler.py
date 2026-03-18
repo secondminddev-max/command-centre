@@ -10,7 +10,7 @@ def run_scheduler():
     from datetime import datetime
 
     aid = "scheduler"
-    CWD = "/Users/secondmind/claudecodetest"
+    CWD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     QUEUE_FILE         = os.path.join(CWD, "data", "email_queue.json")
     CONFIG_FILE        = os.path.join(CWD, "data", "email_config.json")
     SYSTEM_REPORT_FILE = os.path.join(CWD, "data", "system_report.json")

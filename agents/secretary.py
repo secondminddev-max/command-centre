@@ -19,7 +19,7 @@ def run_secretary():
     from datetime import datetime, timezone
 
     aid = "secretary"
-    CWD        = "/Users/secondmind/claudecodetest"
+    CWD        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     TASKS_FILE = os.path.join(CWD, "data", "ceo_tasks.json")
     BRIEF_FILE = os.path.join(CWD, "data", "ceo_brief.md")
     BASE_URL   = "http://localhost:5050"

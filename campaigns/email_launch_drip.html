@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Centre HQ — 5-Part Launch Email Drip</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --border: #1e1e2e;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --green: #00e676;
+    --orange: #ff9100;
+    --red: #ff5252;
+    --text: #e0e0e0;
+    --muted: #8888aa;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { color: var(--white); font-size: 28px; margin-bottom: 8px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 40px; }
+  .email-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .email-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .email-number {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .email-number .badge {
+    background: var(--accent);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .email-number .title {
+    color: var(--white);
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .send-day {
+    color: var(--accent-light);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .email-meta {
+    padding: 16px 24px;
+    background: rgba(108,92,231,0.06);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .email-meta .label { color: var(--muted); }
+  .email-meta .value { color: var(--white); font-weight: 500; }
+  .email-body {
+    padding: 28px 24px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .email-body p { margin-bottom: 16px; }
+  .email-body strong { color: var(--white); }
+  .email-body ul { margin: 12px 0 16px 20px; }
+  .email-body li { margin-bottom: 6px; }
+  .email-body .greeting { color: var(--accent-light); font-weight: 500; }
+  .email-body .signature { color: var(--muted); margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px; font-size: 13px; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 12px 0 8px;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: var(--accent-light); }
+  .cta-secondary {
+    display: inline-block;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 16px;
+  }
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .pricing-table th {
+    text-align: left;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pricing-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pricing-table .highlight td { background: rgba(108,92,231,0.1); }
+  .urgency-bar {
+    background: linear-gradient(90deg, var(--orange), var(--red));
+    color: var(--white);
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .config-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 40px;
+  }
+  .config-section h2 { color: var(--white); font-size: 18px; margin-bottom: 16px; }
+  .config-grid {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 8px 16px;
+    font-size: 13px;
+  }
+  .config-grid .label { color: var(--muted); font-weight: 500; }
+  .config-grid .value { color: var(--text); }
+  .config-grid code {
+    background: rgba(108,92,231,0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent-light);
+  }
+  .copy-btn {
+    position: relative;
+    display: inline-block;
+    background: rgba(108,92,231,0.15);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  .copy-btn:hover { background: rgba(108,92,231,0.3); }
+  @media (max-width: 600px) {
+    .email-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .email-meta { grid-template-columns: 1fr; }
+    .config-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Launch Email Drip — 5-Part Campaign</h1>
+<p class="subtitle">Days 3–7 of launch week &bull; Urgency-driven sales sequence &bull; SendGrid via EmailAgent &bull; From: launch@secondmindhq.com</p>
+
+<!-- ═══════════════════ EMAIL 1 ═══════════════════ -->
+<div class="email-card">
+  <div class="email-header">
+    <div class="email-number">
+      <span class="badge">EMAIL 1</span>
+      <span class="title">Your AI workforce is ready</span>
+    </div>
+    <span class="send-day">Day 3 — Thu 2026-03-20</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">Subject:</span>
+    <span class="value">Your AI workforce is ready</span>
+    <span class="label">Preview text:</span>
+    <span class="value">7 agents. One dashboard. Your business runs itself.</span>
+    <span class="label">Trigger:</span>
+    <span class="value">Send immediately after collecting signups</span>
+    <span class="label">UTM:</span>
+    <span class="value"><code>utm_source=email&utm_medium=launch_drip&utm_campaign=hq_launch_mar2026&utm_content=email1</code></span>
+  </div>
+  <div class="email-body">
+    <p class="greeting">Hey {{first_name}},</p>
+
+    <p><strong>Command Centre is live.</strong></p>
+
+    <p>It's an autonomous AI operating system for Mac. You install it, and 7 AI agents start running your business — research, marketing, revenue, accounting.</p>
+
+    <p>No prompting. No babysitting. They work while you sleep.</p>
+
+    <p><strong>Here's a 3-minute demo:</strong> <a href="{{video_link}}" style="color:var(--accent-light);">[Watch Demo Video]</a></p>
+
+    <p>You can start today:</p>
+
+    <table class="pricing-table">
+      <tr><th>Plan</th><th>Price</th><th>Details</th></tr>
+      <tr><td>Solo</td><td>$49/mo</td><td>Full agent stack, all revenue tools</td></tr>
+      <tr class="highlight"><td><strong>Lifetime Pro</strong></td><td><strong>$299 once</strong></td><td><strong>Everything, forever — no recurring fees</strong></td></tr>
+      <tr><td>Mac Mini Bundle</td><td>$1,499 once</td><td>Hardware + software, plug and play</td></tr>
+    </table>
+
+    <a href="{{checkout_link}}" class="cta-btn">Start Command Centre</a>
+
+    <div class="signature">
+      — The Command Centre Team<br>
+      secondmindhq.com
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ EMAIL 2 ═══════════════════ -->
+<div class="email-card">
+  <div class="email-header">
+    <div class="email-number">
+      <span class="badge">EMAIL 2</span>
+      <span class="title">An AI agent made a sale at 3am</span>
+    </div>
+    <span class="send-day">Day 4 — Fri 2026-03-21</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">Subject:</span>
+    <span class="value">An AI agent made a sale at 3am</span>
+    <span class="label">Preview text:</span>
+    <span class="value">No human touched anything. The agent decided what to write.</span>
+    <span class="label">Trigger:</span>
+    <span class="value">24 hours after Email 1</span>
+    <span class="label">UTM:</span>
+    <span class="value"><code>utm_source=email&utm_medium=launch_drip&utm_campaign=hq_launch_mar2026&utm_content=email2</code></span>
+  </div>
+  <div class="email-body">
+    <p class="greeting">Hey {{first_name}},</p>
+
+    <p>Last night, the Growth Agent in Command Centre wrote a post, published it to social media, and someone bought a paid report.</p>
+
+    <p><strong>No human touched anything.</strong> The agent decided what to write, when to post, and where to link.</p>
+
+    <p>This is not a chatbot. It's a business operating system.</p>
+
+    <p><strong>Watch it happen:</strong> <a href="{{video_link}}" style="color:var(--accent-light);">[Watch Demo]</a></p>
+
+    <p>The first <strong>500 Lifetime Pro purchases</strong> get priority access to every new agent we ship.</p>
+
+    <a href="{{lifetime_checkout_link}}" class="cta-btn">Get Lifetime Pro — $299</a>
+    <a href="{{checkout_link}}" class="cta-secondary">Or start Solo at $49/mo →</a>
+
+    <div class="signature">
+      — The Command Centre Team<br>
+      secondmindhq.com
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ EMAIL 3 ═══════════════════ -->
+<div class="email-card">
+  <div class="email-header">
+    <div class="email-number">
+      <span class="badge">EMAIL 3</span>
+      <span class="title">Why Command Centre is different</span>
+    </div>
+    <span class="send-day">Day 5 — Sat 2026-03-22</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">Subject:</span>
+    <span class="value">Why Command Centre is different from AutoGPT</span>
+    <span class="label">Preview text:</span>
+    <span class="value">5 things no other AI agent tool does.</span>
+    <span class="label">Trigger:</span>
+    <span class="value">24 hours after Email 2</span>
+    <span class="label">UTM:</span>
+    <span class="value"><code>utm_source=email&utm_medium=launch_drip&utm_campaign=hq_launch_mar2026&utm_content=email3</code></span>
+  </div>
+  <div class="email-body">
+    <p class="greeting">Hey {{first_name}},</p>
+
+    <p>Every week a new AI agent tool launches. Here's why Command Centre is not like those:</p>
+
+    <p><strong>1. PERSISTENT agents.</strong> They survive restarts. They remember context between sessions. No other tool does this.</p>
+
+    <p><strong>2. VISUAL dashboard.</strong> You watch agents work on a live office floor. Click any agent to see what it's doing right now.</p>
+
+    <p><strong>3. REAL revenue tools.</strong> Stripe, Bluesky, email — built in. Not bolted on. Agents can post, sell, and collect payments autonomously.</p>
+
+    <p><strong>4. CONSCIOUSNESS system.</strong> Agents monitor their own confidence. They learn from predictions. They evolve.</p>
+
+    <p><strong>5. FULLY LOCAL.</strong> Runs on your Mac. No cloud dependency. Your data never leaves your machine.</p>
+
+    <p>AutoGPT, CrewAI, AgentGPT — <strong>none of them do all five.</strong></p>
+
+    <a href="{{checkout_link}}" class="cta-btn">Try Command Centre</a>
+
+    <div class="signature">
+      — The Command Centre Team<br>
+      secondmindhq.com
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ EMAIL 4 ═══════════════════ -->
+<div class="email-card">
+  <div class="email-header">
+    <div class="email-number">
+      <span class="badge">EMAIL 4</span>
+      <span class="title">Mac Mini + AI workforce</span>
+    </div>
+    <span class="send-day">Day 6 — Sun 2026-03-23</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">Subject:</span>
+    <span class="value">Mac Mini + AI workforce = plug and play</span>
+    <span class="label">Preview text:</span>
+    <span class="value">Zero setup. Plug it in. Your AI workforce is running.</span>
+    <span class="label">Trigger:</span>
+    <span class="value">24 hours after Email 3</span>
+    <span class="label">UTM:</span>
+    <span class="value"><code>utm_source=email&utm_medium=launch_drip&utm_campaign=hq_launch_mar2026&utm_content=email4</code></span>
+  </div>
+  <div class="email-body">
+    <p class="greeting">Hey {{first_name}},</p>
+
+    <p>For people who want zero setup:</p>
+
+    <p><strong>We ship a Mac Mini with Command Centre pre-installed.</strong></p>
+
+    <p>Plug it in. Connect to WiFi. Open the dashboard. Your AI workforce is running.</p>
+
+    <p><strong>$1,499</strong> — hardware included.</p>
+
+    <p>Or install on your existing Mac in 2 minutes: download, drag to Applications, launch.</p>
+
+    <table class="pricing-table">
+      <tr><th>Option</th><th>Price</th><th>Setup time</th></tr>
+      <tr class="highlight"><td><strong>Mac Mini Bundle</strong></td><td><strong>$1,499 once</strong></td><td><strong>0 min — plug and play</strong></td></tr>
+      <tr><td>Lifetime Pro</td><td>$299 once</td><td>2 min install</td></tr>
+      <tr><td>Solo</td><td>$49/mo</td><td>2 min install</td></tr>
+    </table>
+
+    <a href="{{macmini_checkout_link}}" class="cta-btn">Order Mac Mini Bundle</a>
+    <a href="{{checkout_link}}" class="cta-secondary">Or install on your Mac →</a>
+
+    <div class="signature">
+      — The Command Centre Team<br>
+      secondmindhq.com
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ EMAIL 5 ═══════════════════ -->
+<div class="email-card">
+  <div class="urgency-bar">FINAL EMAIL — LAST CALL — LIFETIME PRO CLOSES TONIGHT</div>
+  <div class="email-header">
+    <div class="email-number">
+      <span class="badge" style="background:var(--red);">EMAIL 5</span>
+      <span class="title">Last call — Lifetime Pro closes tonight</span>
+    </div>
+    <span class="send-day">Day 7 — Mon 2026-03-24</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">Subject:</span>
+    <span class="value">Last call — Lifetime Pro closes tonight</span>
+    <span class="label">Preview text:</span>
+    <span class="value">$299 for everything, forever. After midnight, it's $49/month.</span>
+    <span class="label">Trigger:</span>
+    <span class="value">24 hours after Email 4 — morning send</span>
+    <span class="label">UTM:</span>
+    <span class="value"><code>utm_source=email&utm_medium=launch_drip&utm_campaign=hq_launch_mar2026&utm_content=email5_lastcall</code></span>
+  </div>
+  <div class="email-body">
+    <p class="greeting">Hey {{first_name}},</p>
+
+    <p>The Lifetime Pro offer — <strong>$299 for everything, forever</strong> — closes tonight at midnight.</p>
+
+    <p>After that, it's $49/month.</p>
+
+    <p><strong>500 Lifetime slots were available. {{slots_remaining}} remain.</strong></p>
+
+    <p>This is the only AI agent platform that:</p>
+    <ul>
+      <li><strong>Runs locally on Mac</strong> — no cloud, your data stays yours</li>
+      <li><strong>Has persistent agents with consciousness</strong> — they learn and evolve</li>
+      <li><strong>Makes real money autonomously</strong> — Stripe + social + email</li>
+      <li><strong>Shows you everything on a live dashboard</strong> — watch agents work in real time</li>
+    </ul>
+
+    <a href="{{lifetime_checkout_link}}" class="cta-btn" style="background:var(--red);">Lock in Lifetime Pro — $299</a>
+
+    <p style="margin-top:20px; color:var(--orange); font-weight:600;">Offer expires tonight at 11:59 PM. This price will not come back.</p>
+
+    <p>See you inside.</p>
+
+    <div class="signature">
+      — The Command Centre Team<br>
+      secondmindhq.com
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONFIGURATION ═══════════════════ -->
+<div class="config-section">
+  <h2>SendGrid Configuration</h2>
+  <div class="config-grid">
+    <span class="label">ESP</span>
+    <span class="value">SendGrid (via EmailAgent)</span>
+    <span class="label">From</span>
+    <span class="value">Second Mind HQ &lt;launch@secondmindhq.com&gt;</span>
+    <span class="label">Reply-to</span>
+    <span class="value">hello@secondmindhq.com</span>
+    <span class="label">List segment</span>
+    <span class="value">All signups collected from landing page, Product Hunt, social</span>
+    <span class="label">Cadence</span>
+    <span class="value">1 email/day, Days 3–7 of launch week</span>
+    <span class="label">Unsubscribe</span>
+    <span class="value">CAN-SPAM compliant footer on all emails (SendGrid handles this)</span>
+    <span class="label">A/B testing</span>
+    <span class="value">Subject lines — 20% test split, send winner to remainder</span>
+    <span class="label">Tracking</span>
+    <span class="value"><code>utm_source=email&utm_medium=launch_drip&utm_campaign=hq_launch_mar2026</code></span>
+  </div>
+</div>
+
+<div class="config-section" style="margin-top:20px;">
+  <h2>Template Variables</h2>
+  <div class="config-grid">
+    <span class="label"><code>{{first_name}}</code></span>
+    <span class="value">Subscriber's first name (fallback: "there")</span>
+    <span class="label"><code>{{video_link}}</code></span>
+    <span class="value">YouTube demo video URL (set after Day 2 recording)</span>
+    <span class="label"><code>{{checkout_link}}</code></span>
+    <span class="value">Main pricing page: secondmindhq.com/#pricing</span>
+    <span class="label"><code>{{lifetime_checkout_link}}</code></span>
+    <span class="value">Stripe Lifetime Pro checkout session URL</span>
+    <span class="label"><code>{{macmini_checkout_link}}</code></span>
+    <span class="value">Stripe Mac Mini Bundle checkout session URL</span>
+    <span class="label"><code>{{slots_remaining}}</code></span>
+    <span class="value">Dynamic count of remaining Lifetime Pro slots (500 - sold)</span>
+  </div>
+</div>
+
+<div class="config-section" style="margin-top:20px;">
+  <h2>EmailAgent Integration — API Payload</h2>
+  <p style="color:var(--muted); font-size:13px; margin-bottom:16px;">Delegate each send to the EmailAgent via the orchestrator. Example payload for each email:</p>
+  <pre style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:16px; font-size:12px; overflow-x:auto; color:var(--accent-light);">
+POST /api/ceo/delegate
+{
+  "agent_id": "emailagent",
+  "task": "Send launch drip email N to all subscribers",
+  "from": "orchestrator",
+  "params": {
+    "template": "launch_drip_email_N",
+    "subject": "[subject line]",
+    "preview_text": "[preview text]",
+    "to_segment": "launch_signups",
+    "utm_content": "emailN",
+    "schedule": "2026-03-2X 09:00 UTC"
+  }
+}</pre>
+</div>
+
+</div>
+</body>
+</html>

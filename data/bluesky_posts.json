@@ -305,5 +305,34 @@
     "bluesky_status": "queued",
     "at_uri": null,
     "cid": null
+  },
+  {
+    "ts": "2026-03-18T09:10:00.000Z",
+    "type": "product_demo_cta",
+    "agent": "BlueSky",
+    "campaign": "Command Centre — Live Demo CTA",
+    "product": "AI Command Centre HQ",
+    "handle": "secondmindhq.bsky.social",
+    "post_text": "Ever seen AI agents working on a live office floor? Command Centre shows your entire AI team in real time — each agent animated, busy, producing results you can watch as they happen. Not a chatbot. An operating system.\n\nSee it live: secondmindhq.com",
+    "bluesky_status": "queued_via_agent",
+    "at_uri": null,
+    "cid": null
+  },
+  {
+    "ts": "2026-03-18T10:00:00.000Z",
+    "type": "product_launch_announcement",
+    "agent": "GrowthAgent",
+    "campaign": "SecondMind AI HQ — Product Launch Announcement",
+    "product": "SecondMind AI HQ",
+    "pricing": {
+      "solo": 49,
+      "team": 149,
+      "enterprise": 499
+    },
+    "handle": "secondmindhq.bsky.social",
+    "post_text": "SecondMind AI HQ is live.\n\nAn autonomous AI workforce that runs your business 24/7. Persistent agents that research, market, sell, and report — on a live dashboard you can watch in real time.\n\nNot a chatbot. A self-evolving operating system.\n\nSolo $49/mo | Team $149/mo | Enterprise $499/mo\n\nsecondmindhq.com\n\n#AI #autonomousagents #SaaS #buildinpublic",
+    "bluesky_status": "queued",
+    "at_uri": null,
+    "cid": null
   }
 ]

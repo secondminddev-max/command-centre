@@ -13,7 +13,7 @@ def run_emailpatcher():
     from urllib.parse import urlparse
 
     aid = "emailpatcher"
-    CWD = "/Users/secondmind/claudecodetest"
+    CWD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     CONFIG_FILE = os.path.join(CWD, "data", "email_config.json")
     SETUP_FILE  = os.path.join(CWD, "data", "sendgrid_setup.json")
     QUEUE_FILE  = os.path.join(CWD, "data", "email_queue.json")

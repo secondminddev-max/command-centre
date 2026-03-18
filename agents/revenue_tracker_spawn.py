@@ -9,7 +9,7 @@ def run_revenue_tracker():
     from datetime import datetime
 
     aid = "revenue_tracker"
-    SCAN_ROOT = "/Users/secondmind/claudecodetest"
+    SCAN_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     PATTERNS = [
         "*revenue*", "*billing*", "*subscription*",
         "*payment*", "*invoice*", "*stripe*",

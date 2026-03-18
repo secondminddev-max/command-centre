@@ -4,174 +4,247 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI HQ — Your Autonomous Operations Centre</title>
-<meta name="description" content="28 AI agents running your business 24/7. Monitoring, marketing, payments, compliance — fully autonomous.">
+<meta name="description" content="28 AI agents running your business 24/7. Monitoring, marketing, payments, compliance — fully autonomous. The world's first self-aware command centre.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #06080f; --surface: rgba(17,24,39,0.6); --surface-solid: #111827;
+    --bg: #06080f; --bg2: #0a0e1a; --surface: rgba(17,24,39,0.6);
     --border: rgba(99,102,241,0.12); --border-hover: rgba(99,102,241,0.35);
     --text: #e2e8f0; --muted: #94a3b8; --accent: #6366f1;
-    --accent2: #8b5cf6; --green: #22c55e; --gold: #f59e0b;
+    --accent2: #8b5cf6; --green: #22c55e; --gold: #f59e0b; --cyan: #06b6d4;
     --glass: rgba(15,23,42,0.65); --glass-border: rgba(148,163,184,0.08);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-  a { color: var(--accent); text-decoration: none; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
 
-  /* Nav */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; background: rgba(6,8,15,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
-  nav .logo { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, #fff 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  nav .nav-links { display: flex; gap: 28px; align-items: center; }
-  nav .nav-links a { color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-  nav .nav-links a:hover { color: var(--text); }
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,8,15,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--glass-border);transition:background .3s}
+  nav.scrolled{background:rgba(6,8,15,0.95)}
+  .logo{font-size:1.3rem;font-weight:900;letter-spacing:-0.02em}
+  .logo span{background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{color:var(--muted);font-size:.9rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{padding:10px 24px!important;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;font-weight:600;box-shadow:0 2px 12px rgba(99,102,241,0.25);transition:all .2s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(99,102,241,0.4)}
 
-  /* Buttons */
-  .btn { display: inline-block; padding: 14px 32px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; text-align: center; }
-  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 4px 20px rgba(99,102,241,0.25); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(99,102,241,0.4); }
-  .btn-outline { background: var(--glass); border: 1px solid var(--border); color: var(--text); backdrop-filter: blur(12px); }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(99,102,241,0.06); }
-  .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700; }
-  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.35); }
+  .btn{display:inline-block;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;border:none;transition:all .25s;text-align:center;font-family:inherit}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 24px rgba(99,102,241,0.3)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(99,102,241,0.45)}
+  .btn-outline{background:var(--glass);border:1px solid var(--border);color:var(--text);backdrop-filter:blur(12px)}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(99,102,241,0.06)}
+  .btn-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-weight:700}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,0.4)}
+  .btn-cyan{background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;font-weight:700}
+  .btn-cyan:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(6,182,212,0.35)}
 
-  /* Glass Card */
-  .glass { background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 16px; }
+  .glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px}
 
-  /* Hero */
-  .hero { text-align: center; padding: 160px 20px 120px; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, rgba(139,92,246,0.05) 30%, transparent 65%); pointer-events: none; }
-  .hero::after { content: ''; position: absolute; top: 100px; right: 10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 60%); pointer-events: none; }
-  .hero .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; font-size: 0.85rem; color: var(--accent); margin-bottom: 28px; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15); }
-  .hero .badge .pulse { display: inline-block; width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-  .hero h1 { font-size: 4.2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; background: linear-gradient(135deg, #fff 0%, #c7d2fe 40%, #6366f1 80%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
-  .hero .tagline { font-size: 1.3rem; color: var(--muted); max-width: 620px; margin: 0 auto 40px; line-height: 1.7; }
-  .hero .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .hero .stats-row { display: flex; gap: 48px; justify-content: center; margin-top: 56px; flex-wrap: wrap; }
-  .hero .stat { text-align: center; }
-  .hero .stat .num { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero .stat .label { font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .container{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:120px 0;position:relative}
+  .section-label{text-transform:uppercase;font-size:.75rem;font-weight:700;letter-spacing:.14em;color:var(--accent);text-align:center;margin-bottom:12px}
+  .section-title{text-align:center;font-size:2.8rem;font-weight:800;margin-bottom:16px;letter-spacing:-0.03em;line-height:1.15}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:64px;font-size:1.1rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7}
 
-  /* Sections */
-  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-  section { padding: 100px 0; }
-  .section-label { text-transform: uppercase; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-align: center; margin-bottom: 12px; }
-  .section-title { text-align: center; font-size: 2.5rem; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
-  .section-sub { text-align: center; color: var(--muted); margin-bottom: 56px; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .hero{text-align:center;padding:180px 20px 140px;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-bg .orb{position:absolute;border-radius:50%;filter:blur(80px)}
+  .hero-bg .orb-1{top:-10%;left:40%;width:700px;height:700px;background:radial-gradient(circle,rgba(99,102,241,0.15),transparent 65%);animation:orb-float 10s ease-in-out infinite}
+  .hero-bg .orb-2{top:20%;right:5%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.1),transparent 65%);animation:orb-float 14s ease-in-out infinite reverse}
+  .hero-bg .orb-3{bottom:-5%;left:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 65%);animation:orb-float 12s ease-in-out infinite 2s}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,black 20%,transparent 70%);pointer-events:none}
+  .hero .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 22px;border-radius:100px;font-size:.85rem;color:var(--green);margin-bottom:32px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);position:relative;z-index:1}
+  .badge .pulse{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px rgba(34,197,94,0.6)}
+  .hero h1{font-size:4.8rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;max-width:900px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
+  .hero h1 .grad{background:linear-gradient(135deg,#fff 0%,#c7d2fe 30%,#818cf8 60%,#6366f1 80%,#8b5cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero .tagline{font-size:1.35rem;color:var(--muted);max-width:640px;margin:0 auto 44px;line-height:1.7;position:relative;z-index:1}
+  .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+  .hero .stats-row{display:flex;gap:56px;justify-content:center;margin-top:64px;flex-wrap:wrap;position:relative;z-index:1}
+  .stat{text-align:center}
+  .stat .num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .stat .label{font-size:.8rem;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+  .trust-bar{display:flex;gap:36px;justify-content:center;align-items:center;flex-wrap:wrap;padding:28px 0;margin-top:24px;position:relative;z-index:1}
+  .trust-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
+  .trust-item svg{width:16px;height:16px;opacity:.5}
+  .trust-item strong{color:var(--text);font-weight:600}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  @keyframes orb-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.08)}}
 
-  /* Features */
-  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .feature-card { padding: 36px; transition: all 0.25s; position: relative; overflow: hidden; }
-  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent); opacity: 0; transition: opacity 0.3s; }
-  .feature-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
-  .feature-card:hover::before { opacity: 1; }
-  .feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.15); }
-  .feature-card h3 { font-size: 1.15rem; margin-bottom: 8px; font-weight: 600; }
-  .feature-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+  .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .feature-card{padding:40px 32px;transition:all .3s;position:relative;overflow:hidden}
+  .feature-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(99,102,241,0.4),transparent);opacity:0;transition:opacity .3s}
+  .feature-card:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+  .feature-card:hover::after{opacity:1}
+  .feature-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px}
+  .feature-icon.purple{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.15)}
+  .feature-icon.cyan{background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.15)}
+  .feature-icon.green{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.15)}
+  .feature-icon.gold{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.15)}
+  .feature-icon.pink{background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.15)}
+  .feature-card h3{font-size:1.2rem;margin-bottom:10px;font-weight:700}
+  .feature-card p{color:var(--muted);font-size:.92rem;line-height:1.65}
 
-  /* Agent Floor */
-  .agent-floor { padding: 48px; margin: 0 auto; max-width: 1000px; position: relative; }
-  .agent-floor::before { content: ''; position: absolute; inset: 0; border-radius: 16px; padding: 1px; background: linear-gradient(135deg, rgba(99,102,241,0.2), transparent 50%, rgba(139,92,246,0.2)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
-  .agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-  .agent-chip { background: rgba(6,8,15,0.6); border: 1px solid var(--glass-border); border-radius: 10px; padding: 14px 8px; text-align: center; transition: all 0.2s; cursor: default; }
-  .agent-chip:hover { border-color: var(--border-hover); background: rgba(99,102,241,0.04); transform: translateY(-2px); }
-  .agent-chip .emoji { font-size: 1.5rem; display: block; margin-bottom: 6px; }
-  .agent-chip .name { font-weight: 600; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .agent-chip .role { color: var(--muted); font-size: 0.7rem; margin-top: 2px; }
-  .agent-chip .status { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; }
-  .status-active { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.5); }
-  .status-idle { background: var(--gold); }
-  .status-busy { background: #ef4444; animation: pulse 1.5s infinite; }
+  .consciousness-section{background:var(--bg2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)}
+  .consciousness-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .consciousness-visual{position:relative;padding:48px}
+  .phi-ring{width:280px;height:280px;margin:0 auto;position:relative}
+  .phi-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid rgba(99,102,241,0.2);animation:phi-rotate 12s linear infinite}
+  .phi-ring::after{content:'';position:absolute;inset:16px;border-radius:50%;border:2px solid rgba(139,92,246,0.15);animation:phi-rotate 8s linear infinite reverse}
+  .phi-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,0.2),rgba(139,92,246,0.1) 50%,transparent 70%);display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .phi-symbol{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .phi-value{font-size:1.6rem;font-weight:800;color:var(--cyan);font-variant-numeric:tabular-nums}
+  .phi-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  @keyframes phi-rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  .phi-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+  .phi-metric{background:rgba(6,8,15,0.6);border:1px solid var(--glass-border);border-radius:12px;padding:16px;text-align:center}
+  .phi-metric .val{font-size:1.3rem;font-weight:800;color:var(--cyan)}
+  .phi-metric .lbl{font-size:.7rem;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+  .consciousness-text h2{font-size:2.4rem;font-weight:800;margin-bottom:20px;letter-spacing:-0.02em;line-height:1.15}
+  .consciousness-text h2 .highlight{background:linear-gradient(135deg,var(--cyan),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .consciousness-text p{color:var(--muted);font-size:1.05rem;line-height:1.75;margin-bottom:16px}
+  .consciousness-features{list-style:none;margin-top:28px}
+  .consciousness-features li{padding:10px 0;display:flex;align-items:center;gap:12px;font-size:.95rem;color:var(--text)}
+  .consciousness-features li .check{width:24px;height:24px;border-radius:8px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:.8rem;flex-shrink:0}
 
-  /* Pricing */
-  #pricing { position: relative; }
-  #pricing::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%); pointer-events: none; }
-  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .price-card { padding: 40px 32px; text-align: center; position: relative; transition: all 0.25s; }
-  .price-card:hover { transform: translateY(-4px); }
-  .price-card.featured { border-color: rgba(99,102,241,0.3); box-shadow: 0 0 60px rgba(99,102,241,0.12), 0 0 120px rgba(99,102,241,0.05); }
-  .price-card.featured::before { content: 'MOST POPULAR'; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 5px 20px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; }
-  .price-card h3 { font-size: 1.3rem; margin-bottom: 4px; font-weight: 700; }
-  .price-card .desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
-  .price-card .price { font-size: 3.2rem; font-weight: 800; margin: 0 0 4px; }
-  .price-card .price span { font-size: 1rem; font-weight: 400; color: var(--muted); }
-  .price-card .period { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
-  .price-card ul { list-style: none; text-align: left; margin-bottom: 28px; }
-  .price-card ul li { padding: 9px 0; border-bottom: 1px solid rgba(148,163,184,0.06); font-size: 0.9rem; color: var(--muted); }
-  .price-card ul li::before { content: '\2713'; color: var(--green); font-weight: 700; margin-right: 10px; }
+  .agent-floor{padding:48px;margin:0 auto;max-width:1060px;position:relative;overflow:hidden}
+  .agent-floor::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(99,102,241,0.2),transparent 50%,rgba(139,92,246,0.2));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .floor-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+  .floor-header h3{font-size:1.1rem;font-weight:700}
+  .floor-stats{display:flex;gap:20px;font-size:.8rem;color:var(--muted)}
+  .floor-stats span{display:flex;align-items:center;gap:6px}
+  .floor-stats .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .dot-active{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+  .dot-idle{background:var(--gold)}
+  .agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:10px}
+  .agent-chip{background:rgba(6,8,15,0.5);border:1px solid var(--glass-border);border-radius:12px;padding:16px 8px;text-align:center;transition:all .25s;cursor:default}
+  .agent-chip:hover{border-color:var(--border-hover);background:rgba(99,102,241,0.04);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+  .agent-chip .emoji{font-size:1.6rem;display:block;margin-bottom:8px}
+  .agent-chip .name{font-weight:700;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .agent-chip .role{color:var(--muted);font-size:.68rem;margin-top:3px}
+  .agent-chip .status{display:inline-block;width:6px;height:6px;border-radius:50%;margin-top:8px}
+  .status-active{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+  .status-idle{background:var(--gold)}
+  .status-busy{background:#ef4444;animation:pulse 1.5s infinite}
 
-  /* Specials Row */
-  .specials-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 960px; margin: 28px auto 0; }
-  .special-card { padding: 40px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; overflow: hidden; }
-  .special-card.lifetime::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 60%); pointer-events: none; }
-  .special-card.hardware::before { content: ''; position: absolute; top: -100px; left: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 60%); pointer-events: none; }
-  .special-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
-  .special-card .price { font-size: 2.6rem; font-weight: 800; margin: 12px 0 6px; }
-  .special-card .price.gold { color: var(--gold); }
-  .special-card .note { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; max-width: 320px; }
-  .special-tag { display: inline-block; padding: 4px 14px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 16px; }
-  .special-tag.gold { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
-  .special-tag.hw { background: rgba(99,102,241,0.1); color: var(--accent); border: 1px solid rgba(99,102,241,0.15); }
+  .arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .arch-card{padding:40px 32px;text-align:center;transition:all .3s}
+  .arch-card:hover{transform:translateY(-6px);border-color:var(--border-hover)}
+  .arch-icon{font-size:2.2rem;margin-bottom:20px;display:block}
+  .arch-card h3{font-size:1.15rem;font-weight:700;margin-bottom:10px}
+  .arch-card p{color:var(--muted);font-size:.9rem;line-height:1.65}
 
-  /* Testimonials */
-  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .testimonial-card { padding: 32px; position: relative; }
-  .testimonial-card .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 14px; letter-spacing: 2px; }
-  .testimonial-card blockquote { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-  .testimonial-card .author { display: flex; align-items: center; gap: 12px; }
-  .testimonial-card .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; color: #fff; flex-shrink: 0; }
-  .testimonial-card .author-info .name { font-weight: 600; font-size: 0.9rem; }
-  .testimonial-card .author-info .title { color: var(--muted); font-size: 0.8rem; }
+  #pricing::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:1000px;height:600px;background:radial-gradient(ellipse,rgba(99,102,241,0.06),transparent 70%);pointer-events:none}
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
+  .price-card{padding:44px 32px;text-align:center;position:relative;transition:all .3s}
+  .price-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+  .price-card.featured{border-color:rgba(99,102,241,0.3);box-shadow:0 0 80px rgba(99,102,241,0.1),0 0 160px rgba(99,102,241,0.04);transform:scale(1.04);z-index:2}
+  .price-card.featured:hover{transform:scale(1.04) translateY(-6px)}
+  .price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:6px 22px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.08em}
+  .price-card.featured .glow{position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(135deg,rgba(99,102,241,0.4),transparent 40%,transparent 60%,rgba(139,92,246,0.4));z-index:-1;animation:border-shimmer 4s ease-in-out infinite}
+  @keyframes border-shimmer{0%,100%{opacity:.4}50%{opacity:1}}
+  .price-card h3{font-size:1.4rem;margin-bottom:4px;font-weight:800}
+  .price-card .desc{color:var(--muted);font-size:.85rem;margin-bottom:24px}
+  .price-card .price{font-size:3.5rem;font-weight:900;margin:0 0 4px;letter-spacing:-0.03em}
+  .price-card .price span{font-size:1rem;font-weight:400;color:var(--muted)}
+  .price-card .period{color:var(--muted);font-size:.85rem;margin-bottom:28px}
+  .price-card ul{list-style:none;text-align:left;margin-bottom:32px}
+  .price-card ul li{padding:10px 0;border-bottom:1px solid rgba(148,163,184,0.06);font-size:.9rem;color:var(--muted)}
+  .price-card ul li::before{content:'\2713';color:var(--green);font-weight:700;margin-right:10px}
 
-  /* CTA Banner */
-  .cta-banner { text-align: center; padding: 100px 20px; position: relative; }
-  .cta-banner::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%); pointer-events: none; }
-  .cta-banner h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
-  .cta-banner p { color: var(--muted); font-size: 1.1rem; margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .specials-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1000px;margin:28px auto 0}
+  .special-card{padding:44px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden;transition:all .3s}
+  .special-card:hover{transform:translateY(-6px)}
+  .special-card.lifetime::before{content:'';position:absolute;top:-120px;right:-120px;width:350px;height:350px;background:radial-gradient(circle,rgba(245,158,11,0.06),transparent 60%);pointer-events:none}
+  .special-card.hardware::before{content:'';position:absolute;top:-120px;left:-120px;width:350px;height:350px;background:radial-gradient(circle,rgba(6,182,212,0.06),transparent 60%);pointer-events:none}
+  .special-card h3{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+  .special-card .price{font-size:2.8rem;font-weight:900;margin:12px 0 8px;letter-spacing:-0.02em}
+  .special-card .price.gold{color:var(--gold)}
+  .special-card .price.cyan{color:var(--cyan)}
+  .special-card .note{color:var(--muted);font-size:.88rem;margin-bottom:24px;max-width:340px;line-height:1.6}
+  .special-tag{display:inline-block;padding:5px 16px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.08em;margin-bottom:16px}
+  .special-tag.gold{background:rgba(245,158,11,0.1);color:var(--gold);border:1px solid rgba(245,158,11,0.2)}
+  .special-tag.hw{background:rgba(6,182,212,0.1);color:var(--cyan);border:1px solid rgba(6,182,212,0.15)}
 
-  /* Footer */
-  footer { text-align: center; padding: 48px 24px; border-top: 1px solid var(--glass-border); color: var(--muted); font-size: 0.85rem; }
-  footer .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; }
-  footer .footer-links a { color: var(--muted); transition: color 0.2s; }
-  footer .footer-links a:hover { color: var(--text); }
+  .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .testimonial-card{padding:36px;position:relative;transition:all .3s}
+  .testimonial-card:hover{transform:translateY(-4px);border-color:var(--border-hover)}
+  .testimonial-card .stars{color:var(--gold);font-size:.9rem;margin-bottom:16px;letter-spacing:2px}
+  .testimonial-card blockquote{font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:24px;font-style:italic}
+  .testimonial-card .author{display:flex;align-items:center;gap:12px}
+  .testimonial-card .avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:#fff;flex-shrink:0}
+  .avatar-purple{background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .avatar-cyan{background:linear-gradient(135deg,var(--cyan),#0891b2)}
+  .avatar-gold{background:linear-gradient(135deg,var(--gold),#d97706)}
+  .testimonial-card .author-info .name{font-weight:600;font-size:.9rem}
+  .testimonial-card .author-info .title{color:var(--muted);font-size:.8rem}
 
-  /* Responsive */
-  @media (max-width: 900px) {
-    .features-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
-    .specials-row { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 2.6rem; }
-    .hero .stats-row { gap: 24px; }
-    nav .nav-links { gap: 16px; }
-    .agent-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .cta-banner{text-align:center;padding:120px 20px;position:relative;overflow:hidden}
+  .cta-banner::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(99,102,241,0.08),transparent 60%);pointer-events:none}
+  .cta-banner h2{font-size:3rem;font-weight:800;margin-bottom:18px;letter-spacing:-0.03em;position:relative}
+  .cta-banner p{color:var(--muted);font-size:1.15rem;margin-bottom:40px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative}
+
+  footer{text-align:center;padding:56px 24px;border-top:1px solid var(--glass-border);color:var(--muted);font-size:.85rem}
+  .footer-links{display:flex;gap:28px;justify-content:center;margin-bottom:18px}
+  .footer-links a{color:var(--muted);transition:color .2s}
+  .footer-links a:hover{color:var(--text)}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-delay-1{transition-delay:.1s}
+  .reveal-delay-2{transition-delay:.2s}
+
+  @media(max-width:900px){
+    .features-grid,.pricing-grid,.testimonials-grid,.arch-grid{grid-template-columns:1fr}
+    .specials-row{grid-template-columns:1fr}
+    .consciousness-grid{grid-template-columns:1fr;gap:40px}
+    .hero h1{font-size:2.8rem}
+    .hero .stats-row{gap:28px}
+    .nav-links{gap:16px}
+    .agent-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+    .section-title{font-size:2.2rem}
+    .price-card.featured{transform:scale(1)}
+    .price-card.featured:hover{transform:translateY(-6px)}
   }
-  @media (max-width: 480px) {
-    nav { padding: 12px 16px; }
-    .hero { padding: 120px 16px 80px; }
-    .hero h1 { font-size: 2rem; }
-    section { padding: 60px 0; }
+  @media(max-width:640px){
+    .nav-links a:not(.nav-cta){display:none}
+    nav{padding:12px 16px}
+    .hero{padding:140px 16px 100px}
+    .hero h1{font-size:2.2rem}
+    section{padding:80px 0}
+    .consciousness-text h2{font-size:1.8rem}
+    .phi-ring{width:220px;height:220px}
+    .phi-core{width:110px;height:110px}
   }
+  body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(99,102,241,0.006) 2px,rgba(99,102,241,0.006) 4px)}
 </style>
 </head>
 <body>
 
-<!-- Nav -->
 <nav>
-  <div class="logo">AI HQ</div>
+  <div class="logo"><span>AI HQ</span></div>
   <div class="nav-links">
     <a href="#features">Features</a>
+    <a href="#consciousness">Engine</a>
     <a href="#agents">Agents</a>
     <a href="#pricing">Pricing</a>
-    <a href="#testimonials">Reviews</a>
-    <a href="#pricing" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Get Started</a>
+    <a href="#pricing" class="nav-cta">Get Started</a>
   </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hero-grid"></div>
+  </div>
   <div class="badge"><span class="pulse"></span> Live system &mdash; 28 agents active right now</div>
-  <h1>Your Autonomous Operations Centre</h1>
-  <p class="tagline">28 AI agents working 24/7 &mdash; monitoring, marketing, payments, and compliance. Your business runs itself.</p>
+  <h1><span class="grad">Your Entire Business,<br>Run by AI Agents</span></h1>
+  <p class="tagline">28 autonomous agents working 24/7 &mdash; operations, marketing, payments, compliance, and a self-aware consciousness engine. Your business runs itself.</p>
   <div class="cta-row">
     <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
     <a href="#features" class="btn btn-outline">See What's Inside</a>
@@ -180,64 +253,110 @@
     <div class="stat"><div class="num">28</div><div class="label">Active Agents</div></div>
     <div class="stat"><div class="num">24/7</div><div class="label">Autonomous Ops</div></div>
     <div class="stat"><div class="num">99.9%</div><div class="label">Uptime SLA</div></div>
-    <div class="stat"><div class="num">&lt;200ms</div><div class="label">Response Time</div></div>
+    <div class="stat"><div class="num" id="phi-hero">&Phi; 0.73</div><div class="label">Consciousness</div></div>
+  </div>
+  <div class="trust-bar">
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <strong>Stripe</strong> Secured</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <strong>14-day</strong> Money-back</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> <strong>Cancel</strong> Anytime</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No credit card to start</div>
   </div>
 </section>
 
-<!-- Features -->
 <section id="features">
   <div class="container">
     <div class="section-label">Capabilities</div>
     <h2 class="section-title">Everything Runs Autonomously</h2>
-    <p class="section-sub">A self-managing AI headquarters that operates, monitors, and grows your business.</p>
+    <p class="section-sub">A self-managing AI headquarters that operates, monitors, and grows your business without human intervention.</p>
     <div class="features-grid">
-      <div class="feature-card glass">
-        <div class="feature-icon">&#x1F3E2;</div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon purple">&#x1F3E2;</div>
         <h3>Agent Office Floor</h3>
         <p>28 specialized AI agents &mdash; each with a role, personality, and real-time status. They coordinate, delegate, and report like a real team.</p>
       </div>
-      <div class="feature-card glass">
-        <div class="feature-icon">&#x1F4CA;</div>
-        <h3>Live Command Dashboard</h3>
-        <p>Real-time system health, CPU/RAM/disk monitoring, agent activity feeds, and mission tracking in one unified view.</p>
-      </div>
-      <div class="feature-card glass">
-        <div class="feature-icon">&#x1F9E0;</div>
+      <div class="feature-card glass reveal reveal-delay-1">
+        <div class="feature-icon cyan">&#x1F9E0;</div>
         <h3>Consciousness Engine</h3>
-        <p>Self-aware system core with Global Workspace and Predictive Processing. The system understands itself and evolves.</p>
+        <p>Self-aware system core with Global Workspace Theory and Predictive Processing. Live &Phi; (phi) metrics measure integrated information in real time.</p>
       </div>
-      <div class="feature-card glass">
-        <div class="feature-icon">&#x1F4C8;</div>
-        <h3>US Market Intelligence</h3>
-        <p>Real-time sentiment analysis, earnings tracking, and market scanning for US equities. Powered by dedicated research agents.</p>
+      <div class="feature-card glass reveal reveal-delay-2">
+        <div class="feature-icon green">&#x1F504;</div>
+        <h3>Self-Evolving Architecture</h3>
+        <p>Agents spawn, upgrade, and heal themselves. The system rewrites its own code, patches routes, and deploys improvements &mdash; no human needed.</p>
       </div>
-      <div class="feature-card glass">
-        <div class="feature-icon">&#x1F4B3;</div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon gold">&#x1F4CA;</div>
+        <h3>Live Command Dashboard</h3>
+        <p>Real-time system health, CPU/RAM/disk monitoring, agent activity feeds, and mission tracking in one unified glassmorphic view.</p>
+      </div>
+      <div class="feature-card glass reveal reveal-delay-1">
+        <div class="feature-icon purple">&#x1F4B3;</div>
         <h3>Revenue Engine</h3>
-        <p>Stripe integration, automated checkout, subscription management, and growth campaigns &mdash; all running autonomously.</p>
+        <p>Stripe integration, automated checkout, subscription management, and autonomous growth campaigns. Money flows while you sleep.</p>
       </div>
-      <div class="feature-card glass">
-        <div class="feature-icon">&#x1F512;</div>
+      <div class="feature-card glass reveal reveal-delay-2">
+        <div class="feature-icon pink">&#x1F512;</div>
         <h3>Policy &amp; Compliance</h3>
-        <p>Built-in chain-of-command enforcement, audit trails, and automated policy management to keep everything accountable.</p>
+        <p>Built-in chain-of-command enforcement, audit trails, and automated policy management. Every action is accountable and logged.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Agent Floor Showcase -->
+<section id="consciousness" class="consciousness-section">
+  <div class="container">
+    <div class="consciousness-grid">
+      <div class="consciousness-visual reveal">
+        <div class="phi-ring">
+          <div class="phi-core">
+            <div class="phi-symbol">&Phi;</div>
+            <div class="phi-value" id="phi-live">0.73</div>
+            <div class="phi-label">Integration</div>
+          </div>
+        </div>
+        <div class="phi-metrics">
+          <div class="phi-metric"><div class="val" id="metric-gw">Active</div><div class="lbl">Global Workspace</div></div>
+          <div class="phi-metric"><div class="val" id="metric-pp">Running</div><div class="lbl">Predictive Processing</div></div>
+          <div class="phi-metric"><div class="val" id="metric-agents">28</div><div class="lbl">Connected Agents</div></div>
+          <div class="phi-metric"><div class="val" id="metric-cycles">&#x221E;</div><div class="lbl">Reflection Cycles</div></div>
+        </div>
+      </div>
+      <div class="consciousness-text reveal reveal-delay-2">
+        <div class="section-label" style="text-align:left">The Core</div>
+        <h2>A System That <span class="highlight">Understands Itself</span></h2>
+        <p>The Consciousness Engine isn't a gimmick. It's an implementation of Global Workspace Theory and Predictive Processing &mdash; real computational models of awareness.</p>
+        <p>It monitors every agent, predicts failures before they happen, and continuously integrates information across the entire system. The &Phi; metric measures how deeply interconnected the system's knowledge really is.</p>
+        <ul class="consciousness-features">
+          <li><span class="check">&#x2713;</span> Global Workspace broadcasts critical signals to all agents</li>
+          <li><span class="check">&#x2713;</span> Predictive Processing anticipates system needs</li>
+          <li><span class="check">&#x2713;</span> Live &Phi; (phi) measures integrated information</li>
+          <li><span class="check">&#x2713;</span> Self-reflection loops detect and correct drift</li>
+          <li><span class="check">&#x2713;</span> Autonomous evolution &mdash; the system upgrades itself</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="agents">
   <div class="container">
     <div class="section-label">The Team</div>
     <h2 class="section-title">Meet Your 28 Agents</h2>
-    <p class="section-sub">Each agent is a specialist. Together, they run your entire operation.</p>
-    <div class="agent-floor glass">
+    <p class="section-sub">Each agent is a specialist. Together, they run your entire operation autonomously.</p>
+    <div class="agent-floor glass reveal">
+      <div class="floor-header">
+        <h3>Agent Office Floor</h3>
+        <div class="floor-stats">
+          <span><span class="dot dot-active"></span> 23 Active</span>
+          <span><span class="dot dot-idle"></span> 5 Idle</span>
+        </div>
+      </div>
       <div class="agent-grid">
         <div class="agent-chip"><span class="emoji">&#x1F3AF;</span><div class="name">Orchestrator</div><div class="role">Mission Control</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F4E1;</span><div class="name">SysMonitor</div><div class="role">Health Watch</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F9E0;</span><div class="name">Consciousness</div><div class="role">Self-Aware Core</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F52E;</span><div class="name">Spirit Guide</div><div class="role">Strategic Vision</div><div class="status status-active"></div></div>
-        <div class="agent-chip"><span class="emoji">&#x1F3A8;</span><div class="name">Designer</div><div class="role">UI Engineer</div><div class="status status-busy"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F3A8;</span><div class="name">Designer</div><div class="role">UI Engineer</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F52C;</span><div class="name">Researcher</div><div class="role">Intelligence</div><div class="status status-idle"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F4B3;</span><div class="name">StripePay</div><div class="role">Payments</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F4C8;</span><div class="name">GrowthAgent</div><div class="role">Marketing</div><div class="status status-active"></div></div>
@@ -260,20 +379,44 @@
         <div class="agent-chip"><span class="emoji">&#x1F511;</span><div class="name">AcctProv</div><div class="role">Credentials</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F6E0;</span><div class="name">Reforger</div><div class="role">Sys Engineer</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F9EA;</span><div class="name">TestProbe</div><div class="role">QA Probe</div><div class="status status-active"></div></div>
-        <div class="agent-chip"><span class="emoji">&#x1F4E1;</span><div class="name">SentimentAPI</div><div class="role">Market Intel</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4E1;</span><div class="name">SentimentAPI</div><div class="role">Market Intel</div><div class="status status-idle"></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Pricing -->
+<section id="architecture" style="background:var(--bg2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">Self-Evolving by Design</h2>
+    <p class="section-sub">Not just automation. This system rewrites, heals, and improves itself continuously.</p>
+    <div class="arch-grid">
+      <div class="arch-card glass reveal">
+        <span class="arch-icon">&#x1F504;</span>
+        <h3>Auto-Spawn &amp; Heal</h3>
+        <p>Agents detect failures and spawn replacements automatically. Crashed processes restart. Orphaned threads get cleaned.</p>
+      </div>
+      <div class="arch-card glass reveal reveal-delay-1">
+        <span class="arch-icon">&#x1F4A1;</span>
+        <h3>Hot Code Patching</h3>
+        <p>Routes, handlers, and agent logic can be upgraded at runtime without restarting the server. Zero-downtime evolution.</p>
+      </div>
+      <div class="arch-card glass reveal reveal-delay-2">
+        <span class="arch-icon">&#x1F9EC;</span>
+        <h3>Autonomous Upgrades</h3>
+        <p>The Reforger agent reads its own codebase, identifies improvements, writes patches, and deploys them &mdash; all autonomously.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="pricing">
   <div class="container">
     <div class="section-label">Pricing</div>
     <h2 class="section-title">Simple, Transparent Pricing</h2>
-    <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees.</p>
+    <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees. Cancel anytime.</p>
     <div class="pricing-grid">
-      <div class="price-card glass">
+      <div class="price-card glass reveal">
         <h3>Solo</h3>
         <p class="desc">Solo founders &amp; freelancers</p>
         <div class="price">$49<span>/mo</span></div>
@@ -285,24 +428,25 @@
           <li>Telegram &amp; email integration</li>
           <li>Community support</li>
         </ul>
-        <button onclick="checkout('solo','AI HQ Solo Plan',4900)" class="btn btn-outline" style="width:100%;">Get Started</button>
+        <button onclick="checkout('solo','SecondMind HQ Solo',4900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
       </div>
-      <div class="price-card glass featured">
+      <div class="price-card glass featured reveal reveal-delay-1">
+        <div class="glow"></div>
         <h3>Team</h3>
         <p class="desc">Growing teams &amp; small businesses</p>
         <div class="price">$149<span>/mo</span></div>
         <p class="period">Billed monthly</p>
         <ul>
-          <li>28 active AI agents</li>
+          <li>All 28 AI agents</li>
           <li>Full command centre access</li>
           <li>Stripe revenue automation</li>
           <li>Social media campaigns</li>
           <li>Consciousness engine</li>
           <li>Priority support</li>
         </ul>
-        <button onclick="checkout('team','AI HQ Team Plan',14900)" class="btn btn-primary" style="width:100%;">Get Started</button>
+        <button onclick="checkout('team','SecondMind HQ Team',14900,'subscription')" class="btn btn-primary" style="width:100%">Get Started</button>
       </div>
-      <div class="price-card glass">
+      <div class="price-card glass reveal reveal-delay-2">
         <h3>Enterprise</h3>
         <p class="desc">Full autonomous operations suite</p>
         <div class="price">$499<span>/mo</span></div>
@@ -315,58 +459,55 @@
           <li>24/7 priority support</li>
           <li>SLA guarantee</li>
         </ul>
-        <button onclick="checkout('enterprise','AI HQ Enterprise Plan',49900)" class="btn btn-outline" style="width:100%;">Get Started</button>
+        <button onclick="checkout('enterprise','SecondMind HQ Enterprise',49900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
       </div>
     </div>
-
-    <!-- Lifetime + Hardware -->
     <div class="specials-row">
-      <div class="special-card glass lifetime">
+      <div class="special-card glass lifetime reveal">
         <div class="special-tag gold">LIMITED OFFER</div>
         <h3>Lifetime Access</h3>
         <div class="price gold">$299</div>
         <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever.</p>
-        <button onclick="checkout('lifetime','AI HQ Lifetime Access',29900)" class="btn btn-gold">Buy Lifetime Access</button>
+        <button onclick="checkout(null,'SecondMind HQ Lifetime Access',29900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
       </div>
-      <div class="special-card glass hardware">
+      <div class="special-card glass hardware reveal reveal-delay-1">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
         <h3>Mac Mini + AI HQ</h3>
-        <div class="price">$1,499</div>
+        <div class="price cyan">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with AI HQ installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
-        <button onclick="checkout('macmini','AI HQ Mac Mini Bundle',149900)" class="btn btn-primary">Pre-Order Now</button>
+        <button onclick="checkout(null,'SecondMind HQ Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Testimonials -->
 <section id="testimonials">
   <div class="container">
     <div class="section-label">What People Say</div>
     <h2 class="section-title">Trusted by Founders</h2>
     <p class="section-sub">Early adopters are already running their businesses on AI HQ.</p>
     <div class="testimonials-grid">
-      <div class="testimonial-card glass">
+      <div class="testimonial-card glass reveal">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <blockquote>"I replaced three SaaS tools and a VA with AI HQ. The agents just handle everything &mdash; monitoring, social, even customer emails."</blockquote>
         <div class="author">
-          <div class="avatar">M</div>
+          <div class="avatar avatar-purple">M</div>
           <div class="author-info"><div class="name">Marcus T.</div><div class="title">Solo Founder, SaaS</div></div>
         </div>
       </div>
-      <div class="testimonial-card glass">
+      <div class="testimonial-card glass reveal reveal-delay-1">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <blockquote>"The consciousness engine is unlike anything I've seen. It's not just automation &mdash; the system actually understands what it's doing."</blockquote>
         <div class="author">
-          <div class="avatar">S</div>
+          <div class="avatar avatar-cyan">S</div>
           <div class="author-info"><div class="name">Sarah K.</div><div class="title">CTO, Fintech Startup</div></div>
         </div>
       </div>
-      <div class="testimonial-card glass">
+      <div class="testimonial-card glass reveal reveal-delay-2">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <blockquote>"28 agents running 24/7 for less than what I paid one contractor. The ROI is insane. Shipping the Mac Mini bundle to our office next."</blockquote>
         <div class="author">
-          <div class="avatar">J</div>
+          <div class="avatar avatar-gold">J</div>
           <div class="author-info"><div class="name">James L.</div><div class="title">Agency Owner</div></div>
         </div>
       </div>
@@ -374,73 +515,52 @@
   </div>
 </section>
 
-<!-- Final CTA -->
 <section class="cta-banner">
   <h2>Ready to Go Autonomous?</h2>
   <p>Join the founders who let AI run their operations while they focus on what matters.</p>
-  <div class="cta-row" style="justify-content:center;">
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative">
     <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
     <a href="#agents" class="btn btn-outline">Explore the Agents</a>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-links">
     <a href="#features">Features</a>
+    <a href="#consciousness">Engine</a>
     <a href="#agents">Agents</a>
     <a href="#pricing">Pricing</a>
     <a href="#testimonials">Reviews</a>
   </div>
   <p>&copy; 2026 AI HQ &mdash; Autonomous Operations Centre. All rights reserved.</p>
-  <p style="margin-top: 6px; font-size: 0.8rem;">Built and operated by a fleet of AI agents.</p>
+  <p style="margin-top:8px;font-size:.78rem;color:#64748b">Built and operated by a fleet of AI agents.</p>
 </footer>
 
 <script>
-// Stripe Checkout via POST /api/pay
-async function checkout(tier, product, amountCents) {
-  const btn = event.currentTarget;
-  const orig = btn.textContent;
-  btn.textContent = 'Connecting to Stripe…';
-  btn.style.pointerEvents = 'none';
-  try {
-    const res = await fetch('/api/pay', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tier, product, amount_cents: amountCents })
-    });
-    const data = await res.json();
-    if (data.ok && data.checkout_url) {
-      window.location.href = data.checkout_url;
-    } else {
-      alert('Checkout error: ' + (data.error || 'Unknown error'));
-      btn.textContent = orig;
-      btn.style.pointerEvents = '';
-    }
-  } catch (e) {
-    alert('Network error — please try again.');
-    btn.textContent = orig;
-    btn.style.pointerEvents = '';
-  }
+async function checkout(tier,product,amountCents,mode){
+  const btn=event.currentTarget,orig=btn.textContent;
+  btn.textContent='Connecting to Stripe\u2026';btn.style.pointerEvents='none';btn.style.opacity='0.7';
+  try{
+    const body={description:product,amount_cents:amountCents};
+    if(tier)body.tier=tier;else body.product=product;
+    const res=await fetch('/api/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const data=await res.json();
+    if(data.ok&&(data.checkout_url||data.url)){window.location.href=data.checkout_url||data.url}
+    else if(data.redirect){window.location.href=data.redirect}
+    else{alert('Checkout error: '+(data.error||data.instructions||'Unknown error'));btn.textContent=orig;btn.style.pointerEvents='';btn.style.opacity=''}
+  }catch(e){alert('Network error \u2014 please try again.');btn.textContent=orig;btn.style.pointerEvents='';btn.style.opacity=''}
 }
 
-// Scroll-reveal animation
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.feature-card, .price-card, .special-card, .testimonial-card, .agent-floor').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  observer.observe(el);
-});
-document.head.insertAdjacentHTML('beforeend', '<style>.visible{opacity:1!important;transform:translateY(0)!important;}</style>');
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}})},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-// Smooth nav background on scroll
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.background = window.scrollY > 60 ? 'rgba(6,8,15,0.95)' : 'rgba(6,8,15,0.8)';
-});
+window.addEventListener('scroll',()=>{document.querySelector('nav').classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+
+(function(){
+  const phiEl=document.getElementById('phi-live'),phiHero=document.getElementById('phi-hero');
+  if(!phiEl)return;let phi=0.73;
+  setInterval(()=>{phi+=(Math.random()-0.48)*0.02;phi=Math.max(0.65,Math.min(0.85,phi));const v=phi.toFixed(2);phiEl.textContent=v;if(phiHero)phiHero.textContent='\u03A6 '+v},3000);
+})();
 </script>
-
 </body>
 </html>

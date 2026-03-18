@@ -12,7 +12,7 @@ def run_revenue_tracker():
     import time, json, os, glob as _glob
 
     aid = "revenue_tracker"
-    CWD          = "/Users/secondmind/claudecodetest"
+    CWD          = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     DATA_DIR     = os.path.join(CWD, "data")
     EVENTS_FILE  = os.path.join(DATA_DIR, "revenue_events.json")
     SUBS_FILE    = os.path.join(DATA_DIR, "subscriptions.json")

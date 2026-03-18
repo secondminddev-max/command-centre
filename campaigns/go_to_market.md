@@ -772,17 +772,17 @@ Best,
 - [ ] Record short-form Clip 1 and Clip 2
 - [ ] Edit in iMovie (free on Mac) -- add text overlays, trim dead air
 - [ ] Upload demo video to YouTube (unlisted until Day 3)
-- [ ] Create logo (public/logo.svg) and brand guide
-- [ ] Register domain name -- use email agent to sign up at Namecheap or Cloudflare
-- [ ] Set up hosting (Vercel: run `npx vercel` in project root, or Netlify: drag public/ folder to https://app.netlify.com/drop)
+- [x] Create logo (public/logo.svg) and brand guide (DONE — logo at public/logo.svg, brand guide at reports/brand_guide.html)
+- [x] Register domain name (DONE — secondmindhq.com registered on Squarespace)
+- [x] Set up hosting (DONE — deployed on Render at command-centre.onrender.com)
 
 ### Day 3 -- Thursday 2026-03-20
 - [ ] Set YouTube demo video to PUBLIC
 - [ ] Post Clip 1 to TikTok + Instagram Reels
 - [ ] Create accounts on Facebook, Instagram, TikTok, Twitter/X, YouTube (follow Section 3)
 - [ ] Post first social media posts on all platforms (see Section 3 for exact text)
-- [ ] Post Show HN between 8-9am US Eastern
-- [ ] Post to r/SideProject and r/MacApps
+- [ ] Post Show HN between 8-9am US Eastern (PREPARED — draft at campaigns/ready_posts/show_hn.md)
+- [ ] Post to r/SideProject and r/MacApps (PREPARED — drafts at campaigns/ready_posts/reddit_day3.md)
 - [ ] Start $50/day Facebook ads (optional)
 - [ ] Send Email 1 to any collected signups
 

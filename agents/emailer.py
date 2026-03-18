@@ -14,7 +14,7 @@ def run_emailer():
     from email.mime.multipart import MIMEMultipart
 
     aid = "emailer"
-    CWD = "/Users/secondmind/claudecodetest"
+    CWD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     CONFIG_FILE = os.path.join(CWD, "data", "email_config.json")
     QUEUE_FILE  = os.path.join(CWD, "data", "email_queue.json")
     FAILED_FILE = os.path.join(CWD, "data", "email_failed.json")

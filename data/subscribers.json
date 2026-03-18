@@ -76,5 +76,31 @@
     "subscribed_at": "2026-03-18T19:50:58.011662",
     "status": "active",
     "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@demotester.local",
+    "name": "",
+    "subscribed_at": "2026-03-18T20:26:16.252449",
+    "source": "landing_page"
+  },
+  {
+    "email": "qa@test.local",
+    "name": "",
+    "subscribed_at": "2026-03-18T20:49:40.696560",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@launch-readiness.test",
+    "name": "DemoTester",
+    "subscribed_at": "2026-03-18T20:55:37.383056",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@launch-readiness.test",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T20:55:37.397952",
+    "status": "active",
+    "source": "premarket_pulse_landing"
   }
 ]

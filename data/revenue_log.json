@@ -180,6 +180,31 @@
       "email": "test@demotester.local",
       "tier": "free",
       "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T20:26:16.252449",
+      "event": "email_capture",
+      "email": "test@demotester.local",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T20:49:40.696560",
+      "event": "email_capture",
+      "email": "qa@test.local",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T20:55:37.383056",
+      "event": "email_capture",
+      "email": "test@launch-readiness.test",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T20:55:37.397952",
+      "event": "premarket_signup",
+      "email": "test@launch-readiness.test",
+      "tier": "free",
+      "source": "premarket_pulse"
     }
   ]
 }

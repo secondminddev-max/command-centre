@@ -9,5 +9,6 @@
   "NGROK_AUTH_TOKEN": "${NGROK_AUTH_TOKEN}",
   "NGROK_DOMAIN": "${NGROK_DOMAIN}",
   "_test_probe": "ok",
-  "demo_test_flag": "true"
+  "demo_test_flag": "true",
+  "qa_test_flag": "true"
 }

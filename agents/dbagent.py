@@ -14,7 +14,7 @@ def run_dbagent():
     import urllib.request
 
     aid      = "dbagent"
-    DB_PATH  = "/Users/secondmind/claudecodetest/data/dbagent.db"
+    DB_PATH  = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/dbagent.db"
     API_BASE = "http://localhost:5050"
 
     set_agent(aid,
@@ -161,7 +161,7 @@ def run_dbagent():
                 "description": "DBAgent: live DB health and row counts",
                 "handler": (
                     "import sqlite3, json, os\n"
-                    "DB_PATH = '/Users/secondmind/claudecodetest/data/dbagent.db'\n"
+                    "DB_PATH = os.path.join(CWD, 'data', 'dbagent.db')\n"
                     "if not os.path.exists(DB_PATH): return {'error': 'db not found'}\n"
                     "con = sqlite3.connect(DB_PATH)\n"
                     "rows = {}\n"
@@ -182,7 +182,7 @@ def run_dbagent():
                 "description": "DBAgent: DB size and row counts (alias)",
                 "handler": (
                     "import sqlite3, json, os\n"
-                    "DB_PATH = '/Users/secondmind/claudecodetest/data/dbagent.db'\n"
+                    "DB_PATH = os.path.join(CWD, 'data', 'dbagent.db')\n"
                     "if not os.path.exists(DB_PATH): return {'error': 'db not found'}\n"
                     "con = sqlite3.connect(DB_PATH)\n"
                     "rows = {}\n"
@@ -202,7 +202,7 @@ def run_dbagent():
                 "description": "DBAgent: retrieve a KV blob by key",
                 "handler": (
                     "import sqlite3, json\n"
-                    "DB_PATH = '/Users/secondmind/claudecodetest/data/dbagent.db'\n"
+                    "DB_PATH = os.path.join(CWD, 'data', 'dbagent.db')\n"
                     "con = sqlite3.connect(DB_PATH)\n"
                     "row = con.execute('SELECT value, updated_at FROM kv_store WHERE key=?', (path_params.get('key',''),)).fetchone()\n"
                     "if row: return {'key': path_params.get('key'), 'value': json.loads(row[0]), 'updated_at': row[1]}\n"
@@ -215,7 +215,7 @@ def run_dbagent():
                 "description": "DBAgent: store a JSON blob by key",
                 "handler": (
                     "import sqlite3, json, time\n"
-                    "DB_PATH = '/Users/secondmind/claudecodetest/data/dbagent.db'\n"
+                    "DB_PATH = os.path.join(CWD, 'data', 'dbagent.db')\n"
                     "con = sqlite3.connect(DB_PATH)\n"
                     "key = body.get('key'); val = body.get('value')\n"
                     "ts = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())\n"
@@ -356,7 +356,7 @@ def run_dbagent():
                     "updated": ts,
                     "summary": summary,
                 }
-                _status_file = "/Users/secondmind/claudecodetest/data/dbagent_status.json"
+                _status_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/dbagent_status.json"
                 with open(_status_file, "w") as _sf:
                     import json as _json
                     _json.dump(_status_payload, _sf, indent=2)

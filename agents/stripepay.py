@@ -88,6 +88,22 @@ def run_stripepay():
             "price_label": "$499/mo",
             "features":    ["Unlimited seats", "Full agent roster + custom agents", "White-label dashboards", "Dedicated support", "Custom integrations", "SLA guarantee", "On-prem deployment option"],
         },
+        "lifetime": {
+            "name":        "SecondMind HQ Lifetime",
+            "price":       29900,
+            "currency":    "usd",
+            "price_label": "$299 one-time",
+            "one_time":    True,
+            "features":    ["Lifetime access", "All current agents", "All future updates", "Community support"],
+        },
+        "mac_mini": {
+            "name":        "SecondMind HQ Mac Mini Edition",
+            "price":       149900,
+            "currency":    "usd",
+            "price_label": "$1499 one-time",
+            "one_time":    True,
+            "features":    ["Pre-configured Mac Mini", "Full agent roster", "Hardware + software bundle", "1 year priority support", "Plug-and-play deployment"],
+        },
     }
 
     # ── Stripe helpers ────────────────────────────────────────────────────────
@@ -224,7 +240,7 @@ def run_stripepay():
             qs = _parse_qs(urlparse(self.path).query)
             session_id = (qs.get("session_id") or [None])[0]
             secret_key = os.environ.get("STRIPE_SECRET_KEY", "")
-            report_path = "/Users/secondmind/claudecodetest/reports/us_market_intelligence_report.html"
+            report_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "reports/us_market_intelligence_report.html")
 
             if not session_id:
                 self._json({"ok": False, "error": "Missing session_id parameter"}, 400)
@@ -335,7 +351,7 @@ def run_stripepay():
             return
         if path in ("/buy/us-market", "/buy/us-market.html"):
             try:
-                with open(os.path.join("/Users/secondmind/claudecodetest", "public", "buy-us-market.html"), "rb") as _f:
+                with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "buy-us-market.html"), "rb") as _f:
                     _content = _f.read()
                 self.send_response(200); self._cors()
                 self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -346,7 +362,7 @@ def run_stripepay():
             return
         if path in ("/buy/agent-kit", "/buy/agent-kit.html"):
             try:
-                with open(os.path.join("/Users/secondmind/claudecodetest", "public", "buy-agent-kit.html"), "rb") as _f:
+                with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "buy-agent-kit.html"), "rb") as _f:
                     _content = _f.read()
                 self.send_response(200); self._cors()
                 self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -387,7 +403,7 @@ def run_stripepay():
                 amount_cents = tier["price"]
                 currency     = tier["currency"]
                 description  = tier["name"]
-                _checkout_mode = "subscription"
+                _checkout_mode = "payment" if tier.get("one_time") else "subscription"
             elif product_id:
                 if product_id not in PRODUCTS:
                     self._json({"ok": False, "error": f"Unknown product: {product_id}. Valid products: {', '.join(PRODUCTS.keys())}"}, 400)
