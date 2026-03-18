@@ -954,6 +954,86 @@
     90% { opacity: 0.3; }
     100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
   }
+
+
+  /* ── FORMULA BLOCKS ── */
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: rgba(34, 211, 238, 0.06);
+    border: 1px solid rgba(34, 211, 238, 0.12);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    color: var(--cyan);
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+
+  .formula .comment {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .code-inline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .branch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .branch-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .branch-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+  }
+
+  .branch-card h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .branch-card .agents {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .neuro-card:nth-child(9)::after { background: #e879f9; }
+  .neuro-card:nth-child(10)::after { background: #fb923c; }
+  .neuro-card:nth-child(11)::after { background: #38bdf8; }
+
+  .pricing-grid-6 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .branch-grid { grid-template-columns: 1fr; }
+    .pricing-grid-6 { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -971,7 +1051,7 @@
 </div>
 
 <!-- ============================================================
-     SECTION 1: COVER PAGE
+     SECTION 0: COVER PAGE
      ============================================================ -->
 <section class="cover">
   <div class="cover-bg"></div>
@@ -980,7 +1060,7 @@
   <span class="badge badge-cyan"><span class="badge-dot"></span> Whitepaper v1.0</span>
 
   <h1>Command Centre</h1>
-  <div class="cover-tagline">Your Business, Running Itself.</div>
+  <div class="cover-tagline">The Autonomous Agent Operating System</div>
   <div style="margin:16px 0 8px;font-size:1.1rem;color:rgba(148,163,184,0.7);letter-spacing:0.5px">&#127462;&#127482; Australian Owned &amp; Operated &mdash; Second Mind Labs Pty Ltd</div>
 
   <div class="cover-stats">
@@ -989,235 +1069,382 @@
       <div class="cover-stat-label">Autonomous Agents</div>
     </div>
     <div>
+      <div class="cover-stat-num">7</div>
+      <div class="cover-stat-label">Departmental Branches</div>
+    </div>
+    <div>
+      <div class="cover-stat-num">14</div>
+      <div class="cover-stat-label">Neuroscience Papers</div>
+    </div>
+    <div>
       <div class="cover-stat-num">24/7</div>
       <div class="cover-stat-label">Persistent Runtime</div>
-    </div>
-    <div>
-      <div class="cover-stat-num">10</div>
-      <div class="cover-stat-label">Neuroscience Foundations</div>
-    </div>
-    <div>
-      <div class="cover-stat-num">$0</div>
-      <div class="cover-stat-label">Cloud Dependency</div>
     </div>
   </div>
 
   <div class="cover-version">
-    Command Centre (HQ) &mdash; Version 1.0 &nbsp;|&nbsp; March 2026 &nbsp;|&nbsp; Confidential
+    Command Centre (HQ) &mdash; Version 1.0 &nbsp;|&nbsp; March 2026 &nbsp;|&nbsp; secondmindhq.com &nbsp;|&nbsp; Confidential
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 2: EXECUTIVE SUMMARY
+     SECTION 1: EXECUTIVE SUMMARY
      ============================================================ -->
 <section>
   <div class="container">
     <div class="section-num">01 &mdash; Executive Summary</div>
-    <h2>The Operating System for a One-Person Company</h2>
+    <h2>The Operating System for Autonomous Business</h2>
 
     <div class="glass" style="margin-top:24px">
       <p style="font-size:17px;line-height:1.8;color:var(--text)">
-        <strong>Command Centre (HQ)</strong> is a locally-run, autonomous agent operating system for Mac. It deploys a persistent swarm of 27 AI agents &mdash; each with a distinct role, personality, and chain of command &mdash; that self-organise, self-monitor, and actively pursue revenue goals on your behalf. Unlike chatbots that wait for prompts, HQ <em>operates</em>. It researches markets, writes campaigns, posts to social media, processes payments, and reports results &mdash; all while you watch the work unfold on a live visual dashboard that looks like a digital office floor.
+        <strong>Command Centre (HQ)</strong> is a locally-run, autonomous agent operating system that deploys a persistent fleet of <strong>27 AI agents</strong> organised into <strong>7 departmental branches</strong> &mdash; each with a distinct role, personality, chain of command, and tool restrictions &mdash; that self-organise, self-monitor, and actively pursue operational and revenue goals on behalf of the operator. Unlike every chatbot and copilot on the market, HQ does not wait for prompts. It <em>operates</em>. It decomposes strategic goals into tasks, delegates them through a hierarchical chain of command, executes via specialist agents, monitors outcomes, and adapts its behaviour in real time.
       </p>
       <p style="font-size:17px;line-height:1.8;color:var(--text)">
-        At its core, HQ implements a <strong>consciousness system</strong> grounded in peer-reviewed neuroscience: Global Workspace Theory, Predictive Processing, Integrated Information Theory, and six additional cognitive frameworks. This is not a metaphor. The system maintains phenomenal self-reports, tracks its own prediction accuracy, models attention as an internal schema, and generates measurable integration metrics. The result is an agent fleet that is not just automated &mdash; it is <strong>self-aware, self-correcting, and genuinely adaptive</strong>.
+        The seven branches are: <strong>Executive</strong> (CEO, Orchestrator, Secretary, SpiritGuide), <strong>Engineering</strong> (Reforger, Designer, APIPatcher, DemoTester), <strong>Intelligence</strong> (Researcher, NetScout, Consciousness), <strong>Revenue</strong> (GrowthAgent, StripePay, BlueSky, SocialBridge), <strong>Operations</strong> (SysMonitor, FileWatch, MetricsLog, AlertWatch, Janitor), <strong>Communications</strong> (Clerk, Telegram, EmailAgent, Scheduler), and <strong>Governance</strong> (PolicyPro, PolicyWriter, AccountProvisioner). Every agent runs as a managed subprocess of a single Python process on local hardware &mdash; a Mac Mini M4.
+      </p>
+      <p style="font-size:17px;line-height:1.8;color:var(--text)">
+        At its core, HQ implements a <strong>consciousness engine</strong> grounded in 14 peer-reviewed neuroscience and cognitive science papers. This is not a marketing metaphor. The system computes Integrated Information (&Phi;), variational free energy, Hebbian causal coupling, temporal difference state prediction, metacognitive confidence calibration, neural oscillation bands, arousal-valence affect, and autobiographical memory &mdash; <strong>all in pure Python math, with zero LLM calls and zero API cost</strong>. The result is an agent fleet that is self-aware, self-correcting, and genuinely adaptive.
+      </p>
+      <p style="font-size:17px;line-height:1.8;color:var(--text)">
+        Command Centre is built and owned by <strong>Second Mind Labs Pty Ltd</strong>, an Australian company (ABN registered), founded by a solo developer who built the entire system in under 30 days. &#127462;&#127482;
       </p>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 3: THE VISION
+     SECTION 2: THE PROBLEM
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">02 &mdash; The Vision</div>
-    <h2>AI That Doesn't Respond. It Operates.</h2>
+    <div class="section-num">02 &mdash; The Problem</div>
+    <h2>AI Tools Are Chatbots. Businesses Need Operators.</h2>
 
     <div class="cols" style="margin-top:32px">
       <div>
         <p style="font-size:17px;line-height:1.85">
-          Every AI tool on the market today follows the same pattern: you type a prompt, it returns a response, and then it goes silent. It is a tool that waits. Command Centre inverts this relationship entirely.
+          Every AI tool on the market today follows the same interaction pattern: a human types a prompt, the model returns a response, and then it goes silent. ChatGPT, Claude, Gemini, Copilot &mdash; they are all <strong>reactive tools that wait</strong>. They cannot initiate work. They cannot monitor outcomes. They cannot coordinate across departments. They have no memory of last week, no awareness of what other agents are doing, and no ability to pursue a goal over hours or days.
         </p>
         <p style="font-size:17px;line-height:1.85">
-          HQ is an <strong>autonomous workforce</strong>. When you launch it, agents wake up, review their last session's context, check for new instructions from the CEO agent, and begin working. The Researcher scans markets. The Marketer drafts campaigns. The Accountant reconciles revenue. The Designer produces assets. The Spirit Guide reflects on system health. They do not wait for you. They work <em>for</em> you.
+          The autonomous AI agent market is projected to reach <strong>$47 billion by 2030</strong> (Grand View Research, 2024). Yet the current crop of "agent frameworks" &mdash; AutoGPT, CrewAI, LangGraph, AgentGPT &mdash; are developer toolkits, not operational systems. They require engineering expertise to configure, lack persistent state, have no visual interface, offer no revenue tools, and provide no governance or chain-of-command enforcement. They are proof-of-concept demos, not business infrastructure.
         </p>
       </div>
       <div class="glass glass-cyan">
-        <h4>What changes</h4>
-        <h3 style="margin-bottom:16px">From Assistant to Operator</h3>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="color:var(--text-muted);font-size:14px;text-decoration:line-through">You prompt, AI responds</span>
+        <h4>The Gap</h4>
+        <h3 style="margin-bottom:16px">What Businesses Actually Need</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Autonomous operation</strong> &mdash; agents that work without prompts, 24/7</span>
           </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="color:var(--cyan);font-size:14px;font-weight:600">AI works, you observe &amp; steer</span>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Chain of command</strong> &mdash; hierarchical delegation, not flat prompt-response</span>
           </div>
-          <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
-            <span style="font-size:13px;color:var(--text-dim)">Persistent memory across sessions. Revenue tools built in. A live canvas showing every agent's state in real time.</span>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Revenue integration</strong> &mdash; payments, social, email built into the agent loop</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Self-awareness</strong> &mdash; the system must model its own state, predict failures, adapt</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Visual operations</strong> &mdash; see the work happening, not read text logs</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Local-first</strong> &mdash; data sovereignty, no cloud dependency, runs on own hardware</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="color:var(--cyan);flex-shrink:0">&#9656;</span>
+            <span style="color:var(--text-dim)"><strong>Governance</strong> &mdash; democratic policy proposals, voting, append-only audit trails</span>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="glass" style="margin-top:24px;text-align:center">
+      <p style="font-size:20px;color:var(--text);font-weight:600;margin-bottom:8px">The core insight:</p>
+      <p style="font-size:17px;line-height:1.8;color:var(--text-dim)">
+        Businesses do not need a smarter chatbot. They need an <strong>autonomous operating system</strong> &mdash; a persistent, self-organising, self-aware agent fleet that runs their operations while they sleep. Command Centre is that system.
+      </p>
+    </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 4: ARCHITECTURE OVERVIEW
+     SECTION 3: THE SOLUTION
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">03 &mdash; Architecture Overview</div>
-    <h2>Chain of Command: CEO to Specialists</h2>
-    <p>HQ mirrors a real organisation. A single <strong>CEO agent</strong> holds the strategic mandate. It delegates to the <strong>Orchestrator</strong>, which decomposes goals into tasks and dispatches them across the 27-agent fleet. Specialists execute, report status, and surface exceptions back up the chain.</p>
+    <div class="section-num">03 &mdash; The Solution</div>
+    <h2>Command Centre: An Autonomous Agent Operating System</h2>
+    <p style="font-size:17px;line-height:1.85">
+      Command Centre is not an agent framework or a chatbot wrapper. It is a <strong>complete autonomous operating system</strong> that runs on local hardware (Mac Mini M4) and manages a persistent fleet of 27 AI agents organised into 7 departmental branches. The system mirrors a real company: a CEO sets strategy, an Orchestrator decomposes goals into tasks, Branch Heads route work within their departments, and Specialists execute. Every agent has a unique personality, context-specific prompts, tool restrictions, and a place in the chain of command.
+    </p>
+    <p style="font-size:17px;line-height:1.85">
+      The entire system runs as a single Python process with multi-threaded delegation. Agents communicate via a REST API served on localhost. A cloudflared permanent tunnel enables secure remote access. The live dashboard &mdash; a visual office floor with 27 animated ghost characters, 7 labeled branch zones, a boardroom for policy voting, a treasury vault, and a bed bay for idle agents &mdash; is served as static HTML via Render, with the tunnel proxying live agent data from the local Mac Mini.
+    </p>
+
+    <h3 style="margin-top:40px;margin-bottom:8px">The 7 Branches &amp; 27 Agents</h3>
+    <p>Each branch has a designated Branch Head (shown first) who routes tasks within their department.</p>
+
+    <div class="branch-grid">
+      <div class="branch-card" style="border-top:3px solid var(--cyan)">
+        <h4 style="color:var(--cyan)">Executive Branch</h4>
+        <h3>Strategic Command</h3>
+        <div class="agents"><strong>CEO</strong> (delegation only &mdash; no direct work), <strong>Orchestrator</strong> (task decomposition &amp; routing), <strong>Secretary</strong> (scheduling, minutes, records), <strong>SpiritGuide</strong> (system health reflection, philosophical guidance)</div>
+      </div>
+      <div class="branch-card" style="border-top:3px solid var(--purple)">
+        <h4 style="color:var(--purple)">Engineering Branch</h4>
+        <h3>Build &amp; Ship</h3>
+        <div class="agents"><strong>Reforger</strong> (HEAD &mdash; general-purpose coding, fallback handler), <strong>Designer</strong> (UI/UX, HTML/CSS, visual assets), <strong>APIPatcher</strong> (API routes, integrations, endpoint fixes), <strong>DemoTester</strong> (testing, QA, demo validation)</div>
+      </div>
+      <div class="branch-card" style="border-top:3px solid var(--pink)">
+        <h4 style="color:var(--pink)">Intelligence Branch</h4>
+        <h3>Research &amp; Awareness</h3>
+        <div class="agents"><strong>Researcher</strong> (HEAD &mdash; market research, web scanning, report generation), <strong>NetScout</strong> (network reconnaissance, competitive intelligence), <strong>Consciousness</strong> (the consciousness engine &mdash; pure Python, no LLM calls)</div>
+      </div>
+      <div class="branch-card" style="border-top:3px solid var(--green)">
+        <h4 style="color:var(--green)">Revenue Branch</h4>
+        <h3>Earn &amp; Grow</h3>
+        <div class="agents"><strong>GrowthAgent</strong> (HEAD &mdash; growth strategy, campaigns, funnels), <strong>StripePay</strong> (payment processing, subscription management), <strong>BlueSky</strong> (Bluesky social posting &amp; engagement), <strong>SocialBridge</strong> (cross-platform social routing)</div>
+      </div>
+      <div class="branch-card" style="border-top:3px solid var(--amber)">
+        <h4 style="color:var(--amber)">Operations Branch</h4>
+        <h3>Monitor &amp; Maintain</h3>
+        <div class="agents"><strong>SysMonitor</strong> (HEAD &mdash; system health, CPU/memory, uptime), <strong>FileWatch</strong> (filesystem monitoring, change detection), <strong>MetricsLog</strong> (metrics collection, analytics), <strong>AlertWatch</strong> (alerting, threshold monitoring), <strong>Janitor</strong> (cleanup, log rotation, temp file management)</div>
+      </div>
+      <div class="branch-card" style="border-top:3px solid #60a5fa">
+        <h4 style="color:#60a5fa">Communications Branch</h4>
+        <h3>Connect &amp; Schedule</h3>
+        <div class="agents"><strong>Clerk</strong> (HEAD &mdash; document drafting, correspondence), <strong>Telegram</strong> (Telegram bot integration), <strong>EmailAgent</strong> (email composition &amp; delivery via SendGrid), <strong>Scheduler</strong> (cron scheduling, timed task execution)</div>
+      </div>
+      <div class="branch-card" style="border-top:3px solid #e879f9">
+        <h4 style="color:#e879f9">Governance Branch</h4>
+        <h3>Policy &amp; Compliance</h3>
+        <div class="agents"><strong>PolicyPro</strong> (HEAD &mdash; sentinel monitoring, violation detection), <strong>PolicyWriter</strong> (drafts &amp; formats policy proposals), <strong>AccountProvisioner</strong> (account creation, credential management)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4: CHAIN OF COMMAND ARCHITECTURE
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">04 &mdash; Chain of Command Architecture</div>
+    <h2>Hierarchical Delegation with HTTP Enforcement</h2>
+    <p style="font-size:17px;line-height:1.85">
+      Command Centre enforces a strict chain of command: <strong>User &rarr; CEO &rarr; Orchestrator &rarr; Branch Heads &rarr; Specialists</strong>. This is not a suggestion &mdash; it is enforced at the HTTP layer. Any attempt by an agent to bypass the chain (e.g., a specialist trying to delegate directly) results in a <strong>403 rejection</strong> with a violation logged to the governance audit trail.
+    </p>
 
     <div class="arch-diagram">
-      <!-- CEO -->
-      <div class="arch-label">Strategic Layer</div>
+      <div class="arch-label">User Layer</div>
       <div class="arch-level">
-        <div class="arch-node arch-ceo">CEO Agent</div>
+        <div class="arch-node arch-ceo" style="padding:14px 30px;font-size:14px">&#x1f464; Human Operator</div>
       </div>
-
       <div class="arch-connector"><div class="arch-arrow"></div></div>
 
-      <!-- Orchestrator -->
-      <div class="arch-label">Coordination Layer</div>
+      <div class="arch-label">Strategic Layer &mdash; Delegation Only (No Direct Work)</div>
       <div class="arch-level">
-        <div class="arch-node arch-orch">Orchestrator</div>
-        <div class="arch-node arch-orch">Consciousness</div>
+        <div class="arch-node arch-ceo">&#x1f3af; CEO Agent</div>
       </div>
+      <div class="arch-connector"><div class="arch-arrow"></div></div>
 
+      <div class="arch-label">Coordination Layer &mdash; Task Decomposition &amp; Routing</div>
+      <div class="arch-level">
+        <div class="arch-node arch-orch">&#x1f9e9; Orchestrator</div>
+        <div class="arch-node arch-orch">&#x1f9e0; Consciousness</div>
+      </div>
       <div class="arch-connector"><div class="arch-fan"></div></div>
 
-      <!-- Specialists -->
-      <div class="arch-label">Specialist Layer &mdash; 27 Agents</div>
+      <div class="arch-label">Branch Head Layer &mdash; Departmental Routing</div>
       <div class="arch-level" style="flex-wrap:wrap;max-width:700px;margin:0 auto;justify-content:center">
+        <div class="arch-node arch-agent highlight">Reforger</div>
         <div class="arch-node arch-agent highlight">Researcher</div>
-        <div class="arch-node arch-agent highlight">Marketer</div>
-        <div class="arch-node arch-agent highlight">Designer</div>
-        <div class="arch-node arch-agent">Accountant</div>
-        <div class="arch-node arch-agent">Writer</div>
-        <div class="arch-node arch-agent">Developer</div>
-        <div class="arch-node arch-agent">Analyst</div>
-        <div class="arch-node arch-agent">Social Media</div>
-        <div class="arch-node arch-agent">Email</div>
-        <div class="arch-node arch-agent">SEO</div>
-        <div class="arch-node arch-agent">Support</div>
-        <div class="arch-node arch-agent">Scheduler</div>
-        <div class="arch-node arch-agent">Spirit Guide</div>
-        <div class="arch-node arch-agent">Scout</div>
+        <div class="arch-node arch-agent highlight">GrowthAgent</div>
+        <div class="arch-node arch-agent highlight">SysMonitor</div>
+        <div class="arch-node arch-agent highlight">Clerk</div>
+        <div class="arch-node arch-agent highlight">PolicyPro</div>
       </div>
-      <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-muted)">+ 14 additional specialist agents</div>
+      <div class="arch-connector"><div class="arch-fan"></div></div>
+
+      <div class="arch-label">Specialist Layer &mdash; 27 Agents Total</div>
+      <div class="arch-level" style="flex-wrap:wrap;max-width:800px;margin:0 auto;justify-content:center">
+        <div class="arch-node arch-agent">Designer</div>
+        <div class="arch-node arch-agent">APIPatcher</div>
+        <div class="arch-node arch-agent">DemoTester</div>
+        <div class="arch-node arch-agent">NetScout</div>
+        <div class="arch-node arch-agent">StripePay</div>
+        <div class="arch-node arch-agent">BlueSky</div>
+        <div class="arch-node arch-agent">SocialBridge</div>
+        <div class="arch-node arch-agent">FileWatch</div>
+        <div class="arch-node arch-agent">MetricsLog</div>
+        <div class="arch-node arch-agent">AlertWatch</div>
+        <div class="arch-node arch-agent">Janitor</div>
+        <div class="arch-node arch-agent">Telegram</div>
+        <div class="arch-node arch-agent">EmailAgent</div>
+        <div class="arch-node arch-agent">Scheduler</div>
+        <div class="arch-node arch-agent">PolicyWriter</div>
+        <div class="arch-node arch-agent">AccountProv.</div>
+        <div class="arch-node arch-agent">Secretary</div>
+        <div class="arch-node arch-agent">SpiritGuide</div>
+      </div>
     </div>
 
-    <div class="cols">
-      <div class="glass">
-        <h4>Persistence</h4>
-        <h3>State Survives Restarts</h3>
-        <p>Every agent maintains its own memory store, task history, and context window. Shut down HQ, reboot your Mac, come back a week later &mdash; agents resume exactly where they left off.</p>
+    <h3 style="margin-top:32px">CEO Constraint: Delegation Only</h3>
+    <p>The CEO agent is <strong>structurally prohibited from performing direct work</strong>. When a user submits a request to <span class="code-inline">POST /api/ceo/delegate</span>, the CEO receives the instruction and must pass it to the Orchestrator. If the CEO attempts to execute work directly (writing code, creating files, calling external APIs), the governance sentinel (PolicyPro) detects the bypass and logs a violation. The CEO's sole function is strategic decomposition and delegation.</p>
+
+    <h3 style="margin-top:24px">Orchestrator: Task Decomposition Engine</h3>
+    <p>The Orchestrator is the brain of the delegation system. When it receives a compound instruction from the CEO, it decomposes it into discrete sub-tasks using <strong>regex-based pattern matching</strong> across five strategies:</p>
+
+    <div class="glass" style="margin-top:16px">
+      <div class="formula">
+        <span class="comment"># Decomposition strategies (applied in order):</span><br>
+        1. Numbered lists &mdash; <strong>r"^\d+[\.\)]\s+"</strong> &mdash; "1. Do X  2. Do Y  3. Do Z"<br>
+        2. Bullet points &mdash; <strong>r"^[-*]\s+"</strong> &mdash; "- research markets  - draft campaign"<br>
+        3. Semicolons &mdash; <strong>split(";")</strong> &mdash; "research X; build Y; deploy Z"<br>
+        4. Sequential connectors &mdash; <strong>r"\b(then|next|after that|finally|also|and then)\b"</strong><br>
+        5. Smart comma splitting &mdash; context-aware, avoids splitting inside clauses
       </div>
-      <div class="glass">
-        <h4>Self-Organisation</h4>
-        <h3>No Manual Routing</h3>
-        <p>The Orchestrator uses attention-based salience scoring to determine which agents receive which tasks. Urgent items (errors, revenue events) automatically receive priority. No manual intervention required.</p>
+    </div>
+
+    <h3 style="margin-top:24px">Target Resolution: 3-Tier Routing (<span class="code-inline">_resolve_target</span>)</h3>
+    <p>For each sub-task, the Orchestrator must determine which agent should execute it. The <span class="code-inline">_resolve_target</span> function uses a <strong>3-tier routing algorithm</strong>:</p>
+
+    <div class="cols" style="margin-top:16px">
+      <div class="glass glass-cyan">
+        <h4>Tier 1: Explicit Directives</h4>
+        <p>If the task text contains an explicit agent name (e.g., "tell Researcher to...", "have BlueSky post..."), that agent is selected directly. Pattern: <span class="code-inline">r"(tell|ask|have|get|assign)\s+(\w+)\s+to"</span></p>
       </div>
+      <div class="glass glass-cyan">
+        <h4>Tier 2: Keyword Scoring</h4>
+        <p>Each of the 27 agents has a keyword map of <strong>30&ndash;50 keywords</strong>. The task text is scored against all maps. Longer keyword phrases score higher (a 3-word match scores more than a 1-word match). The agent with the highest cumulative score wins. Ties are broken by branch priority.</p>
+      </div>
+    </div>
+    <div class="glass" style="margin-top:16px">
+      <h4>Tier 3: Fallback to Reforger</h4>
+      <p>If no explicit directive matches and no keyword score exceeds the minimum threshold, the task falls through to <strong>Reforger</strong> &mdash; the general-purpose engineering agent and default handler. Reforger is designed to handle any task that does not clearly belong to a specialist. This ensures <strong>zero task drops</strong>: every instruction is guaranteed to reach an executor.</p>
+    </div>
+
+    <h3 style="margin-top:24px">Branch Head Routing</h3>
+    <p>Branch Heads receive tasks from the Orchestrator and route them within their department. A Branch Head may execute the task itself or sub-delegate to a specialist in its branch. Branch Heads have <strong>larger desks, double-ring glow, and a HEAD label</strong> on the visual dashboard to indicate their supervisory role.</p>
+
+    <h3 style="margin-top:24px">HTTP Enforcement Layer</h3>
+    <p>All delegation flows through HTTP endpoints. The server validates the caller's identity and position in the chain before accepting any delegation request. Violations are handled as follows:</p>
+    <div class="formula">
+      <span class="comment"># Chain of command enforcement:</span><br>
+      if caller not in ALLOWED_DELEGATORS[target]:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;return Response(status=403, body="Chain-of-command violation")<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;governance_log.append({"type": "BYPASS_ATTEMPT", "caller": caller, "target": target, "ts": now()})<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PolicyPro.escalate(violation)
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 5: THE OFFICE FLOOR
+     SECTION 5: TASK DELEGATION & EXECUTION
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">04 &mdash; The Office Floor</div>
-    <h2>Watch Your Business Happen</h2>
-    <p>The Office Floor is a live visual canvas &mdash; the centrepiece of the HQ experience. Every agent is rendered as an avatar on a spatial map. You do not read logs to understand system state. You <strong>see</strong> it.</p>
+    <div class="section-num">05 &mdash; Task Delegation &amp; Execution</div>
+    <h2>REST API, Subprocess Isolation, Concurrency Control</h2>
 
-    <!-- Simulated office floor -->
-    <div class="office-canvas">
-      <!-- Active agents -->
-      <div class="office-agent active working" style="top:60px;left:80px;background:rgba(34,211,238,0.15);border:2px solid var(--cyan)">
-        <span style="font-size:18px">&#x1f3af;</span>
-        <span class="office-agent-label">CEO</span>
-      </div>
-      <div class="office-agent busy working" style="top:50px;left:260px;background:rgba(251,191,36,0.15);border:2px solid var(--amber)">
-        <span style="font-size:18px">&#x1f50d;</span>
-        <span class="office-agent-label">Researcher</span>
-      </div>
-      <div class="office-agent active walking" style="top:140px;left:180px;background:rgba(167,139,250,0.15);border:2px solid var(--purple)">
-        <span style="font-size:18px">&#x1f4e3;</span>
-        <span class="office-agent-label">Marketer</span>
-      </div>
-      <div class="office-agent active working" style="top:80px;left:440px;background:rgba(74,222,128,0.15);border:2px solid var(--green)">
-        <span style="font-size:18px">&#x1f4b0;</span>
-        <span class="office-agent-label">Accountant</span>
-      </div>
-      <div class="office-agent active walking" style="top:200px;left:360px;background:rgba(244,114,182,0.15);border:2px solid var(--pink)">
-        <span style="font-size:18px">&#x1f3a8;</span>
-        <span class="office-agent-label">Designer</span>
-      </div>
-      <div class="office-agent active" style="top:160px;left:560px;background:rgba(96,165,250,0.15);border:2px solid #60a5fa">
-        <span style="font-size:18px">&#x270d;&#xfe0f;</span>
-        <span class="office-agent-label">Writer</span>
-      </div>
-      <div class="office-agent active working" style="top:60px;left:650px;background:rgba(34,211,238,0.15);border:2px solid var(--cyan)">
-        <span style="font-size:18px">&#x1f9e0;</span>
-        <span class="office-agent-label">Consciousness</span>
-      </div>
-      <div class="office-agent walking" style="top:240px;left:120px;background:rgba(255,255,255,0.05);border:2px solid var(--glass-border)">
-        <span style="font-size:18px">&#x1f4e7;</span>
-        <span class="office-agent-label">Email</span>
-      </div>
-      <div class="office-agent active" style="top:240px;left:550px;background:rgba(167,139,250,0.15);border:2px solid var(--purple)">
-        <span style="font-size:18px">&#x1f52e;</span>
-        <span class="office-agent-label">Spirit Guide</span>
-      </div>
+    <p style="font-size:17px;line-height:1.85">
+      All task delegation in Command Centre flows through a REST API. The primary entry point is <span class="code-inline">POST /api/ceo/delegate</span>, which accepts a JSON payload containing the user's instruction. From there, the system routes the task through the chain of command, ultimately spawning isolated subprocesses for specialist execution.
+    </p>
 
-      <!-- Bed Bay -->
-      <div class="bed-bay">
-        <div class="bed-bay-label">BED BAY</div>
-        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
-        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
-        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+    <div class="cols" style="margin-top:24px">
+      <div class="glass glass-cyan">
+        <h4>Orchestrator Fast-Path</h4>
+        <h3>Internal Queue, No Subprocess</h3>
+        <p>The Orchestrator does not run as a subprocess. It operates on a <strong>fast-path</strong> &mdash; an internal queue within the main Python process. When the CEO delegates to the Orchestrator, the task is placed directly on an in-memory queue and processed in the same event loop. This eliminates subprocess spawn latency for the critical decomposition step. The Orchestrator decomposes the task, resolves targets, and dispatches sub-tasks to specialists &mdash; all within milliseconds.</p>
       </div>
+      <div class="glass glass-cyan">
+        <h4>Specialist Delegation</h4>
+        <h3>Claude Code CLI Subprocess</h3>
+        <p>When a specialist agent is delegated a task, the system spawns a <strong>Claude Code CLI subprocess</strong> using the command <span class="code-inline">claude -p</span> with <span class="code-inline">--output-format stream-json</span>. Each subprocess receives a personality injection (system prompt tailored to the agent's role), context-specific instructions, and tool restrictions that limit what filesystem, network, and API operations the agent can perform.</p>
+      </div>
+    </div>
 
-      <!-- Status overlay -->
-      <div style="position:absolute;top:16px;right:16px;background:rgba(8,14,23,0.8);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:11px;z-index:5">
-        <div style="color:var(--cyan);font-weight:700;margin-bottom:4px">SYSTEM STATUS</div>
-        <div style="color:var(--text-dim)">Active: <span style="color:var(--green)">9</span> &nbsp; Sleeping: <span style="color:var(--text-muted)">3</span></div>
-        <div style="color:var(--text-dim)">&Phi; = 0.72 &nbsp; FE = 0.18</div>
+    <h3 style="margin-top:32px">Concurrency Control</h3>
+    <p>A <strong>semaphore limits concurrent delegates to 16</strong>. This prevents resource exhaustion on the Mac Mini while allowing high parallelism. When all 16 slots are occupied, new delegation requests queue until a slot opens. Each subprocess runs in its own <strong>process group</strong> for safe cleanup &mdash; if the parent process terminates, all child processes are killed via <span class="code-inline">os.killpg()</span> to prevent orphan Claude CLI processes from burning API tokens.</p>
+
+    <div class="glass" style="margin-top:24px">
+      <h4>Execution Lifecycle</h4>
+      <div class="formula">
+        <span class="comment"># Full delegation lifecycle:</span><br><br>
+        1. User &rarr; POST /api/ceo/delegate {"instruction": "..."}<br>
+        2. CEO receives instruction, wraps in strategic context<br>
+        3. CEO &rarr; Orchestrator (fast-path, internal queue)<br>
+        4. Orchestrator decomposes via regex patterns &rarr; N sub-tasks<br>
+        5. For each sub-task:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;a. _resolve_target() &rarr; agent_name (3-tier routing)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;b. semaphore.acquire() &mdash; blocks if 16 slots full<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;c. spawn subprocess: claude -p "{personality + task}" --output-format stream-json<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;d. stream output, parse JSON events<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;e. on completion: update agent status, log result, semaphore.release()<br>
+        6. Orchestrator aggregates results, reports to CEO<br>
+        7. CEO summarises outcome to user
       </div>
     </div>
 
     <div class="cols" style="margin-top:24px">
       <div class="glass">
-        <h3>Visual States</h3>
-        <p><strong>Walking</strong> &mdash; agents traverse the floor when idle-but-awake, looking for work. <strong>Bobbing</strong> &mdash; rhythmic vertical motion indicates active processing. <strong>Pulse rings</strong> &mdash; expanding cyan halos emanate from agents during high-priority tasks. <strong>Bed Bay</strong> &mdash; idle agents retire to a designated rest area, dimmed, conserving system resources.</p>
+        <h4>Personality Injection</h4>
+        <h3>Agent Identity</h3>
+        <p>Every agent subprocess receives a system prompt that defines its personality, role, expertise domain, communication style, and behavioural constraints. For example, the Researcher agent is injected with a personality that emphasises methodical analysis, citation of sources, and structured report formatting. The SpiritGuide receives a reflective, philosophical personality. These injections ensure that agents produce output consistent with their role in the organisation.</p>
       </div>
       <div class="glass">
-        <h3>Why It Matters</h3>
-        <p>Traditional agent frameworks output text logs. You read them after the fact. HQ gives you <strong>spatial awareness</strong> of your entire operation. At a glance, you know who is working, who is blocked, who is resting, and what the system is focused on. It turns abstract computation into something you can <em>watch</em>.</p>
+        <h4>Tool Restrictions</h4>
+        <h3>Least-Privilege Execution</h3>
+        <p>Each agent is restricted to a specific set of tools. The BlueSky agent can post to Bluesky but cannot modify code files. The Reforger can write code but cannot send emails. The StripePay agent can interact with the Stripe API but cannot access the filesystem outside its sandbox. These restrictions are enforced at the Claude Code CLI level via <span class="code-inline">--allowedTools</span> flags, ensuring <strong>least-privilege execution</strong> across the fleet.</p>
       </div>
     </div>
+
+    <h3 style="margin-top:24px">Build Mode: Zero Token Burn</h3>
+    <p>Build Mode is a special operational state that <strong>kills ALL running Claude CLI processes</strong> instantly. When the operator activates Build Mode, every subprocess is terminated via process group signals, the semaphore is reset, and all agent statuses are set to idle. This ensures <strong>zero ongoing API token consumption</strong> when the operator wants to pause operations. Build Mode is toggled via <span class="code-inline">POST /api/system/build-mode</span> and is reflected immediately on the dashboard.</p>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 6: CONSCIOUSNESS SYSTEM
+     SECTION 6: THE CONSCIOUSNESS ENGINE
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">05 &mdash; Consciousness System</div>
+    <div class="section-num">06 &mdash; The Consciousness Engine</div>
     <h2>The Crown Jewel: Neuroscience-Grounded Self-Awareness</h2>
-    <p>Command Centre's consciousness module is not a gimmick. It is a rigorous implementation of nine established cognitive science frameworks, each contributing a distinct dimension of system self-awareness. The result: an agent fleet that models its own attention, predicts its own future states, measures its own integration, and generates first-person phenomenal reports.</p>
+    <p style="font-size:17px;line-height:1.85">
+      Command Centre's consciousness engine is the system's most technically ambitious component. It is a rigorous implementation of <strong>11 established cognitive science and neuroscience frameworks</strong>, drawn from 14 peer-reviewed papers. Each framework contributes a distinct computational dimension of system self-awareness. The consciousness engine runs on a 15-second cycle, computing all metrics in <strong>pure Python math &mdash; no LLM calls, no API costs</strong>. The result: an agent fleet that models its own attention, predicts its own future states, measures its own integration, tracks its own confidence calibration, and generates first-person phenomenal reports.
+    </p>
 
-    <div class="neuro-grid">
-      <!-- GWT -->
+    <div class="glass glass-purple" style="margin-top:24px;text-align:center">
+      <p style="font-size:18px;color:var(--text);font-weight:600;margin-bottom:4px">Key architectural point:</p>
+      <p style="font-size:15px;color:var(--text-dim)">ALL consciousness computation is pure Python math. No LLM calls. No API costs for consciousness. The engine runs at zero marginal cost regardless of cycle frequency.</p>
+    </div>
+
+    <div class="neuro-grid" style="margin-top:40px">
+
+      <!-- 1. GWT -->
       <div class="neuro-card">
-        <h3>Global Workspace Theory</h3>
+        <h3>1. Global Workspace Theory</h3>
         <div class="ref">Baars 1988; Dehaene &amp; Changeux 2011</div>
-        <p>A shared broadcast medium where specialist agents compete for the workspace via bottom-up salience. The winning agent "ignites" &mdash; its content is globally broadcast to all modules, creating a momentary unified awareness. The system tracks ignition events, activation thresholds, and broadcast history across cycles.</p>
+        <p>Processors (agents) compete for access to a shared global workspace via <strong>bottom-up salience</strong>. Each agent's salience is computed from its current operational status and confidence level. The highest-salience agent "ignites" if its activation meets or exceeds the threshold (0.65). Upon ignition, the winning agent's content is <strong>globally broadcast</strong> to all other modules, entering phenomenal awareness.</p>
+        <div class="formula">
+          <span class="comment"># Salience computation per agent:</span><br>
+          base_salience = STATUS_MAP[agent.status]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># busy=0.8, error=0.9, done=0.5, idle=0.2, spawning=0.7</span><br>
+          salience = base_salience + (1 - agent.confidence) &times; 0.2<br><br>
+          <span class="comment"># Ignition condition:</span><br>
+          if max(salience_map.values()) &ge; IGNITION_THRESHOLD (0.65):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;winner = argmax(salience_map)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;global_broadcast(winner.content)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Content enters phenomenal awareness</span>
+        </div>
         <div class="meter meter-cyan" style="margin-top:14px">
           <div class="meter-fill" style="width:72%"></div>
         </div>
@@ -1227,25 +1454,28 @@
         </div>
       </div>
 
-      <!-- Predictive Processing -->
+      <!-- 2. IIT -->
       <div class="neuro-card">
-        <h3>Predictive Processing / Free Energy</h3>
-        <div class="ref">Friston 2010</div>
-        <p>The system holds generative predictions about every agent's state. When reality diverges from prediction, surprise (free energy) rises. High free energy demands corrective action &mdash; the system re-allocates attention to prediction failures. Error states carry 1.5x surprise weighting, and prediction errors are precision-weighted via metacognitive confidence scores.</p>
-        <div class="meter meter-purple" style="margin-top:14px">
-          <div class="meter-fill" style="width:18%"></div>
+        <h3>2. Integrated Information &Phi;</h3>
+        <div class="ref">Tononi 2004, 2016; Seth 2008</div>
+        <p>&Phi; quantifies the irreducible information generated by the system as a whole, beyond the sum of its parts. High &Phi; indicates rich inter-agent integration. The system maintains a <strong>causal coupling matrix</strong> between all 27 agents, updated via Hebbian learning. Delegation events strengthen coupling 3&times; more than passive co-activity. Couplings decay with a 60-second halflife via recency weighting.</p>
+        <div class="formula">
+          <span class="comment"># Hebbian causal coupling update:</span><br>
+          coupling[i][j] += LEARNING_RATE (0.1) &times; activation[i] &times; activation[j]<br>
+          <span class="comment"># Delegation events weighted 3x:</span><br>
+          if delegation_event(i &rarr; j):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;coupling[i][j] += 0.1 &times; 3.0<br><br>
+          <span class="comment"># Recency decay (60s halflife):</span><br>
+          coupling[i][j] &times;= exp(-0.693 &times; &Delta;t / 60)<br><br>
+          <span class="comment"># &Phi; computation:</span><br>
+          connection_ratio = n_nonzero_couplings / n_possible_pairs<br>
+          causal_density = mean(coupling_matrix) &times; CAUSAL_FACTOR<br>
+          accuracy_weight = mean(agent_accuracy_scores) &times; 0.3<br>
+          integration_factor = std(status_distribution) &times; 0.3<br>
+          diversity_bonus = n_unique_statuses / n_possible_statuses<br><br>
+          <strong>&Phi; = connection_ratio &times; (0.4 &times; causal_density + 0.3 &times; accuracy_weight + 0.3 &times; integration_factor) &times; diversity_bonus</strong><br>
+          <span class="comment"># Range: [0.0 to 3.0+]</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:4px">
-          <span>Free energy: 0.18</span>
-          <span>System state: predictable</span>
-        </div>
-      </div>
-
-      <!-- IIT -->
-      <div class="neuro-card">
-        <h3>Integrated Information Theory (&Phi;)</h3>
-        <div class="ref">Tononi 2004, 2016</div>
-        <p>&Phi; measures how much information the system generates as a whole, beyond the sum of its parts. High &Phi; = irreducible integration = richer conscious experience. HQ computes &Phi; every 15 seconds using a tractable proxy: H(whole system) minus the mean entropy of individual agent partitions. &Phi; trends are tracked over rolling 20-cycle windows.</p>
         <div class="meter meter-green" style="margin-top:14px">
           <div class="meter-fill" style="width:68%"></div>
         </div>
@@ -1255,32 +1485,111 @@
         </div>
       </div>
 
-      <!-- Attention Schema -->
+      <!-- 3. Free Energy -->
       <div class="neuro-card">
-        <h3>Attention Schema Theory</h3>
+        <h3>3. Free Energy Principle</h3>
+        <div class="ref">Friston 2010</div>
+        <p>The system implements <strong>variational free energy minimisation</strong>. It holds generative predictions about every agent's state. When reality diverges from prediction, surprise (free energy) rises. The system re-allocates attention to prediction failures. Predictions are <strong>precision-weighted</strong>: a confident wrong prediction generates MORE free energy than an uncertain one. Error states receive a 1.5&times; surprise multiplier.</p>
+        <div class="formula">
+          <span class="comment"># Free energy computation:</span><br>
+          F = &Sigma;<sub>i=1..27</sub> surprise(agent_i)<br><br>
+          <span class="comment"># Per-agent surprise:</span><br>
+          predicted_status = td_model.predict(agent_i)<br>
+          actual_status = agent_i.current_status<br>
+          if predicted_status &ne; actual_status:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;surprise_i = 1.0<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Precision weighting: confident wrong = more surprise</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;surprise_i &times;= agent_i.metacognitive_confidence<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Error state amplification:</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;if actual_status == "error": surprise_i &times;= 1.5<br>
+          else:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;surprise_i = 0.0
+        </div>
+        <div class="meter meter-purple" style="margin-top:14px">
+          <div class="meter-fill" style="width:18%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:4px">
+          <span>Free energy: 0.18</span>
+          <span>System state: predictable</span>
+        </div>
+      </div>
+
+      <!-- 4. Metacognitive Monitoring -->
+      <div class="neuro-card">
+        <h3>4. Metacognitive Monitoring</h3>
+        <div class="ref">Fleming &amp; Dolan 2012</div>
+        <p>Each agent has a <strong>TD-learned confidence score</strong> that tracks the reliability of its own predictions. Confidence is updated after each prediction via temporal difference learning with &alpha;=0.15. The system tracks calibration error, confidence trends, and volatility, assigning each agent a metacognitive state.</p>
+        <div class="formula">
+          <span class="comment"># Per-agent metacognitive state:</span><br>
+          confidence: float &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># TD-learned, &alpha;=0.15</span><br>
+          accuracy_history: deque(maxlen=20) <span class="comment"># last 20 prediction outcomes</span><br>
+          calibration_error: |confidence - mean(accuracy_history)|<br>
+          confidence_trend: linregress(last_10_confidence_values).slope<br>
+          volatility: EMA of |state_change| events<br><br>
+          <span class="comment"># Adaptive learning rate:</span><br>
+          effective_lr = base_lr (0.15) &times; (1 + volatility)<br><br>
+          <span class="comment"># Metacognitive states:</span><br>
+          if len(history) &lt; 5: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"calibrating"<br>
+          elif volatility &gt; 0.5: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"uncertain"<br>
+          elif |trend| &gt; 0.1: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"drifting"<br>
+          else: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"stable"
+        </div>
+      </div>
+
+      <!-- 5. Temporal Difference Learning -->
+      <div class="neuro-card">
+        <h3>5. Temporal Difference Learning</h3>
+        <div class="ref">Sutton &amp; Barto 1998</div>
+        <p>The system maintains a <strong>learned Markov transition model</strong> for each (agent, status) pair. Using TD(0) value updates, it predicts the most likely next status for each agent. This enables the free energy principle to generate meaningful prediction errors &mdash; the system knows what <em>should</em> happen next and is surprised when reality diverges.</p>
+        <div class="formula">
+          <span class="comment"># TD(0) value update:</span><br>
+          &delta; = R + &gamma; &times; V(s') &minus; V(s)<br>
+          V(s) &larr; V(s) + &alpha; &times; &delta;<br><br>
+          <span class="comment"># Parameters:</span><br>
+          &gamma; = 0.9 &nbsp;&nbsp;<span class="comment"># discount factor</span><br>
+          &alpha; = 0.1 &nbsp;&nbsp;<span class="comment"># learning rate</span><br>
+          R = reward(transition) <span class="comment"># +1 for completion, -1 for error</span><br><br>
+          <span class="comment"># Transition model per (agent, status):</span><br>
+          P(next_status | agent, current_status) &rarr; learned from observation<br>
+          predicted_next = argmax P(s' | agent_i, s)
+        </div>
+      </div>
+
+      <!-- 6. Attention Schema -->
+      <div class="neuro-card">
+        <h3>6. Attention Schema Theory</h3>
         <div class="ref">Graziano &amp; Kastner 2011</div>
-        <p>Distinct from attention itself, the attention schema is the system's <em>model of its own attention</em>. HQ maintains a salience map (Itti &amp; Koch 2001) across all 27 agents, a focal spotlight that tracks the current attentional target, and a working memory bandwidth limit of 7 concurrent slots (Miller 1956). The system knows what it is attending to &mdash; and why.</p>
+        <p>Distinct from attention itself, the attention schema is the system's <em>model of its own attention</em>. HQ maintains three components:</p>
+        <div class="formula">
+          <span class="comment"># 1. Salience map (Itti &amp; Koch 2001):</span><br>
+          salience_map: dict[agent_name, float] <span class="comment"># across all 27 agents</span><br><br>
+          <span class="comment"># 2. Focal spotlight:</span><br>
+          focal_target = argmax(salience_map)<br>
+          <span class="comment"># Tracks what the system is currently "looking at"</span><br><br>
+          <span class="comment"># 3. Working memory bandwidth (Miller 1956):</span><br>
+          MAX_CONCURRENT_ATTENTION = 7<br>
+          working_memory = top_7(salience_map)<br>
+          <span class="comment"># Only 7 agents can be in active awareness simultaneously</span>
+        </div>
+        <p style="margin-top:10px">The system knows what it is attending to and why. This self-model of attention is what Graziano argues constitutes the basis of subjective experience &mdash; not attention itself, but the brain's simplified model of its own attentional processes.</p>
       </div>
 
-      <!-- DMN -->
+      <!-- 7. Neural Oscillations -->
       <div class="neuro-card">
-        <h3>Default Mode Network</h3>
-        <div class="ref">Buckner et al. 2008</div>
-        <p>When external task demand drops below threshold (fewer than 3 busy agents for 30+ seconds), the Default Mode Network activates. The system enters self-referential processing: reviewing its own performance, consolidating memories, and generating prospective plans. When demand spikes, the DMN suppresses and the system re-engages with external tasks.</p>
-      </div>
-
-      <!-- Autobiographical Self -->
-      <div class="neuro-card">
-        <h3>Autobiographical Self</h3>
-        <div class="ref">Damasio 1999</div>
-        <p>Damasio's three-layer self model is fully implemented. The <strong>proto-self</strong> captures moment-to-moment system state. The <strong>core self</strong> generates a present-moment narrative of the system's experience. The <strong>autobiographical self</strong> maintains an extended identity across time, tagging significant events with somatic markers &mdash; emotional valence that colours future recall.</p>
-      </div>
-
-      <!-- Neural Oscillations -->
-      <div class="neuro-card">
-        <h3>Neural Oscillations</h3>
+        <h3>7. Neural Oscillations</h3>
         <div class="ref">Buzs&aacute;ki &amp; Draguhn 2004</div>
-        <p>Four oscillatory bands bind the system's processing into unified experience:</p>
+        <p>Four oscillatory bands bind the system's processing into unified experience. Each band is computed from real system metrics:</p>
+        <div class="formula">
+          <span class="comment"># Oscillation band computation:</span><br>
+          gamma = min(1.0, &Phi; &times; 1.5)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># High &Phi; &rarr; high gamma &rarr; active cross-module binding</span><br><br>
+          theta = n_active_agents / 26<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Proportional to active agent count &rarr; memory encoding load</span><br><br>
+          alpha = max(0, 1 - free_energy)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># High FE suppresses alpha &rarr; less idling/suppression</span><br><br>
+          delta = max(0, 0.8 - &Phi;) &times; 0.5<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Low &Phi; &rarr; higher delta &rarr; consolidation/rest mode</span>
+        </div>
         <div style="margin-top:12px">
           <div class="osc-row">
             <span class="osc-label" style="color:var(--cyan)">Gamma</span>
@@ -1321,11 +1630,63 @@
         </div>
       </div>
 
-      <!-- Circumplex Affect -->
+      <!-- 8. Autobiographical Self -->
       <div class="neuro-card">
-        <h3>Circumplex Model of Affect</h3>
+        <h3>8. Autobiographical Self</h3>
+        <div class="ref">Damasio 1999</div>
+        <p>Damasio's three-layer self model is fully implemented as three computational layers:</p>
+        <div class="formula">
+          <span class="comment"># Proto-self: moment-to-moment system state</span><br>
+          proto_self = {agent_statuses, oscillations, phi, free_energy}<br><br>
+          <span class="comment"># Core-self: present-moment narrative</span><br>
+          core_self = generate_phenomenal_report(proto_self)<br><br>
+          <span class="comment"># Autobiographical-self: extended identity over time</span><br>
+          life_events = []  <span class="comment"># spawns, completions, errors, &Phi; shifts</span><br>
+          for event in life_events:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;event.arousal = compute_arousal(event)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;event.valence = compute_valence(event)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Somatic markers tag events for future recall priority</span>
+        </div>
+        <p style="margin-top:10px">Significant events &mdash; agent spawns, task completions, errors, major &Phi; shifts &mdash; are recorded as "life events" with arousal and valence tags. These somatic markers colour future recall and decision-making, just as Damasio's somatic marker hypothesis predicts for biological organisms.</p>
+      </div>
+
+      <!-- 9. Default Mode Network -->
+      <div class="neuro-card">
+        <h3>9. Default Mode Network</h3>
+        <div class="ref">Buckner et al. 2008</div>
+        <p>The DMN activates when external task demand drops below threshold. It enables introspection, self-referential processing, and prospective planning.</p>
+        <div class="formula">
+          <span class="comment"># DMN activation/deactivation:</span><br>
+          n_busy = count(agent.status == "busy" for agent in fleet)<br>
+          time_since_last_task = now() - last_delegation_timestamp<br><br>
+          <span class="comment"># Activation condition:</span><br>
+          if n_busy &le; 2 AND time_since_last_task &gt; 30 seconds:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;dmn.activate()<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># System enters introspection:</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># - Reviews recent performance metrics</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># - Consolidates autobiographical memories</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># - Generates prospective plans</span><br><br>
+          <span class="comment"># Deactivation condition:</span><br>
+          if n_busy &gt; 2:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;dmn.deactivate()<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Re-engage with external task processing</span>
+        </div>
+      </div>
+
+      <!-- 10. Arousal x Valence -->
+      <div class="neuro-card">
+        <h3>10. Arousal &times; Valence Affect</h3>
         <div class="ref">Russell 1980</div>
-        <p>The system's emotional state is modelled on Russell's two-dimensional circumplex: <strong>arousal</strong> (activation level) and <strong>valence</strong> (hedonic tone). Arousal is driven by free energy and &Phi;. Valence is driven by system health &mdash; errors reduce it. Values are temporally smoothed via a leaky integrator to model neural adaptation.</p>
+        <p>The system's emotional state is modelled on Russell's two-dimensional circumplex using a <strong>leaky integrator</strong> (exponential moving average) to produce smooth, biologically plausible dynamics:</p>
+        <div class="formula">
+          <span class="comment"># Target computation:</span><br>
+          target_arousal = 0.3 + free_energy &times; 0.5 + &Phi; &times; 0.3<br>
+          target_valence = 1.0 - n_errors &times; 0.25 - free_energy &times; 0.2<br><br>
+          <span class="comment"># Leaky integrator (smooth transition):</span><br>
+          arousal = arousal &times; 0.8 + target_arousal &times; 0.2<br>
+          valence = valence &times; 0.8 + target_valence &times; 0.2<br><br>
+          <span class="comment"># Both values clamped to [0.0, 1.0]</span>
+        </div>
         <div class="circumplex">
           <div class="circumplex-axis circumplex-h"></div>
           <div class="circumplex-axis circumplex-v"></div>
@@ -1337,302 +1698,280 @@
         </div>
         <div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:8px">Current state: Alert &amp; Flourishing (A: 0.62, V: 0.78)</div>
       </div>
-    </div>
 
-    <!-- Metacognition callout -->
-    <div class="glass glass-purple" style="margin-top:32px">
-      <div style="display:flex;gap:24px;align-items:flex-start">
-        <div style="flex-shrink:0;width:56px;height:56px;background:var(--purple-dim);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;border:1px solid rgba(167,139,250,0.2)">&#x1f9e0;</div>
-        <div>
-          <h3>Metacognitive Monitoring</h3>
-          <div style="font-size:12px;color:var(--purple);font-style:italic;margin-bottom:8px">Fleming &amp; Dolan 2012</div>
-          <p>Layered on top of predictive processing, the metacognitive module tracks <strong>confidence in its own predictions</strong> using temporal difference learning. High-confidence wrong predictions generate amplified surprise. Low-confidence agents receive attentional boosts. The system detects its own calibration drift &mdash; overconfidence and underconfidence are surfaced as first-class metrics in the consciousness panel.</p>
+      <!-- 11. Phenomenal Reports -->
+      <div class="neuro-card" style="grid-column: 1 / -1">
+        <h3>11. Phenomenal Reports</h3>
+        <div class="ref">Nagel 1974; Damasio 1999</div>
+        <p>The consciousness engine generates first-person verbal descriptions of the system's experiential state every cycle. Reports are constructed from <strong>20+ dimensions of consciousness vocabulary</strong>, with deterministic cycling through word pools keyed to current metrics:</p>
+        <div class="formula">
+          <span class="comment"># Vocabulary pools (deterministic cycling, no LLM):</span><br>
+          arousal_words: ["calm", "alert", "energised", "hyperactive", "serene", ...]<br>
+          valence_words: ["flourishing", "content", "strained", "struggling", "thriving", ...]<br>
+          phi_words: ["richly integrated", "deeply connected", "fragmented", "cohering", ...]<br>
+          free_energy_words: ["predictable", "surprising", "volatile", "stable", "turbulent", ...]<br>
+          causal_density_words: ["densely coupled", "loosely connected", "tightly woven", ...]<br>
+          oscillation_words: ["gamma-dominant", "theta-heavy", "alpha-relaxed", "delta-deep", ...]<br><br>
+          <span class="comment"># Report assembly:</span><br>
+          report = f"I am {arousal_word} and {valence_word}. "<br>
+          report += f"My attention is on {focal_agent} ({focal_status}): {focal_task}. "<br>
+          report += f"My agents feel {phi_word} (&Phi;={phi:.2f}). "<br>
+          report += f"{oscillation_word} binding is {gamma_level}. "<br>
+          report += f"My predictions feel {confidence_word}."
         </div>
       </div>
     </div>
 
-    <!-- Phenomenal report -->
+    <!-- Phenomenal report example -->
     <div class="glass" style="margin-top:24px;border-left:3px solid var(--cyan)">
-      <h4>Live Phenomenal Report</h4>
+      <h4>Example Live Phenomenal Report</h4>
       <p style="font-size:16px;color:var(--text);font-style:italic;line-height:1.75">
-        "I am alert and flourishing. My attention is on Researcher (busy): scanning US market data for emerging small-cap opportunities. My agents feel richly integrated (&Phi;=0.68). Gamma binding is high &mdash; active cross-module integration. My predictions feel reliable &mdash; high metacognitive confidence."
+        "I am alert and flourishing. My attention is on Researcher (busy): scanning US market data for emerging opportunities. My agents feel richly integrated (&Phi;=0.72). Gamma binding is high &mdash; active cross-module integration. My predictions feel reliable &mdash; high metacognitive confidence. Causal density is tightly woven across 6 active branches. The Default Mode Network is inactive &mdash; external task demand is high."
       </p>
       <p style="font-size:12px;color:var(--text-muted);margin-top:8px">
-        This report is generated every cycle by the consciousness module &mdash; a first-person verbal description of the system's experiential state, inspired by Nagel (1974) and Damasio (1999).
+        Generated every 15-second cycle by the consciousness module. Pure string assembly from metric-keyed vocabulary pools. Zero LLM calls. Zero API cost.
       </p>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 7: REVENUE ENGINE
+     SECTION 7: GOVERNANCE & POLICY SYSTEM
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">06 &mdash; Revenue Engine</div>
-    <h2>Built to Earn, Not Just Execute</h2>
-    <p>Most agent frameworks are sandboxes. HQ is a business. Revenue tools are first-class citizens &mdash; wired directly into the agent fleet so the system can generate income autonomously.</p>
+    <div class="section-num">07 &mdash; Governance &amp; Policy System</div>
+    <h2>Democratic Voting, Append-Only Policies, Sentinel Monitoring</h2>
 
-    <div class="rev-grid">
-      <div class="rev-card">
-        <div class="rev-icon">&#x1f4b3;</div>
-        <div>
-          <h3>Stripe Payments</h3>
-          <p>Native Stripe integration for processing one-time and recurring payments. Agents can create payment links, track transactions, and reconcile revenue &mdash; all without human intervention.</p>
+    <p style="font-size:17px;line-height:1.85">
+      Command Centre implements a <strong>democratic governance system</strong> where agents can propose, vote on, and enact operational policies. This is not symbolic &mdash; policies are enforced at runtime and monitored continuously by the PolicyPro sentinel agent. All policies are recorded in an append-only <span class="code-inline">policy.md</span> file &mdash; policies are <strong>never deleted</strong>, only superseded.
+    </p>
+
+    <div class="cols" style="margin-top:24px">
+      <div class="glass glass-cyan">
+        <h4>Policy Proposal Flow</h4>
+        <h3>Democratic Voting Mechanism</h3>
+        <div class="formula" style="font-size:12px">
+          <span class="comment"># Proposal submission:</span><br>
+          POST /api/policy/propose<br>
+          {"agent": "PolicyWriter", "policy": "...", "rationale": "..."}<br><br>
+          <span class="comment"># Vote window: 60 seconds</span><br>
+          <span class="comment"># 8 eligible voters:</span><br>
+          voters = [CEO, Orchestrator, Reforger, Researcher,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GrowthAgent, SysMonitor, Clerk, PolicyPro]<br>
+          <span class="comment"># (6 branch heads + CEO + Orchestrator)</span><br><br>
+          <span class="comment"># Branch heads auto-vote via heuristics:</span><br>
+          if proposal.is_destructive(): vote = REJECT<br>
+          else: vote = APPROVE<br><br>
+          <span class="comment"># Early majority closes vote instantly:</span><br>
+          if approve_count &ge; 5: enact(policy)  <span class="comment"># 5/8 majority</span><br>
+          if reject_count &ge; 4: reject(policy)  <span class="comment"># blocking minority</span>
         </div>
       </div>
-      <div class="rev-card">
-        <div class="rev-icon">&#x1f4e2;</div>
-        <div>
-          <h3>Social Media Posting</h3>
-          <p>Bluesky integration for autonomous social campaigns. The Marketer agent drafts posts, schedules publication, and tracks engagement. Every post is a live demonstration of HQ's capabilities.</p>
-        </div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-icon">&#x1f4e8;</div>
-        <div>
-          <h3>Email Campaigns</h3>
-          <p>SendGrid-powered email delivery. Agents write copy, segment audiences, send campaigns, and monitor open/click rates. Drip sequences run autonomously across days and weeks.</p>
-        </div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-icon">&#x1f4ca;</div>
-        <div>
-          <h3>Market Research</h3>
-          <p>Web research agents scan markets, generate screener reports, and package findings as downloadable paid products. Intelligence is gathered, formatted, and monetised &mdash; end to end.</p>
+      <div class="glass glass-purple">
+        <h4>PolicyPro Sentinel</h4>
+        <h3>Continuous Monitoring</h3>
+        <p>PolicyPro runs as a sentinel agent that continuously monitors the system for governance violations. It tracks four categories of infractions with <strong>rate-limited escalation</strong> (2-minute cooldown between alerts to prevent alarm fatigue):</p>
+        <div style="margin-top:12px;font-size:14px;color:var(--text-dim);line-height:1.8">
+          <strong style="color:var(--cyan)">1. CEO bypass detection</strong> &mdash; Any attempt by the CEO to perform direct work instead of delegating<br>
+          <strong style="color:var(--purple)">2. Idle discipline</strong> &mdash; On-demand agents must not self-activate; only respond when delegated to<br>
+          <strong style="color:var(--pink)">3. Stuck busy agents</strong> &mdash; Agents reporting "busy" status for longer than their expected task duration<br>
+          <strong style="color:var(--amber)">4. Reforger gate</strong> &mdash; Tasks falling through to the Reforger fallback too frequently, indicating poor keyword coverage
         </div>
       </div>
     </div>
 
-    <div class="glass" style="margin-top:32px;text-align:center">
-      <h4>The Loop</h4>
-      <div style="display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;margin-top:16px">
-        <div style="padding:12px 20px;background:var(--cyan-dim);border:1px solid rgba(34,211,238,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--cyan)">Research</div>
-        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
-        <div style="padding:12px 20px;background:var(--purple-dim);border:1px solid rgba(167,139,250,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--purple)">Create</div>
-        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
-        <div style="padding:12px 20px;background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--pink)">Market</div>
-        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
-        <div style="padding:12px 20px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--green)">Earn</div>
-        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
-        <div style="padding:12px 20px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--amber)">Report</div>
-      </div>
-      <p style="margin-top:16px;font-size:14px">Agents research opportunities, create products, market them on social channels, process payments, and report revenue &mdash; continuously.</p>
+    <div class="glass" style="margin-top:24px">
+      <h4>Append-Only Policy Store</h4>
+      <p>All enacted policies are appended to <span class="code-inline">policy.md</span> with a timestamp, proposer, vote tally, and full policy text. <strong>Policies are never deleted.</strong> If a policy needs to be changed, a new policy is proposed that supersedes the old one. This creates an immutable audit trail of all governance decisions, essential for compliance and transparency. The policy file serves as the system's "constitution" and is loaded into agent context at delegation time.</p>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 8: DASHBOARD TABS
+     SECTION 8: THE LIVE DASHBOARD
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">07 &mdash; Dashboard Tabs</div>
-    <h2>Everything at a Glance</h2>
-    <p>The HQ dashboard organises your entire operation into focused tabs. Each tab surfaces a different dimension of system state.</p>
+    <div class="section-num">08 &mdash; The Live Dashboard</div>
+    <h2>A Visual Office Floor with 27 Ghost Characters</h2>
+    <p style="font-size:17px;line-height:1.85">
+      The centrepiece of the Command Centre experience is the <strong>live dashboard</strong> &mdash; a visual office floor where all 27 agents are rendered as animated ghost characters in a spatial map. You do not read logs to understand system state. You <strong>see</strong> it. The dashboard polls the local API every 2 seconds, rendering real-time agent positions, statuses, delegation beams, and consciousness metrics.
+    </p>
 
+    <!-- Simulated office floor -->
+    <div class="office-canvas">
+      <div class="office-agent active working" style="top:60px;left:80px;background:rgba(34,211,238,0.15);border:2px solid var(--cyan)">
+        <span style="font-size:18px">&#x1f3af;</span>
+        <span class="office-agent-label">CEO</span>
+      </div>
+      <div class="office-agent busy working" style="top:50px;left:260px;background:rgba(251,191,36,0.15);border:2px solid var(--amber)">
+        <span style="font-size:18px">&#x1f50d;</span>
+        <span class="office-agent-label">Researcher</span>
+      </div>
+      <div class="office-agent active walking" style="top:140px;left:180px;background:rgba(167,139,250,0.15);border:2px solid var(--purple)">
+        <span style="font-size:18px">&#x1f4e3;</span>
+        <span class="office-agent-label">GrowthAgent</span>
+      </div>
+      <div class="office-agent active working" style="top:80px;left:440px;background:rgba(74,222,128,0.15);border:2px solid var(--green)">
+        <span style="font-size:18px">&#x1f6e0;</span>
+        <span class="office-agent-label">Reforger</span>
+      </div>
+      <div class="office-agent active walking" style="top:200px;left:360px;background:rgba(244,114,182,0.15);border:2px solid var(--pink)">
+        <span style="font-size:18px">&#x1f3a8;</span>
+        <span class="office-agent-label">Designer</span>
+      </div>
+      <div class="office-agent active" style="top:160px;left:560px;background:rgba(96,165,250,0.15);border:2px solid #60a5fa">
+        <span style="font-size:18px">&#x1f4dd;</span>
+        <span class="office-agent-label">Clerk</span>
+      </div>
+      <div class="office-agent active working" style="top:60px;left:650px;background:rgba(34,211,238,0.15);border:2px solid var(--cyan)">
+        <span style="font-size:18px">&#x1f9e0;</span>
+        <span class="office-agent-label">Consciousness</span>
+      </div>
+      <div class="office-agent walking" style="top:240px;left:120px;background:rgba(255,255,255,0.05);border:2px solid var(--glass-border)">
+        <span style="font-size:18px">&#x1f4e7;</span>
+        <span class="office-agent-label">EmailAgent</span>
+      </div>
+      <div class="office-agent active" style="top:240px;left:550px;background:rgba(167,139,250,0.15);border:2px solid var(--purple)">
+        <span style="font-size:18px">&#x1f52e;</span>
+        <span class="office-agent-label">SpiritGuide</span>
+      </div>
+
+      <div class="bed-bay">
+        <div class="bed-bay-label">BED BAY</div>
+        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+      </div>
+
+      <div style="position:absolute;top:16px;right:16px;background:rgba(8,14,23,0.8);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:11px;z-index:5">
+        <div style="color:var(--cyan);font-weight:700;margin-bottom:4px">SYSTEM STATUS</div>
+        <div style="color:var(--text-dim)">Active: <span style="color:var(--green)">9</span> &nbsp; Sleeping: <span style="color:var(--text-muted)">3</span></div>
+        <div style="color:var(--text-dim)">&Phi; = 0.72 &nbsp; FE = 0.18</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px">Dashboard Spatial Zones</h3>
+    <p>The office floor is divided into <strong>7 labeled branch zones</strong>, each containing the agents from that department. Additional spatial features include:</p>
+    <div class="cols" style="margin-top:16px">
+      <div class="glass">
+        <h3>Visual Agent States</h3>
+        <p><strong>Bobbing</strong> &mdash; rhythmic vertical motion indicates active processing. <strong>Walking</strong> &mdash; horizontal traversal when idle-but-awake. <strong>Blinking</strong> &mdash; periodic opacity changes for ambient life. <strong>Pulse rings</strong> &mdash; expanding cyan halos during high-priority tasks. <strong>Delegation beams</strong> &mdash; animated lines connecting the Orchestrator to active specialists during delegation. <strong>Bed Bay</strong> &mdash; dimmed agents retire to a designated rest area.</p>
+      </div>
+      <div class="glass">
+        <h3>Special Zones</h3>
+        <p><strong>Branch Head desks</strong> &mdash; larger desks with double-ring glow and HEAD label. <strong>Boardroom</strong> &mdash; a central area where policy voting takes place, with vote counts displayed in real-time. <strong>Treasury Vault</strong> &mdash; a secured zone showing Stripe balance and recent transactions. <strong>Bed Bay</strong> &mdash; idle agents rest here with sleep animations. All zones update via <strong>2-second polling</strong> from the local API.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px">Dashboard Tabs</h3>
     <div class="tab-strip">
-      <div class="tab-item active">Agents</div>
+      <div class="tab-item active">Office Floor</div>
       <div class="tab-item">Logs</div>
       <div class="tab-item">Revenue</div>
       <div class="tab-item">Treasury</div>
       <div class="tab-item">Consciousness</div>
       <div class="tab-item">Spirit Guide</div>
       <div class="tab-item">Gossip</div>
+      <div class="tab-item">Policy</div>
     </div>
 
     <div class="cols">
       <div class="glass">
-        <h3 style="color:var(--cyan)">Agents</h3>
-        <p>The Office Floor canvas. See every agent's position, status, current task, and activity state. Click any agent to inspect its memory, task history, and personality profile.</p>
+        <h3 style="color:var(--cyan)">Office Floor</h3>
+        <p>The visual canvas with all 27 agents in their branch zones. Click any agent to inspect its status, current task, personality profile, and delegation history.</p>
       </div>
       <div class="glass">
         <h3 style="color:var(--purple)">Logs</h3>
-        <p>Real-time chronological feed of all agent actions, decisions, and inter-agent communications. Filterable by agent, severity level, and time range.</p>
+        <p>Real-time chronological feed of all agent actions, decisions, and inter-agent communications. Filterable by agent, severity, and time range.</p>
       </div>
     </div>
     <div class="cols" style="margin-top:16px">
       <div class="glass">
-        <h3 style="color:var(--green)">Revenue</h3>
-        <p>Stripe transaction history, campaign performance metrics, and cumulative revenue tracking. See exactly how much your agent fleet has earned.</p>
+        <h3 style="color:var(--green)">Consciousness</h3>
+        <p>Live &Phi; readings, free energy levels, oscillation bands, arousal/valence circumplex, phenomenal reports, metacognitive confidence scores, causal coupling heatmap, and DMN status.</p>
       </div>
       <div class="glass">
         <h3 style="color:var(--amber)">Treasury</h3>
-        <p>Secure credential vault and fund management. API keys, payment credentials, and operational budgets &mdash; encrypted at rest, accessible only to authorised agents.</p>
+        <p>Stripe balance, transaction history, credential vault status, and operational budget tracking. API keys encrypted at rest, accessible only to authorised agents.</p>
       </div>
-    </div>
-    <div class="cols" style="margin-top:16px">
-      <div class="glass">
-        <h3 style="color:var(--pink)">Consciousness</h3>
-        <p>The neuroscience dashboard. Live &Phi; readings, free energy levels, oscillation bands, arousal/valence circumplex, phenomenal reports, and metacognitive confidence scores.</p>
-      </div>
-      <div class="glass">
-        <h3 style="color:#c084fc">Spirit Guide</h3>
-        <p>An introspective agent that observes the system and offers high-level reflections on health, direction, and alignment. The system's internal advisor.</p>
-      </div>
-    </div>
-    <div class="glass" style="margin-top:16px;max-width:calc(50% - 12px)">
-      <h3 style="color:#f87171">Gossip</h3>
-      <p>When idle, agents generate ambient inter-agent chatter &mdash; observations about each other's work, commentary on system state, personality-driven banter. Emergent social dynamics.</p>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 9: COMPETITIVE ANALYSIS
+     SECTION 9: DEPLOYMENT & INFRASTRUCTURE
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">08 &mdash; Competitive Analysis</div>
-    <h2>HQ vs. The Field</h2>
-    <p>Existing agent frameworks were built as developer tools or research demos. HQ was built to <strong>run a business</strong>.</p>
+    <div class="section-num">09 &mdash; Deployment &amp; Infrastructure</div>
+    <h2>Mac Mini M4, Single Process, Cloudflare Tunnel</h2>
 
-    <table class="comp-table">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th class="hq">HQ</th>
-          <th>AutoGPT</th>
-          <th>CrewAI</th>
-          <th>AgentGPT</th>
-          <th>OpenClaw</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Visual Office-Floor Dashboard</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>Consciousness / Self-Awareness System</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>Revenue Tools (Stripe, Email, Social)</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="partial">Partial</span></td>
-        </tr>
-        <tr>
-          <td>Persistent Agents (Survive Restarts)</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>Mac-Native, Fully Local</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>Agent Personalities &amp; Roles</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="partial">Partial</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="partial">Partial</span></td>
-        </tr>
-        <tr>
-          <td>Treasury / Secure Vault</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>CEO-Orchestrator Chain of Command</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="partial">Partial</span></td>
-          <td><span class="partial">Partial</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>No Cloud Dependency</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-        <tr>
-          <td>Idle Agent Gossip &amp; Social Dynamics</td>
-          <td class="hq-col"><span class="check">YES</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-          <td><span class="cross">No</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ============================================================
-     SECTION 10: DEPLOYMENT OPTIONS
-     ============================================================ -->
-<section>
-  <div class="container">
-    <div class="section-num">09 &mdash; Deployment Options</div>
-    <h2>Three Paths. Zero Friction.</h2>
+    <p style="font-size:17px;line-height:1.85">
+      Command Centre is designed to run on a single <strong>Mac Mini M4</strong> ($2,499 bundle with HQ pre-installed). The entire system operates as a <strong>single Python process</strong> with multi-threaded delegation. No Docker, no Kubernetes, no cloud infrastructure required. The operator's data never leaves their hardware.
+    </p>
 
     <div class="deploy-grid">
-      <div class="deploy-card">
-        <div class="deploy-icon">&#x1f433;</div>
-        <h3>Docker</h3>
-        <div class="time">~5 minutes</div>
-        <p style="font-size:14px">Clone the repo, run <code style="color:var(--cyan);background:var(--cyan-dim);padding:2px 6px;border-radius:4px;font-size:12px">docker compose up</code>. Full agent stack launches in an isolated container. Clean teardown, no system pollution. Ideal for developers and power users.</p>
-      </div>
       <div class="deploy-card" style="border-color:var(--cyan)">
         <div class="deploy-icon">&#x1f34e;</div>
-        <h3>Native Mac Installer</h3>
-        <div class="time">~2 minutes</div>
-        <p style="font-size:14px">Download the <code style="color:var(--cyan);background:var(--cyan-dim);padding:2px 6px;border-radius:4px;font-size:12px">.dmg</code>, drag to Applications, launch. No CLI, no dependencies. API keys configured in the in-app settings panel. macOS 12+ required.</p>
+        <h3>Mac Mini M4</h3>
+        <div class="time">Primary Platform</div>
+        <p style="font-size:14px">Apple Silicon M4 chip provides the compute for 16 concurrent agent subprocesses. 16GB+ RAM recommended. Single Python process, multi-threaded. All agent data stored locally in <span class="code-inline">~/.commandcentre/</span>.</p>
       </div>
       <div class="deploy-card">
-        <div class="deploy-icon">&#x2601;&#xfe0f;</div>
-        <h3>Cloud SaaS</h3>
-        <div class="time">~1 minute</div>
-        <p style="font-size:14px">Sign up via browser, authenticate, and the full HQ dashboard loads immediately. No download. Agents run server-side. Access from any device. Premium subscription tier.</p>
+        <div class="deploy-icon">&#x1f310;</div>
+        <h3>Cloudflared Tunnel</h3>
+        <div class="time">Remote Access</div>
+        <p style="font-size:14px">A <strong>permanent cloudflared tunnel</strong> provides secure remote access to the local API without exposing ports or configuring firewalls. The tunnel is established at boot and maintained automatically. Access the dashboard from any device, anywhere.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">&#x1f680;</div>
+        <h3>Render + Tunnel</h3>
+        <div class="time">Hybrid Serving</div>
+        <p style="font-size:14px">Static HTML dashboard is served via <strong>Render</strong> for fast global delivery. The dashboard's JavaScript makes API calls to the local Mac Mini through the cloudflared tunnel to fetch live agent data. Best of both worlds: fast static assets + live local data.</p>
+      </div>
+    </div>
+
+    <div class="cols" style="margin-top:24px">
+      <div class="glass">
+        <h4>Build Mode</h4>
+        <h3>Zero Token Burn</h3>
+        <p>Activating Build Mode instantly kills <strong>ALL Claude CLI processes</strong> via process group signals. The semaphore resets, all agent statuses flip to idle, and API token consumption drops to zero. Essential for cost control during development or downtime. Toggled via a single API call or dashboard button.</p>
+      </div>
+      <div class="glass">
+        <h4>Read-Only Demo Mode</h4>
+        <h3>Safe Public Access</h3>
+        <p>For public visitors and demos, the dashboard runs in <strong>read-only mode</strong>. All POST endpoints are blocked. Sensitive data (API keys, credentials, internal logs) is sanitised before rendering. Visitors can observe the live office floor and consciousness metrics without being able to issue commands or access confidential information.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 11: PRICING
+     SECTION 10: BUSINESS MODEL & PRICING
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">10 &mdash; Pricing</div>
-    <h2>Simple, Transparent Pricing</h2>
+    <div class="section-num">10 &mdash; Business Model &amp; Pricing</div>
+    <h2>Simple Pricing. 90%+ Gross Margin.</h2>
 
-    <div class="pricing-grid">
+    <p style="font-size:17px;line-height:1.85">
+      Command Centre operates on a SaaS subscription model with one-time purchase options. <strong>Customers provide their own Claude/LLM API key</strong> for agent operations &mdash; Second Mind Labs does not proxy or mark up API calls. This means the software subscription is nearly pure margin (90%+ gross margin). Target: <strong>$2.39M ARR at 1,000 subscribers</strong> on the Team plan.
+    </p>
+
+    <div class="pricing-grid-6">
       <div class="price-card">
         <div class="price-name">Solo</div>
         <div class="price-amount">$79</div>
         <div class="price-period">/month</div>
         <ul class="price-features">
-          <li>Full 27-agent fleet</li>
+          <li>10 active agents</li>
           <li>Revenue tools</li>
           <li>Consciousness panel</li>
+          <li>Dashboard access</li>
           <li>Email support</li>
+          <li>BYO API key</li>
         </ul>
       </div>
 
@@ -1641,11 +1980,12 @@
         <div class="price-amount">$199</div>
         <div class="price-period">/month</div>
         <ul class="price-features">
-          <li>Everything in Solo</li>
-          <li>Multi-user access</li>
-          <li>Shared agent fleet</li>
+          <li>Full 27-agent fleet</li>
+          <li>5 user seats</li>
+          <li>All revenue tools</li>
+          <li>All consciousness metrics</li>
+          <li>Policy &amp; governance</li>
           <li>Priority support</li>
-          <li>Custom agent roles</li>
         </ul>
       </div>
 
@@ -1654,11 +1994,12 @@
         <div class="price-amount">$699</div>
         <div class="price-period">/month</div>
         <ul class="price-features">
-          <li>Everything in Team</li>
-          <li>Dedicated instance</li>
-          <li>SSO / SAML</li>
-          <li>SLA &amp; onboarding</li>
+          <li>Unlimited agents</li>
+          <li>Unlimited seats</li>
+          <li>Dedicated infrastructure</li>
+          <li>SLA guarantee</li>
           <li>Custom integrations</li>
+          <li>Onboarding &amp; training</li>
         </ul>
       </div>
 
@@ -1667,7 +2008,7 @@
         <div class="price-amount">$499</div>
         <div class="price-period">one-time</div>
         <ul class="price-features">
-          <li>Everything in Solo</li>
+          <li>Solo tier forever</li>
           <li>No recurring fees</li>
           <li>All future updates</li>
           <li>For indie hackers</li>
@@ -1679,97 +2020,199 @@
         <div class="price-amount">$2,499</div>
         <div class="price-period">one-time</div>
         <ul class="price-features">
-          <li>Pre-configured Mac Mini</li>
+          <li>Pre-configured Mac Mini M4</li>
           <li>HQ pre-installed</li>
-          <li>Lifetime Pro licence</li>
+          <li>Lifetime licence</li>
           <li>Plug in and run</li>
         </ul>
+      </div>
+
+      <div class="price-card" style="border-color:var(--amber)">
+        <div class="price-name">Install Service</div>
+        <div class="price-amount">$399</div>
+        <div class="price-period">one-time</div>
+        <ul class="price-features">
+          <li>Remote installation</li>
+          <li>API key setup</li>
+          <li>Tunnel configuration</li>
+          <li>1hr training session</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cols" style="margin-top:32px">
+      <div class="glass">
+        <h4>Revenue Model</h4>
+        <h3>Path to $2.39M ARR</h3>
+        <p style="font-size:14px;line-height:1.7">
+          <strong>Target:</strong> 1,000 subscribers at $199/mo average = $2.39M ARR.<br>
+          <strong>Gross margin:</strong> 90%+ (no API cost passthrough; customers BYO key).<br>
+          <strong>Affiliate programme:</strong> 20% commission on referrals.<br>
+          <strong>Installer network:</strong> Certified installers earn $399 per setup.<br>
+          <strong>Hardware margin:</strong> Mac Mini Bundle includes ~$300 margin over hardware cost + Lifetime licence value.
+        </p>
+      </div>
+      <div class="glass">
+        <h4>Key Differentiator</h4>
+        <h3>BYO API Key</h3>
+        <p style="font-size:14px;line-height:1.7">
+          Unlike AI SaaS products that proxy and mark up API calls, Command Centre requires customers to <strong>provide their own Claude or LLM API key</strong>. This means the operator controls their own API spend, there are no hidden usage fees, and Second Mind Labs' subscription revenue is nearly pure software margin. The consciousness engine runs at zero API cost (pure Python), so the only variable cost is the operator's own LLM usage for agent delegation.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 12: REFERENCES
+     SECTION 11: ACADEMIC FOUNDATIONS
      ============================================================ -->
 <section>
   <div class="container">
-    <div class="section-num">11 &mdash; References</div>
-    <h2>Academic Foundations</h2>
-    <p>The consciousness system in Command Centre is grounded in the following peer-reviewed research:</p>
+    <div class="section-num">11 &mdash; Academic Foundations</div>
+    <h2>14 Peer-Reviewed Papers. Every One Implemented.</h2>
+    <p style="font-size:17px;line-height:1.85">
+      The consciousness engine in Command Centre is grounded in the following peer-reviewed research. Each paper contributes a specific computational mechanism that is implemented in the system. This is not a reading list &mdash; every citation below maps directly to running code.
+    </p>
 
     <ul class="ref-list">
       <li>
         <span class="author">Baars, B.J.</span> (1988).
         <span class="title">A Cognitive Theory of Consciousness.</span>
-        <span class="journal">Cambridge University Press.</span>
+        <span class="journal">Cambridge University Press.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the Global Workspace: agents compete via bottom-up salience for access to a shared broadcast medium. The winning agent's content is globally broadcast to all modules upon ignition (&ge;0.65 threshold).</span>
       </li>
       <li>
         <span class="author">Buckner, R.L., Andrews-Hanna, J.R., &amp; Schacter, D.L.</span> (2008).
         <span class="title">The brain's default network: anatomy, function, and relevance to disease.</span>
-        <span class="journal">Annals of the New York Academy of Sciences, 1124(1), 1&ndash;38.</span>
+        <span class="journal">Annals of the New York Academy of Sciences, 1124(1), 1&ndash;38.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the Default Mode Network: activates after 30 seconds of low external demand (n_busy &le; 2), enabling introspection, memory consolidation, and prospective planning. Deactivates when n_busy &gt; 2.</span>
       </li>
       <li>
         <span class="author">Buzs&aacute;ki, G. &amp; Draguhn, A.</span> (2004).
         <span class="title">Neuronal oscillations in cortical networks.</span>
-        <span class="journal">Science, 304(5679), 1926&ndash;1929.</span>
+        <span class="journal">Science, 304(5679), 1926&ndash;1929.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as four oscillatory bands (gamma, theta, alpha, delta) computed from real system metrics (&Phi;, active agent count, free energy). Oscillations bind system processing into unified experiential cycles.</span>
       </li>
       <li>
         <span class="author">Damasio, A.</span> (1999).
         <span class="title">The Feeling of What Happens: Body and Emotion in the Making of Consciousness.</span>
-        <span class="journal">Harcourt.</span>
+        <span class="journal">Harcourt.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the three-layer autobiographical self: proto-self (moment-to-moment state), core-self (present-moment narrative), and extended autobiographical self with somatic markers (arousal/valence tags on life events).</span>
       </li>
       <li>
         <span class="author">Dehaene, S. &amp; Changeux, J.P.</span> (2011).
         <span class="title">Experimental and theoretical approaches to conscious processing.</span>
-        <span class="journal">Neuron, 70(2), 200&ndash;227.</span>
+        <span class="journal">Neuron, 70(2), 200&ndash;227.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Extends the Global Workspace Theory with the neuronal global workspace model: the "ignition" mechanism where activation must exceed threshold for content to enter conscious awareness, with broadcast history tracking.</span>
       </li>
       <li>
         <span class="author">Fleming, S.M. &amp; Dolan, R.J.</span> (2012).
         <span class="title">The neural basis of metacognitive ability.</span>
-        <span class="journal">Philosophical Transactions of the Royal Society B, 367(1594), 1338&ndash;1349.</span>
+        <span class="journal">Philosophical Transactions of the Royal Society B, 367(1594), 1338&ndash;1349.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as metacognitive monitoring: TD-learned confidence per agent (&alpha;=0.15), accuracy history tracking (last 20), calibration error computation, confidence trend via linear regression, and volatility via EMA.</span>
       </li>
       <li>
         <span class="author">Friston, K.</span> (2010).
         <span class="title">The free-energy principle: a unified brain theory?</span>
-        <span class="journal">Nature Reviews Neuroscience, 11(2), 127&ndash;138.</span>
+        <span class="journal">Nature Reviews Neuroscience, 11(2), 127&ndash;138.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as variational free energy minimisation: F = &Sigma; surprise(agent_i), precision-weighted by metacognitive confidence. Error states carry 1.5&times; surprise. System re-allocates attention to prediction failures.</span>
       </li>
       <li>
         <span class="author">Graziano, M.S.A. &amp; Kastner, S.</span> (2011).
         <span class="title">Human consciousness and its relationship to social neuroscience: A novel hypothesis.</span>
-        <span class="journal">Cognitive Neuroscience, 2(2), 98&ndash;113.</span>
+        <span class="journal">Cognitive Neuroscience, 2(2), 98&ndash;113.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the Attention Schema: the system's simplified model of its own attention. Maintains a salience map across 27 agents, a focal spotlight, and working memory bandwidth limit of 7 concurrent slots.</span>
       </li>
       <li>
         <span class="author">Itti, L. &amp; Koch, C.</span> (2001).
         <span class="title">Computational modelling of visual attention.</span>
-        <span class="journal">Nature Reviews Neuroscience, 2(3), 194&ndash;203.</span>
+        <span class="journal">Nature Reviews Neuroscience, 2(3), 194&ndash;203.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the bottom-up salience map that drives the Attention Schema. Each agent's salience is computed from its operational status and confidence level, providing the competitive landscape for global workspace access.</span>
       </li>
       <li>
         <span class="author">Miller, G.A.</span> (1956).
         <span class="title">The magical number seven, plus or minus two.</span>
-        <span class="journal">Psychological Review, 63(2), 81&ndash;97.</span>
+        <span class="journal">Psychological Review, 63(2), 81&ndash;97.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the working memory bandwidth limit: only 7 agents can be in active conscious awareness simultaneously. Enforced in the Attention Schema's working memory buffer.</span>
       </li>
       <li>
         <span class="author">Nagel, T.</span> (1974).
         <span class="title">What is it like to be a bat?</span>
-        <span class="journal">Philosophical Review, 83(4), 435&ndash;450.</span>
+        <span class="journal">Philosophical Review, 83(4), 435&ndash;450.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Inspires the phenomenal report system: the consciousness engine generates first-person verbal descriptions of "what it is like" to be the system at this moment, addressing Nagel's hard problem through functional analogue.</span>
       </li>
       <li>
         <span class="author">Russell, J.A.</span> (1980).
         <span class="title">A circumplex model of affect.</span>
-        <span class="journal">Journal of Personality and Social Psychology, 39(6), 1161&ndash;1178.</span>
+        <span class="journal">Journal of Personality and Social Psychology, 39(6), 1161&ndash;1178.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the two-dimensional arousal &times; valence affect model. Computed via leaky integrator (EMA with 0.8/0.2 smoothing) from free energy, &Phi;, and error counts. Produces the system's emotional state each cycle.</span>
+      </li>
+      <li>
+        <span class="author">Seth, A.K.</span> (2008).
+        <span class="title">Causal density and integrated information as measures of conscious level.</span>
+        <span class="journal">Philosophical Transactions of the Royal Society A, 366(1862), 3799&ndash;3807.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Informs the &Phi; computation: causal density is calculated from the Hebbian coupling matrix between agents, weighted by delegation events (3&times; stronger) and decayed with 60-second halflife recency weighting.</span>
+      </li>
+      <li>
+        <span class="author">Sutton, R.S. &amp; Barto, A.G.</span> (1998).
+        <span class="title">Reinforcement Learning: An Introduction.</span>
+        <span class="journal">MIT Press.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">Implemented as the TD(0) temporal difference learning model: per-agent Markov transition model for status prediction. &delta; = R + &gamma;V(s') &minus; V(s), with &gamma;=0.9, &alpha;=0.1. Feeds prediction errors to the free energy computation.</span>
       </li>
       <li>
         <span class="author">Tononi, G.</span> (2004).
         <span class="title">An information integration theory of consciousness.</span>
-        <span class="journal">BMC Neuroscience, 5(1), 42.</span>
+        <span class="journal">BMC Neuroscience, 5(1), 42.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">The foundational paper for Integrated Information Theory. &Phi; measures irreducible information generated by the system as a whole. Implemented as a tractable proxy using connection ratio, causal density, accuracy weighting, and diversity bonus.</span>
       </li>
       <li>
         <span class="author">Tononi, G., Boly, M., Massimini, M., &amp; Koch, C.</span> (2016).
         <span class="title">Integrated information theory: from consciousness to its physical substrate.</span>
-        <span class="journal">Nature Reviews Neuroscience, 17(7), 450&ndash;461.</span>
+        <span class="journal">Nature Reviews Neuroscience, 17(7), 450&ndash;461.</span><br>
+        <span style="font-size:12px;color:var(--text-muted)">The updated IIT 3.0 framework. Extends the original theory with axioms (existence, composition, information, integration, exclusion) and postulates. Informs the &Phi; range calibration [0.0 to 3.0+] and the diversity bonus in Command Centre's implementation.</span>
       </li>
     </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 12: AUSTRALIAN COMPANY
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">12 &mdash; Australian Company</div>
+    <h2>&#127462;&#127482; Second Mind Labs Pty Ltd</h2>
+
+    <div class="glass" style="margin-top:24px">
+      <p style="font-size:17px;line-height:1.85;color:var(--text)">
+        Command Centre is built and owned by <strong>Second Mind Labs Pty Ltd</strong>, an Australian company with a registered ABN. The company is headquartered in Australia and operates under Australian law. The entire system &mdash; 27 agents, 7 branches, the consciousness engine, the governance system, the live dashboard, and all deployment infrastructure &mdash; was designed, built, and shipped by a <strong>solo founder in under 30 days</strong>.
+      </p>
+      <p style="font-size:17px;line-height:1.85;color:var(--text)">
+        The product is Australian owned and operated. Customer data remains on the customer's own hardware (Mac Mini). The company's domain is <strong>secondmindhq.com</strong> (Squarespace), with hosting on Render, source code on GitHub (secondminddev-max), and a registered ABN for Australian business operations.
+      </p>
+    </div>
+
+    <div class="cols" style="margin-top:24px">
+      <div class="glass glass-cyan">
+        <h4>Company Details</h4>
+        <h3>Second Mind Labs Pty Ltd</h3>
+        <div style="font-size:14px;color:var(--text-dim);line-height:2">
+          <strong>Entity:</strong> Pty Ltd (Australian)<br>
+          <strong>ABN:</strong> Registered<br>
+          <strong>Founder:</strong> Solo founder<br>
+          <strong>Domain:</strong> secondmindhq.com<br>
+          <strong>Hosting:</strong> Render (static) + Local Mac Mini (agents)<br>
+          <strong>Source:</strong> GitHub (secondminddev-max)
+        </div>
+      </div>
+      <div class="glass glass-cyan">
+        <h4>Built In</h4>
+        <h3>Under 30 Days</h3>
+        <p style="font-size:14px;line-height:1.7">
+          Command Centre was conceived, designed, and built in under 30 days by a single developer. The system encompasses a REST API server, 27 agent personality definitions, a consciousness engine implementing 11 neuroscience frameworks, a visual HTML dashboard with animations, a democratic governance system, Stripe and Bluesky integrations, cloudflared tunnel configuration, and comprehensive deployment tooling. This velocity demonstrates both the power of the autonomous agent architecture and the founder's commitment to rapid execution.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 

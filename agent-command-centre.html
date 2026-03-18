@@ -284,7 +284,7 @@
     .agent-card.status-busy    { background: linear-gradient(100deg, rgba(0,200,255,0.06) 0%, var(--panel2) 55%); }
     .agent-card.status-error   { background: linear-gradient(100deg, rgba(255,51,85,0.08)  0%, var(--panel2) 55%); }
     .agent-card.status-waiting { background: linear-gradient(100deg, rgba(255,215,0,0.06) 0%, var(--panel2) 55%); }
-    .agent-card.status-idle    { background: linear-gradient(100deg, rgba(255,255,255,0.02) 0%, var(--panel2) 55%); }
+    .agent-card.status-idle    { background: linear-gradient(100deg, rgba(154,180,212,0.04) 0%, var(--panel2) 55%); }
     .agent-card.status-active.selected  { background: linear-gradient(100deg, rgba(0,255,136,0.08) 0%, rgba(0,200,255,0.05) 100%); }
     .agent-card.status-busy.selected    { background: linear-gradient(100deg, rgba(0,200,255,0.08) 0%, rgba(0,200,255,0.05) 100%); }
     .agent-card.status-error.selected   { background: linear-gradient(100deg, rgba(255,51,85,0.10)  0%, rgba(0,200,255,0.05) 100%); }
@@ -471,6 +471,7 @@
     .status-busy    .ac-task { border-left-color: rgba(0,200,255,0.55); background: rgba(0,200,255,0.05); }
     .status-error   .ac-task { border-left-color: rgba(255,51,85,0.6);  background: rgba(255,51,85,0.05); }
     .status-waiting .ac-task { border-left-color: rgba(255,215,0,0.55); background: rgba(255,215,0,0.04); }
+    .status-idle    .ac-task { border-left-color: rgba(154,180,212,0.35); background: rgba(154,180,212,0.03); text-shadow: 0 0 6px rgba(154,180,212,0.12); }
 
     .ac-bar { margin-top: 0.6rem; height: 8px; background: rgba(0,200,255,0.10); border-radius: 4px; overflow: hidden; border: 1px solid rgba(0,200,255,0.12); box-shadow: inset 0 1px 3px rgba(0,0,0,0.35); }
     .ac-bar-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
@@ -489,7 +490,7 @@
       animation: bar-shimmer 1.8s linear infinite;
     }
     .status-idle    .ac-bar-fill {
-      background: linear-gradient(90deg, #3a4560 35%, #566b8a 50%, #3a4560 65%);
+      background: linear-gradient(90deg, #3d4e6a 35%, #6280a4 50%, #3d4e6a 65%);
       background-size: 200% auto;
       animation: bar-shimmer 4s linear infinite;
     }
@@ -2603,32 +2604,142 @@
 
     /* ── MOBILE RESPONSIVE ── */
     @media (max-width: 768px) {
-      body { overflow: auto !important; }
-      .app { flex-direction: column !important; overflow: visible !important; }
+      body { overflow: auto !important; height: auto !important; }
+      .app { flex-direction: column !important; overflow: visible !important; height: auto !important; }
+
+      /* ── Sidebars stack vertically ── */
       .sidebar-left, .sidebar-right {
-        width: 100% !important; flex-shrink: 0 !important;
+        width: 100% !important; max-width: 100% !important;
+        flex-shrink: 0 !important;
         border-right: none !important; border-left: none !important;
         border-bottom: 1px solid var(--border) !important;
       }
-      .agent-canvas { min-height: 60vh; }
+      .sidebar-left { order: 2; min-height: 280px; max-height: 45vh; }
+      .sidebar-right { order: 3; min-height: 300px; max-height: 50vh; }
+
+      /* ── Canvas takes priority ── */
+      .agent-canvas { order: 1; min-height: 55vh; width: 100% !important; min-width: unset !important; }
+      #center-office-container { min-height: 350px !important; }
+
+      /* ── Agent grid cards ── */
       #agent-list-body {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-        gap: 0.6rem !important;
-        padding: 0.6rem !important;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+        gap: 0.5rem !important;
+        padding: 0.5rem !important;
       }
-      .agent-card { padding: 0.7rem !important; border-radius: 10px !important; }
-      .canvas-bottom { flex-direction: column !important; height: auto !important; }
+      .agent-card { padding: 0.6rem !important; border-radius: 10px !important; }
+      .ac-name { font-size: 0.82rem !important; }
+      .ac-role { font-size: 0.62rem !important; padding: 0.08rem 0.4rem !important; }
+      .ac-task { font-size: 0.68rem !important; }
+      .ac-bar { height: 6px !important; }
+
+      /* ── Canvas bottom strip ── */
+      .canvas-bottom {
+        flex-direction: column !important; height: auto !important;
+        overflow: visible !important;
+      }
       .canvas-bottom .metrics-panel,
-      .canvas-bottom .search-panel { width: 100% !important; }
-      .canvas-toolbar { flex-wrap: wrap; gap: 0.4rem; }
-      #top-tab-bar { overflow-x: auto !important; flex-wrap: nowrap !important; }
-      .top-tab-btn { padding: 0.5rem 0.75rem !important; font-size: 0.6rem !important; }
-      header { height: auto !important; flex-wrap: wrap; padding: 0.5rem 0.8rem !important; gap: 0.4rem; }
-      .hdr-center { position: static !important; transform: none !important; flex-wrap: wrap; gap: 0.5rem; }
+      .canvas-bottom .search-panel,
+      .canvas-bottom .log-panel {
+        width: 100% !important; min-height: 80px;
+        flex-shrink: 0 !important;
+      }
+      .canvas-bottom .metrics-panel .panel-body {
+        grid-template-columns: repeat(4, 1fr) !important;
+      }
+
+      /* ── Canvas toolbar ── */
+      .canvas-toolbar {
+        flex-wrap: wrap; gap: 0.35rem;
+        padding: 0.35rem 0.6rem !important;
+      }
+      .canvas-toolbar > div:last-child {
+        flex-wrap: wrap; gap: 3px !important;
+      }
+      .canvas-toolbar button {
+        font-size: 0.58rem !important;
+        padding: 0.18rem 0.45rem !important;
+      }
+
+      /* ── Header compact ── */
+      header {
+        height: auto !important; flex-wrap: wrap;
+        padding: 0.45rem 0.7rem !important; gap: 0.35rem;
+      }
+      .hdr-center { position: static !important; transform: none !important; display: none !important; }
+      .logo-text { font-size: 0.72rem !important; }
+      .logo-sub { display: none; }
+      .hdr-right { gap: 0.5rem !important; }
+      .clock { font-size: 0.7rem !important; }
+
+      /* ── Top tab bar ── */
+      #top-tab-bar { overflow-x: auto !important; flex-wrap: nowrap !important; -webkit-overflow-scrolling: touch; }
+      .top-tab-btn { padding: 0.45rem 0.65rem !important; font-size: 0.58rem !important; white-space: nowrap; }
+
+      /* ── Quick command bar ── */
       #quick-cmd-bar { flex-wrap: wrap; }
-      #quick-cmd-input { min-width: 0; }
-      .canvas-bottom .log-panel { min-height: 100px; }
+      #quick-cmd-input { min-width: 0; flex: 1; }
+      .quick-cmd-hint { display: none !important; }
+
+      /* ── Chat panel ── */
+      .chat-messages { padding: 0.5rem 0.6rem !important; }
+      .chat-bubble { font-size: 0.78rem !important; padding: 0.5rem 0.7rem !important; }
+      .chat-msg { max-width: 95% !important; }
+      .chat-input-area { padding: 0.5rem !important; }
+      .chat-input { font-size: 0.82rem !important; padding: 0.5rem 0.7rem !important; min-height: 36px !important; }
+      .chat-send { padding: 0 0.8rem !important; font-size: 0.72rem !important; height: 36px !important; }
+
+      /* ── Task feed ── */
+      .task-item { padding: 0.45rem 0.6rem !important; }
+      .ti-desc { font-size: 0.72rem !important; }
+      .ti-agent { font-size: 0.62rem !important; }
+
+      /* ── Metrics ── */
+      .mb-val { font-size: 1.1rem !important; }
+      .mb-label { font-size: 0.55rem !important; }
+
+      /* ── Data panel ── */
       .data-panel { height: auto !important; }
+
+      /* ── Oracle strip ── */
+      #sg-oracle-strip { padding: 0.3rem 0.6rem !important; }
+      #sg-oracle-text { font-size: 0.6rem !important; }
+
+      /* ── Scan lines off on mobile (perf) ── */
+      body::after { display: none !important; }
+
+      /* ── CTA banner ── */
+      .cta-banner { flex-direction: column; gap: 0.6rem; padding: 0.6rem 0.8rem !important; text-align: center; }
+
+      /* ── Clerk station ── */
+      .clerk-station { margin: 0.3rem !important; }
+    }
+
+    /* ── SMALL PHONE (≤480px) ── */
+    @media (max-width: 480px) {
+      .sidebar-left { max-height: 35vh; }
+      .sidebar-right { max-height: 45vh; }
+      .agent-canvas { min-height: 45vh; }
+      #center-office-container { min-height: 280px !important; }
+
+      #agent-list-body {
+        grid-template-columns: 1fr 1fr !important;
+      }
+
+      .canvas-bottom .metrics-panel .panel-body {
+        grid-template-columns: 1fr 1fr !important;
+      }
+
+      .canvas-toolbar button {
+        font-size: 0.52rem !important;
+        padding: 0.15rem 0.35rem !important;
+      }
+
+      .panel-hdr { padding: 0.5rem 0.6rem !important; }
+      .panel-title { font-size: 0.68rem !important; }
+      .panel-badge { font-size: 0.6rem !important; padding: 0.15rem 0.5rem !important; }
+
+      .tab-bar .tab-btn { font-size: 0.6rem !important; padding: 0.4rem 0.5rem !important; }
     }
   </style>
 
@@ -9342,16 +9453,20 @@ function submitProposal() {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({proposal: text, proposer: 'ceo'}),
   }).then(r => r.json()).then(d => {
+    // Remove form first so loadBoardroom can refresh
+    const form = document.getElementById('propose-form');
+    if (form) form.remove();
     if (d.ok) {
-      // Small delay to let auto-votes register
       setTimeout(loadBoardroom, 800);
     } else {
       alert('Proposal failed: ' + (d.error || 'unknown'));
-      if (btn) { btn.textContent = 'Submit to Vote'; btn.disabled = false; }
+      loadBoardroom();
     }
   }).catch(err => {
+    const form = document.getElementById('propose-form');
+    if (form) form.remove();
     alert('Error: ' + err.message);
-    if (btn) { btn.textContent = 'Submit to Vote'; btn.disabled = false; }
+    loadBoardroom();
   });
 }
 
