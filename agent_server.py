@@ -4969,7 +4969,7 @@ _agent_gossip = {}  # aid -> {text, ts, target_aid}
 
 # ─── Launch ────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    PORT    = 5050
+    PORT    = int(os.environ.get("PORT", 5050))
 
     # ── Singleton guard: kill any previous instance, write our own PID ────────
     _PID_FILE = os.path.join(CWD, "agent_server.pid")
@@ -5071,6 +5071,7 @@ if __name__ == "__main__":
                 return
             print(f"[server error from {client_address}]: {exc}")
             traceback.print_exc()
-    server = ThreadedHTTPServer(("localhost", PORT), Handler)
+    _bind = os.environ.get("BIND", "0.0.0.0" if os.environ.get("RENDER") else "localhost")
+    server = ThreadedHTTPServer((_bind, PORT), Handler)
     try:    server.serve_forever()
     except KeyboardInterrupt: print("\n  Shutting down.")
