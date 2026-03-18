@@ -22,7 +22,8 @@
       "Bash(chmod:*)",
       "Bash(gh repo:*)",
       "Bash(brew install:*)",
-      "Bash(dig:*)"
+      "Bash(dig:*)",
+      "Bash(cd:*)"
     ]
   }
 }
