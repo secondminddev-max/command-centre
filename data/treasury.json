@@ -8,7 +8,7 @@
       "type": "income",
       "amount_usd": 79.00,
       "source": "stripe_checkout",
-      "product": "asx_screener_report",
+      "product": "us_market_intel_report",
       "status": "settled"
     }
   ],
