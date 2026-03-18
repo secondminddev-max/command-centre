@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Command Centre","applicationCategory":"BusinessApplication","description":"27 autonomous AI agents running your business 24/7. Australian owned and operated.","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"79","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"199","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"699","priceCurrency":"USD","name":"Enterprise"}]}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Command Centre","applicationCategory":"BusinessApplication","description":"27 autonomous AI agents running your business 24/7. Australian owned and operated.","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"79","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"149","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"499","priceCurrency":"USD","name":"Enterprise"}]}
 </script>
 <style>
   :root {
@@ -319,7 +319,7 @@
 <style>.skip-nav:focus{top:16px}</style>
 
 <nav role="navigation" aria-label="Main navigation">
-  <div class="logo"><img src="/mascot.svg" alt="Command Centre" style="height:28px;vertical-align:middle;margin-right:8px;display:inline-block"><span>Second Mind Labs</span> <svg style="width:32px;height:20px;vertical-align:middle;margin-left:8px;border-radius:3px;box-shadow:0 0 0 1px rgba(255,255,255,0.2)" viewBox="0 0 640 480"><rect fill="#00008B" width="640" height="480"/><rect fill="#C8102E" x="0" y="208" width="640" height="64"/><rect fill="#C8102E" x="288" y="0" width="64" height="480"/><rect fill="#fff" x="0" y="192" width="640" height="96"/><rect fill="#fff" x="272" y="0" width="96" height="480"/><rect fill="#C8102E" x="0" y="208" width="640" height="64"/><rect fill="#C8102E" x="288" y="0" width="64" height="480"/><rect fill="#00008B" x="0" y="0" width="320" height="240"/><g fill="#fff"><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(-40,-10) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(60,50) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(100,-10) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(100,110) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(140,50) scale(0.35)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(60,140) scale(0.55)"/></g></svg></div>
+  <div class="logo"><img src="/mascot.png" alt="Command Centre" style="height:28px;vertical-align:middle;margin-right:8px;display:inline-block"><span>Second Mind Labs</span> <img src="/flag-au.svg" alt="Australian flag" style="width:36px;height:18px;vertical-align:middle;margin-left:8px;border-radius:3px;box-shadow:0 0 0 1px rgba(255,255,255,0.2)"></div>
   <button class="hamburger" aria-label="Toggle menu" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('mobile-open')">
     <span></span><span></span><span></span>
   </button>
@@ -342,10 +342,11 @@
     <div class="hero-grid"></div>
     <canvas id="hero-particles"></canvas>
   </div>
-  <div style="margin-bottom:24px"><img src="/mascot.svg" alt="Command Centre" style="height:80px;filter:drop-shadow(0 0 20px rgba(192,132,252,0.3))"></div>
+  <style>@keyframes mascot-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}</style>
+  <div style="margin-bottom:24px"><img src="/mascot.png" alt="Command Centre" style="height:100px;filter:drop-shadow(0 0 30px rgba(192,132,252,0.5));animation:mascot-bob 2.5s ease-in-out infinite"></div>
   <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;padding:8px 20px;border-radius:24px;background:rgba(0,0,100,0.25);border:1px solid rgba(255,255,255,0.12)">
-    <svg style="width:40px;height:26px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,0.3)" viewBox="0 0 640 480"><rect fill="#00008B" width="640" height="480"/><rect fill="#C8102E" x="0" y="208" width="640" height="64"/><rect fill="#C8102E" x="288" y="0" width="64" height="480"/><rect fill="#fff" x="0" y="192" width="640" height="96"/><rect fill="#fff" x="272" y="0" width="96" height="480"/><rect fill="#C8102E" x="0" y="208" width="640" height="64"/><rect fill="#C8102E" x="288" y="0" width="64" height="480"/><rect fill="#00008B" x="0" y="0" width="320" height="240"/><g fill="#fff"><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(-40,-10) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(60,50) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(100,-10) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(100,110) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(140,50) scale(0.35)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(60,140) scale(0.55)"/></g></svg>
-    <span style="font-size:.88rem;font-weight:700;color:rgba(255,255,255,0.85);letter-spacing:.3px">Australian Owned &amp; Operated</span>
+    <img src="/flag-au.svg" alt="Australian flag" style="width:72px;height:36px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.4)">
+    <span style="font-size:1rem;font-weight:800;color:rgba(255,255,255,0.9);letter-spacing:.3px">Australian Owned &amp; Operated</span>
   </div>
   <br>
   <a href="https://secondmindhq.com" target="_blank" class="badge" style="text-decoration:none;cursor:pointer"><span class="pulse"></span> Live system &mdash; 27 agents active right now &mdash; <strong style="color:#a78bfa">Watch Live &rarr;</strong></a>
@@ -622,7 +623,7 @@
         <div style="position:absolute;top:12px;right:12px;background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3);padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px">BEST VALUE</div>
         <h3>Team</h3>
         <p class="desc">Growing teams &amp; small businesses</p>
-        <div class="price">$199<span>/mo</span></div>
+        <div class="price">$149<span>/mo</span></div>
         <p class="period">Billed monthly</p>
         <ul>
           <li>All 27 AI agents</li>
@@ -633,14 +634,14 @@
           <li>5 team seats</li>
           <li>Priority support</li>
         </ul>
-        <a href="/api/pay?plan=team" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',19900,'subscription')" class="btn btn-buy buy-team">START FREE TRIAL &mdash; $199/mo</a>
-        <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">14 days free, then $199/mo. Cancel anytime.</p>
+        <a href="/api/pay?plan=team" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-buy buy-team">START FREE TRIAL &mdash; $149/mo</a>
+        <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">14 days free, then $149/mo. Cancel anytime.</p>
       </div>
       <div class="price-card glass reveal reveal-delay-2">
         <div style="position:absolute;top:12px;right:12px;background:rgba(6,182,212,0.12);color:var(--cyan);border:1px solid rgba(6,182,212,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">LAUNCH PRICING</div>
         <h3>Enterprise</h3>
         <p class="desc">Full autonomous operations suite</p>
-        <div class="price">$699<span>/mo</span></div>
+        <div class="price">$499<span>/mo</span></div>
         <p class="period">Billed monthly</p>
         <ul>
           <li>Unlimited AI agents</li>
@@ -651,7 +652,7 @@
           <li>24/7 priority support</li>
           <li>SLA guarantee</li>
         </ul>
-        <a href="/api/pay?plan=enterprise" onclick="event.preventDefault();checkout('enterprise','Second Mind Labs — Enterprise',69900,'subscription')" class="btn btn-buy buy-enterprise">START FREE TRIAL &mdash; $699/mo</a>
+        <a href="/api/pay?plan=enterprise" onclick="event.preventDefault();checkout('enterprise','Second Mind Labs — Enterprise',49900,'subscription')" class="btn btn-buy buy-enterprise">START FREE TRIAL &mdash; $499/mo</a>
       </div>
     </div>
     <!-- Feature Comparison Table -->
@@ -661,8 +662,8 @@
           <tr>
             <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:left;font-weight:700;border-bottom:1px solid var(--glass-border);color:var(--muted)">Feature</th>
             <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Solo <span style="color:var(--accent);font-weight:800">$79</span></th>
-            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:2px solid var(--green);color:var(--green)">Team <span style="font-weight:800">$199</span></th>
-            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Enterprise <span style="color:var(--cyan);font-weight:800">$699</span></th>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:2px solid var(--green);color:var(--green)">Team <span style="font-weight:800">$149</span></th>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Enterprise <span style="color:var(--cyan);font-weight:800">$499</span></th>
           </tr>
         </thead>
         <tbody>
@@ -916,8 +917,8 @@ function unlockInvestor() {
         <input type="email" id="res-cust-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
         <select id="res-cust-tier" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:12px;box-sizing:border-box">
           <option value="solo">Solo — $79/mo</option>
-          <option value="team" selected>Team — $199/mo</option>
-          <option value="enterprise">Enterprise — $699/mo</option>
+          <option value="team" selected>Team — $149/mo</option>
+          <option value="enterprise">Enterprise — $499/mo</option>
           <option value="lifetime">Lifetime — $499 one-time</option>
           <option value="mac_mini">Mac Mini Bundle — $2,499</option>
         </select>
@@ -1021,7 +1022,7 @@ async function submitReserve(type, prefix) {
 </style>
 
 <footer>
-  <div style="margin-bottom:20px"><img src="/mascot.svg" alt="Command Centre Mascot" style="height:48px;opacity:0.7"></div>
+  <div style="margin-bottom:20px"><img src="/mascot.png" alt="Command Centre Mascot" style="height:48px;opacity:0.7"></div>
   <div class="footer-links">
     <a href="#features">Features</a>
     <a href="#office-floor">Office Floor</a>
@@ -1032,7 +1033,7 @@ async function submitReserve(type, prefix) {
   </div>
   <p>&copy; 2026 Second Mind Labs Pty Ltd &mdash; Command Centre. All rights reserved.</p>
   <p style="margin-top:8px;font-size:.78rem;color:#64748b">
-    <svg style="width:28px;height:18px;vertical-align:middle;margin-right:6px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,0.15)" viewBox="0 0 640 480"><rect fill="#00008B" width="640" height="480"/><rect fill="#C8102E" x="0" y="208" width="640" height="64"/><rect fill="#C8102E" x="288" y="0" width="64" height="480"/><rect fill="#fff" x="0" y="192" width="640" height="96"/><rect fill="#fff" x="272" y="0" width="96" height="480"/><rect fill="#C8102E" x="0" y="208" width="640" height="64"/><rect fill="#C8102E" x="288" y="0" width="64" height="480"/><rect fill="#00008B" x="0" y="0" width="320" height="240"/><g fill="#fff"><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(-40,-10) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(60,50) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(100,-10) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(100,110) scale(0.55)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(140,50) scale(0.35)"/><polygon points="160,20 170,55 207,55 177,75 187,110 160,90 133,110 143,75 113,55 150,55" transform="translate(60,140) scale(0.55)"/></g></svg> Australian owned &amp; operated &mdash; ABN registered &mdash; Built by a fleet of 27 AI agents
+    <img src="/flag-au.svg" alt="Australian flag" style="width:32px;height:16px;vertical-align:middle;margin-right:6px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,0.15)"> Australian owned &amp; operated &mdash; ABN registered &mdash; Built by a fleet of 27 AI agents
   </p>
 </footer>
 
