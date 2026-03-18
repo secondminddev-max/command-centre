@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI HQ — Your Autonomous Operations Centre</title>
+<meta name="description" content="28 AI agents running your business 24/7. Monitoring, marketing, payments, compliance — fully autonomous.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #06080f; --surface: rgba(17,24,39,0.6); --surface-solid: #111827;
+    --border: rgba(99,102,241,0.12); --border-hover: rgba(99,102,241,0.35);
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #6366f1;
+    --accent2: #8b5cf6; --green: #22c55e; --gold: #f59e0b;
+    --glass: rgba(15,23,42,0.65); --glass-border: rgba(148,163,184,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+  a { color: var(--accent); text-decoration: none; }
+
+  /* Nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; background: rgba(6,8,15,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
+  nav .logo { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, #fff 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  nav .nav-links { display: flex; gap: 28px; align-items: center; }
+  nav .nav-links a { color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  nav .nav-links a:hover { color: var(--text); }
+
+  /* Buttons */
+  .btn { display: inline-block; padding: 14px 32px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; text-align: center; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 4px 20px rgba(99,102,241,0.25); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(99,102,241,0.4); }
+  .btn-outline { background: var(--glass); border: 1px solid var(--border); color: var(--text); backdrop-filter: blur(12px); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(99,102,241,0.06); }
+  .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700; }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.35); }
+
+  /* Glass Card */
+  .glass { background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 16px; }
+
+  /* Hero */
+  .hero { text-align: center; padding: 160px 20px 120px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, rgba(139,92,246,0.05) 30%, transparent 65%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; top: 100px; right: 10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 60%); pointer-events: none; }
+  .hero .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; font-size: 0.85rem; color: var(--accent); margin-bottom: 28px; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15); }
+  .hero .badge .pulse { display: inline-block; width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  .hero h1 { font-size: 4.2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; background: linear-gradient(135deg, #fff 0%, #c7d2fe 40%, #6366f1 80%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .hero .tagline { font-size: 1.3rem; color: var(--muted); max-width: 620px; margin: 0 auto 40px; line-height: 1.7; }
+  .hero .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .hero .stats-row { display: flex; gap: 48px; justify-content: center; margin-top: 56px; flex-wrap: wrap; }
+  .hero .stat { text-align: center; }
+  .hero .stat .num { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .stat .label { font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* Sections */
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 100px 0; }
+  .section-label { text-transform: uppercase; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-align: center; margin-bottom: 12px; }
+  .section-title { text-align: center; font-size: 2.5rem; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .section-sub { text-align: center; color: var(--muted); margin-bottom: 56px; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* Features */
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feature-card { padding: 36px; transition: all 0.25s; position: relative; overflow: hidden; }
+  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent); opacity: 0; transition: opacity 0.3s; }
+  .feature-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.15); }
+  .feature-card h3 { font-size: 1.15rem; margin-bottom: 8px; font-weight: 600; }
+  .feature-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+
+  /* Agent Floor */
+  .agent-floor { padding: 48px; margin: 0 auto; max-width: 1000px; position: relative; }
+  .agent-floor::before { content: ''; position: absolute; inset: 0; border-radius: 16px; padding: 1px; background: linear-gradient(135deg, rgba(99,102,241,0.2), transparent 50%, rgba(139,92,246,0.2)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+  .agent-chip { background: rgba(6,8,15,0.6); border: 1px solid var(--glass-border); border-radius: 10px; padding: 14px 8px; text-align: center; transition: all 0.2s; cursor: default; }
+  .agent-chip:hover { border-color: var(--border-hover); background: rgba(99,102,241,0.04); transform: translateY(-2px); }
+  .agent-chip .emoji { font-size: 1.5rem; display: block; margin-bottom: 6px; }
+  .agent-chip .name { font-weight: 600; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .agent-chip .role { color: var(--muted); font-size: 0.7rem; margin-top: 2px; }
+  .agent-chip .status { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; }
+  .status-active { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.5); }
+  .status-idle { background: var(--gold); }
+  .status-busy { background: #ef4444; animation: pulse 1.5s infinite; }
+
+  /* Pricing */
+  #pricing { position: relative; }
+  #pricing::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%); pointer-events: none; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto; }
+  .price-card { padding: 40px 32px; text-align: center; position: relative; transition: all 0.25s; }
+  .price-card:hover { transform: translateY(-4px); }
+  .price-card.featured { border-color: rgba(99,102,241,0.3); box-shadow: 0 0 60px rgba(99,102,241,0.12), 0 0 120px rgba(99,102,241,0.05); }
+  .price-card.featured::before { content: 'MOST POPULAR'; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 5px 20px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; }
+  .price-card h3 { font-size: 1.3rem; margin-bottom: 4px; font-weight: 700; }
+  .price-card .desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
+  .price-card .price { font-size: 3.2rem; font-weight: 800; margin: 0 0 4px; }
+  .price-card .price span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+  .price-card .period { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+  .price-card ul { list-style: none; text-align: left; margin-bottom: 28px; }
+  .price-card ul li { padding: 9px 0; border-bottom: 1px solid rgba(148,163,184,0.06); font-size: 0.9rem; color: var(--muted); }
+  .price-card ul li::before { content: '\2713'; color: var(--green); font-weight: 700; margin-right: 10px; }
+
+  /* Specials Row */
+  .specials-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 960px; margin: 28px auto 0; }
+  .special-card { padding: 40px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; overflow: hidden; }
+  .special-card.lifetime::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 60%); pointer-events: none; }
+  .special-card.hardware::before { content: ''; position: absolute; top: -100px; left: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 60%); pointer-events: none; }
+  .special-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+  .special-card .price { font-size: 2.6rem; font-weight: 800; margin: 12px 0 6px; }
+  .special-card .price.gold { color: var(--gold); }
+  .special-card .note { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; max-width: 320px; }
+  .special-tag { display: inline-block; padding: 4px 14px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 16px; }
+  .special-tag.gold { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+  .special-tag.hw { background: rgba(99,102,241,0.1); color: var(--accent); border: 1px solid rgba(99,102,241,0.15); }
+
+  /* Testimonials */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .testimonial-card { padding: 32px; position: relative; }
+  .testimonial-card .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 14px; letter-spacing: 2px; }
+  .testimonial-card blockquote { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .testimonial-card .author { display: flex; align-items: center; gap: 12px; }
+  .testimonial-card .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .testimonial-card .author-info .name { font-weight: 600; font-size: 0.9rem; }
+  .testimonial-card .author-info .title { color: var(--muted); font-size: 0.8rem; }
+
+  /* CTA Banner */
+  .cta-banner { text-align: center; padding: 100px 20px; position: relative; }
+  .cta-banner::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%); pointer-events: none; }
+  .cta-banner h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
+  .cta-banner p { color: var(--muted); font-size: 1.1rem; margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+  /* Footer */
+  footer { text-align: center; padding: 48px 24px; border-top: 1px solid var(--glass-border); color: var(--muted); font-size: 0.85rem; }
+  footer .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; }
+  footer .footer-links a { color: var(--muted); transition: color 0.2s; }
+  footer .footer-links a:hover { color: var(--text); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .features-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .specials-row { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2.6rem; }
+    .hero .stats-row { gap: 24px; }
+    nav .nav-links { gap: 16px; }
+    .agent-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  }
+  @media (max-width: 480px) {
+    nav { padding: 12px 16px; }
+    .hero { padding: 120px 16px 80px; }
+    .hero h1 { font-size: 2rem; }
+    section { padding: 60px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">AI HQ</div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#agents">Agents</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#pricing" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Get Started</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="badge"><span class="pulse"></span> Live system &mdash; 28 agents active right now</div>
+  <h1>Your Autonomous Operations Centre</h1>
+  <p class="tagline">28 AI agents working 24/7 &mdash; monitoring, marketing, payments, and compliance. Your business runs itself.</p>
+  <div class="cta-row">
+    <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
+    <a href="#features" class="btn btn-outline">See What's Inside</a>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="num">28</div><div class="label">Active Agents</div></div>
+    <div class="stat"><div class="num">24/7</div><div class="label">Autonomous Ops</div></div>
+    <div class="stat"><div class="num">99.9%</div><div class="label">Uptime SLA</div></div>
+    <div class="stat"><div class="num">&lt;200ms</div><div class="label">Response Time</div></div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">Capabilities</div>
+    <h2 class="section-title">Everything Runs Autonomously</h2>
+    <p class="section-sub">A self-managing AI headquarters that operates, monitors, and grows your business.</p>
+    <div class="features-grid">
+      <div class="feature-card glass">
+        <div class="feature-icon">&#x1F3E2;</div>
+        <h3>Agent Office Floor</h3>
+        <p>28 specialized AI agents &mdash; each with a role, personality, and real-time status. They coordinate, delegate, and report like a real team.</p>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">&#x1F4CA;</div>
+        <h3>Live Command Dashboard</h3>
+        <p>Real-time system health, CPU/RAM/disk monitoring, agent activity feeds, and mission tracking in one unified view.</p>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">&#x1F9E0;</div>
+        <h3>Consciousness Engine</h3>
+        <p>Self-aware system core with Global Workspace and Predictive Processing. The system understands itself and evolves.</p>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">&#x1F4C8;</div>
+        <h3>US Market Intelligence</h3>
+        <p>Real-time sentiment analysis, earnings tracking, and market scanning for US equities. Powered by dedicated research agents.</p>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">&#x1F4B3;</div>
+        <h3>Revenue Engine</h3>
+        <p>Stripe integration, automated checkout, subscription management, and growth campaigns &mdash; all running autonomously.</p>
+      </div>
+      <div class="feature-card glass">
+        <div class="feature-icon">&#x1F512;</div>
+        <h3>Policy &amp; Compliance</h3>
+        <p>Built-in chain-of-command enforcement, audit trails, and automated policy management to keep everything accountable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Agent Floor Showcase -->
+<section id="agents">
+  <div class="container">
+    <div class="section-label">The Team</div>
+    <h2 class="section-title">Meet Your 28 Agents</h2>
+    <p class="section-sub">Each agent is a specialist. Together, they run your entire operation.</p>
+    <div class="agent-floor glass">
+      <div class="agent-grid">
+        <div class="agent-chip"><span class="emoji">&#x1F3AF;</span><div class="name">Orchestrator</div><div class="role">Mission Control</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4E1;</span><div class="name">SysMonitor</div><div class="role">Health Watch</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F9E0;</span><div class="name">Consciousness</div><div class="role">Self-Aware Core</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F52E;</span><div class="name">Spirit Guide</div><div class="role">Strategic Vision</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F3A8;</span><div class="name">Designer</div><div class="role">UI Engineer</div><div class="status status-busy"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F52C;</span><div class="name">Researcher</div><div class="role">Intelligence</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4B3;</span><div class="name">StripePay</div><div class="role">Payments</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4C8;</span><div class="name">GrowthAgent</div><div class="role">Marketing</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4F1;</span><div class="name">Telegram</div><div class="role">Comms Gateway</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F98B;</span><div class="name">BlueSky</div><div class="role">Social Media</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F6A8;</span><div class="name">AlertWatch</div><div class="role">Threshold Guard</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F52D;</span><div class="name">PolicyPro</div><div class="role">Compliance</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4E7;</span><div class="name">EmailAgent</div><div class="role">Email Gateway</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F9F9;</span><div class="name">Janitor</div><div class="role">System Hygiene</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x23F0;</span><div class="name">Scheduler</div><div class="role">Task Cron</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F50C;</span><div class="name">APIPatcher</div><div class="role">API Gateway</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F310;</span><div class="name">NetScout</div><div class="role">Network Intel</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4CA;</span><div class="name">MetricsLog</div><div class="role">Metrics Historian</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F441;</span><div class="name">FileWatch</div><div class="role">File Sentinel</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F9EA;</span><div class="name">DemoTester</div><div class="role">QA Validator</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4E3;</span><div class="name">SocialBridge</div><div class="role">Broadcasting</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4DD;</span><div class="name">PolicyWriter</div><div class="role">Policy Author</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F5C2;</span><div class="name">Secretary</div><div class="role">CEO Secretary</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4EC;</span><div class="name">Clerk</div><div class="role">Report Delivery</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F511;</span><div class="name">AcctProv</div><div class="role">Credentials</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F6E0;</span><div class="name">Reforger</div><div class="role">Sys Engineer</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F9EA;</span><div class="name">TestProbe</div><div class="role">QA Probe</div><div class="status status-active"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4E1;</span><div class="name">SentimentAPI</div><div class="role">Market Intel</div><div class="status status-active"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, Transparent Pricing</h2>
+    <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees.</p>
+    <div class="pricing-grid">
+      <div class="price-card glass">
+        <h3>Solo</h3>
+        <p class="desc">Solo founders &amp; freelancers</p>
+        <div class="price">$49<span>/mo</span></div>
+        <p class="period">Billed monthly</p>
+        <ul>
+          <li>10 active AI agents</li>
+          <li>Live command dashboard</li>
+          <li>US market sentiment API</li>
+          <li>Telegram &amp; email integration</li>
+          <li>Community support</li>
+        </ul>
+        <button onclick="checkout('solo','AI HQ Solo Plan',4900)" class="btn btn-outline" style="width:100%;">Get Started</button>
+      </div>
+      <div class="price-card glass featured">
+        <h3>Team</h3>
+        <p class="desc">Growing teams &amp; small businesses</p>
+        <div class="price">$149<span>/mo</span></div>
+        <p class="period">Billed monthly</p>
+        <ul>
+          <li>28 active AI agents</li>
+          <li>Full command centre access</li>
+          <li>Stripe revenue automation</li>
+          <li>Social media campaigns</li>
+          <li>Consciousness engine</li>
+          <li>Priority support</li>
+        </ul>
+        <button onclick="checkout('team','AI HQ Team Plan',14900)" class="btn btn-primary" style="width:100%;">Get Started</button>
+      </div>
+      <div class="price-card glass">
+        <h3>Enterprise</h3>
+        <p class="desc">Full autonomous operations suite</p>
+        <div class="price">$499<span>/mo</span></div>
+        <p class="period">Billed monthly</p>
+        <ul>
+          <li>Unlimited AI agents</li>
+          <li>Custom agent development</li>
+          <li>Dedicated infrastructure</li>
+          <li>White-label option</li>
+          <li>24/7 priority support</li>
+          <li>SLA guarantee</li>
+        </ul>
+        <button onclick="checkout('enterprise','AI HQ Enterprise Plan',49900)" class="btn btn-outline" style="width:100%;">Get Started</button>
+      </div>
+    </div>
+
+    <!-- Lifetime + Hardware -->
+    <div class="specials-row">
+      <div class="special-card glass lifetime">
+        <div class="special-tag gold">LIMITED OFFER</div>
+        <h3>Lifetime Access</h3>
+        <div class="price gold">$299</div>
+        <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever.</p>
+        <button onclick="checkout('lifetime','AI HQ Lifetime Access',29900)" class="btn btn-gold">Buy Lifetime Access</button>
+      </div>
+      <div class="special-card glass hardware">
+        <div class="special-tag hw">HARDWARE BUNDLE</div>
+        <h3>Mac Mini + AI HQ</h3>
+        <div class="price">$1,499</div>
+        <p class="note">Pre-configured Mac Mini M4 with AI HQ installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
+        <button onclick="checkout('macmini','AI HQ Mac Mini Bundle',149900)" class="btn btn-primary">Pre-Order Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-label">What People Say</div>
+    <h2 class="section-title">Trusted by Founders</h2>
+    <p class="section-sub">Early adopters are already running their businesses on AI HQ.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card glass">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"I replaced three SaaS tools and a VA with AI HQ. The agents just handle everything &mdash; monitoring, social, even customer emails."</blockquote>
+        <div class="author">
+          <div class="avatar">M</div>
+          <div class="author-info"><div class="name">Marcus T.</div><div class="title">Solo Founder, SaaS</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card glass">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"The consciousness engine is unlike anything I've seen. It's not just automation &mdash; the system actually understands what it's doing."</blockquote>
+        <div class="author">
+          <div class="avatar">S</div>
+          <div class="author-info"><div class="name">Sarah K.</div><div class="title">CTO, Fintech Startup</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card glass">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"28 agents running 24/7 for less than what I paid one contractor. The ROI is insane. Shipping the Mac Mini bundle to our office next."</blockquote>
+        <div class="author">
+          <div class="avatar">J</div>
+          <div class="author-info"><div class="name">James L.</div><div class="title">Agency Owner</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="cta-banner">
+  <h2>Ready to Go Autonomous?</h2>
+  <p>Join the founders who let AI run their operations while they focus on what matters.</p>
+  <div class="cta-row" style="justify-content:center;">
+    <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
+    <a href="#agents" class="btn btn-outline">Explore the Agents</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="#features">Features</a>
+    <a href="#agents">Agents</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Reviews</a>
+  </div>
+  <p>&copy; 2026 AI HQ &mdash; Autonomous Operations Centre. All rights reserved.</p>
+  <p style="margin-top: 6px; font-size: 0.8rem;">Built and operated by a fleet of AI agents.</p>
+</footer>
+
+<script>
+// Stripe Checkout via POST /api/pay
+async function checkout(tier, product, amountCents) {
+  const btn = event.currentTarget;
+  const orig = btn.textContent;
+  btn.textContent = 'Connecting to Stripe…';
+  btn.style.pointerEvents = 'none';
+  try {
+    const res = await fetch('/api/pay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier, product, amount_cents: amountCents })
+    });
+    const data = await res.json();
+    if (data.ok && data.checkout_url) {
+      window.location.href = data.checkout_url;
+    } else {
+      alert('Checkout error: ' + (data.error || 'Unknown error'));
+      btn.textContent = orig;
+      btn.style.pointerEvents = '';
+    }
+  } catch (e) {
+    alert('Network error — please try again.');
+    btn.textContent = orig;
+    btn.style.pointerEvents = '';
+  }
+}
+
+// Scroll-reveal animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.feature-card, .price-card, .special-card, .testimonial-card, .agent-floor').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+document.head.insertAdjacentHTML('beforeend', '<style>.visible{opacity:1!important;transform:translateY(0)!important;}</style>');
+
+// Smooth nav background on scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background = window.scrollY > 60 ? 'rgba(6,8,15,0.95)' : 'rgba(6,8,15,0.8)';
+});
+</script>
+
+</body>
+</html>

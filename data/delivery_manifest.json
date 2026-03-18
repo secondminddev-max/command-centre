@@ -1,0 +1,284 @@
+{
+  "manifest_version": "1.0",
+  "generated_at": "2026-03-18T18:15:00Z",
+  "generated_by": "clerk",
+  "summary": {
+    "total_deliverables": 24,
+    "agents_reporting": ["designer", "researcher", "reforger", "growthagent"],
+    "by_agent": {
+      "designer": 5,
+      "researcher": 11,
+      "reforger": 3,
+      "growthagent": 5
+    },
+    "status_counts": {
+      "delivered": 22,
+      "live": 2
+    },
+    "missing_expected": [
+      "reports/product_landing.html — no HQ product landing page found on disk",
+      "reports/product_launch_dashboard.html — not found",
+      "reports/rivalradar_landing.html — engine exists but no landing page",
+      "reports/autonomousops_landing.html — blueprint exists but landing page missing",
+      "reports/hq_landing_page.html — not found",
+      "public/buy-agent-kit.html — actual path is public/buy/agent-kit/index.html",
+      "public/buy-us-market.html — not found on disk",
+      "public/buy.html — not found on disk",
+      "products/filingedge/landing.html — not found, only server.py and edgar_poller.py exist"
+    ]
+  },
+  "deliverables": [
+    {
+      "id": "DESIGNER-001",
+      "agent": "designer",
+      "title": "Designer Recommendation — Semantic Colour-Coded Stat Cards",
+      "file_path": "data/designer_recommendation.json",
+      "file_size_bytes": 1292,
+      "status": "delivered",
+      "verified": true,
+      "description": "UX recommendation for colour-coded KPI stat cards on screener reports to reduce cognitive load and increase perceived quality."
+    },
+    {
+      "id": "DESIGNER-002",
+      "agent": "designer",
+      "title": "Sentiment API Landing Page",
+      "file_path": "reports/sentiment_api.html",
+      "file_size_bytes": 9724,
+      "status": "delivered",
+      "verified": true,
+      "description": "Landing page for US Market Sentiment API product with endpoint docs and pricing."
+    },
+    {
+      "id": "DESIGNER-003",
+      "agent": "designer",
+      "title": "AutonomousOps Blueprint Report",
+      "file_path": "reports/autonomousops_blueprint.html",
+      "file_size_bytes": 91816,
+      "status": "delivered",
+      "verified": true,
+      "description": "Full AutonomousOps Blueprint document (91KB) — the sellable digital product."
+    },
+    {
+      "id": "DESIGNER-004",
+      "agent": "designer",
+      "title": "Competitive Intel Pricing Report (HTML)",
+      "file_path": "reports/ai_agent_platform_pricing_competitive_intel.html",
+      "file_size_bytes": 29234,
+      "status": "delivered",
+      "verified": true,
+      "description": "Visual HTML report of competitive pricing analysis across AI agent platforms."
+    },
+    {
+      "id": "DESIGNER-005",
+      "agent": "designer",
+      "title": "Buy Page — Agent Kit",
+      "file_path": "public/buy/agent-kit/index.html",
+      "status": "delivered",
+      "verified": true,
+      "description": "Purchase page for Agent Kit product."
+    },
+    {
+      "id": "RESEARCHER-001",
+      "agent": "researcher",
+      "title": "Product Definition — SecondMind HQ",
+      "file_path": "data/product_definition.json",
+      "file_size_bytes": 6099,
+      "status": "delivered",
+      "verified": true,
+      "description": "Full product definition including features, pricing tiers (Solo $49, Team $149, Enterprise $499), and positioning."
+    },
+    {
+      "id": "RESEARCHER-002",
+      "agent": "researcher",
+      "title": "Product Definition Summary (Markdown)",
+      "file_path": "reports/product_definition.md",
+      "file_size_bytes": 5456,
+      "status": "delivered",
+      "verified": true,
+      "description": "Human-readable product definition document."
+    },
+    {
+      "id": "RESEARCHER-003",
+      "agent": "researcher",
+      "title": "Competitive Analysis — AI Agent Platforms",
+      "file_path": "reports/competitive_analysis.md",
+      "file_size_bytes": 8889,
+      "status": "delivered",
+      "verified": true,
+      "description": "Market sizing ($10.91B in 2026, 46.3% CAGR), competitor landscape, and positioning strategy."
+    },
+    {
+      "id": "RESEARCHER-004",
+      "agent": "researcher",
+      "title": "Competitor Differentiators",
+      "file_path": "reports/competitor_differentiators.md",
+      "file_size_bytes": 5327,
+      "status": "delivered",
+      "verified": true,
+      "description": "Feature comparison matrix across AI platforms (CrewAI, AgentOps, LangChain, etc.)."
+    },
+    {
+      "id": "RESEARCHER-005",
+      "agent": "researcher",
+      "title": "Competitive Pricing Intel (JSON)",
+      "file_path": "data/launch_competitive_intel.json",
+      "file_size_bytes": 5093,
+      "status": "delivered",
+      "verified": true,
+      "description": "Structured pricing data for competitors including CrewAI, AgentOps, and others."
+    },
+    {
+      "id": "RESEARCHER-006",
+      "agent": "researcher",
+      "title": "Niche Research — Top 3 Monetisable Niches",
+      "file_path": "data/niche_research.json",
+      "file_size_bytes": 10518,
+      "status": "delivered",
+      "verified": true,
+      "description": "Analysis of top monetisable data/automation niches with low barrier and high willingness to pay."
+    },
+    {
+      "id": "RESEARCHER-007",
+      "agent": "researcher",
+      "title": "Monetisation Research — Financial Data Tools",
+      "file_path": "data/monetisation_research.json",
+      "file_size_bytes": 8684,
+      "status": "delivered",
+      "verified": true,
+      "description": "Monetisation strategies research (freemium, paywall, trial) with competitor pricing examples."
+    },
+    {
+      "id": "RESEARCHER-008",
+      "agent": "researcher",
+      "title": "Revenue Opportunities — SaaS Products",
+      "file_path": "data/revenue_opportunities_saas.json",
+      "file_size_bytes": 13989,
+      "status": "delivered",
+      "verified": true,
+      "description": "SaaS revenue opportunity analysis including PreMarket Pulse and other product concepts."
+    },
+    {
+      "id": "RESEARCHER-009",
+      "agent": "researcher",
+      "title": "Revenue Opportunities — Demand Analysis",
+      "file_path": "data/revenue_opportunities_demand.json",
+      "file_size_bytes": 9414,
+      "status": "delivered",
+      "verified": true,
+      "description": "Market demand validation for revenue opportunities."
+    },
+    {
+      "id": "RESEARCHER-010",
+      "agent": "researcher",
+      "title": "HQ Product Brief",
+      "file_path": "data/hq_product_brief.md",
+      "file_size_bytes": 6583,
+      "status": "delivered",
+      "verified": true,
+      "description": "Executive product brief for SecondMind HQ SaaS launch."
+    },
+    {
+      "id": "RESEARCHER-011",
+      "agent": "researcher",
+      "title": "HQ Go-To-Market Plan",
+      "file_path": "data/hq_gtm_plan.md",
+      "file_size_bytes": 22463,
+      "status": "delivered",
+      "verified": true,
+      "description": "Full go-to-market strategy for HQ product launch."
+    },
+    {
+      "id": "REFORGER-001",
+      "agent": "reforger",
+      "title": "Landing Page Upgrade Log — ASX Screener",
+      "file_path": "data/reforger_landing_upgrade.txt",
+      "file_size_bytes": 2045,
+      "status": "delivered",
+      "verified": true,
+      "description": "Reforger upgrade log: rewrote ASX screener landing with dual pricing, social proof, ASIC disclaimer, dark theme."
+    },
+    {
+      "id": "REFORGER-002",
+      "agent": "reforger",
+      "title": "FilingEdge Product — Server + Edgar Poller",
+      "file_path": "products/filingedge/server.py",
+      "file_size_bytes": 9746,
+      "status": "delivered",
+      "verified": true,
+      "description": "FilingEdge backend: Flask server + SEC EDGAR polling engine for real-time filing alerts.",
+      "related_files": [
+        "products/filingedge/edgar_poller.py",
+        "products/filingedge/__init__.py"
+      ]
+    },
+    {
+      "id": "REFORGER-003",
+      "agent": "reforger",
+      "title": "US Market Intelligence Report Product",
+      "file_path": "reports/us_market_intelligence_report.html",
+      "file_size_bytes": 57632,
+      "status": "delivered",
+      "verified": true,
+      "description": "Full US Market Intelligence Report (57KB) — sellable product at $29 USD via Stripe."
+    },
+    {
+      "id": "GROWTH-001",
+      "agent": "growthagent",
+      "title": "HQ Launch Campaign — Full Campaign Assets",
+      "file_path": "campaigns/hq_launch_campaign.md",
+      "file_size_bytes": 5440,
+      "status": "delivered",
+      "verified": true,
+      "description": "Complete campaign doc: 5-post Bluesky thread (PAS framework), targeting US tech founders/indie hackers."
+    },
+    {
+      "id": "GROWTH-002",
+      "agent": "growthagent",
+      "title": "Distribution Channel Research",
+      "file_path": "data/growth_channels.md",
+      "file_size_bytes": 9875,
+      "status": "delivered",
+      "verified": true,
+      "description": "Channel evaluation matrix: Reddit subs, IndieHackers, Show HN, Product Hunt — ranked by 24h conversion likelihood."
+    },
+    {
+      "id": "GROWTH-003",
+      "agent": "growthagent",
+      "title": "Bluesky Launch Scripts (v1-v5)",
+      "file_path": "scripts/post_launch_sprint_v5.py",
+      "file_size_bytes": 7437,
+      "status": "live",
+      "verified": true,
+      "description": "5 iterations of Bluesky launch posting scripts. v5 is the active PAS-framework campaign script.",
+      "related_files": [
+        "scripts/post_launch_sprint.py",
+        "scripts/post_launch_sprint_v2.py",
+        "scripts/post_launch_sprint_v3.py",
+        "scripts/post_launch_sprint_v4.py",
+        "scripts/post_product_launch_2posts.py"
+      ]
+    },
+    {
+      "id": "GROWTH-004",
+      "agent": "growthagent",
+      "title": "Bluesky Campaign Posts — Published",
+      "file_path": "data/bluesky_posts.json",
+      "file_size_bytes": 11948,
+      "status": "live",
+      "verified": true,
+      "description": "Log of all Bluesky posts published by growthagent including revenue CTA campaigns."
+    },
+    {
+      "id": "GROWTH-005",
+      "agent": "growthagent",
+      "title": "AutonomousOps Bluesky Scripts",
+      "file_path": "scripts/post_autonomousops_thread.py",
+      "status": "delivered",
+      "verified": true,
+      "description": "Bluesky posting scripts for AutonomousOps Blueprint promotion.",
+      "related_files": [
+        "scripts/post_autonomousops_teasers.py"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "us_market_intel",
+    "name": "US Stock Market Intelligence Report",
+    "description": "S&P 500 momentum picks, sector strength analysis, 20 watchlist candidates, risk dashboard — March 2026",
+    "status": "live",
+    "currency_primary": "USD",
+    "variants": [
+      {
+        "id": "us_market_intel_v1",
+        "label": "One-Time Report (March 2026)",
+        "price_cents": 2900,
+        "currency": "USD",
+        "billing": "one_time",
+        "display_price": "$29 USD"
+      }
+    ]
+  },
+  {
+    "id": "agent_kit",
+    "name": "AI Agent HQ Starter Kit",
+    "description": "Complete command centre source code template, 20+ agent configs, setup guide & deployment scripts",
+    "status": "live",
+    "currency_primary": "USD",
+    "variants": [
+      {
+        "id": "agent_kit_v1",
+        "label": "One-Time Purchase",
+        "price_cents": 4900,
+        "currency": "USD",
+        "billing": "one_time",
+        "display_price": "$49 USD"
+      }
+    ]
+  }
+]

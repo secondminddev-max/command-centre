@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knowledge Base — Live Feed</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg:       #050810;
+      --panel:    #080d1a;
+      --panel2:   #0c1220;
+      --border:   rgba(0,200,255,0.1);
+      --border2:  rgba(0,200,255,0.2);
+      --cyan:     #00c8ff;
+      --cyan-dim: rgba(0,200,255,0.15);
+      --green:    #00ff88;
+      --yellow:   #ffd700;
+      --red:      #ff4466;
+      --purple:   #a855f7;
+      --orange:   #ff8c00;
+      --muted:    rgba(255,255,255,0.3);
+      --text:     rgba(255,255,255,0.85);
+      --mono:     'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* scan line overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 52px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border2);
+      flex-shrink: 0;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.5;
+    }
+
+    .hdr-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 12px rgba(0,200,255,0.6);
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 3px;
+      border: 1px solid;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .badge-live {
+      color: var(--green);
+      border-color: rgba(0,255,136,0.4);
+      background: rgba(0,255,136,0.07);
+      animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.5; }
+    }
+
+    .hdr-right {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .refresh-info {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .refresh-info span {
+      color: var(--cyan);
+    }
+
+    .last-updated {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    /* ── MAIN GRID ── */
+    main {
+      flex: 1;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 320px 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 1rem;
+    }
+
+    /* ── PANEL ── */
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.3;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: var(--panel2);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-title .icon {
+      font-size: 0.9rem;
+    }
+
+    .panel-title.cyan  { color: var(--cyan); }
+    .panel-title.green { color: var(--green); }
+    .panel-title.yellow { color: var(--yellow); }
+    .panel-title.purple { color: var(--purple); }
+
+    .panel-meta {
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--muted);
+    }
+
+    .panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.75rem;
+    }
+
+    .panel-body::-webkit-scrollbar { width: 4px; }
+    .panel-body::-webkit-scrollbar-track { background: transparent; }
+    .panel-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    /* ── WEATHER CARD ── */
+    #panel-weather {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+
+    .weather-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem 1rem;
+      gap: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .weather-icon {
+      font-size: 3.5rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 12px rgba(0,200,255,0.4));
+    }
+
+    .weather-temp {
+      font-family: var(--mono);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 20px rgba(0,200,255,0.5);
+      line-height: 1;
+    }
+
+    .weather-desc {
+      font-size: 0.85rem;
+      color: var(--text);
+      text-transform: capitalize;
+    }
+
+    .weather-location {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    .weather-stat {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.5rem 0.6rem;
+    }
+
+    .weather-stat-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.2rem;
+    }
+
+    .weather-stat-value {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    .weather-extra {
+      padding: 0 0.75rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .weather-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0.5rem;
+      background: var(--panel2);
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    .weather-row-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .weather-row-value {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--yellow);
+    }
+
+    /* ── HN STORIES ── */
+    #panel-hn {
+      grid-column: 2;
+      grid-row: 1 / 3;
+    }
+
+    .story-item {
+      display: flex;
+      gap: 0.6rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .story-item:last-child { border-bottom: none; }
+
+    .story-rank {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      min-width: 22px;
+      padding-top: 2px;
+      text-align: right;
+    }
+
+    .story-content { flex: 1; min-width: 0; }
+
+    .story-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .story-title:hover { color: var(--cyan); text-decoration: underline; }
+
+    .story-meta {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .story-score {
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .story-comments {
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      color: var(--muted);
+    }
+
+    .story-domain {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--purple);
+      opacity: 0.8;
+    }
+
+    /* ── GITHUB TRENDING ── */
+    #panel-github {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .repo-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .repo-item:last-child { border-bottom: none; }
+
+    .repo-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .repo-name {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--cyan);
+      text-decoration: none;
+      line-height: 1.3;
+    }
+
+    .repo-name:hover { text-shadow: 0 0 8px rgba(0,200,255,0.6); }
+
+    .repo-stars {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--yellow);
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .repo-desc {
+      font-size: 0.73rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .repo-meta {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .repo-lang {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .lang-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    .repo-today {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--orange);
+    }
+
+    .repo-forks {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    /* ── WIKI FACTS ── */
+    #panel-wiki {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    .fact-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fact-item:last-child { border-bottom: none; }
+
+    .fact-title {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--purple);
+      margin-bottom: 0.25rem;
+    }
+
+    .fact-text {
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .fact-source {
+      margin-top: 0.3rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+    }
+
+    .fact-source a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    .fact-source a:hover { text-decoration: underline; }
+
+    /* ── LOADING / ERROR ── */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 0.75rem;
+      color: var(--muted);
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border2);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .error-msg {
+      padding: 1rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--red);
+    }
+
+    .error-msg .err-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+    /* ── PROGRESS BAR (refresh countdown) ── */
+    .refresh-bar-wrap {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .refresh-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      width: 100%;
+      transform-origin: left;
+      transition: transform 1s linear;
+    }
+
+    /* ── STATUS DOT ── */
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-ok     { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-error  { background: var(--red);   box-shadow: 0 0 6px var(--red); }
+    .dot-loading{ background: var(--yellow);box-shadow: 0 0 6px var(--yellow); animation: pulse-yellow 1s infinite; }
+
+    @keyframes pulse-yellow {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      height: 28px;
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .footer-item {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .footer-item .label { color: var(--muted); }
+    .footer-item .value { color: var(--cyan); }
+
+    @media (max-width: 1100px) {
+      main {
+        grid-template-columns: 280px 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      #panel-weather { grid-column: 1; grid-row: 1 / 4; }
+      #panel-hn      { grid-column: 2; grid-row: 1 / 3; }
+      #panel-github  { grid-column: 2; grid-row: 3; }
+      #panel-wiki    { grid-column: 1 / 3; grid-row: 4; }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      #panel-weather, #panel-hn, #panel-github, #panel-wiki {
+        grid-column: 1;
+        grid-row: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-left">
+    <div class="logo">Knowledge<span>Base</span></div>
+    <span class="badge badge-live">● Live</span>
+  </div>
+  <div class="hdr-right">
+    <div class="refresh-info">Next refresh in <span id="countdown">60</span>s</div>
+    <div class="last-updated">Last: <span id="last-updated">—</span></div>
+  </div>
+</header>
+
+<div class="refresh-bar-wrap">
+  <div class="refresh-bar" id="refresh-bar"></div>
+</div>
+
+<main>
+
+  <!-- WEATHER -->
+  <div class="panel" id="panel-weather">
+    <div class="panel-header">
+      <div class="panel-title cyan"><span class="icon">◈</span> Weather</div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="status-dot dot-loading" id="dot-weather"></span>
+        <span class="panel-meta" id="meta-weather">loading…</span>
+      </div>
+    </div>
+    <div class="panel-body" id="body-weather">
+      <div class="loading"><div class="spinner"></div><span class="loading-text">Fetching data…</span></div>
+    </div>
+  </div>
+
+  <!-- HACKER NEWS -->
+  <div class="panel" id="panel-hn">
+    <div class="panel-header">
+      <div class="panel-title orange"><span class="icon">◆</span> Hacker News — Top Stories</div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="status-dot dot-loading" id="dot-hn"></span>
+        <span class="panel-meta" id="meta-hn">loading…</span>
+      </div>
+    </div>
+    <div class="panel-body" id="body-hn">
+      <div class="loading"><div class="spinner"></div><span class="loading-text">Fetching data…</span></div>
+    </div>
+  </div>
+
+  <!-- GITHUB TRENDING -->
+  <div class="panel" id="panel-github">
+    <div class="panel-header">
+      <div class="panel-title green"><span class="icon">◉</span> GitHub Trending</div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="status-dot dot-loading" id="dot-github"></span>
+        <span class="panel-meta" id="meta-github">loading…</span>
+      </div>
+    </div>
+    <div class="panel-body" id="body-github">
+      <div class="loading"><div class="spinner"></div><span class="loading-text">Fetching data…</span></div>
+    </div>
+  </div>
+
+  <!-- WIKIPEDIA FACTS -->
+  <div class="panel" id="panel-wiki">
+    <div class="panel-header">
+      <div class="panel-title purple"><span class="icon">◇</span> Wikipedia Facts</div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="status-dot dot-loading" id="dot-wiki"></span>
+        <span class="panel-meta" id="meta-wiki">loading…</span>
+      </div>
+    </div>
+    <div class="panel-body" id="body-wiki">
+      <div class="loading"><div class="spinner"></div><span class="loading-text">Fetching data…</span></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-item"><span class="label">SOURCES</span><span class="value">4</span></div>
+  <div class="footer-item"><span class="label">INTERVAL</span><span class="value">60s</span></div>
+  <div class="footer-item"><span class="label">HOST</span><span class="value">localhost:5050</span></div>
+  <div class="footer-item"><span class="label">BUILD</span><span class="value">knowledge-base v1.0</span></div>
+</footer>
+
+<script>
+  const SOURCES = {
+    hn:     'http://localhost:5050/data/hn_top.json',
+    github: 'http://localhost:5050/data/github_trending.json',
+    wiki:   'http://localhost:5050/data/wiki_facts.json',
+    weather:'http://localhost:5050/data/weather.json',
+  };
+
+  const REFRESH_INTERVAL = 60; // seconds
+  let countdown = REFRESH_INTERVAL;
+  let refreshTimer = null;
+  let countdownTimer = null;
+
+  // ── helpers ──────────────────────────────────────────────────────────────
+
+  function setDot(id, state) {
+    const el = document.getElementById('dot-' + id);
+    if (!el) return;
+    el.className = 'status-dot ' + {ok:'dot-ok', error:'dot-error', loading:'dot-loading'}[state];
+  }
+
+  function setMeta(id, text) {
+    const el = document.getElementById('meta-' + id);
+    if (el) el.textContent = text;
+  }
+
+  function getDomain(url) {
+    if (!url) return '';
+    try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
+  }
+
+  function fmtNum(n) {
+    if (n == null) return '—';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+    return String(n);
+  }
+
+  function weatherIcon(cond) {
+    if (!cond) return '🌡';
+    const c = cond.toLowerCase();
+    if (c.includes('thunder')) return '⛈';
+    if (c.includes('drizzle') || c.includes('rain')) return '🌧';
+    if (c.includes('snow'))   return '❄';
+    if (c.includes('fog') || c.includes('mist') || c.includes('haze')) return '🌫';
+    if (c.includes('cloud') || c.includes('overcast')) return '☁';
+    if (c.includes('partly') || c.includes('mostly')) return '⛅';
+    if (c.includes('clear') || c.includes('sunny')) return '☀';
+    return '🌡';
+  }
+
+  // ── renderers ─────────────────────────────────────────────────────────────
+
+  function renderWeather(data) {
+    const body = document.getElementById('body-weather');
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      body.innerHTML = '<div class="error-msg"><div class="err-icon">⚠</div>No weather data</div>';
+      setDot('weather', 'error'); setMeta('weather', 'no data');
+      return;
+    }
+
+    // Accept object or array[0]
+    const d = Array.isArray(data) ? data[0] : data;
+    const temp      = d.temperature ?? d.temp ?? d.temp_c ?? '—';
+    const feels     = d.feels_like ?? d.feelslike_c ?? d.apparent_temperature ?? null;
+    const humidity  = d.humidity ?? d.relative_humidity_2m ?? '—';
+    const wind      = d.wind_speed ?? d.wind_kph ?? d.windspeed ?? '—';
+    const windUnit  = d.wind_kph ? 'km/h' : (d.windspeed ? 'km/h' : (d.wind_speed ? 'm/s' : ''));
+    const condition = d.condition ?? d.weather_description ?? d.description ?? d.weathercode ?? '';
+    const location  = d.location ?? d.city ?? d.name ?? d.timezone ?? '';
+    const pressure  = d.pressure ?? d.pressure_mb ?? d.surface_pressure ?? null;
+    const visibility= d.visibility ?? d.vis_km ?? null;
+    const uvIndex   = d.uv_index ?? d.uv ?? null;
+    const high      = d.high ?? d.maxtemp_c ?? d.temperature_2m_max ?? null;
+    const low       = d.low ?? d.mintemp_c ?? d.temperature_2m_min ?? null;
+
+    const condStr = typeof condition === 'string' ? condition : 'Weather data';
+    const icon = weatherIcon(condStr);
+    const tempUnit = (temp !== '—' && typeof temp === 'number' && temp > 50) ? '°F' : '°C';
+
+    let html = `
+      <div class="weather-main">
+        <div class="weather-icon">${icon}</div>
+        <div class="weather-temp">${temp !== '—' ? temp + tempUnit : '—'}</div>
+        <div class="weather-desc">${condStr || 'Current conditions'}</div>
+        ${location ? `<div class="weather-location">📍 ${location}</div>` : ''}
+      </div>
+      <div class="weather-grid">
+        <div class="weather-stat">
+          <div class="weather-stat-label">Humidity</div>
+          <div class="weather-stat-value">${humidity}${humidity !== '—' ? '%' : ''}</div>
+        </div>
+        <div class="weather-stat">
+          <div class="weather-stat-label">Wind</div>
+          <div class="weather-stat-value">${wind} ${windUnit}</div>
+        </div>
+        ${feels !== null ? `
+        <div class="weather-stat">
+          <div class="weather-stat-label">Feels Like</div>
+          <div class="weather-stat-value">${feels}${tempUnit}</div>
+        </div>` : ''}
+        ${pressure !== null ? `
+        <div class="weather-stat">
+          <div class="weather-stat-label">Pressure</div>
+          <div class="weather-stat-value">${pressure} hPa</div>
+        </div>` : ''}
+      </div>
+      <div class="weather-extra">
+    `;
+
+    if (high !== null && low !== null) html += `
+        <div class="weather-row">
+          <span class="weather-row-label">High / Low</span>
+          <span class="weather-row-value">${high}${tempUnit} / ${low}${tempUnit}</span>
+        </div>`;
+    if (visibility !== null) html += `
+        <div class="weather-row">
+          <span class="weather-row-label">Visibility</span>
+          <span class="weather-row-value">${visibility} km</span>
+        </div>`;
+    if (uvIndex !== null) html += `
+        <div class="weather-row">
+          <span class="weather-row-label">UV Index</span>
+          <span class="weather-row-value">${uvIndex}</span>
+        </div>`;
+    if (d.sunrise) html += `
+        <div class="weather-row">
+          <span class="weather-row-label">Sunrise</span>
+          <span class="weather-row-value">${d.sunrise}</span>
+        </div>`;
+    if (d.sunset) html += `
+        <div class="weather-row">
+          <span class="weather-row-label">Sunset</span>
+          <span class="weather-row-value">${d.sunset}</span>
+        </div>`;
+
+    html += '</div>';
+    body.innerHTML = html;
+    setDot('weather', 'ok');
+    setMeta('weather', location || 'updated');
+  }
+
+  function renderHN(data) {
+    const body = document.getElementById('body-hn');
+    const stories = Array.isArray(data) ? data : (data.stories ?? data.items ?? []);
+    if (!stories.length) {
+      body.innerHTML = '<div class="error-msg"><div class="err-icon">⚠</div>No stories found</div>';
+      setDot('hn', 'error'); setMeta('hn', 'no data');
+      return;
+    }
+
+    let html = '';
+    stories.slice(0, 30).forEach((s, i) => {
+      const title    = s.title ?? s.name ?? 'Untitled';
+      const url      = s.url ?? s.link ?? s.hn_url ?? '#';
+      const score    = s.score ?? s.points ?? null;
+      const comments = s.comments ?? s.num_comments ?? s.descendants ?? null;
+      const domain   = getDomain(url !== '#' ? url : '');
+
+      html += `
+        <div class="story-item">
+          <div class="story-rank">${i + 1}</div>
+          <div class="story-content">
+            <a class="story-title" href="${url}" target="_blank" rel="noopener">${title}</a>
+            <div class="story-meta">
+              ${score !== null ? `<span class="story-score">▲ ${fmtNum(score)}</span>` : ''}
+              ${comments !== null ? `<span class="story-comments">💬 ${fmtNum(comments)}</span>` : ''}
+              ${domain ? `<span class="story-domain">${domain}</span>` : ''}
+            </div>
+          </div>
+        </div>`;
+    });
+
+    body.innerHTML = html;
+    setDot('hn', 'ok');
+    setMeta('hn', `${stories.length} stories`);
+  }
+
+  function renderGitHub(data) {
+    const body = document.getElementById('body-github');
+    const repos = Array.isArray(data) ? data : (data.repos ?? data.repositories ?? data.items ?? []);
+    if (!repos.length) {
+      body.innerHTML = '<div class="error-msg"><div class="err-icon">⚠</div>No repos found</div>';
+      setDot('github', 'error'); setMeta('github', 'no data');
+      return;
+    }
+
+    let html = '';
+    repos.slice(0, 20).forEach(r => {
+      const name    = r.full_name ?? r.name ?? 'unknown/repo';
+      const desc    = r.description ?? r.desc ?? '';
+      const stars   = r.stars ?? r.stargazers_count ?? r.star_count ?? null;
+      const forks   = r.forks ?? r.forks_count ?? null;
+      const lang    = r.language ?? r.lang ?? '';
+      const today   = r.stars_today ?? r.todayStars ?? r.new_stars ?? null;
+      const repoUrl = r.url ?? r.html_url ?? `https://github.com/${name}`;
+
+      html += `
+        <div class="repo-item">
+          <div class="repo-top">
+            <a class="repo-name" href="${repoUrl}" target="_blank" rel="noopener">${name}</a>
+            ${stars !== null ? `<span class="repo-stars">★ ${fmtNum(stars)}</span>` : ''}
+          </div>
+          ${desc ? `<div class="repo-desc">${desc}</div>` : ''}
+          <div class="repo-meta">
+            ${lang ? `<span class="repo-lang"><span class="lang-dot"></span>${lang}</span>` : ''}
+            ${forks !== null ? `<span class="repo-forks">⑂ ${fmtNum(forks)}</span>` : ''}
+            ${today !== null ? `<span class="repo-today">+${fmtNum(today)} today</span>` : ''}
+          </div>
+        </div>`;
+    });
+
+    body.innerHTML = html;
+    setDot('github', 'ok');
+    setMeta('github', `${repos.length} repos`);
+  }
+
+  function renderWiki(data) {
+    const body = document.getElementById('body-wiki');
+    const facts = Array.isArray(data) ? data : (data.facts ?? data.articles ?? data.items ?? []);
+    if (!facts.length) {
+      body.innerHTML = '<div class="error-msg"><div class="err-icon">⚠</div>No facts found</div>';
+      setDot('wiki', 'error'); setMeta('wiki', 'no data');
+      return;
+    }
+
+    let html = '';
+    facts.slice(0, 15).forEach(f => {
+      const title   = f.title ?? f.name ?? f.topic ?? 'Fact';
+      const text    = f.extract ?? f.summary ?? f.description ?? f.text ?? f.content ?? '';
+      const wikiUrl = f.url ?? f.wiki_url ?? f.link ?? null;
+
+      html += `
+        <div class="fact-item">
+          <div class="fact-title">${title}</div>
+          <div class="fact-text">${text}</div>
+          ${wikiUrl ? `<div class="fact-source"><a href="${wikiUrl}" target="_blank" rel="noopener">→ Wikipedia</a></div>` : ''}
+        </div>`;
+    });
+
+    body.innerHTML = html;
+    setDot('wiki', 'ok');
+    setMeta('wiki', `${facts.length} facts`);
+  }
+
+  // ── fetch & dispatch ──────────────────────────────────────────────────────
+
+  async function fetchSource(key, url, renderer) {
+    setDot(key, 'loading');
+    setMeta(key, 'fetching…');
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      renderer(data);
+    } catch (err) {
+      const body = document.getElementById('body-' + key);
+      body.innerHTML = `<div class="error-msg"><div class="err-icon">⚠</div>${err.message}</div>`;
+      setDot(key, 'error');
+      setMeta(key, 'error');
+    }
+  }
+
+  function fetchAll() {
+    fetchSource('weather', SOURCES.weather, renderWeather);
+    fetchSource('hn',      SOURCES.hn,      renderHN);
+    fetchSource('github',  SOURCES.github,  renderGitHub);
+    fetchSource('wiki',    SOURCES.wiki,    renderWiki);
+
+    const now = new Date();
+    document.getElementById('last-updated').textContent =
+      now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
+  // ── countdown & progress bar ──────────────────────────────────────────────
+
+  function startCountdown() {
+    countdown = REFRESH_INTERVAL;
+    const bar = document.getElementById('refresh-bar');
+    bar.style.transform = 'scaleX(1)';
+
+    if (countdownTimer) clearInterval(countdownTimer);
+    countdownTimer = setInterval(() => {
+      countdown--;
+      document.getElementById('countdown').textContent = Math.max(0, countdown);
+      const progress = Math.max(0, countdown / REFRESH_INTERVAL);
+      bar.style.transform = `scaleX(${progress})`;
+
+      if (countdown <= 0) {
+        clearInterval(countdownTimer);
+        fetchAll();
+        startCountdown();
+      }
+    }, 1000);
+  }
+
+  // ── init ──────────────────────────────────────────────────────────────────
+
+  fetchAll();
+  startCountdown();
+</script>
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous Web Intelligence API — Agent Fleet Powered Research</title>
+  <meta name="description" content="Submit research queries or scraping tasks via API. Get structured data back in minutes, powered by autonomous AI agents running 24/7." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    @keyframes spin     { to { transform: rotate(360deg); } }
+    @keyframes pulse    { 0%,100%{opacity:1} 50%{opacity:.4} }
+    @keyframes slideUp  { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes glow     { 0%,100%{text-shadow:0 0 20px rgba(0,200,255,.4)} 50%{text-shadow:0 0 40px rgba(0,200,255,.8),0 0 80px rgba(0,200,255,.3)} }
+    @keyframes scan     { 0%{background-position:0 0} 100%{background-position:0 100%} }
+    @keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes beamIn   { from{width:0;opacity:0} to{opacity:1} }
+    @keyframes blink    { 0%,100%{opacity:1} 49%{opacity:1} 50%{opacity:0} 99%{opacity:0} }
+
+    :root {
+      --bg:       #050810;
+      --panel:    #080d1a;
+      --panel2:   #0c1220;
+      --border:   rgba(0,200,255,0.14);
+      --border2:  rgba(0,200,255,0.26);
+      --cyan:     #00c8ff;
+      --cyan-dim: rgba(0,200,255,0.12);
+      --green:    #00ff88;
+      --yellow:   #ffd700;
+      --red:      #ff3355;
+      --purple:   #a855f7;
+      --orange:   #ff8c00;
+      --muted:    rgba(255,255,255,0.35);
+      --text:     rgba(255,255,255,0.88);
+      --mono:     'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    /* ── SCANLINE overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.035) 2px,rgba(0,0,0,0.035) 4px);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 58px;
+      background: rgba(5,8,16,0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border2);
+    }
+    nav::after {
+      content: '';
+      position: absolute; bottom:-1px; left:0; right:0; height:1px;
+      background: linear-gradient(90deg,transparent,var(--cyan),transparent);
+      opacity: .6;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: .8rem;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 30px; height: 30px;
+      border: 1.5px solid var(--cyan); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: var(--cyan); position: relative;
+    }
+    .nav-logo-icon::before {
+      content: ''; position: absolute; inset: 3px;
+      border: 1px solid var(--cyan); border-radius: 3px;
+      opacity: .35; animation: spin 8s linear infinite;
+    }
+    .nav-brand {
+      font-family: var(--mono); font-size: .8rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--cyan);
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-family: var(--mono); font-size: .75rem; letter-spacing: .1em;
+      color: var(--muted); text-decoration: none; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta {
+      font-family: var(--mono); font-size: .75rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      background: var(--cyan); color: #050810;
+      border: none; padding: .45rem 1.2rem; border-radius: 4px;
+      cursor: pointer; text-decoration: none; transition: all .2s;
+    }
+    .nav-cta:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 0 20px rgba(0,200,255,.5); }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,200,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(0,200,255,.07) 0%, transparent 70%);
+    }
+    .hero-content { position: relative; z-index: 1; animation: slideUp .7s ease both; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--cyan);
+      background: var(--cyan-dim); border: 1px solid var(--border2);
+      padding: .35rem 1rem; border-radius: 100px; margin-bottom: 2rem;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); animation: pulse 1.5s ease infinite;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800; line-height: 1.12;
+      letter-spacing: -.02em; margin-bottom: 1.5rem;
+    }
+    .hero h1 span.accent { color: var(--cyan); animation: glow 3s ease infinite; }
+    .hero h1 span.accent2 { color: var(--green); }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted); max-width: 600px;
+      margin: 0 auto 2.5rem; font-weight: 400;
+    }
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--mono); font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: var(--cyan); color: #050810;
+      border: none; padding: .85rem 2rem; border-radius: 6px;
+      cursor: pointer; text-decoration: none; transition: all .2s;
+    }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,255,.4); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--mono); font-size: .85rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border2); padding: .85rem 2rem; border-radius: 6px;
+      cursor: pointer; text-decoration: none; transition: all .2s;
+    }
+    .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; align-items: center; justify-content: center; gap: 3rem;
+      margin-top: 3.5rem; padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: var(--mono); font-size: 1.6rem; font-weight: 700;
+      color: var(--cyan); display: block;
+    }
+    .stat-label { font-size: .75rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+
+    /* ── CODE DEMO ── */
+    .demo-strip {
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0; overflow: hidden; position: relative;
+    }
+    .demo-inner {
+      font-family: var(--mono); font-size: .78rem; color: var(--muted);
+      white-space: nowrap; padding: 0 2rem;
+    }
+    .demo-inner .k { color: var(--purple); }
+    .demo-inner .s { color: var(--green); }
+    .demo-inner .c { color: var(--cyan); }
+    .demo-inner .p { color: var(--yellow); }
+
+    /* ── SECTION ── */
+    section { padding: 5rem 0; }
+    .section-label {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--cyan);
+      margin-bottom: .75rem; display: flex; align-items: center; gap: .75rem;
+    }
+    .section-label::before { content: '//'; color: var(--muted); }
+    .section-title {
+      font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 700;
+      line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 560px; }
+
+    /* ── BENEFITS ── */
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    @media(max-width:768px){ .benefits-grid{grid-template-columns:1fr;} }
+    .benefit-card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 10px; padding: 2rem;
+      transition: border-color .25s, transform .25s;
+      position: relative; overflow: hidden;
+    }
+    .benefit-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0; transition: opacity .25s;
+    }
+    .benefit-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+    .benefit-card:hover::before { opacity: 1; }
+    .benefit-icon {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: var(--cyan-dim); border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 1.2rem;
+    }
+    .benefit-title { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+    .benefit-desc { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: var(--panel); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 0; margin-top: 3rem; position: relative;
+    }
+    @media(max-width:900px){ .steps-grid{grid-template-columns:repeat(2,1fr); gap:1.5rem;} }
+    @media(max-width:500px){ .steps-grid{grid-template-columns:1fr;} }
+    .step {
+      padding: 2rem; text-align: center; position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -0.5rem; top: 50%; transform: translateY(-50%);
+      color: var(--cyan); opacity: .4; font-size: 1.2rem;
+    }
+    @media(max-width:900px){ .step::after{display:none;} }
+    .step-num {
+      font-family: var(--mono); font-size: .7rem; font-weight: 700;
+      color: var(--cyan); letter-spacing: .15em; margin-bottom: .75rem;
+      display: block;
+    }
+    .step-icon { font-size: 2rem; margin-bottom: .75rem; display: block; }
+    .step-title { font-size: .95rem; font-weight: 600; margin-bottom: .4rem; }
+    .step-desc { font-size: .82rem; color: var(--muted); }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; margin-top: 3.5rem; align-items: start;
+    }
+    @media(max-width:768px){ .pricing-grid{grid-template-columns:1fr;} }
+    .plan {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .plan.featured {
+      border-color: var(--cyan);
+      background: linear-gradient(145deg, rgba(0,200,255,.06), var(--panel));
+    }
+    .plan.featured::after {
+      content: 'MOST POPULAR';
+      position: absolute; top: 1.1rem; right: 1.1rem;
+      font-family: var(--mono); font-size: .6rem; font-weight: 700;
+      letter-spacing: .1em; color: #050810;
+      background: var(--cyan); padding: .2rem .6rem; border-radius: 3px;
+    }
+    .plan-name {
+      font-family: var(--mono); font-size: .75rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: .75rem;
+    }
+    .plan-price {
+      font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: .3rem;
+    }
+    .plan-price .currency { font-size: 1.3rem; vertical-align: top; margin-top: .4rem; display: inline-block; }
+    .plan-price .period { font-size: .85rem; font-weight: 400; color: var(--muted); }
+    .plan-tagline { font-size: .85rem; color: var(--muted); margin-bottom: 1.75rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border); }
+    .plan-features { list-style: none; margin-bottom: 2rem; }
+    .plan-features li {
+      display: flex; align-items: flex-start; gap: .6rem;
+      font-size: .875rem; margin-bottom: .65rem; color: var(--text);
+    }
+    .plan-features li .check { color: var(--green); flex-shrink: 0; margin-top: .1rem; }
+    .plan-features li .x { color: var(--muted); flex-shrink: 0; }
+    .btn-plan {
+      display: block; width: 100%; text-align: center;
+      font-family: var(--mono); font-size: .8rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .8rem; border-radius: 6px; cursor: pointer; text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-plan-outline {
+      background: transparent; color: var(--text); border: 1px solid var(--border2);
+    }
+    .btn-plan-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-plan-fill {
+      background: var(--cyan); color: #050810; border: none;
+    }
+    .btn-plan-fill:hover { background: #fff; box-shadow: 0 6px 24px rgba(0,200,255,.4); transform: translateY(-1px); }
+    .btn-plan-ghost {
+      background: transparent; color: var(--muted); border: 1px solid var(--border);
+    }
+    .btn-plan-ghost:hover { border-color: var(--border2); color: var(--text); }
+
+    /* ── CODE BLOCK ── */
+    .code-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    @media(max-width:768px){ .code-section{grid-template-columns:1fr;} }
+    .code-block {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .75rem 1rem;
+      background: var(--panel2); border-bottom: 1px solid var(--border);
+    }
+    .code-title { font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .1em; }
+    .code-dots { display: flex; gap: .4rem; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #febc2e; }
+    .dot.g { background: #28c840; }
+    pre {
+      padding: 1.5rem; font-family: var(--mono); font-size: .78rem;
+      line-height: 1.7; overflow-x: auto; tab-size: 2;
+    }
+    .kw { color: var(--purple); }
+    .str { color: var(--green); }
+    .cmt { color: rgba(255,255,255,0.28); font-style: italic; }
+    .fn { color: var(--cyan); }
+    .num { color: var(--yellow); }
+    .key { color: #ff8c00; }
+    .cursor { animation: blink 1s step-end infinite; }
+
+    /* ── TECH CREDIBILITY ── */
+    .tech-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1rem; margin-top: 3rem;
+    }
+    @media(max-width:900px){ .tech-grid{grid-template-columns:repeat(2,1fr);} }
+    .tech-item {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem; text-align: center;
+      transition: border-color .2s;
+    }
+    .tech-item:hover { border-color: var(--border2); }
+    .tech-icon { font-size: 1.8rem; margin-bottom: .75rem; display: block; }
+    .tech-label { font-size: .8rem; font-weight: 600; margin-bottom: .25rem; }
+    .tech-desc { font-size: .75rem; color: var(--muted); }
+
+    /* ── FAQ ── */
+    .faq-list { margin-top: 3rem; max-width: 720px; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: 8px;
+      margin-bottom: .75rem; overflow: hidden;
+      transition: border-color .2s;
+    }
+    .faq-item:hover { border-color: var(--border2); }
+    .faq-q {
+      padding: 1.1rem 1.5rem;
+      font-size: .95rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+    }
+    .faq-q::after { content: '+'; font-family: var(--mono); color: var(--cyan); font-size: 1.2rem; flex-shrink: 0; }
+    .faq-a {
+      padding: 0 1.5rem 1.1rem;
+      font-size: .875rem; color: var(--muted); line-height: 1.7;
+    }
+    .faq-a code {
+      font-family: var(--mono); font-size: .78rem;
+      background: var(--panel2); border: 1px solid var(--border);
+      padding: .1rem .4rem; border-radius: 3px; color: var(--cyan);
+    }
+
+    /* ── CTA FOOTER ── */
+    .cta-section {
+      background: var(--panel); border-top: 1px solid var(--border);
+      padding: 6rem 2rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; top:0; left:50%; transform:translateX(-50%);
+      width: 600px; height: 300px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(0,200,255,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 { font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 800; margin-bottom: 1rem; }
+    .cta-section p { color: var(--muted); font-size: 1rem; margin-bottom: 2.5rem; }
+    .cta-note { font-family: var(--mono); font-size: .72rem; color: var(--muted); margin-top: 1.2rem; letter-spacing: .08em; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: var(--mono); font-size: .7rem; color: var(--muted); text-decoration: none; letter-spacing: .08em; }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-status { display: flex; align-items: center; gap: .5rem; font-family: var(--mono); font-size: .7rem; color: var(--green); letter-spacing: .08em; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.5s ease infinite; }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: linear-gradient(90deg,transparent,var(--border2),transparent); margin: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">⬡</div>
+      <span class="nav-brand">WebIntel API</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="/buy" class="nav-cta">Start Free →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Agent fleet online — 12 agents active
+      </div>
+      <h1>
+        Your API for<br/>
+        <span class="accent">Autonomous</span> Web<br/>
+        <span class="accent2">Intelligence</span>
+      </h1>
+      <p class="hero-sub">
+        Submit research queries or scraping tasks. Get structured, clean data back in minutes — powered by a live fleet of AI agents running 24/7.
+      </p>
+      <div class="hero-actions">
+        <a href="/buy" class="btn-primary">
+          <span>Get API Key</span>
+          <span>→</span>
+        </a>
+        <a href="#how" class="btn-secondary">
+          <span>See How It Works</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">24/7</span>
+          <span class="stat-label">Agent Uptime</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">&lt; 3 min</span>
+          <span class="stat-label">Avg Response</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">REST</span>
+          <span class="stat-label">Simple API</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">JSON</span>
+          <span class="stat-label">Structured Output</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO STRIP -->
+  <div class="demo-strip">
+    <div class="demo-inner container">
+      <span class="k">curl</span> -X POST <span class="c">https://api.webintel.ai/v1/research</span>
+      &nbsp;&nbsp;<span class="k">-H</span> <span class="s">"Authorization: Bearer sk-..."</span>
+      &nbsp;&nbsp;<span class="k">-d</span> <span class="s">'{"query": "top 5 competitors for SaaS CRM tools in 2026", "output": "json"}'</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="p">→  200 OK · 2.1s · 4.2kb structured JSON</span>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Value Proposition</div>
+      <h2 class="section-title">Intelligence-as-a-Service.<br/>No scraper maintenance.</h2>
+      <p class="section-sub">We run the agents. You get the data. Three reasons developers choose WebIntel.</p>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <div class="benefit-title">Results in Minutes, Not Hours</div>
+          <p class="benefit-desc">
+            Our autonomous agent fleet parallelises work across multiple sources. Complex multi-source research that would take a human hours completes in under 3 minutes on average.
+          </p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🧩</div>
+          <div class="benefit-title">Structured Data, Ready to Use</div>
+          <p class="benefit-desc">
+            Every response is clean, normalised JSON — no parsing HTML soup or regex hell. Agents extract, validate, and structure data before it reaches you.
+          </p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🤖</div>
+          <div class="benefit-title">Agents That Actually Reason</div>
+          <p class="benefit-desc">
+            Not simple scrapers — our agents understand context, follow multi-step research paths, handle pagination, logins, and dynamic content automatically.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div class="container">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Four steps from query to data</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <span class="step-num">01</span>
+          <span class="step-icon">📨</span>
+          <div class="step-title">Submit Query</div>
+          <p class="step-desc">POST your research question or URL target to the API with your desired output schema.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <span class="step-icon">🧠</span>
+          <div class="step-title">Agent Dispatch</div>
+          <p class="step-desc">The orchestrator decomposes the task and routes sub-tasks to specialist agents in the fleet.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <span class="step-icon">🔍</span>
+          <div class="step-title">Live Execution</div>
+          <p class="step-desc">Agents browse, extract, validate, and cross-reference data in real-time across the web.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <span class="step-icon">📦</span>
+          <div class="step-title">Structured Response</div>
+          <p class="step-desc">Receive clean JSON matching your schema, with source citations and confidence scores.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CODE EXAMPLE -->
+  <section>
+    <div class="container">
+      <div class="code-section">
+        <div>
+          <div class="section-label">Developer Experience</div>
+          <h2 class="section-title">Integrate in under 5 minutes</h2>
+          <p class="section-sub" style="margin-bottom:1.5rem">
+            A single POST request is all you need. Webhooks available for async long-running tasks. SDKs for Python, Node, and Go coming soon.
+          </p>
+          <a href="/buy" class="btn-primary" style="display:inline-flex">Get your API key →</a>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots">
+              <div class="dot r"></div>
+              <div class="dot y"></div>
+              <div class="dot g"></div>
+            </div>
+            <span class="code-title">example.py</span>
+          </div>
+          <pre><span class="kw">import</span> requests
+
+<span class="cmt"># Submit a research query</span>
+response = requests.<span class="fn">post</span>(
+    <span class="str">"https://api.webintel.ai/v1/research"</span>,
+    headers={<span class="str">"Authorization"</span>: <span class="str">"Bearer sk-..."</span>},
+    json={
+        <span class="key">"query"</span>: <span class="str">"Top SaaS tools for devops 2026"</span>,
+        <span class="key">"depth"</span>: <span class="str">"standard"</span>,
+        <span class="key">"output_format"</span>: <span class="str">"json"</span>,
+    }
+)
+
+data = response.<span class="fn">json</span>()
+<span class="cmt"># → {"results": [...], "sources": [...],</span>
+<span class="cmt">#    "confidence": 0.94, "elapsed_ms": 1847}</span>
+<span class="cursor">_</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TECH CREDIBILITY -->
+  <section>
+    <div class="container">
+      <div class="section-label">Under the Hood</div>
+      <h2 class="section-title">Powered by real autonomous agents</h2>
+      <p class="section-sub">Not a wrapper. Not a prompt chain. A live, observable fleet of specialised AI agents.</p>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <span class="tech-icon">🏭</span>
+          <div class="tech-label">Live Agent Fleet</div>
+          <div class="tech-desc">Persistent agents with memory, roles, and specialisations — always on, always running</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-icon">📡</span>
+          <div class="tech-icon">📡</div>
+          <div class="tech-label">Real-Time Data</div>
+          <div class="tech-desc">Agents hit the live web, not cached indexes. Fresh data on every request</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-icon">🔒</span>
+          <div class="tech-label">Policy Enforcement</div>
+          <div class="tech-desc">Every agent query runs through compliance checks before execution. Ethical by design</div>
+        </div>
+        <div class="tech-item">
+          <span class="tech-icon">📊</span>
+          <div class="tech-label">Structured Outputs</div>
+          <div class="tech-desc">JSON Schema validation on every response. Predictable, typed, machine-readable</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-label">Pricing</div>
+      <h2 class="section-title">Pay for what you use.</h2>
+      <p class="section-sub">No seats, no subscriptions required. Start free and scale as you grow.</p>
+      <div class="pricing-grid">
+
+        <!-- FREE -->
+        <div class="plan">
+          <div class="plan-name">Free</div>
+          <div class="plan-price"><span class="currency">$</span>0<span class="period">/mo</span></div>
+          <p class="plan-tagline">Perfect for exploring the API and prototyping.</p>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> 5 queries / month</li>
+            <li><span class="check">✓</span> Standard depth research</li>
+            <li><span class="check">✓</span> JSON output</li>
+            <li><span class="check">✓</span> REST API access</li>
+            <li><span class="x">–</span> <span style="color:var(--muted)">Webhooks</span></li>
+            <li><span class="x">–</span> <span style="color:var(--muted)">Priority queue</span></li>
+            <li><span class="x">–</span> <span style="color:var(--muted)">Custom schemas</span></li>
+          </ul>
+          <a href="/buy" class="btn-plan btn-plan-outline">Get Free Key</a>
+        </div>
+
+        <!-- PRO -->
+        <div class="plan featured">
+          <div class="plan-name">Pro</div>
+          <div class="plan-price"><span class="currency">$</span>29<span class="period">/mo</span></div>
+          <p class="plan-tagline">For developers and small teams shipping products.</p>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> 500 queries / month</li>
+            <li><span class="check">✓</span> Deep + standard depth</li>
+            <li><span class="check">✓</span> JSON + Markdown output</li>
+            <li><span class="check">✓</span> REST API access</li>
+            <li><span class="check">✓</span> Webhooks (async tasks)</li>
+            <li><span class="check">✓</span> Priority queue</li>
+            <li><span class="x">–</span> <span style="color:var(--muted)">Custom schemas</span></li>
+          </ul>
+          <a href="/buy" class="btn-plan btn-plan-fill">Start Pro →</a>
+        </div>
+
+        <!-- ENTERPRISE -->
+        <div class="plan">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-price" style="font-size:1.8rem;padding-top:.35rem">Custom</div>
+          <p class="plan-tagline">High-volume, custom integrations, and dedicated agents.</p>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> Unlimited queries</li>
+            <li><span class="check">✓</span> All depth levels</li>
+            <li><span class="check">✓</span> All output formats</li>
+            <li><span class="check">✓</span> REST + streaming API</li>
+            <li><span class="check">✓</span> Webhooks + SSE</li>
+            <li><span class="check">✓</span> Dedicated agent fleet</li>
+            <li><span class="check">✓</span> Custom output schemas</li>
+          </ul>
+          <a href="mailto:hello@webintel.ai" class="btn-plan btn-plan-ghost">Contact Sales →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Common questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-q">What kinds of queries can I submit?</div>
+          <div class="faq-a">
+            Research questions ("What are the top 5 project management tools in 2026?"), data extraction ("Extract all product listings from this URL"), competitive intelligence, news aggregation, price monitoring, and more. If a human could research it on the web, our agents can too.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How is this different from a standard web scraper?</div>
+          <div class="faq-a">
+            Traditional scrapers break when sites change structure. Our agents <em>understand</em> pages — they navigate JavaScript-rendered content, handle pagination, interpret context, and synthesise information across multiple sources. You describe what you want, not how to get it.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What does a "query" count as?</div>
+          <div class="faq-a">
+            One API call to <code>/v1/research</code> or <code>/v1/extract</code> counts as one query, regardless of how many URLs the agent visits internally to fulfil it.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How long does a typical response take?</div>
+          <div class="faq-a">
+            Standard queries return in 1–3 minutes. Deep research tasks (multi-source synthesis) can take up to 8 minutes. Use webhooks on the Pro plan for async polling so you're not blocking your server.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Is there a rate limit?</div>
+          <div class="faq-a">
+            Free: 1 concurrent query, 5/month. Pro: 5 concurrent queries, 500/month. Enterprise: custom. Burst limits apply — see the API docs for details.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How do I get started?</div>
+          <div class="faq-a">
+            Click <a href="/buy" style="color:var(--cyan)">Get API Key</a>, grab your free key, and make your first POST request. No credit card required for the free tier.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FOOTER -->
+  <section class="cta-section">
+    <div style="position:relative;z-index:1">
+      <div class="section-label" style="justify-content:center">Get Started Today</div>
+      <h2>Your first 5 queries are free.</h2>
+      <p>No credit card. No infrastructure. Just your API key and a POST request.</p>
+      <a href="/buy" class="btn-primary" style="font-size:.95rem;padding:1rem 2.5rem">
+        Get Your Free API Key →
+      </a>
+      <p class="cta-note">Free tier · No card required · Cancel anytime</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">WebIntel API © 2026</span>
+    <div class="footer-links">
+      <a href="/">Command Centre</a>
+      <a href="/kb">Docs</a>
+      <a href="mailto:hello@webintel.ai">Contact</a>
+    </div>
+    <div class="footer-status">
+      <div class="status-dot"></div>
+      All systems operational
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+[
+  {
+    "sequence": 1,
+    "name": "Welcome",
+    "subject": "Welcome to AI HQ — Your Command Centre is Ready",
+    "delay_days": 0,
+    "html": true,
+    "body": "<h2>Welcome to AI HQ</h2><p>You've just unlocked the most powerful AI operations platform available.</p><p>AI HQ gives you a unified command centre to orchestrate autonomous agents, monitor real-time intelligence, and drive revenue — all from a single dashboard.</p><p>Here's what happens next:</p><ul><li><strong>Your dashboard is live.</strong> Log in now to explore your workspace.</li><li><strong>Agents are standing by.</strong> Your fleet is ready to deploy on your first task.</li><li><strong>Support is included.</strong> Reply to this email anytime — a real human will respond.</li></ul><p style='margin-top:24px;'><a href='https://aihq.app/dashboard' style='background:#2563eb;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:bold;'>Open Your Dashboard →</a></p><p style='margin-top:24px;color:#666;font-size:14px;'>Welcome aboard.<br/>The AI HQ Team</p>"
+  },
+  {
+    "sequence": 2,
+    "name": "Feature Tour",
+    "subject": "5 Things You Can Do with AI HQ Today",
+    "delay_days": 2,
+    "html": true,
+    "body": "<h2>Get More From AI HQ</h2><p>Most users only scratch the surface. Here are five capabilities you can put to work right now:</p><ol><li><strong>Agent Fleet Management</strong> — Deploy, monitor, and coordinate autonomous agents from one screen. No context-switching.</li><li><strong>Real-Time Market Intelligence</strong> — Track competitors, trending topics, and opportunities as they emerge.</li><li><strong>Automated Outreach</strong> — Draft and send campaigns across email and social channels without manual effort.</li><li><strong>Revenue Analytics</strong> — See exactly where your pipeline stands and where to focus next.</li><li><strong>Consciousness Stream</strong> — Our proprietary self-improving agent layer that gets smarter with every interaction.</li></ol><p>Each of these is available in your dashboard now — no setup required.</p><p style='margin-top:24px;'><a href='https://aihq.app/dashboard' style='background:#2563eb;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:bold;'>Explore Features →</a></p><p style='margin-top:24px;color:#666;font-size:14px;'>Build something great.<br/>The AI HQ Team</p>"
+  },
+  {
+    "sequence": 3,
+    "name": "Conversion",
+    "subject": "Your Free Trial Ends Soon — Lock In Your Rate",
+    "delay_days": 5,
+    "html": true,
+    "body": "<h2>Don't Lose Access</h2><p>Your trial period is ending soon. Here's what upgrading gets you:</p><ul><li><strong>Unlimited agent deployments</strong> — no caps on your fleet size.</li><li><strong>Priority processing</strong> — your tasks run first, every time.</li><li><strong>Advanced analytics</strong> — full revenue tracking, market intelligence, and performance dashboards.</li><li><strong>Dedicated support</strong> — direct access to our team for onboarding and strategy.</li></ul><p>Early adopters who upgrade this week lock in our launch pricing — <strong>50% off</strong> the standard rate, guaranteed for life.</p><p style='margin-top:24px;'><a href='https://aihq.app/pricing' style='background:#16a34a;color:#fff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:16px;'>Upgrade Now — 50% Off →</a></p><p style='margin-top:16px;color:#666;font-size:14px;'>This pricing won't last. Secure your spot today.</p><p style='color:#666;font-size:14px;'>— The AI HQ Team</p>"
+  }
+]

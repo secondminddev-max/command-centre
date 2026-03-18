@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Platform Pricing - Competitive Intelligence Report</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --heading: #f0f6fc;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --red: #f85149;
+    --purple: #bc8cff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; line-height: 1.6; padding: 2rem; }
+  h1 { color: var(--heading); font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { color: var(--accent); font-size: 1.5rem; margin: 2rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+  h3 { color: var(--heading); font-size: 1.15rem; margin: 1rem 0 0.5rem; }
+  .subtitle { color: #8b949e; margin-bottom: 2rem; }
+  .platform-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .platform-card h2 { margin-top: 0; border: none; padding: 0; }
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .tier { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; }
+  .tier.free { border-left: 3px solid var(--green); }
+  .tier.mid { border-left: 3px solid var(--accent); }
+  .tier.pro { border-left: 3px solid var(--orange); }
+  .tier.enterprise { border-left: 3px solid var(--purple); }
+  .tier-name { font-weight: 700; color: var(--heading); font-size: 1.1rem; }
+  .tier-price { font-size: 1.4rem; font-weight: 700; color: var(--green); margin: 0.5rem 0; }
+  .tier-price.paid { color: var(--orange); }
+  .tier-price.enterprise { color: var(--purple); }
+  .tier ul { list-style: none; padding: 0; margin-top: 0.5rem; }
+  .tier ul li { padding: 0.2rem 0; font-size: 0.9rem; }
+  .tier ul li::before { content: "- "; color: #8b949e; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+  .badge-free { background: rgba(63,185,80,0.15); color: var(--green); }
+  .badge-oss { background: rgba(188,140,255,0.15); color: var(--purple); }
+  .badge-credit { background: rgba(210,153,34,0.15); color: var(--orange); }
+  .target { font-size: 0.85rem; color: #8b949e; margin-top: 0.5rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--card); color: var(--heading); }
+  td { background: var(--bg); }
+  .notes { background: var(--card); border-left: 3px solid var(--accent); padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .timestamp { color: #8b949e; font-size: 0.85rem; margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+</style>
+</head>
+<body>
+
+<h1>AI Agent Platform Pricing -- Competitive Intelligence Report</h1>
+<p class="subtitle">US Market Focus | Data collected March 2026 | 14 platforms analyzed</p>
+
+<!-- ========== CREWAI ========== -->
+<div class="platform-card">
+  <h2>1. CrewAI <span class="badge badge-free">Free Tier</span></h2>
+  <p><a href="https://crewai.com/pricing">crewai.com/pricing</a> | Multi-agent orchestration framework + hosted platform</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Basic</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>50 executions/month</li>
+        <li>1 seat</li>
+        <li>Visual editor + AI copilot</li>
+        <li>Standard tools & triggers</li>
+        <li>Tracing, OpenTelemetry</li>
+        <li>Guardrails & human-in-the-loop</li>
+        <li>Cron scheduling</li>
+        <li>Community support</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Professional</div>
+      <div class="tier-price paid">$25/mo</div>
+      <ul>
+        <li>100 executions included</li>
+        <li>$0.50 per additional execution</li>
+        <li>2 seats</li>
+        <li>GitHub integration</li>
+        <li>Export as MCP server</li>
+        <li>LLM testing & management</li>
+        <li>Auto-scaling</li>
+        <li>Hallucination scores</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Up to 30,000 executions/mo</li>
+        <li>Unlimited seats</li>
+        <li>Dedicated VPC / FedRAMP</li>
+        <li>SSO (Entra, Okta) + RBAC</li>
+        <li>On-site training & onboarding</li>
+        <li>SLA-backed support</li>
+        <li>Self-hosted option</li>
+      </ul>
+    </div>
+  </div>
+  <p class="target"><strong>Target:</strong> Developers building multi-agent crews; small teams to enterprise.</p>
+</div>
+
+<!-- ========== AUTOGEN ========== -->
+<div class="platform-card">
+  <h2>2. Microsoft AutoGen / AutoGen Studio <span class="badge badge-oss">Open Source</span></h2>
+  <p><a href="https://github.com/microsoft/autogen">github.com/microsoft/autogen</a> | Multi-agent framework from Microsoft Research</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Open Source</div>
+      <div class="tier-price">$0 (Free)</div>
+      <ul>
+        <li>Fully open-source (MIT license)</li>
+        <li>Self-hosted only</li>
+        <li>AutoGen Studio (low-code UI)</li>
+        <li>Multi-agent conversation patterns</li>
+        <li>No managed cloud offering</li>
+        <li>You pay only for LLM API costs</li>
+        <li>Prototyping tool, not production SaaS</li>
+        <li>Community support via GitHub</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">AutoGen has no commercial pricing -- it is a free research framework. Costs come from LLM API usage (OpenAI, Azure, etc.) and your own infrastructure. No managed/hosted version exists.</div>
+  <p class="target"><strong>Target:</strong> Developers & researchers building custom multi-agent systems.</p>
+</div>
+
+<!-- ========== LANGSMITH ========== -->
+<div class="platform-card">
+  <h2>3. LangChain / LangSmith <span class="badge badge-free">Free Tier</span></h2>
+  <p><a href="https://www.langchain.com/pricing">langchain.com/pricing</a> | Agent framework + observability/deployment platform</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Developer</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>1 seat</li>
+        <li>5,000 base traces/month</li>
+        <li>1 Agent Builder agent</li>
+        <li>50 Agent Builder runs/month</li>
+        <li>14-day trace retention</li>
+        <li>Tracing, evals, Prompt Hub</li>
+        <li>Community support</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Plus</div>
+      <div class="tier-price paid">$39/seat/mo</div>
+      <ul>
+        <li>Unlimited seats</li>
+        <li>10,000 base traces/month</li>
+        <li>500 Agent Builder runs/month</li>
+        <li>Unlimited agents</li>
+        <li>1 free dev deployment</li>
+        <li>Up to 3 workspaces</li>
+        <li>400-day extended retention</li>
+        <li>Email support</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Custom seats & workspaces</li>
+        <li>Hybrid / self-hosted / VPC</li>
+        <li>Custom SSO + RBAC</li>
+        <li>SLA guarantees</li>
+        <li>Dedicated engineering team</li>
+        <li>Team training & architecture guidance</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">
+    <strong>Usage-based trace costs:</strong> Base traces $2.50/1k (14-day retention). Extended traces $5.00/1k (400-day retention). LLM/model costs billed separately by providers.<br>
+    <strong>Deployment costs (Plus):</strong> Dev $0.0007/min uptime, Prod $0.0036/min uptime, $0.005/run for additional deployments.
+  </div>
+  <p class="target"><strong>Target:</strong> Developers building LLM apps & agents; teams needing observability.</p>
+</div>
+
+<!-- ========== RELEVANCE AI ========== -->
+<div class="platform-card">
+  <h2>4. Relevance AI <span class="badge badge-free">Free Tier</span> <span class="badge badge-credit">Credit-Based</span></h2>
+  <p><a href="https://relevanceai.com/pricing">relevanceai.com/pricing</a> | AI workforce platform with no-code agent builder</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Free</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>200 actions/month</li>
+        <li>$1,000 one-time vendor credits</li>
+        <li>Unlimited agents & tools</li>
+        <li>1 user, 1 project, 1 workforce</li>
+        <li>30-day task history</li>
+        <li>2,000+ integrations</li>
+        <li>SOC 2 & GDPR compliant</li>
+        <li>Community forum support</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Team</div>
+      <div class="tier-price paid">$234/mo (annual)</div>
+      <ul>
+        <li>7,000 actions/month (84k/year)</li>
+        <li>$840/year vendor credits</li>
+        <li>5 build users + 45 end users</li>
+        <li>5 shared projects</li>
+        <li>Unlimited workforces</li>
+        <li>Task scheduling</li>
+        <li>Calling & meeting agents</li>
+        <li>A/B testing & analytics</li>
+        <li>Priority support; credit rollover</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Unlimited users & projects</li>
+        <li>Enterprise app triggers</li>
+        <li>Agent evaluations</li>
+        <li>Multi-org management</li>
+        <li>Enterprise security</li>
+        <li>Dedicated account manager</li>
+        <li>Custom implementation</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">As of Sept 2025, Relevance AI split credits into Actions (what agents do) and Vendor Credits (AI model costs passed through at cost, no markup). The old Pro ($19) and Business plans were sunset.</div>
+  <p class="target"><strong>Target:</strong> Business teams automating workflows with AI agents; GTM teams.</p>
+</div>
+
+<!-- ========== LINDY AI ========== -->
+<div class="platform-card">
+  <h2>5. Lindy AI <span class="badge badge-credit">Credit-Based</span></h2>
+  <p><a href="https://www.lindy.ai/pricing">lindy.ai/pricing</a> | AI executive assistant / work automation platform</p>
+  <div class="tier-grid">
+    <div class="tier mid">
+      <div class="tier-name">Plus</div>
+      <div class="tier-price paid">$49.99/mo</div>
+      <ul>
+        <li>iMessage-style AI assistant 24/7</li>
+        <li>Inbox management & AI-drafted replies</li>
+        <li>Meeting scheduling, prep & follow-up</li>
+        <li>Meeting recording & notes</li>
+        <li>Learns your style over time</li>
+        <li>Hundreds of integrations</li>
+        <li>7-day free trial (500 credits)</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price paid">$59.99/mo</div>
+      <ul>
+        <li>Everything in Plus</li>
+        <li>Email triage & drafting</li>
+        <li>Ad-hoc task handling</li>
+        <li>17% discount on annual billing</li>
+        <li>"Ultimate AI work assistant"</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>Team access controls</li>
+        <li>SSO, SCIM, audit logs</li>
+        <li>HIPAA compliant + signed BAA</li>
+        <li>Expanded usage allowances</li>
+        <li>Dedicated support & onboarding</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">Lindy positions itself as an "AI employee" rather than a workflow tool. Additional credits cost $10 per 1,000. No traditional free tier -- 7-day trial only. HIPAA, GDPR, AICPA, PIPEDA compliant.</div>
+  <p class="target"><strong>Target:</strong> Professionals & executives wanting a personal AI assistant; healthcare-compliant teams.</p>
+</div>
+
+<!-- ========== BEAM AI ========== -->
+<div class="platform-card">
+  <h2>6. Beam AI <span class="badge badge-credit">Enterprise-Focused</span></h2>
+  <p><a href="https://beam.ai">beam.ai</a> | Agentic automation platform for enterprise operations</p>
+  <div class="tier-grid">
+    <div class="tier mid">
+      <div class="tier-name">Agent S</div>
+      <div class="tier-price paid">$990/mo</div>
+      <ul>
+        <li>Unlimited users & agents</li>
+        <li>Entry-level integration capacity</li>
+        <li>Standard workflow complexity</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="tier-name">Agent M</div>
+      <div class="tier-price paid">$1,990/mo</div>
+      <ul>
+        <li>Unlimited users & agents</li>
+        <li>Mid-tier integration capacity</li>
+        <li>Higher workflow complexity</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="tier-name">Agent L</div>
+      <div class="tier-price paid">$3,990/mo</div>
+      <ul>
+        <li>Unlimited users & agents</li>
+        <li>Full integration capacity</li>
+        <li>Maximum workflow complexity</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Custom</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Enterprise-specific requirements</li>
+        <li>Custom integrations</li>
+        <li>Dedicated support</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">Beam AI is positioned as a premium enterprise platform. No free tier. Pricing starts at ~$12k/year. All plans include unlimited users and agents -- differentiation is in integration depth and workflow complexity.</div>
+  <p class="target"><strong>Target:</strong> Mid-market to enterprise operations teams.</p>
+</div>
+
+<!-- ========== COGNOSYS ========== -->
+<div class="platform-card">
+  <h2>7. Cognosys (now Ottogrid) <span class="badge badge-free">Free Tier</span></h2>
+  <p><a href="https://www.cognosys.ai/pricing">cognosys.ai/pricing</a> | AI agent for web research & workflow automation</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Free</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>100 messages/month</li>
+        <li>1 concurrent integration</li>
+        <li>1 document upload/query</li>
+        <li>1 active workflow</li>
+        <li>20 workflow executions</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price paid">$15/mo</div>
+      <ul>
+        <li>1,000 messages/month</li>
+        <li>5 concurrent integrations</li>
+        <li>3 document uploads/query</li>
+        <li>10 active workflows</li>
+        <li>100 workflow executions</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="tier-name">Ultimate</div>
+      <div class="tier-price paid">$59/mo</div>
+      <ul>
+        <li>Unlimited messages</li>
+        <li>Unlimited integrations</li>
+        <li>10 document uploads/query</li>
+        <li>Unlimited workflows</li>
+        <li>Unlimited executions</li>
+        <li>Early access to features</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Custom limits</li>
+        <li>Dedicated support</li>
+        <li>Custom features</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">Cognosys rebranded to Ottogrid in October 2024. Some sources still reference both names. Very affordable entry point at $15/mo for Pro.</div>
+  <p class="target"><strong>Target:</strong> Individual users & small teams for research automation.</p>
+</div>
+
+<!-- ========== AGENTGPT ========== -->
+<div class="platform-card">
+  <h2>8. AgentGPT / Reworkd <span class="badge badge-free">Free Tier</span></h2>
+  <p><a href="https://agentgpt.reworkd.ai/">agentgpt.reworkd.ai</a> | Browser-based autonomous AI agent</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Free</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>GPT-3.5 access</li>
+        <li>5 demo agents</li>
+        <li>Limited daily runs</li>
+        <li>Core features only</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price paid">$40/mo</div>
+      <ul>
+        <li>30 agents</li>
+        <li>25 loops per agent</li>
+        <li>GPT-4 access</li>
+        <li>GPT-3.5-Turbo 16k access</li>
+        <li>AgentGPT plugins</li>
+        <li>Unlimited web search</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Custom usage limits</li>
+        <li>SLA-backed support</li>
+        <li>SAML SSO</li>
+        <li>Dedicated account manager</li>
+        <li>Advanced controls</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">AgentGPT/Reworkd is one of the earliest autonomous agent platforms. The open-source version can be self-hosted for free. The hosted Pro tier is straightforward at $40/mo.</div>
+  <p class="target"><strong>Target:</strong> Individual users experimenting with autonomous agents; small teams.</p>
+</div>
+
+<!-- ========== TASKADE ========== -->
+<div class="platform-card">
+  <h2>9. Taskade AI <span class="badge badge-free">Free Tier</span></h2>
+  <p><a href="https://www.taskade.com/pricing">taskade.com/pricing</a> | AI-powered workspace with agents, projects & automation</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Free</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>1 user, 1 workspace</li>
+        <li>3,000 credits (one-time)</li>
+        <li>3 apps, 1 AI agent</li>
+        <li>500+ templates</li>
+        <li>Desktop & mobile apps</li>
+      </ul>
+    </div>
+    <div class="tier free">
+      <div class="tier-name">Starter</div>
+      <div class="tier-price paid">$6/mo (annual)</div>
+      <ul>
+        <li>3 users</li>
+        <li>10,000 credits/month</li>
+        <li>Unlimited apps & workspaces</li>
+        <li>3 AI agents</li>
+        <li>Frontier AI models</li>
+        <li>File & link uploads</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price paid">$16/mo (annual)</div>
+      <ul>
+        <li>10 users</li>
+        <li>50,000 credits/month</li>
+        <li>Unlimited agents & automations</li>
+        <li>100+ integrations</li>
+        <li>Background agents (24/7)</li>
+        <li>Web search/scraping</li>
+        <li>Remove branding</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="tier-name">Business</div>
+      <div class="tier-price paid">$40/mo (annual)</div>
+      <ul>
+        <li>Unlimited users</li>
+        <li>150,000 credits/month</li>
+        <li>Multi-agent workflows</li>
+        <li>Custom domains & white-label</li>
+        <li>API & custom integrations</li>
+        <li>Admin dashboard & controls</li>
+        <li>2x faster AI processing</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">Taskade is exceptionally affordable -- the Pro plan covers 10 users for $16/mo total (not per user). Enterprise available with SSO, SAML, SCIM, private cloud, and SLA. Annual billing saves ~20%.</div>
+  <p class="target"><strong>Target:</strong> Teams needing AI-enhanced project management; small businesses; creators.</p>
+</div>
+
+<!-- ========== ADDITIONAL COMPETITORS ========== -->
+<h2>Additional Notable Competitors</h2>
+
+<!-- GUMLOOP -->
+<div class="platform-card">
+  <h2>10. Gumloop <span class="badge badge-free">Free Tier</span> <span class="badge badge-credit">Credit-Based</span></h2>
+  <p><a href="https://www.gumloop.com/pricing">gumloop.com/pricing</a> | No-code AI agent builder (raised $50M Series B, March 2026)</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">Free</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>2,000 credits</li>
+        <li>2 concurrent flow runs</li>
+        <li>Forum support</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">Solo</div>
+      <div class="tier-price paid">$37/mo</div>
+      <ul>
+        <li>10,000 credits</li>
+        <li>1 seat</li>
+        <li>API keys, event triggers</li>
+        <li>5 list steps</li>
+      </ul>
+    </div>
+    <div class="tier pro">
+      <div class="tier-name">Team</div>
+      <div class="tier-price paid">$244/mo</div>
+      <ul>
+        <li>60,000 credits</li>
+        <li>Up to 10 seats</li>
+        <li>Workspaces, 15 list steps</li>
+        <li>Slack support</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>SSO/SCIM, audit logs</li>
+        <li>Private infrastructure</li>
+        <li>On-call support</li>
+      </ul>
+    </div>
+  </div>
+  <div class="notes">Credit costs: 2 credits per standard AI call, 20 credits per advanced AI call (GPT-4.1, Claude Sonnet 3.7). Heavy users can burn through credits quickly.</div>
+  <p class="target"><strong>Target:</strong> Solo builders to mid-size teams automating AI workflows.</p>
+</div>
+
+<!-- WORDWARE -->
+<div class="platform-card">
+  <h2>11. Wordware <span class="badge badge-free">Free Tier</span></h2>
+  <p><a href="https://www.wordware.ai/pricing">wordware.ai/pricing</a> | Natural-language IDE for building AI agents (YC-backed)</p>
+  <div class="tier-grid">
+    <div class="tier free">
+      <div class="tier-name">AI Tinkerer (Free)</div>
+      <div class="tier-price">$0/mo</div>
+      <ul>
+        <li>First $5 usage free/month</li>
+        <li>~75M words generation</li>
+        <li>Cloud IDE, latest models</li>
+        <li>All flows must be public</li>
+      </ul>
+    </div>
+    <div class="tier mid">
+      <div class="tier-name">AI Builder</div>
+      <div class="tier-price paid">$199/mo</div>
+      <ul>
+        <li>Premium IDE features</li>
+        <li>Exotic models</li>
+        <li>Private experimentation</li>
+      </ul>
+    </div>
+    <div class="tier enterprise">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-price enterprise">Custom</div>
+      <ul>
+        <li>Custom deployment</li>
+        <li>Advanced security</li>
+        <li>Dedicated support</li>
+      </ul>
+    </div>
+  </div>
+  <p class="target"><strong>Target:</strong> Developers building custom AI agents with natural language programming.</p>
+</div>
+
+<!-- WORKFLOW AUTOMATION COMPARISONS -->
+<div class="platform-card">
+  <h2>12-14. Workflow Automation Platforms (AI-Enhanced)</h2>
+  <p>These are not pure AI agent platforms but increasingly compete in the same space with AI features.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Free Tier</th>
+        <th>Entry Paid</th>
+        <th>Mid-Tier</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Zapier</strong></td>
+        <td>100 tasks/mo</td>
+        <td>$19.99/mo (750 tasks)</td>
+        <td>$103.50/mo (2,000 tasks, Team)</td>
+        <td>Market leader; AI features added. Gets expensive at scale ($299+/mo).</td>
+      </tr>
+      <tr>
+        <td><strong>Make (Integromat)</strong></td>
+        <td>1,000 ops/mo</td>
+        <td>$9/mo (10,000 ops)</td>
+        <td>$16/mo (Teams)</td>
+        <td>60-80% cheaper than Zapier for equivalent usage. Strong visual builder.</td>
+      </tr>
+      <tr>
+        <td><strong>n8n</strong></td>
+        <td>Self-hosted (free, OSS)</td>
+        <td>~$20/mo cloud (3,000 tasks)</td>
+        <td>Self-host for ~$5-10/mo VPS</td>
+        <td>Open source. Best value for technical teams. Growing AI agent capabilities.</td>
+      </tr>
+      <tr>
+        <td><strong>Activepieces</strong></td>
+        <td>1,000 tasks + AI steps</td>
+        <td>~$5/flow</td>
+        <td>$150/mo (unlimited tasks, enterprise)</td>
+        <td>Open source alternative. Generous free tier with AI & code steps.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== SUMMARY TABLE ========== -->
+<h2>Pricing Comparison Summary</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Platform</th>
+      <th>Free Tier?</th>
+      <th>Entry Price</th>
+      <th>Mid Price</th>
+      <th>Pricing Model</th>
+      <th>Primary Audience</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>CrewAI</td><td>Yes (50 exec)</td><td>$25/mo</td><td>Custom (Enterprise)</td><td>Per-execution</td><td>Dev teams</td></tr>
+    <tr><td>AutoGen (MS)</td><td>Yes (OSS)</td><td>$0</td><td>$0</td><td>Free / self-host</td><td>Developers, researchers</td></tr>
+    <tr><td>LangSmith</td><td>Yes (5k traces)</td><td>$39/seat/mo</td><td>Custom</td><td>Per-seat + usage</td><td>Dev teams, MLOps</td></tr>
+    <tr><td>Relevance AI</td><td>Yes (200 actions)</td><td>$234/mo</td><td>Custom</td><td>Actions + vendor credits</td><td>Business/GTM teams</td></tr>
+    <tr><td>Lindy AI</td><td>Trial only</td><td>$49.99/mo</td><td>$59.99/mo</td><td>Credit-based</td><td>Professionals, execs</td></tr>
+    <tr><td>Beam AI</td><td>No</td><td>$990/mo</td><td>$3,990/mo</td><td>Tiered flat rate</td><td>Enterprise ops</td></tr>
+    <tr><td>Cognosys/Ottogrid</td><td>Yes (100 msg)</td><td>$15/mo</td><td>$59/mo</td><td>Message-based</td><td>Individual researchers</td></tr>
+    <tr><td>AgentGPT/Reworkd</td><td>Yes (GPT-3.5)</td><td>$40/mo</td><td>Custom</td><td>Agent count</td><td>Individuals, hobbyists</td></tr>
+    <tr><td>Taskade</td><td>Yes (3k credits)</td><td>$6/mo</td><td>$40/mo</td><td>Credit-based</td><td>Teams, creators</td></tr>
+    <tr><td>Gumloop</td><td>Yes (2k credits)</td><td>$37/mo</td><td>$244/mo</td><td>Credit-based</td><td>Solo to mid-size teams</td></tr>
+    <tr><td>Wordware</td><td>Yes ($5 free)</td><td>$199/mo</td><td>Custom</td><td>Usage-based</td><td>Developers</td></tr>
+    <tr><td>Zapier</td><td>Yes (100 tasks)</td><td>$19.99/mo</td><td>$103.50/mo</td><td>Per-task</td><td>Broad market</td></tr>
+    <tr><td>Make</td><td>Yes (1k ops)</td><td>$9/mo</td><td>$16/mo</td><td>Per-operation</td><td>SMBs, teams</td></tr>
+    <tr><td>n8n</td><td>Yes (OSS)</td><td>~$20/mo cloud</td><td>Self-host ~$5-10</td><td>Self-host or cloud</td><td>Technical teams</td></tr>
+  </tbody>
+</table>
+
+<h2>Key Market Observations</h2>
+<div class="notes">
+  <h3>Pricing Models</h3>
+  <ul>
+    <li><strong>Credit/execution-based</strong> dominates: CrewAI, Lindy, Taskade, Gumloop, and Relevance AI all use variants of credit systems. This makes cost prediction difficult for users.</li>
+    <li><strong>Per-seat pricing</strong> is used by LangSmith ($39/seat) -- familiar to SaaS buyers but can get expensive for large teams.</li>
+    <li><strong>Flat-rate tiering</strong> is used by Beam AI ($990-$3,990/mo) -- simplest to understand but highest entry point.</li>
+    <li><strong>Open source / free</strong>: AutoGen and n8n offer fully free self-hosted options, competing on zero cost with DIY setup.</li>
+  </ul>
+
+  <h3>Market Gaps & Opportunities</h3>
+  <ul>
+    <li><strong>$50-$200/mo "missing middle":</strong> There is a gap between cheap solo tools ($6-$40/mo) and enterprise platforms ($234-$990+/mo). Teams of 5-20 people have limited options.</li>
+    <li><strong>Taskade is the value leader</strong> at $16/mo for 10 users with 50k credits -- significantly cheaper than all competitors.</li>
+    <li><strong>Beam AI is the premium outlier</strong> starting at $990/mo, targeting enterprise-only.</li>
+    <li><strong>Most platforms offer free tiers</strong> but they are heavily restricted (50-200 actions/month), designed as trial funnels rather than usable ongoing plans.</li>
+    <li><strong>Transparency varies wildly:</strong> CrewAI, Beam AI, and Relevance AI require accounts or sales calls for full pricing; Taskade and Cognosys are the most transparent.</li>
+  </ul>
+
+  <h3>Consolidation Trends</h3>
+  <ul>
+    <li>Workflow automation platforms (Zapier, Make, n8n) are adding AI agent features, competing directly with purpose-built agent platforms.</li>
+    <li>Cognosys rebranded to Ottogrid; AgentGPT/Reworkd appears to have stalled in feature development relative to newer entrants.</li>
+    <li>Gumloop just raised $50M (March 2026), signaling significant VC confidence in the no-code AI agent builder category.</li>
+  </ul>
+</div>
+
+<p class="timestamp">Report generated: March 18, 2026 | Data sourced from official pricing pages, review sites, and product documentation.</p>
+
+</body>
+</html>

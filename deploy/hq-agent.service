@@ -1,0 +1,15 @@
+[Unit]
+Description=HQ Agent Command Centre
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/hq-agent
+ExecStart=/usr/bin/python3 /opt/hq-agent/agent_server.py
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=-/opt/hq-agent/.env
+
+[Install]
+WantedBy=multi-user.target

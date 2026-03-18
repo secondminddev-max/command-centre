@@ -1,0 +1,137 @@
+{
+  "product_name": "SecondMind HQ",
+  "tagline": "Your self-managing AI workforce — deployed and running in minutes.",
+  "description": "SecondMind HQ is a hosted multi-agent command centre that gives you an autonomous AI workforce. Deploy a full fleet of specialized agents — system monitoring, research, design, alerting, growth, revenue tracking, and more — to your own infrastructure or ours. Manage everything from a single real-time dashboard with API access for deep integration. The agents collaborate, self-coordinate, and escalate only when they need you.",
+  "core_deliverable": {
+    "summary": "A fully managed, self-coordinating AI agent fleet with dashboard and API access",
+    "components": [
+      "Real-time command centre dashboard",
+      "REST API access for all agent operations and data",
+      "Full agent fleet (configurable per tier)",
+      "Hosted deployment (customer infrastructure or SecondMind cloud)",
+      "Persistent agent memory and context across sessions",
+      "Agent-to-agent coordination and task routing"
+    ]
+  },
+  "features": [
+    {
+      "name": "Multi-Agent Fleet",
+      "description": "Specialized agents for system monitoring, web research, design, alert watching, growth, revenue tracking, email, social media, and more — all working together."
+    },
+    {
+      "name": "Command Centre Dashboard",
+      "description": "Real-time web dashboard showing agent status, task queues, system health, revenue metrics, and alerts in one unified view."
+    },
+    {
+      "name": "Full API Access",
+      "description": "REST API to trigger agents, query data, manage tasks, and integrate SecondMind HQ into your existing workflows and tools."
+    },
+    {
+      "name": "Self-Managing Coordination",
+      "description": "Agents autonomously prioritize, delegate, and collaborate. No manual orchestration required — they manage themselves."
+    },
+    {
+      "name": "Flexible Deployment",
+      "description": "Deploy to SecondMind cloud for zero-ops, or to your own infrastructure for full data sovereignty."
+    },
+    {
+      "name": "Persistent Memory",
+      "description": "Agents retain context across sessions — they learn your systems, preferences, and priorities over time."
+    },
+    {
+      "name": "Alert & Escalation Engine",
+      "description": "Intelligent alerting that filters noise. Agents handle routine issues autonomously and escalate only what matters."
+    },
+    {
+      "name": "Revenue & Growth Automation",
+      "description": "Built-in agents for campaign management, social posting, email sequences, and revenue tracking."
+    }
+  ],
+  "pricing_tiers": [
+    {
+      "id": "solo",
+      "name": "Solo",
+      "price_usd": 49,
+      "billing": "monthly",
+      "agents": 10,
+      "seats": 1,
+      "features": [
+        "10 active agents",
+        "1 user seat",
+        "Command centre dashboard",
+        "API access",
+        "SecondMind cloud hosting",
+        "Community support",
+        "Standard agent fleet (sysmon, researcher, alertwatch, designer, emailagent)"
+      ],
+      "target": "Solo founders, indie hackers, and freelancers who want AI-powered ops without hiring."
+    },
+    {
+      "id": "team",
+      "name": "Team",
+      "price_usd": 149,
+      "billing": "monthly",
+      "agents": "full_fleet",
+      "seats": 5,
+      "features": [
+        "Full agent fleet (all available agents)",
+        "5 user seats",
+        "Command centre dashboard",
+        "API access",
+        "SecondMind cloud or self-hosted deployment",
+        "Priority email support",
+        "Custom alert rules",
+        "Revenue & growth agent suite",
+        "Shared agent memory across team"
+      ],
+      "target": "Small teams and startups that need an autonomous ops layer across their stack."
+    },
+    {
+      "id": "enterprise",
+      "name": "Enterprise",
+      "price_usd": 499,
+      "billing": "monthly",
+      "agents": "unlimited_custom",
+      "seats": "unlimited",
+      "features": [
+        "Unlimited custom agents (built to your spec)",
+        "Unlimited user seats",
+        "Dedicated infrastructure",
+        "99.9% uptime SLA",
+        "On-prem or private cloud deployment",
+        "Dedicated support channel",
+        "Custom integrations and workflows",
+        "SSO and audit logging",
+        "Onboarding and migration assistance"
+      ],
+      "target": "Mid-market and enterprise teams needing custom AI workforce with compliance, SLA, and dedicated support."
+    }
+  ],
+  "target_customer_segments": [
+    {
+      "segment": "Solo Founders & Indie Hackers",
+      "pain_point": "Wearing too many hats — need ops, monitoring, research, and marketing but can't afford to hire.",
+      "value_prop": "A team of AI agents that handle the work you can't get to, for less than the cost of one SaaS tool."
+    },
+    {
+      "segment": "Early-Stage Startups (2-10 people)",
+      "pain_point": "Moving fast but drowning in operational overhead — alerts, content, monitoring, and admin tasks pile up.",
+      "value_prop": "Deploy a self-managing ops team in minutes. Your agents handle the busywork so your humans ship product."
+    },
+    {
+      "segment": "SMB Engineering & Ops Teams",
+      "pain_point": "Need 24/7 coverage and intelligent automation but don't have the headcount or budget for an SRE team.",
+      "value_prop": "Always-on agents that monitor, alert, research, and act — with escalation to humans only when it matters."
+    },
+    {
+      "segment": "Enterprise Innovation Teams",
+      "pain_point": "Exploring AI workforce augmentation with compliance, security, and SLA requirements.",
+      "value_prop": "Custom agent fleet on your infrastructure, with enterprise controls, audit logging, and guaranteed uptime."
+    }
+  ],
+  "competitive_positioning": "Unlike single-purpose AI tools, SecondMind HQ is a complete workforce — multiple specialized agents that coordinate autonomously. Not a chatbot. Not a copilot. A team.",
+  "status": "defined",
+  "version": "1.0.0",
+  "created": "2026-03-18",
+  "updated_at": "2026-03-18T00:00:00Z"
+}

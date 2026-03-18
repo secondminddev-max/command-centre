@@ -1,0 +1,44 @@
+# Secrets and environment
+.env
+.env.*
+!.env.example
+
+# Vault and tokens
+data/vault.key
+data/vault.json
+data/gmail_tokens.json
+data/email_config.json
+data/email_log.json
+
+# Git
+.git
+.gitignore
+
+# IDE and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Keys
+*.pem
+*.key
+
+# Database (user data)
+agents.db
+
+# Backups
+*.bak
+*.backup
+
+# Claude
+.claude/
+CLAUDE.md

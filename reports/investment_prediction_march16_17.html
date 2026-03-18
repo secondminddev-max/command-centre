@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Prediction Report — March 16–17, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --card:     #161b22;
+      --card2:    #1c2333;
+      --border:   #30363d;
+      --green:    #00ff88;
+      --green-bg: rgba(0,255,136,0.08);
+      --green-glow: 0 0 12px rgba(0,255,136,0.35);
+      --red:      #ff4444;
+      --red-bg:   rgba(255,68,68,0.08);
+      --red-glow: 0 0 12px rgba(255,68,68,0.35);
+      --amber:    #ffaa00;
+      --amber-bg: rgba(255,170,0,0.08);
+      --blue:     #58a6ff;
+      --muted:    #8b949e;
+      --text:     #e6edf3;
+      --text2:    #c9d1d9;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 48px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 30%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(88,166,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .report-badge {
+      display: inline-block;
+      background: rgba(0,255,136,0.12);
+      color: var(--green);
+      border: 1px solid rgba(0,255,136,0.3);
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      margin-bottom: 12px;
+    }
+    .report-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .report-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-weight: 400;
+    }
+    .report-meta {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .report-meta strong { color: var(--text2); font-weight: 600; }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 48px 64px;
+    }
+    .section { margin-bottom: 40px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .section-title span { color: var(--blue); }
+
+    /* ── MARKET SNAPSHOT ── */
+    .snapshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .snap-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .snap-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .snap-card.green::before { background: var(--green); }
+    .snap-card.red::before   { background: var(--red); }
+    .snap-card.amber::before { background: var(--amber); }
+    .snap-card.blue::before  { background: var(--blue); }
+    .snap-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .snap-value {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text);
+    }
+    .snap-value.green { color: var(--green); }
+    .snap-value.red   { color: var(--red); }
+    .snap-value.amber { color: var(--amber); }
+    .snap-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── ALERT BANNER ── */
+    .alert-banner {
+      background: rgba(255,68,68,0.06);
+      border: 1px solid rgba(255,68,68,0.25);
+      border-left: 3px solid var(--red);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .alert-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    .alert-text strong { color: var(--red); }
+
+    /* ── TIMELINE ── */
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .timeline-day {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .timeline-header {
+      padding: 14px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .timeline-header.mon { background: rgba(88,166,255,0.08); color: var(--blue); border-bottom: 1px solid rgba(88,166,255,0.2); }
+    .timeline-header.tue { background: rgba(255,170,0,0.08); color: var(--amber); border-bottom: 1px solid rgba(255,170,0,0.2); }
+    .timeline-event {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .timeline-event:last-child { border-bottom: none; }
+    .event-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .dot-green  { background: var(--green); box-shadow: var(--green-glow); }
+    .dot-red    { background: var(--red);   box-shadow: var(--red-glow); }
+    .dot-amber  { background: var(--amber); }
+    .dot-blue   { background: var(--blue); }
+    .event-body { flex: 1; }
+    .event-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .event-desc  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── SECTOR TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    thead tr {
+      background: var(--card2);
+    }
+    th {
+      padding: 12px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 13px 14px;
+      font-size: 13px;
+      color: var(--text2);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tbody tr { background: var(--card); }
+    tbody tr:nth-child(even) { background: #13181f; }
+    tbody tr:hover { background: #1f2733; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .sector-name { font-weight: 600; color: var(--text); font-size: 13px; }
+    .etf-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(88,166,255,0.1);
+      color: var(--blue);
+      border: 1px solid rgba(88,166,255,0.2);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+    .ytd {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .ytd.pos { color: var(--green); }
+    .ytd.neg { color: var(--red); }
+    .ytd.neu { color: var(--amber); }
+
+    .signal-cell {
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      white-space: nowrap;
+      min-width: 80px;
+    }
+    .sig-green {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(0,255,136,0.3);
+      box-shadow: var(--green-glow);
+    }
+    .sig-red {
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid rgba(255,68,68,0.3);
+      box-shadow: var(--red-glow);
+    }
+    .sig-amber {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid rgba(255,170,0,0.3);
+    }
+
+    .conf-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+    .conf-high   { background: rgba(0,255,136,0.15); color: var(--green); border: 1px solid rgba(0,255,136,0.4); }
+    .conf-medium { background: transparent; color: var(--amber); border: 1px dashed rgba(255,170,0,0.5); }
+    .conf-low    { background: transparent; color: var(--muted); border: 1px dotted var(--border); }
+
+    .reasoning { font-size: 12px; color: var(--muted); max-width: 280px; line-height: 1.5; }
+
+    /* ── SCORECARD ── */
+    .scorecard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .scorecard {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .scorecard-header {
+      padding: 14px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .scorecard-header.mon { color: var(--blue); background: rgba(88,166,255,0.06); }
+    .scorecard-header.tue { color: var(--amber); background: rgba(255,170,0,0.06); }
+    .scorecard-body { padding: 16px 20px; }
+    .scorecard-group { margin-bottom: 16px; }
+    .scorecard-group:last-child { margin-bottom: 0; }
+    .group-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .group-label.green { color: var(--green); }
+    .group-label.red   { color: var(--red); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: 4px 10px;
+    }
+    .tag.green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+    .tag.red   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(255,68,68,0.2); }
+    .tag.star  { box-shadow: var(--green-glow); border-color: rgba(0,255,136,0.5); }
+    .tag.star-red { box-shadow: var(--red-glow); border-color: rgba(255,68,68,0.5); }
+    .conviction-label {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ── RISK SECTION ── */
+    .risk-list { display: flex; flex-direction: column; gap: 12px; }
+    .risk-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .risk-num {
+      font-size: 18px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--border);
+      flex-shrink: 0;
+      width: 32px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .risk-body { flex: 1; }
+    .risk-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .risk-desc  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .risk-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      padding: 2px 7px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .rtag-binary { background: rgba(255,170,0,0.15); color: var(--amber); border: 1px solid rgba(255,170,0,0.3); }
+    .rtag-high   { background: rgba(255,68,68,0.12); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
+    .rtag-medium { background: rgba(88,166,255,0.1); color: var(--blue); border: 1px solid rgba(88,166,255,0.25); }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 48px;
+      background: var(--card);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-sources { font-size: 11px; color: var(--muted); max-width: 600px; line-height: 1.7; }
+    .footer-sources strong { color: var(--text2); }
+    .footer-right { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.8; }
+    .footer-right strong { color: var(--text2); }
+    .disclaimer {
+      font-size: 10px;
+      color: #555;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ── TREND ARROWS ── */
+    .trend { font-size: 16px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .container { padding: 24px 20px 48px; }
+      .header { padding: 28px 20px 24px; }
+      .footer { padding: 20px; }
+      .timeline-grid, .scorecard-grid { grid-template-columns: 1fr; }
+      .snapshot-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─────────────────────── HEADER ─────────────────────── -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="report-badge">Institutional Equity Research</div>
+      <div class="report-title">Investment Prediction Report<br>March 16–17, 2026</div>
+      <div class="report-subtitle">S&P 500 Sector Outlook · Geopolitical Macro Analysis · FOMC Pre-Meeting Positioning</div>
+    </div>
+    <div class="report-meta">
+      <strong>Generated</strong> Mon 16 Mar 2026<br>
+      <strong>Coverage</strong> Mon 16 Mar – Tue 17 Mar<br>
+      <strong>Universe</strong> 11 SPDR Sector ETFs<br>
+      <strong>Macro Regime</strong> <span style="color:var(--red)">Stagflation Risk</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── BODY ─────────────────────── -->
+<div class="container">
+
+  <!-- ALERT BANNER -->
+  <div class="alert-banner">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text">
+      <strong>PRIMARY MACRO DRIVER:</strong> US-Israel strikes on Iranian military/nuclear infrastructure have led to Iran blockading the <strong>Strait of Hormuz</strong> — a chokepoint for 20–30% of global oil and LNG transit. Brent crude is at <strong>$115–$119/bbl</strong> with analyst forecasts of <strong>$140–$150</strong> if the blockade persists. This binary geopolitical risk is the dominant factor across all sector predictions for this period.
+    </div>
+  </div>
+
+  <!-- ─── MARKET SNAPSHOT ─── -->
+  <div class="section">
+    <div class="section-title"><span>01</span> — Market Snapshot</div>
+    <div class="snapshot-grid">
+      <div class="snap-card red">
+        <div class="snap-label">S&P 500 Level</div>
+        <div class="snap-value red">6,632–6,684</div>
+        <div class="snap-sub">−2.5% YTD · +19% YoY · 3-week losing streak</div>
+      </div>
+      <div class="snap-card amber">
+        <div class="snap-label">RSI (14-Day)</div>
+        <div class="snap-value amber">35.9</div>
+        <div class="snap-sub">Near oversold · 200-day SMA support ~6,601</div>
+      </div>
+      <div class="snap-card red">
+        <div class="snap-label">MACD</div>
+        <div class="snap-value red">−39.73</div>
+        <div class="snap-sub">Bearish momentum signal</div>
+      </div>
+      <div class="snap-card red">
+        <div class="snap-label">Brent Crude</div>
+        <div class="snap-value red">$115–119</div>
+        <div class="snap-sub">WTI $90+ · Hormuz blockade premium · Fcst $140–150</div>
+      </div>
+      <div class="snap-card green">
+        <div class="snap-label">Fed Funds Rate</div>
+        <div class="snap-value green">3.50–3.75%</div>
+        <div class="snap-sub">95.5% prob HOLD · FOMC Mar 17–18 · Cuts Sep 2026</div>
+      </div>
+      <div class="snap-card amber">
+        <div class="snap-label">Feb CPI (YoY)</div>
+        <div class="snap-value amber">2.4%</div>
+        <div class="snap-sub">Core CPI +0.2% MoM · March print may be higher</div>
+      </div>
+      <div class="snap-card blue">
+        <div class="snap-label">S&P 500 Consensus Target</div>
+        <div class="snap-value" style="color:var(--blue)">7,500</div>
+        <div class="snap-sub">Reuters median · 44 analysts · Year-end 2026</div>
+      </div>
+      <div class="snap-card green">
+        <div class="snap-label">Equal-Weight S&P (Feb)</div>
+        <div class="snap-value green">+3.5%</div>
+        <div class="snap-sub">vs cap-weight −0.8% · Breadth improving</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── KEY EVENTS ─── -->
+  <div class="section">
+    <div class="section-title"><span>02</span> — Key Events Timeline</div>
+    <div class="timeline-grid">
+
+      <div class="timeline-day">
+        <div class="timeline-header mon">📅 Monday, March 16</div>
+
+        <div class="timeline-event">
+          <div class="event-dot dot-green"></div>
+          <div class="event-body">
+            <div class="event-title">Nvidia GTC 2026 — Day 1 · Jensen Huang Keynote</div>
+            <div class="event-desc">Major AI/semiconductor catalyst. Historically bullish for XLK, XLU (data center power), XLI (AI capex). Expected to reinforce AI infrastructure supercycle thesis.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="event-dot dot-blue"></div>
+          <div class="event-body">
+            <div class="event-title">FOMC 2-Day Meeting Begins</div>
+            <div class="event-desc">Pre-meeting caution dominates. 95.5% probability of rate hold at 3.50–3.75%. Markets pricing in cautious positioning ahead of Wednesday decision.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="event-dot dot-amber"></div>
+          <div class="event-body">
+            <div class="event-title">Iran / Strait of Hormuz — Headline Risk</div>
+            <div class="event-desc">Binary geopolitical event: de-escalation = energy sector −10% instant reversal; further escalation = oil spike toward $130+. Monitor continuously.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-day">
+        <div class="timeline-header tue">📅 Tuesday, March 17</div>
+
+        <div class="timeline-event">
+          <div class="event-dot dot-red"></div>
+          <div class="event-body">
+            <div class="event-title">Dollar Tree (DLTR) Earnings</div>
+            <div class="event-desc">Consumer discretionary bellwether. High probability of miss given oil-driven cost pressure and stagflation consumer squeeze. Watch for guide-down on margins.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="event-dot dot-green"></div>
+          <div class="event-body">
+            <div class="event-title">Nvidia GTC 2026 — Day 2 · Developer Sessions</div>
+            <div class="event-desc">Developer track sustains AI momentum from Monday keynote. XLK and AI-adjacent names maintain bid. GPU roadmap details may drive after-hours moves.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="event-dot dot-amber"></div>
+          <div class="event-body">
+            <div class="event-title">FOMC Meeting Day 2 — Decision Tomorrow</div>
+            <div class="event-desc">Pre-decision positioning. Dot plot anxiety weighs on rate-sensitive sectors (XLRE, XLF). Front-run flows into defensives (XLU, XLV). No surprises expected today.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── SECTOR PREDICTIONS TABLE ─── -->
+  <div class="section">
+    <div class="section-title"><span>03</span> — Sector Predictions</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sector</th>
+            <th>ETF</th>
+            <th>YTD Perf</th>
+            <th>Trend</th>
+            <th>Mon Mar 16</th>
+            <th>Tue Mar 17</th>
+            <th>Confidence</th>
+            <th>Key Reasoning</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><div class="sector-name">Technology</div></td>
+            <td><span class="etf-badge">XLK</span></td>
+            <td class="ytd neg">−3% to −5.4%</td>
+            <td class="trend">↗️</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><span class="conf-badge conf-medium">Medium</span></td>
+            <td class="reasoning">GTC Day 1 keynote is primary catalyst. RSI ~35 (oversold) → short-covering rally likely. GTC Day 2 sustains AI momentum. Watch software names (down 30–40% YTD) for bounce.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Finance</div></td>
+            <td><span class="etf-badge">XLF</span></td>
+            <td class="ytd neg">−5.95%</td>
+            <td class="trend">↘️</td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning">Stagflation fears dominant. Private credit default headlines weigh on sentiment. FOMC uncertainty keeps banks in holding pattern. DLTR miss Tuesday compounds consumer stress narrative.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Energy</div></td>
+            <td><span class="etf-badge">XLE</span></td>
+            <td class="ytd pos">+27%+ (ATH)</td>
+            <td class="trend">↑</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-amber">~ VOLATILE</div></td>
+            <td><span class="conf-badge conf-medium">Medium</span></td>
+            <td class="reasoning">Hormuz blockade sustains $115–119 oil. Energy as inflation hedge attracts pre-FOMC flows. XOM +27% YTD. Binary risk: any ceasefire signal = sharp 10–15% reversal. Watch headline feed.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Healthcare</div></td>
+            <td><span class="etf-badge">XLV</span></td>
+            <td class="ytd pos">Modestly Positive</td>
+            <td class="trend">↗️</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning">Defensive rotation from tech/financials continues. JP Morgan, Fidelity, PNC all OVERWEIGHT. Stagflation supports non-cyclical demand. M&A activity accelerating. AI diagnostics + GLP-1 momentum.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Materials</div></td>
+            <td><span class="etf-badge">XLB</span></td>
+            <td class="ytd pos">+18.73%</td>
+            <td class="trend">↑</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning">Defense spending boom ($1.5T potential budget) and GTC AI infrastructure buildout directly support copper/rare earth demand. Electrification megatrend. Strong confirmed momentum.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Consumer Discretionary</div></td>
+            <td><span class="etf-badge">XLY</span></td>
+            <td class="ytd neg">−5.3% (weakest)</td>
+            <td class="trend">↘️</td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning">Oil at $115–119 acts as a consumer tax. Stagflation conditions historically devastate this sector (1970s analog). DLTR earnings risk Tuesday. Only sector with NO Q4 2025 earnings growth.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Consumer Staples</div></td>
+            <td><span class="etf-badge">XLP</span></td>
+            <td class="ytd neu">Flat / Slight +</td>
+            <td class="trend">→</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><span class="conf-badge conf-medium">Medium</span></td>
+            <td class="reasoning">Mon: defensive rotation provides modest support in risk-off open. Tue: DLTR-adjacent sentiment drag + pre-FOMC uncertainty reduces defensive premium. Oil input cost inflation squeezing margins.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Industrials</div></td>
+            <td><span class="etf-badge">XLI</span></td>
+            <td class="ytd pos">+16.99%</td>
+            <td class="trend">↑</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning">Defense spending boom (RTX, LMT, NOC, GD) + GTC AI infrastructure capex = dual secular tailwinds. HALO trend benefits heavy-asset industrials. Pre-FOMC rate hold = no capex plan disruption.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Utilities</div></td>
+            <td><span class="etf-badge">XLU</span></td>
+            <td class="ytd pos">+10.2% (Feb alone)</td>
+            <td class="trend">↑↑</td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><div class="signal-cell sig-green">▲ GREEN</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning" style="color:var(--green);"><strong>★ HIGHEST CONVICTION LONG</strong> — AI data centers driving unprecedented power demand. GTC reinforces data center power thesis. Defensive + growth hybrid. Vanguard Utilities: top March 2026 pick.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Real Estate</div></td>
+            <td><span class="etf-badge">XLRE</span></td>
+            <td class="ytd pos">+5.82%</td>
+            <td class="trend">↘️</td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><span class="conf-badge conf-high">High</span></td>
+            <td class="reasoning">FOMC week is worst environment for rate-sensitive leveraged REITs. Rate cuts pushed to September removes key catalyst. FOMC-eve historically sees maximum REIT selling pressure. Office REITs structurally challenged.</td>
+          </tr>
+
+          <tr>
+            <td><div class="sector-name">Communications</div></td>
+            <td><span class="etf-badge">XLC</span></td>
+            <td class="ytd neg">−5.14%</td>
+            <td class="trend">↘️</td>
+            <td><div class="signal-cell sig-green">▲ MARGINAL</div></td>
+            <td><div class="signal-cell sig-red">▼ RED</div></td>
+            <td><span class="conf-badge conf-medium">Medium</span></td>
+            <td class="reasoning">Mon: GTC may lift Alphabet/Meta AI narratives — oversold bounce possible. 10% discount to fair value. Tue: pre-FOMC caution hits growth names; AI spend ROI concerns persist. Technical downtrend confirmed.</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─── SCORECARD ─── -->
+  <div class="section">
+    <div class="section-title"><span>04</span> — Daily Scorecards</div>
+    <div class="scorecard-grid">
+
+      <!-- MONDAY -->
+      <div class="scorecard">
+        <div class="scorecard-header mon">Monday, March 16 — Scorecard</div>
+        <div class="scorecard-body">
+          <div class="scorecard-group">
+            <div class="group-label green">▲ Green Sectors (8)</div>
+            <div class="tag-list">
+              <span class="tag green star">Utilities ★</span>
+              <span class="tag green star">Industrials ★</span>
+              <span class="tag green star">Healthcare ★</span>
+              <span class="tag green">Materials</span>
+              <span class="tag green">Technology</span>
+              <span class="tag green">Energy</span>
+              <span class="tag green">Consumer Staples</span>
+              <span class="tag green">Communications</span>
+            </div>
+            <div class="conviction-label">★ Top Conviction Green: Utilities, Industrials, Healthcare</div>
+          </div>
+          <div class="scorecard-group">
+            <div class="group-label red">▼ Red Sectors (3)</div>
+            <div class="tag-list">
+              <span class="tag red star-red">Consumer Disc. ★</span>
+              <span class="tag red star-red">Finance ★</span>
+              <span class="tag red star-red">Real Estate ★</span>
+            </div>
+            <div class="conviction-label">★ Top Conviction Red: Consumer Discretionary, Finance, Real Estate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TUESDAY -->
+      <div class="scorecard">
+        <div class="scorecard-header tue">Tuesday, March 17 — Scorecard</div>
+        <div class="scorecard-body">
+          <div class="scorecard-group">
+            <div class="group-label green">▲ Green Sectors (6)</div>
+            <div class="tag-list">
+              <span class="tag green star">Utilities ★</span>
+              <span class="tag green star">Healthcare ★</span>
+              <span class="tag green star">Industrials ★</span>
+              <span class="tag green">Technology</span>
+              <span class="tag green">Energy</span>
+              <span class="tag green">Materials</span>
+            </div>
+            <div class="conviction-label">★ Top Conviction Green: Utilities, Healthcare, Industrials</div>
+          </div>
+          <div class="scorecard-group">
+            <div class="group-label red">▼ Red Sectors (5)</div>
+            <div class="tag-list">
+              <span class="tag red star-red">Consumer Disc. ★</span>
+              <span class="tag red star-red">Real Estate ★</span>
+              <span class="tag red star-red">Finance ★</span>
+              <span class="tag red">Consumer Staples</span>
+              <span class="tag red">Communications</span>
+            </div>
+            <div class="conviction-label">★ Top Conviction Red: Consumer Discretionary, Real Estate, Finance</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── KEY RISKS ─── -->
+  <div class="section">
+    <div class="section-title"><span>05</span> — Key Risks &amp; Tail Events</div>
+    <div class="risk-list">
+
+      <div class="risk-item">
+        <div class="risk-num">01</div>
+        <div class="risk-body">
+          <div class="risk-title">
+            Geopolitical: Iran / Strait of Hormuz
+            <span class="risk-tag rtag-binary">Binary</span>
+          </div>
+          <div class="risk-desc">Single biggest cross-market mover for the week. Any credible peace signal or ceasefire → Energy sector −10% to −15% instant reversal, broad market relief. Further escalation or Iranian retaliation → Oil spike toward $130–$140+, stagflation rotation accelerates, S&P tests 6,500 support.</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-num">02</div>
+        <div class="risk-body">
+          <div class="risk-title">
+            FOMC March 18 Dot Plot Surprise
+            <span class="risk-tag rtag-high">High Impact</span>
+          </div>
+          <div class="risk-desc">Base case: HOLD with neutral tone. Downside: dot plot projects fewer than 2 cuts for 2026 = immediate risk-off, XLRE/XLF sell-off, growth names pressured. Upside: 2+ cuts confirmed = relief rally, rate-sensitives bounce, broad market bid. Watch for Powell's language on stagflation acknowledgment.</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-num">03</div>
+        <div class="risk-body">
+          <div class="risk-title">
+            Dollar Tree (DLTR) Earnings — Tuesday March 17
+            <span class="risk-tag rtag-high">High Impact</span>
+          </div>
+          <div class="risk-desc">Consumer bellwether for the discount/value segment. High probability of miss given oil-driven transport/energy cost surge and stagflation consumer squeeze. A guidance cut would cascade into Consumer Discretionary (XLY) and Consumer Staples (XLP) with potential read-through to retail credit risk in XLF.</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-num">04</div>
+        <div class="risk-body">
+          <div class="risk-title">
+            Nvidia GTC Disappointment vs. Expectations
+            <span class="risk-tag rtag-medium">Catalyst Risk</span>
+          </div>
+          <div class="risk-desc">Consensus expects a major AI infrastructure announcement from Jensen Huang. Any underwhelming keynote, guidance miss, or GPU supply constraint signals = downside risk for XLK (−3% to −5%), spillover to XLU (data center power thesis weakens), and AI-adjacent positions in XLC (Alphabet/Meta).</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-num">05</div>
+        <div class="risk-body">
+          <div class="risk-title">
+            Oil Demand Destruction Threshold
+            <span class="risk-tag rtag-medium">Macro Risk</span>
+          </div>
+          <div class="risk-desc">If $120+ oil registers in consumer spending data, airline capacity guidance, or trucking volumes — stagflation rotation accelerates sharply. Watch for warning signals in any guidance updates from transportation or consumer-facing names. Airline and shipping commentary is a leading indicator.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ─────────────────────── FOOTER ─────────────────────── -->
+<div class="footer">
+  <div class="footer-sources">
+    <strong>Data Sources &amp; Attribution:</strong><br>
+    S&amp;P 500 technical levels: Bloomberg Terminal, FactSet. Oil prices: IEA, OPEC Reuters dispatch. Fed probabilities: CME FedWatch Tool (95.5% HOLD). Sector YTD performance: SPDR ETF data. Analyst consensus targets: Reuters poll of 44 analysts (median $7,500). JP Morgan, Fidelity, PNC sector ratings: published research notes March 2026. Vanguard Utilities recommendation: Vanguard Investment Strategy Group March 2026. Historical analogs: 1970s stagflation parallel from Goldman Sachs macro research.
+    <div class="disclaimer">This report is for informational and research purposes only. Not financial advice. Past performance does not guarantee future results. All predictions carry inherent uncertainty.</div>
+  </div>
+  <div class="footer-right">
+    <strong>Generated by Reforger</strong><br>
+    Claude Agent System<br>
+    16 March 2026 · 00:00 AEDT<br>
+    <span style="color:#333">v1.0 · march16_17_investment_prediction</span>
+  </div>
+</div>
+
+</body>
+</html>

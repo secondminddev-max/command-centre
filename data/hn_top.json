@@ -1,0 +1,86 @@
+{
+  "fetched_at": "2026-03-16T05:57:06.581266",
+  "count": 10,
+  "stories": [
+    {
+      "id": 47390233,
+      "title": "Office.eu launches as Europe's sovereign office platform",
+      "url": "https://office.eu/media/pressrelease-20260304",
+      "score": 60,
+      "by": "campuscodi",
+      "comments": 25
+    },
+    {
+      "id": 47388141,
+      "title": "What makes Intel Optane stand out (2023)",
+      "url": "https://blog.zuthof.nl/2023/06/02/what-makes-intel-optane-stand-out/",
+      "score": 105,
+      "by": "walterbell",
+      "comments": 82
+    },
+    {
+      "id": 47388137,
+      "title": "Separating the Wayland Compositor and Window Manager",
+      "url": "https://isaacfreund.com/blog/river-window-management/",
+      "score": 79,
+      "by": "dpassens",
+      "comments": 34
+    },
+    {
+      "id": 47332593,
+      "title": "C++26: The Oxford Variadic Comma",
+      "url": "https://www.sandordargo.com/blog/2026/03/11/cpp26-oxford-variadic-comma",
+      "score": 33,
+      "by": "ingve",
+      "comments": 10
+    },
+    {
+      "id": 47387047,
+      "title": "Glassworm Is Back: A New Wave of Invisible Unicode Attacks Hits Repositories",
+      "url": "https://www.aikido.dev/blog/glassworm-returns-unicode-attack-github-npm-vscode",
+      "score": 122,
+      "by": "robinhouston",
+      "comments": 57
+    },
+    {
+      "id": 47388531,
+      "title": "In Memoriam: John W. Addison, my PhD advisor",
+      "url": "https://billwadge.com/2026/03/15/in-memoriam-john-w-addison-jr-my-phd-advisor/",
+      "score": 25,
+      "by": "herodotus",
+      "comments": 2
+    },
+    {
+      "id": 47386116,
+      "title": "A Visual Introduction to Machine Learning (2015)",
+      "url": "https://r2d3.us/visual-intro-to-machine-learning-part-1/",
+      "score": 257,
+      "by": "vismit2000",
+      "comments": 22
+    },
+    {
+      "id": 47388479,
+      "title": "Show HN: GDSL \u2013 800 line kernel: Lisp subset in 500, C subset in 1300",
+      "url": "https://firthemouse.github.io/",
+      "score": 30,
+      "by": "FirTheMouse",
+      "comments": 5
+    },
+    {
+      "id": 47388273,
+      "title": "Learning athletic humanoid tennis skills from imperfect human motion data",
+      "url": "https://zzk273.github.io/LATENT/",
+      "score": 40,
+      "by": "danielmorozoff",
+      "comments": 2
+    },
+    {
+      "id": 47386856,
+      "title": "Hollywood Enters Oscars Weekend in Existential Crisis",
+      "url": "https://www.theculturenewspaper.com/hollywood-enters-oscars-weekend-in-existential-crisis/",
+      "score": 66,
+      "by": "RickJWagner",
+      "comments": 167
+    }
+  ]
+}

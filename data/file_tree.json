@@ -1,0 +1,262 @@
+{
+  "name": "claudecodetest",
+  "path": "/Users/secondmind/claudecodetest",
+  "type": "directory",
+  "size": 448,
+  "modified": 1773511301.5831745,
+  "modified_str": "2026-03-15 05:01",
+  "children": [
+    {
+      "name": "data",
+      "path": "/Users/secondmind/claudecodetest/data",
+      "type": "directory",
+      "size": 384,
+      "modified": 1773511094.7578278,
+      "modified_str": "2026-03-15 04:58",
+      "children": [
+        {
+          "name": "code_analysis.json",
+          "path": "/Users/secondmind/claudecodetest/data/code_analysis.json",
+          "type": "file",
+          "size": 3410,
+          "modified": 1773510811.2779171,
+          "modified_str": "2026-03-15 04:53",
+          "extension": ".json"
+        },
+        {
+          "name": "code_analysis_report.txt",
+          "path": "/Users/secondmind/claudecodetest/data/code_analysis_report.txt",
+          "type": "file",
+          "size": 4034,
+          "modified": 1773510835.2412474,
+          "modified_str": "2026-03-15 04:53",
+          "extension": ".txt"
+        },
+        {
+          "name": "file_changes.json",
+          "path": "/Users/secondmind/claudecodetest/data/file_changes.json",
+          "type": "file",
+          "size": 16493,
+          "modified": 1773511637.4451754,
+          "modified_str": "2026-03-15 05:07",
+          "extension": ".json"
+        },
+        {
+          "name": "github_trending.json",
+          "path": "/Users/secondmind/claudecodetest/data/github_trending.json",
+          "type": "file",
+          "size": 2902,
+          "modified": 1773510580.335051,
+          "modified_str": "2026-03-15 04:49",
+          "extension": ".json"
+        },
+        {
+          "name": "hn_top.json",
+          "path": "/Users/secondmind/claudecodetest/data/hn_top.json",
+          "type": "file",
+          "size": 2577,
+          "modified": 1773510502.8024452,
+          "modified_str": "2026-03-15 04:48",
+          "extension": ".json"
+        },
+        {
+          "name": "metrics_history.json",
+          "path": "/Users/secondmind/claudecodetest/data/metrics_history.json",
+          "type": "file",
+          "size": 612,
+          "modified": 1773511083.016039,
+          "modified_str": "2026-03-15 04:58",
+          "extension": ".json"
+        },
+        {
+          "name": "notes.json",
+          "path": "/Users/secondmind/claudecodetest/data/notes.json",
+          "type": "file",
+          "size": 272,
+          "modified": 1773511094.7573552,
+          "modified_str": "2026-03-15 04:58",
+          "extension": ".json"
+        },
+        {
+          "name": "system_report.json",
+          "path": "/Users/secondmind/claudecodetest/data/system_report.json",
+          "type": "file",
+          "size": 2120,
+          "modified": 1773510649.6831741,
+          "modified_str": "2026-03-15 04:50",
+          "extension": ".json"
+        },
+        {
+          "name": "weather.json",
+          "path": "/Users/secondmind/claudecodetest/data/weather.json",
+          "type": "file",
+          "size": 1811,
+          "modified": 1773511034.200655,
+          "modified_str": "2026-03-15 04:57",
+          "extension": ".json"
+        },
+        {
+          "name": "wiki_facts.json",
+          "path": "/Users/secondmind/claudecodetest/data/wiki_facts.json",
+          "type": "file",
+          "size": 2233,
+          "modified": 1773510712.0226445,
+          "modified_str": "2026-03-15 04:51",
+          "extension": ".json"
+        }
+      ],
+      "child_count": 10
+    },
+    {
+      "name": "reports",
+      "path": "/Users/secondmind/claudecodetest/reports",
+      "type": "directory",
+      "size": 96,
+      "modified": 1773511426.993119,
+      "modified_str": "2026-03-15 05:03",
+      "children": [
+        {
+          "name": "morning_briefing.html",
+          "path": "/Users/secondmind/claudecodetest/reports/morning_briefing.html",
+          "type": "file",
+          "size": 22660,
+          "modified": 1773511426.9932325,
+          "modified_str": "2026-03-15 05:03",
+          "extension": ".html"
+        }
+      ],
+      "child_count": 1
+    },
+    {
+      "name": "tools",
+      "path": "/Users/secondmind/claudecodetest/tools",
+      "type": "directory",
+      "size": 160,
+      "modified": 1773511605.9480743,
+      "modified_str": "2026-03-15 05:06",
+      "children": [
+        {
+          "name": "file_tree.py",
+          "path": "/Users/secondmind/claudecodetest/tools/file_tree.py",
+          "type": "file",
+          "size": 1518,
+          "modified": 1773511605.9476051,
+          "modified_str": "2026-03-15 05:06",
+          "extension": ".py"
+        },
+        {
+          "name": "metrics_logger.py",
+          "path": "/Users/secondmind/claudecodetest/tools/metrics_logger.py",
+          "type": "file",
+          "size": 1446,
+          "modified": 1773510911.9113145,
+          "modified_str": "2026-03-15 04:55",
+          "extension": ".py"
+        },
+        {
+          "name": "morning_briefing.py",
+          "path": "/Users/secondmind/claudecodetest/tools/morning_briefing.py",
+          "type": "file",
+          "size": 14262,
+          "modified": 1773511424.84625,
+          "modified_str": "2026-03-15 05:03",
+          "extension": ".py"
+        }
+      ],
+      "child_count": 3
+    },
+    {
+      "name": "widgets",
+      "path": "/Users/secondmind/claudecodetest/widgets",
+      "type": "directory",
+      "size": 128,
+      "modified": 1773511642.7114565,
+      "modified_str": "2026-03-15 05:07",
+      "children": [
+        {
+          "name": "filetree.html",
+          "path": "/Users/secondmind/claudecodetest/widgets/filetree.html",
+          "type": "file",
+          "size": 10192,
+          "modified": 1773511642.7106946,
+          "modified_str": "2026-03-15 05:07",
+          "extension": ".html"
+        },
+        {
+          "name": "notes.html",
+          "path": "/Users/secondmind/claudecodetest/widgets/notes.html",
+          "type": "file",
+          "size": 15533,
+          "modified": 1773511148.8523095,
+          "modified_str": "2026-03-15 04:59",
+          "extension": ".html"
+        }
+      ],
+      "child_count": 2
+    },
+    {
+      "name": "agent-command-centre.html",
+      "path": "/Users/secondmind/claudecodetest/agent-command-centre.html",
+      "type": "file",
+      "size": 60330,
+      "modified": 1773509817.6468492,
+      "modified_str": "2026-03-15 04:36",
+      "extension": ".html"
+    },
+    {
+      "name": "agent_server.py",
+      "path": "/Users/secondmind/claudecodetest/agent_server.py",
+      "type": "file",
+      "size": 39402,
+      "modified": 1773509744.9454722,
+      "modified_str": "2026-03-15 04:35",
+      "extension": ".py"
+    },
+    {
+      "name": "improvements.json",
+      "path": "/Users/secondmind/claudecodetest/improvements.json",
+      "type": "file",
+      "size": 7158,
+      "modified": 1773511593.4659572,
+      "modified_str": "2026-03-15 05:06",
+      "extension": ".json"
+    },
+    {
+      "name": "knowledge-base.html",
+      "path": "/Users/secondmind/claudecodetest/knowledge-base.html",
+      "type": "file",
+      "size": 29753,
+      "modified": 1773511301.5827842,
+      "modified_str": "2026-03-15 05:01",
+      "extension": ".html"
+    },
+    {
+      "name": "live-feed.html",
+      "path": "/Users/secondmind/claudecodetest/live-feed.html",
+      "type": "file",
+      "size": 18249,
+      "modified": 1773510387.8687747,
+      "modified_str": "2026-03-15 04:46",
+      "extension": ".html"
+    },
+    {
+      "name": "spawn_agents.py",
+      "path": "/Users/secondmind/claudecodetest/spawn_agents.py",
+      "type": "file",
+      "size": 24660,
+      "modified": 1773510470.1449552,
+      "modified_str": "2026-03-15 04:47",
+      "extension": ".py"
+    },
+    {
+      "name": "watch_agents.py",
+      "path": "/Users/secondmind/claudecodetest/watch_agents.py",
+      "type": "file",
+      "size": 9523,
+      "modified": 1773509248.2631497,
+      "modified_str": "2026-03-15 04:27",
+      "extension": ".py"
+    }
+  ],
+  "child_count": 11
+}

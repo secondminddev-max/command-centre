@@ -1,0 +1,208 @@
+{
+  "test_run": {
+    "timestamp": "2026-03-18T10:45:00Z",
+    "tester": "DemoTester",
+    "server": "http://localhost:5050",
+    "target_pass_rate": "100%",
+    "rerun_reason": "Independent revalidation — DemoTester trusts no one else's results"
+  },
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/",
+      "description": "Landing page",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Full HTML rendered with Agent Command Centre UI"
+    },
+    {
+      "method": "GET",
+      "path": "/api/status",
+      "description": "System status — agents, tasks, logs, metrics, delegations",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Returns full JSON with 28 agents, tasks, logs, metrics, delegation chains"
+    },
+    {
+      "method": "POST",
+      "path": "/api/pay",
+      "description": "Stripe checkout session creation",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Returns valid Stripe checkout URL, session_id, amount_cents, currency"
+    },
+    {
+      "method": "GET",
+      "path": "/api/pay",
+      "description": "Payment endpoint info / product catalog",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Returns product catalog with stripe_configured=true"
+    },
+    {
+      "method": "GET",
+      "path": "/api/pay/tiers",
+      "description": "Payment tier listing",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Returns pricing tiers"
+    },
+    {
+      "method": "GET",
+      "path": "/api/pay/status",
+      "description": "Payment system status",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Stripe integration healthy"
+    },
+    {
+      "method": "GET",
+      "path": "/api/pay/success",
+      "description": "Post-payment success handler (requires session_id)",
+      "status_code": 400,
+      "expected": 400,
+      "pass": true,
+      "notes": "Correctly returns 400 without session_id — proper input validation"
+    },
+    {
+      "method": "GET",
+      "path": "/api/improvements",
+      "description": "System improvement suggestions",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "APIPatcher route responding"
+    },
+    {
+      "method": "GET",
+      "path": "/api/bluesky/status",
+      "description": "Bluesky social integration status",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Returns Bluesky agent status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/policy/current",
+      "description": "Current governance policy",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "PolicyWriter returning current policy document"
+    },
+    {
+      "method": "POST",
+      "path": "/api/policy/suggest",
+      "description": "Policy suggestion submission (validation test)",
+      "status_code": 400,
+      "expected": 400,
+      "pass": true,
+      "notes": "Correctly rejects empty suggestion body"
+    },
+    {
+      "method": "GET",
+      "path": "/api/tasks/pending",
+      "description": "Pending task list",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Secretary returning pending tasks"
+    },
+    {
+      "method": "GET",
+      "path": "/api/tasks/all",
+      "description": "All tasks (pending + completed)",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Full task history returned"
+    },
+    {
+      "method": "GET",
+      "path": "/api/tasks/brief",
+      "description": "CEO briefing document",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Brief document available"
+    },
+    {
+      "method": "POST",
+      "path": "/api/ceo/delegate",
+      "description": "CEO delegation endpoint",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "Delegation pipeline functional"
+    },
+    {
+      "method": "GET",
+      "path": "/api/agents",
+      "description": "Agent listing (standalone)",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "VERIFIED — Returns JSON array with 28 agents (id, name, role, status, progress, task per agent)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/metrics",
+      "description": "Metrics endpoint (standalone)",
+      "status_code": 200,
+      "expected": 200,
+      "pass": true,
+      "notes": "VERIFIED — Returns metrics object with keys: tasks_done, errors, messages_sent, active, total"
+    },
+    {
+      "method": "GET",
+      "path": "/dashboard",
+      "description": "Dashboard page",
+      "status_code": 302,
+      "expected": "302 redirect to /",
+      "pass": true,
+      "notes": "VERIFIED — 302 redirect to / (Location: /), follows through to 200"
+    },
+    {
+      "method": "GET",
+      "path": "/command",
+      "description": "Command centre page (alternate)",
+      "status_code": 302,
+      "expected": "302 redirect to /",
+      "pass": true,
+      "notes": "VERIFIED — 302 redirect to / (Location: /), follows through to 200"
+    }
+  ],
+  "summary": {
+    "total_endpoints_tested": 19,
+    "passed": 19,
+    "failed": 0,
+    "pass_rate": "100.0%",
+    "previous_pass_rate": "78.9%",
+    "improvement": "+21.1%",
+    "critical_passes": {
+      "landing_page_200": true,
+      "stripe_checkout_url_valid": true,
+      "agent_status_reporting": true,
+      "api_status_full_payload": true,
+      "standalone_agents_route": true,
+      "standalone_metrics_route": true,
+      "dashboard_redirect": true,
+      "command_redirect": true
+    },
+    "fixes_verified": [
+      "GET /api/agents — was 404, now 200 (28-agent JSON array)",
+      "GET /api/metrics — was 404, now 200 (metrics object)",
+      "GET /dashboard — was 404, now 302 -> / -> 200",
+      "GET /command — was 404, now 302 -> / -> 200"
+    ],
+    "failures": [],
+    "verdict": "FULL PASS — 19/19 endpoints verified by independent DemoTester revalidation. 100% pass rate achieved."
+  }
+}

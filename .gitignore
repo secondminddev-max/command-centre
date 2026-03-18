@@ -1,0 +1,52 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+.env.tmp
+
+# Vault and tokens
+data/vault.key
+data/vault.json
+data/gmail_tokens.json
+data/email_config.json
+data/email_log.json
+
+# Backup files
+*.bak
+*.backup
+
+# Database
+agents.db
+
+# Keys
+*.pem
+*.key
+!public/**/*.key
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PID files
+*.pid
+
+# Runtime data
+data/consciousness_stream.jsonl
+data/campaign_log.json
+data/revenue_events.json
+data/revenue_stats.json
+data/intel_latest.json
+data/policy_violations.json
+data/ceo_tasks.json
+data/consciousness.json
+
+# Node
+node_modules/
+
+# Metrics
+metrics/

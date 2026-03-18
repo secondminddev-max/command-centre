@@ -1,0 +1,23 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "title": "System Started",
+      "body": "Autonomous improvement system launched. Agents are running and building capabilities overnight.",
+      "created": "2026-03-15T00:00:00.000Z",
+      "tags": [
+        "system",
+        "meta"
+      ]
+    }
+  ],
+  "ceo_policy_violations": {
+    "last_updated": "2026-03-16T00:30:02.621544",
+    "delegation_bypass_count": 8,
+    "direct_work_bypass_count": 39,
+    "total": 47,
+    "last_delegation_bypass": "2026-03-16T00:22:56",
+    "status": "intercept_active",
+    "note": "Server enforcement at agent_server.py:934-949 intercepts and reroutes all CEO->specialist delegation attempts"
+  }
+}

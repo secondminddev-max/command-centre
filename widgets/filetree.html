@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Tree — claudecodetest</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --red: #f85149;
+      --hover: #21262d;
+      --radius: 6px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    header .path {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    button {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    button:hover { background: var(--hover); border-color: var(--accent); }
+    #status {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      min-height: 18px;
+    }
+    #status.error { color: var(--red); }
+    #status.ok { color: var(--green); }
+    .tree { list-style: none; }
+    .tree-node { position: relative; }
+
+    .node-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 6px;
+      border-radius: var(--radius);
+      cursor: default;
+      white-space: nowrap;
+      transition: background 0.1s;
+      user-select: none;
+    }
+    .node-row:hover { background: var(--hover); }
+    .node-row.is-dir { cursor: pointer; }
+
+    .toggle {
+      display: inline-block;
+      width: 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 10px;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    .toggle.open { transform: rotate(90deg); }
+    .no-toggle { display: inline-block; width: 14px; flex-shrink: 0; }
+
+    .icon { flex-shrink: 0; font-size: 14px; line-height: 1; }
+    .name { color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; }
+    .name.dir-name { color: var(--accent); font-weight: 500; }
+    .meta {
+      display: flex;
+      gap: 16px;
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .meta .size { min-width: 56px; text-align: right; }
+    .meta .mtime { min-width: 120px; }
+
+    .children {
+      padding-left: 22px;
+      border-left: 1px solid var(--border);
+      margin-left: 10px;
+      overflow: hidden;
+      transition: max-height 0.2s ease, opacity 0.2s ease;
+    }
+    .children.collapsed { display: none; }
+
+    .badge {
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 6px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>📁 File Tree</h1>
+      <div class="path">/Users/secondmind/claudecodetest</div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <button id="btn-expand">Expand All</button>
+    <button id="btn-collapse">Collapse All</button>
+    <button id="btn-reload">↻ Reload</button>
+  </div>
+
+  <div id="status">Loading…</div>
+  <ul class="tree" id="tree"></ul>
+  <footer id="footer"></footer>
+
+  <script>
+    const API = 'http://localhost:5050/data/system_report.json';
+    const FALLBACK = 'http://localhost:5050/data/file_tree.json';
+
+    const statusEl = document.getElementById('status');
+    const treeEl = document.getElementById('tree');
+    const footerEl = document.getElementById('footer');
+
+    function formatSize(bytes) {
+      if (bytes == null) return '';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+    }
+
+    function getIcon(node) {
+      if (node.type === 'directory') return '📁';
+      const ext = (node.extension || '').toLowerCase();
+      const map = {
+        '.py': '🐍', '.html': '🌐', '.htm': '🌐',
+        '.json': '📊', '.md': '📝', '.txt': '📄',
+        '.js': '⚡', '.ts': '⚡', '.css': '🎨',
+        '.sh': '⚙️', '.yaml': '⚙️', '.yml': '⚙️',
+        '.png': '🖼️', '.jpg': '🖼️', '.jpeg': '🖼️', '.gif': '🖼️', '.svg': '🖼️',
+        '.pdf': '📕', '.zip': '📦', '.gz': '📦', '.tar': '📦',
+        '.csv': '📊', '.sql': '🗄️', '.log': '📋',
+      };
+      return map[ext] || '📄';
+    }
+
+    function buildNode(node, depth) {
+      const li = document.createElement('li');
+      li.className = 'tree-node';
+
+      const row = document.createElement('div');
+      row.className = 'node-row' + (node.type === 'directory' ? ' is-dir' : '');
+
+      // Toggle arrow or spacer
+      const toggle = document.createElement('span');
+      if (node.type === 'directory' && node.children && node.children.length > 0) {
+        toggle.className = 'toggle';
+        toggle.textContent = '▶';
+      } else {
+        toggle.className = 'no-toggle';
+      }
+      row.appendChild(toggle);
+
+      // Icon
+      const icon = document.createElement('span');
+      icon.className = 'icon';
+      icon.textContent = getIcon(node);
+      row.appendChild(icon);
+
+      // Name
+      const name = document.createElement('span');
+      name.className = 'name' + (node.type === 'directory' ? ' dir-name' : '');
+      name.textContent = node.name;
+      row.appendChild(name);
+
+      // Child count badge for dirs
+      if (node.type === 'directory' && node.children) {
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = node.children.length;
+        row.appendChild(badge);
+      }
+
+      // Meta: size + mtime
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      if (node.type === 'file') {
+        const sizeEl = document.createElement('span');
+        sizeEl.className = 'size';
+        sizeEl.textContent = formatSize(node.size);
+        meta.appendChild(sizeEl);
+      }
+      if (node.modified_str) {
+        const mtimeEl = document.createElement('span');
+        mtimeEl.className = 'mtime';
+        mtimeEl.textContent = node.modified_str;
+        meta.appendChild(mtimeEl);
+      }
+      row.appendChild(meta);
+
+      li.appendChild(row);
+
+      // Children
+      if (node.type === 'directory' && node.children && node.children.length > 0) {
+        const childList = document.createElement('ul');
+        childList.className = 'tree children collapsed';
+        node.children.forEach(child => {
+          childList.appendChild(buildNode(child, depth + 1));
+        });
+        li.appendChild(childList);
+
+        row.addEventListener('click', () => {
+          const collapsed = childList.classList.toggle('collapsed');
+          toggle.classList.toggle('open', !collapsed);
+        });
+      }
+
+      return li;
+    }
+
+    function renderTree(data) {
+      treeEl.innerHTML = '';
+      // Try to find the root node
+      let root = data;
+      if (data.file_tree) root = data.file_tree;
+      else if (data.tree) root = data.tree;
+
+      if (!root || !root.name) {
+        // Maybe it's an array
+        if (Array.isArray(data)) {
+          data.forEach(n => treeEl.appendChild(buildNode(n, 0)));
+        } else {
+          // Wrap whatever we got
+          treeEl.appendChild(buildNode(root || data, 0));
+        }
+      } else {
+        const rootLi = buildNode(root, 0);
+        treeEl.appendChild(rootLi);
+        // Auto-expand root
+        const firstChildren = rootLi.querySelector('.children');
+        const firstToggle = rootLi.querySelector('.toggle');
+        if (firstChildren) {
+          firstChildren.classList.remove('collapsed');
+          if (firstToggle) firstToggle.classList.add('open');
+        }
+      }
+      footerEl.textContent = `Loaded at ${new Date().toLocaleTimeString()}`;
+    }
+
+    async function load() {
+      statusEl.textContent = 'Fetching data…';
+      statusEl.className = '';
+      try {
+        // Try system_report first, then file_tree fallback
+        let data = null;
+        try {
+          const r = await fetch(FALLBACK);
+          if (r.ok) data = await r.json();
+        } catch (_) {}
+
+        if (!data) {
+          const r = await fetch(API);
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          const raw = await r.json();
+          // system_report may have file info nested
+          data = raw.file_tree || raw.files || raw;
+        }
+
+        renderTree(data);
+        statusEl.textContent = 'Tree loaded successfully.';
+        statusEl.className = 'ok';
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message} — is the server running on port 5050?`;
+        statusEl.className = 'error';
+      }
+    }
+
+    function setAllCollapsed(collapsed) {
+      treeEl.querySelectorAll('.children').forEach(el => {
+        el.classList.toggle('collapsed', collapsed);
+      });
+      treeEl.querySelectorAll('.toggle').forEach(el => {
+        el.classList.toggle('open', !collapsed);
+      });
+    }
+
+    document.getElementById('btn-expand').addEventListener('click', () => setAllCollapsed(false));
+    document.getElementById('btn-collapse').addEventListener('click', () => setAllCollapsed(true));
+    document.getElementById('btn-reload').addEventListener('click', load);
+
+    load();
+  </script>
+</body>
+</html>

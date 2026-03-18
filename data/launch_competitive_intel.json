@@ -1,0 +1,263 @@
+{
+  "topic": "AI HQ Product Launch — Full Competitive Intelligence & Research Sprint",
+  "timestamp": "2026-03-18T00:00:00Z",
+  "sections": {
+    "1_competitive_analysis": {
+      "our_differentiators": [
+        "Visual office floor UI (no competitor has this)",
+        "Persistent agent personalities across sessions",
+        "Live operational dashboard",
+        "Mac-native desktop application",
+        "Stripe-integrated monetisation out of the box",
+        "Flat-tier pricing (no credit anxiety)"
+      ],
+      "our_pricing": {
+        "solo": "$49/mo",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "competitors": {
+        "OpenClaw": {
+          "pricing": "Free and open-source (users pay LLM API costs only)",
+          "features": [
+            "250,000+ GitHub stars — most starred non-aggregator project",
+            "100+ built-in skills",
+            "Executes real-world tasks: email, calendar, terminal, code deploy",
+            "Cross-session memory",
+            "Messaging-platform UI (WhatsApp, Telegram, Discord)",
+            "Nvidia NemoClaw enterprise fork (March 2026)"
+          ],
+          "limitations": [
+            "512 vulnerabilities in Jan 2026 audit, 8 critical",
+            "China banned state agencies from using it",
+            "No visual UI — messaging-only interface",
+            "Creator left for OpenAI (Feb 2026) — governance uncertain",
+            "No built-in monetisation or billing",
+            "No persistent personality layer"
+          ],
+          "threat_level": "HIGH — massive adoption but security/governance risks create opening",
+          "users": "300,000-400,000 estimated"
+        },
+        "AutoGPT": {
+          "pricing": "Free/open-source (LLM API costs ~$0.50-$5/task)",
+          "features": [
+            "170,000+ GitHub stars",
+            "Visual Agent Builder (low-code)",
+            "Persistent AutoGPT Server",
+            "Plugin system",
+            "Fully autonomous goal-based execution"
+          ],
+          "limitations": [
+            "High API costs for complex tasks",
+            "Can loop/get stuck",
+            "No team/multi-agent coordination UI",
+            "No billing, no persistent personalities, no live dashboard"
+          ],
+          "threat_level": "MEDIUM — big name but stalling vs OpenClaw"
+        },
+        "CrewAI": {
+          "pricing": {
+            "basic_free": "50 executions/month, 1 seat",
+            "professional": "$25/month — 100 executions, 2 seats, $0.50/extra",
+            "enterprise": "Custom — up to 30,000 executions, unlimited seats, SOC2, SSO, RBAC"
+          },
+          "features": [
+            "Multi-agent role-based orchestration",
+            "CrewAI Studio: no-code visual editor + AI copilot",
+            "Open-source Python framework + managed cloud",
+            "Dozens of integrations (Gmail, Slack, HubSpot, Salesforce, Notion, GitHub)",
+            "Memory, planning, reasoning, knowledge bases"
+          ],
+          "limitations": [
+            "Key features locked behind paid plans",
+            "Execution-based pricing gets expensive at scale",
+            "Web-only — no desktop/native app",
+            "No visual office/spatial UI, no persistent personalities"
+          ],
+          "threat_level": "HIGH — closest feature competitor, but web-only and execution-capped"
+        },
+        "LangGraph": {
+          "pricing": {
+            "langgraph": "$0.001/node execution",
+            "langsmith_free": "Free dev tier",
+            "langsmith_plus": "$39/seat/month + usage"
+          },
+          "features": [
+            "DAG-based agent orchestration",
+            "LangGraph 1.0 stable (Oct 2025)",
+            "MCP support, node-level caching",
+            "Production-grade complexity handling"
+          ],
+          "limitations": [
+            "Developer-only — steep learning curve",
+            "No visual management UI for non-devs",
+            "Requires LangSmith for observability (extra cost)",
+            "Competing against free MS/Google alternatives"
+          ],
+          "threat_level": "LOW — developer tool, not competing for same buyer"
+        },
+        "MetaGPT": {
+          "pricing": {
+            "free": "$0 — 750K credits/day, 5 messages/chat",
+            "pro": "~$20/month"
+          },
+          "features": [
+            "Full software company simulation (PM, architect, engineer)",
+            "Natural language to full project output",
+            "MGX no-code builder (Feb 2025)"
+          ],
+          "limitations": [
+            "Software dev focused — not general-purpose",
+            "Limited integrations",
+            "No dashboard, no desktop app, no persistent personalities"
+          ],
+          "threat_level": "LOW — different use case (dev tool vs operations platform)"
+        }
+      },
+      "competitive_gap_summary": "No competitor offers visual office-floor UI + persistent agent personalities + Mac-native + Stripe billing. OpenClaw is biggest threat by adoption but has security/governance issues. CrewAI is closest on features but web-only and execution-capped. Our flat-tier pricing avoids credit anxiety that plagues Lindy, Manus, and Relevance.",
+      "pricing_position": "Solo $49 sits between Manus Plus ($39) and Lindy Pro ($50). Team $149 is below Relevance Team ($199). Enterprise $499 undercuts CrewAI Standard ($500) and n8n Business ($800). All tiers competitively positioned."
+    },
+    "2_tam_market_data": {
+      "market_size_2025": "$7.63B - $8.0B",
+      "market_size_2030": "$47.1B - $52.62B",
+      "market_size_2033": "$182.97B (Grand View Research)",
+      "cagr_range": "43.3% - 49.6%",
+      "projections_by_source": [
+        {"source": "MarketsandMarkets", "2025": "$7.84B", "2030": "$52.62B", "cagr": "46.3%"},
+        {"source": "Grand View Research", "2025": "$7.63B", "2033": "$182.97B", "cagr": "49.6%"},
+        {"source": "BCC Research", "2025": "$8.0B", "2030": "$48.3B", "cagr": "43.3%"},
+        {"source": "Market.us (Agentic AI)", "cagr": "43.8%"}
+      ],
+      "growth_drivers": [
+        "Foundation model improvements driving capability",
+        "Enterprise demand for intelligent copilots",
+        "Autonomous task execution maturity",
+        "Vertical AI agents fastest-growing segment (62.7% CAGR)"
+      ],
+      "regional": "North America dominates at 39.63% revenue share (2025)",
+      "our_opportunity": "Mac-native AI agent platforms with visual UI = underserved niche. Even 0.01% of $50B TAM = $5M ARR opportunity."
+    },
+    "3_investor_brief_data": {
+      "seed_benchmarks": {
+        "median_pre_money_valuation_ai": "$16M-$17.9M",
+        "median_seed_round_size_ai": "$4.6M (1.3x premium over non-AI)",
+        "median_seed_round_size_general": "$2.5M-$3.5M",
+        "ai_valuation_premium": "42% over non-AI startups",
+        "revenue_multiples_seed": "10x-25x",
+        "revenue_multiples_series_a": "15x-30x",
+        "series_a_median_valuation": "$30M-$35M",
+        "series_a_avg_funding_ai": "$51.9M (30% above non-AI)",
+        "ai_share_global_vc": "53% of all VC (H1 2025)"
+      },
+      "pitch_talking_points": [
+        "AI startups command 42% valuation premium — we qualify",
+        "Seed rounds for AI average $4.6M — target $3-5M raise",
+        "At 10-25x revenue multiple, $1M ARR = $10-25M valuation",
+        "53% of all VC goes to AI — investor appetite is peak",
+        "Seed deal count down 29% YoY but valuations up 19% — quality wins",
+        "No competitor has our visual + native + billing combination"
+      ],
+      "recommended_raise": "$3-5M seed at $15-20M pre-money valuation"
+    },
+    "4_video_production": {
+      "screen_recording_mac": {
+        "top_pick": {
+          "name": "Screen Studio",
+          "why": "Purpose-built for product demos, 4K 60fps, auto-zoom, beautiful motion — SaaS demo gold standard",
+          "price": "~$89 one-time"
+        },
+        "runner_up": {
+          "name": "CleanShot X",
+          "why": "Top-rated 2026, screen+audio, annotations, cloud sharing",
+          "price": "~$29 one-time or Setapp"
+        },
+        "free_options": [
+          {"name": "macOS Screenshot (Shift+Cmd+5)", "note": "Built-in, basic but works"},
+          {"name": "OBS Studio", "note": "Free, open-source, pro-grade, no watermark"}
+        ],
+        "for_editing": [
+          {"name": "ScreenFlow", "note": "Record + full editor, crop/pan/zoom, annotations"},
+          {"name": "Capto", "note": "Capture + professional editing combined"}
+        ]
+      },
+      "short_form_video_specs": {
+        "tiktok": {
+          "resolution": "1080x1920px",
+          "aspect_ratio": "9:16",
+          "format": "MP4 (Android) / MOV (iOS)",
+          "max_size": "72MB (Android), 287.6MB (iOS), 500MB (web)",
+          "max_length": "10 min in-app, 60 min upload"
+        },
+        "instagram_reels": {
+          "resolution": "1080x1920px",
+          "aspect_ratio": "9:16",
+          "max_size": "4GB",
+          "max_length": "90 seconds"
+        }
+      },
+      "demo_video_plan": "Record at 1080x1920 (9:16) in MP4 using Screen Studio. Create 60-90s highlight clips for Reels/TikTok. Full demo can be longer for website/YouTube."
+    },
+    "5_external_hosting": {
+      "github_pages": {
+        "steps": [
+          "1. Create GitHub repo (e.g., yourusername.github.io)",
+          "2. Push static site files (HTML, CSS, JS)",
+          "3. Settings > Pages > Source: select branch (main) and folder",
+          "4. Save — auto-deploys",
+          "5. Live at https://yourusername.github.io",
+          "6. Optional: add custom domain via Settings > Pages > Custom domain + DNS CNAME"
+        ],
+        "pricing": "Free",
+        "limits": "1GB repo, 100GB bandwidth/month, 10 builds/hour"
+      },
+      "netlify": {
+        "steps": [
+          "1. Sign up at netlify.com (GitHub OAuth)",
+          "2. Add new site > Import existing project",
+          "3. Connect GitHub, select repo",
+          "4. Set build command (npm run build) and publish dir (dist/build)",
+          "5. Deploy site — live in ~30 seconds",
+          "6. Optional: custom domain + auto SSL"
+        ],
+        "pricing": "Free: 100GB bandwidth, 300 build min/month. Pro: $19/mo",
+        "features": "Continuous deploy, instant rollbacks, PR previews, serverless functions"
+      },
+      "vercel": {
+        "steps": [
+          "1. Sign up at vercel.com (GitHub OAuth)",
+          "2. Add New Project > Import Git Repository",
+          "3. Select repo — auto-detects framework",
+          "4. Click Deploy — live in 10-30 seconds",
+          "5. URL: project-name.vercel.app",
+          "6. Optional: custom domain in Project Settings > Domains"
+        ],
+        "pricing": "Free (Hobby): 100GB bandwidth. Pro: $20/user/month",
+        "features": "Auto CI/CD, PR preview deploys, global CDN, edge functions"
+      },
+      "recommendation": "Vercel for Next.js/React (best DX). Netlify for static + forms. GitHub Pages for simple landing pages."
+    }
+  },
+  "sources": [
+    "https://www.marketsandmarkets.com/Market-Reports/ai-agents-market-15761548.html",
+    "https://www.grandviewresearch.com/industry-analysis/ai-agents-market-report",
+    "https://www.marketsandmarkets.com/PressReleases/ai-agents.asp",
+    "https://crewai.com/pricing",
+    "https://www.zenml.io/blog/langgraph-pricing",
+    "https://aiagentslist.com/agents/autogpt",
+    "https://www.futurepedia.io/tool/metagpt",
+    "https://en.wikipedia.org/wiki/OpenClaw",
+    "https://www.kdnuggets.com/openclaw-explained-the-free-ai-agent-tool-going-viral-already-in-2026",
+    "https://qubit.capital/blog/ai-startup-valuation-multiples",
+    "https://qubit.capital/blog/ai-startup-fundraising-trends",
+    "https://www.flowjam.com/blog/seed-round-valuation-2025-complete-founders-guide",
+    "https://news.crunchbase.com/ai/big-funding-trends-charts-eoy-2025/",
+    "https://www.pitchwise.se/blog/median-seed-round-size-by-industry-in-2026-data",
+    "https://setapp.com/app-reviews/best-screen-recorders-for-mac",
+    "https://screen.studio/",
+    "https://riverside.com/blog/tiktok-video-size",
+    "https://www.sendible.com/insights/social-media-video-specs",
+    "https://www.netlify.com/blog/2016/09/29/a-step-by-step-guide-deploying-on-netlify/",
+    "https://vercel.com/docs/git/vercel-for-github",
+    "https://www.jobaajlearnings.com/blog/how-to-host-your-website-for-free-github-pages-netlify-vercel"
+  ]
+}

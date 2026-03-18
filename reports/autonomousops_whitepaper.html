@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecondMind Ops — Autonomous AI Agent Fleet Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #050810;
+  --panel: #080d1a;
+  --cyan: #00c8ff;
+  --green: #00ff88;
+  --purple: #a855f7;
+  --yellow: #ffd700;
+  --red: #ff3355;
+  --text: #e0e6f0;
+  --text-dim: #8892a8;
+  --border: rgba(0,200,255,0.12);
+  --glass: rgba(8,13,26,0.7);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 3px; }
+
+/* ── Global Typography ── */
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: 1rem; }
+h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+p { margin-bottom: 1rem; color: var(--text-dim); }
+code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ── Layout ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 5rem 0; position: relative; }
+section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ── Glass Panel ── */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+/* ── Glow Utility ── */
+.glow-cyan { text-shadow: 0 0 30px rgba(0,200,255,0.3); }
+.glow-green { text-shadow: 0 0 30px rgba(0,255,136,0.3); }
+
+/* ── Accent text ── */
+.cyan { color: var(--cyan); }
+.green { color: var(--green); }
+.purple { color: var(--purple); }
+.yellow { color: var(--yellow); }
+.red { color: var(--red); }
+
+/* ── Badges ── */
+.badge {
+  display: inline-block;
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-cyan { background: rgba(0,200,255,0.15); color: var(--cyan); border: 1px solid rgba(0,200,255,0.3); }
+.badge-green { background: rgba(0,255,136,0.15); color: var(--green); border: 1px solid rgba(0,255,136,0.3); }
+.badge-purple { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+.badge-yellow { background: rgba(255,215,0,0.15); color: var(--yellow); border: 1px solid rgba(255,215,0,0.3); }
+
+/* ═══════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 2rem;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(0,200,255,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(168,85,247,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(0,255,136,0.05) 0%, transparent 60%);
+  z-index: 0;
+}
+.hero-content { position: relative; z-index: 1; max-width: 800px; }
+.hero-label {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--cyan);
+  border: 1px solid rgba(0,200,255,0.3);
+  padding: 0.4em 1.2em;
+  border-radius: 999px;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: pulse-border 3s ease-in-out infinite;
+}
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(0,200,255,0.3); box-shadow: 0 0 10px rgba(0,200,255,0); }
+  50% { border-color: rgba(0,200,255,0.6); box-shadow: 0 0 20px rgba(0,200,255,0.15); }
+}
+.hero h1 { margin-bottom: 1.5rem; }
+.hero h1 span { color: var(--cyan); }
+.hero p { font-size: 1.15rem; color: var(--text-dim); max-width: 600px; margin: 0 auto 2.5rem; }
+.hero-cta {
+  display: inline-block;
+  padding: 0.9em 2.5em;
+  background: linear-gradient(135deg, var(--cyan), #0090cc);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 30px rgba(0,200,255,0.25);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,200,255,0.35); }
+
+/* ── Grid for floating particles in hero ── */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  background: var(--cyan);
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: float-up linear infinite;
+}
+@keyframes float-up {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════
+   TABLE OF CONTENTS
+   ═══════════════════════════════════════ */
+.toc { padding: 3rem 0; }
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(0,200,255,0.03);
+  border: 1px solid rgba(0,200,255,0.08);
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.25s;
+}
+.toc-item:hover {
+  background: rgba(0,200,255,0.07);
+  border-color: rgba(0,200,255,0.2);
+  transform: translateX(4px);
+}
+.toc-num {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan);
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-width: 28px;
+}
+.toc-label { font-size: 0.95rem; font-weight: 500; }
+
+/* ═══════════════════════════════════════
+   SECTION HEADERS
+   ═══════════════════════════════════════ */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--cyan);
+  background: rgba(0,200,255,0.1);
+  border: 1px solid rgba(0,200,255,0.2);
+  padding: 0.3em 0.8em;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   CARDS / GRID
+   ═══════════════════════════════════════ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.card:hover {
+  border-color: rgba(0,200,255,0.3);
+  transform: translateY(-4px);
+}
+.card-icon {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+/* ═══════════════════════════════════════
+   STATS ROW
+   ═══════════════════════════════════════ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.stat-card {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ═══════════════════════════════════════
+   MOCKUP: Office Floor
+   ═══════════════════════════════════════ */
+.office-floor {
+  position: relative;
+  background: linear-gradient(180deg, rgba(0,200,255,0.03) 0%, var(--panel) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  min-height: 400px;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+.office-floor .floor-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(600px) rotateX(30deg);
+  transform-origin: center bottom;
+}
+.desk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+.desk {
+  background: rgba(0,200,255,0.05);
+  border: 1px solid rgba(0,200,255,0.15);
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+.desk:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,200,255,0.1); }
+.desk-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  margin: 0 auto 0.6rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  position: relative;
+}
+.desk-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--panel);
+}
+.desk.active .desk-avatar::after { background: var(--green); }
+.desk.busy .desk-avatar::after { background: var(--yellow); }
+.desk.idle .desk-avatar::after { background: var(--text-dim); }
+.desk-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.desk-task {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+/* delegation beam */
+.beam {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+  top: 50%;
+  z-index: 0;
+  animation: beam-pulse 2s ease-in-out infinite;
+  opacity: 0.5;
+}
+@keyframes beam-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+
+/* ═══════════════════════════════════════
+   MOCKUP: Dashboard
+   ═══════════════════════════════════════ */
+.dashboard-mock {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 2rem 0;
+  background: var(--panel);
+}
+.dash-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,200,255,0.03);
+}
+.dash-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.dash-logo {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border-radius: 8px;
+}
+.dash-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.dash-tabs {
+  display: flex;
+  gap: 0;
+}
+.dash-tab {
+  padding: 0.5em 1.2em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  border-bottom: 2px solid transparent;
+  cursor: default;
+  transition: all 0.2s;
+}
+.dash-tab.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+.dash-body { padding: 1.5rem; }
+.dash-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.dash-metric {
+  padding: 1rem;
+  background: rgba(0,200,255,0.04);
+  border: 1px solid rgba(0,200,255,0.1);
+  border-radius: 12px;
+}
+.dash-metric-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 0.4rem;
+}
+.dash-metric-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+.dash-metric-sub {
+  font-size: 0.7rem;
+  margin-top: 0.3rem;
+}
+/* mini chart bars */
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 40px;
+  margin-top: 0.8rem;
+}
+.mini-bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  min-width: 6px;
+  animation: bar-grow 1s ease-out forwards;
+  transform-origin: bottom;
+}
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+/* ═══════════════════════════════════════
+   MOCKUP: Agent Cards
+   ═══════════════════════════════════════ */
+.agent-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+  margin: 2rem 0;
+}
+.agent-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.agent-card:hover { border-color: rgba(0,200,255,0.3); }
+.agent-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.agent-card.status-active::before { background: var(--green); }
+.agent-card.status-busy::before { background: var(--yellow); }
+.agent-card.status-idle::before { background: var(--text-dim); }
+.agent-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.agent-avatar-lg {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.agent-name { font-weight: 700; font-size: 0.95rem; }
+.agent-role { font-size: 0.75rem; color: var(--text-dim); }
+.agent-task-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(0,200,255,0.04);
+  border-radius: 8px;
+  font-size: 0.78rem;
+}
+.agent-task-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.agent-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+.agent-progress-bar {
+  height: 100%;
+  border-radius: 2px;
+  animation: progress-fill 2s ease-out forwards;
+}
+@keyframes progress-fill {
+  from { width: 0; }
+}
+
+/* ═══════════════════════════════════════
+   COMPARISON TABLE
+   ═══════════════════════════════════════ */
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+}
+.comparison-table th, .comparison-table td {
+  padding: 1rem 1.2rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.comparison-table th {
+  background: rgba(0,200,255,0.06);
+  color: var(--cyan);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: sticky;
+  top: 0;
+}
+.comparison-table th:first-child { border-radius: 12px 0 0 0; }
+.comparison-table th:last-child { border-radius: 0 12px 0 0; }
+.comparison-table td { color: var(--text-dim); }
+.comparison-table tr:hover td { background: rgba(0,200,255,0.03); }
+.comparison-table .highlight-col {
+  background: rgba(0,200,255,0.04);
+  color: var(--text);
+  font-weight: 500;
+}
+.check { color: var(--green); font-weight: 700; }
+.cross { color: var(--red); font-weight: 700; }
+.partial { color: var(--yellow); }
+
+/* ═══════════════════════════════════════
+   PRICING
+   ═══════════════════════════════════════ */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.pricing-card {
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card.featured {
+  border-color: var(--cyan);
+  box-shadow: 0 0 40px rgba(0,200,255,0.1);
+}
+.pricing-card.featured::before {
+  content: 'MOST POPULAR';
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--cyan), #0090cc);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.3em 1.2em;
+  border-radius: 999px;
+  letter-spacing: 0.1em;
+}
+.pricing-tier {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.pricing-price {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.pricing-period {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+}
+.pricing-features {
+  list-style: none;
+  flex: 1;
+}
+.pricing-features li {
+  padding: 0.5rem 0;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.pricing-features li::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.pricing-cta {
+  display: block;
+  text-align: center;
+  padding: 0.9em;
+  margin-top: 2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.pricing-cta-outline {
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  background: transparent;
+}
+.pricing-cta-outline:hover { background: rgba(0,200,255,0.1); }
+.pricing-cta-solid {
+  background: linear-gradient(135deg, var(--cyan), #0090cc);
+  color: #fff;
+  border: none;
+}
+.pricing-cta-solid:hover { box-shadow: 0 4px 25px rgba(0,200,255,0.3); transform: translateY(-2px); }
+
+/* ═══════════════════════════════════════
+   ARCHITECTURE DIAGRAM
+   ═══════════════════════════════════════ */
+.arch-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 2rem 0;
+}
+.arch-node {
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  position: relative;
+}
+.arch-connector {
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(180deg, var(--cyan), rgba(0,200,255,0.2));
+  position: relative;
+}
+.arch-connector::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: -3px;
+  width: 8px; height: 8px;
+  background: var(--cyan);
+  border-radius: 50%;
+}
+.arch-fan {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════
+   INVESTOR
+   ═══════════════════════════════════════ */
+.investor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+  text-align: center;
+}
+footer p { font-size: 0.85rem; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .desk-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-metrics { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .comparison-table { font-size: 0.78rem; }
+  .comparison-table th, .comparison-table td { padding: 0.7rem; }
+}
+
+/* ── Subtle animations ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fade-in-up 0.6s ease-out both;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-particles">
+    <div class="particle" style="left:10%;animation-duration:8s;animation-delay:0s"></div>
+    <div class="particle" style="left:25%;animation-duration:12s;animation-delay:1s"></div>
+    <div class="particle" style="left:40%;animation-duration:9s;animation-delay:2s"></div>
+    <div class="particle" style="left:55%;animation-duration:11s;animation-delay:0.5s"></div>
+    <div class="particle" style="left:70%;animation-duration:10s;animation-delay:3s"></div>
+    <div class="particle" style="left:85%;animation-duration:7s;animation-delay:1.5s"></div>
+    <div class="particle" style="left:15%;animation-duration:13s;animation-delay:4s;background:var(--purple)"></div>
+    <div class="particle" style="left:60%;animation-duration:9s;animation-delay:2.5s;background:var(--green)"></div>
+    <div class="particle" style="left:90%;animation-duration:11s;animation-delay:0.8s"></div>
+    <div class="particle" style="left:35%;animation-duration:14s;animation-delay:3.5s;background:var(--purple)"></div>
+  </div>
+  <div class="hero-content animate-in">
+    <div class="hero-label">White Paper &mdash; 2026</div>
+    <h1 class="glow-cyan">Your Business<br>Runs Itself with<br><span>SecondMind Ops</span></h1>
+    <p>Deploy an autonomous AI agent fleet that works 24/7. No hiring. No managing. No waiting. Just results delivered to your dashboard while you focus on strategy.</p>
+    <a href="#executive-summary" class="hero-cta">Read the White Paper</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TABLE OF CONTENTS
+     ═══════════════════════════════════════ -->
+<section class="toc" style="padding-top:2rem">
+  <div class="container">
+    <h2 style="text-align:center;margin-bottom:2rem">Table of Contents</h2>
+    <div class="toc-grid">
+      <a class="toc-item" href="#executive-summary">
+        <span class="toc-num">01</span><span class="toc-label">Executive Summary</span>
+      </a>
+      <a class="toc-item" href="#the-problem">
+        <span class="toc-num">02</span><span class="toc-label">The Problem</span>
+      </a>
+      <a class="toc-item" href="#the-solution">
+        <span class="toc-num">03</span><span class="toc-label">The Solution</span>
+      </a>
+      <a class="toc-item" href="#platform-overview">
+        <span class="toc-num">04</span><span class="toc-label">Platform Overview &amp; UI</span>
+      </a>
+      <a class="toc-item" href="#architecture">
+        <span class="toc-num">05</span><span class="toc-label">Architecture</span>
+      </a>
+      <a class="toc-item" href="#competitive-positioning">
+        <span class="toc-num">06</span><span class="toc-label">Competitive Positioning</span>
+      </a>
+      <a class="toc-item" href="#market-opportunity">
+        <span class="toc-num">07</span><span class="toc-label">Market Opportunity</span>
+      </a>
+      <a class="toc-item" href="#revenue-model">
+        <span class="toc-num">08</span><span class="toc-label">Revenue Model</span>
+      </a>
+      <a class="toc-item" href="#investors">
+        <span class="toc-num">09</span><span class="toc-label">Investor Section</span>
+      </a>
+      <a class="toc-item" href="#team">
+        <span class="toc-num">10</span><span class="toc-label">Team</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     1. EXECUTIVE SUMMARY
+     ═══════════════════════════════════════ -->
+<section id="executive-summary">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Executive Summary</h2>
+    </div>
+    <div class="glass" style="border-left:3px solid var(--cyan)">
+      <p style="font-size:1.1rem;color:var(--text);margin-bottom:1rem">
+        The future of business operations is autonomous.
+      </p>
+      <p>
+        SecondMind Ops is a command centre that deploys, coordinates, and monitors an AI agent fleet that handles your business operations around the clock. From content creation and social media management to market research, customer outreach, and data analysis &mdash; our agents deliver real, measurable outputs while you focus on high-value strategy.
+      </p>
+      <p>
+        We are not another AI chatbot or workflow automation tool. SecondMind Ops is a fully autonomous workforce &mdash; agents that think, delegate, collaborate, and execute. The platform provides a real-time animated office floor where you can watch your agents work, a comprehensive dashboard for monitoring performance, and a delegation system where a CEO agent coordinates specialist agents for maximum efficiency.
+      </p>
+      <p style="margin-bottom:0">
+        <strong style="color:var(--text)">The result:</strong> <span class="cyan">10x faster execution</span>, <span class="green">90% lower cost</span> than traditional staffing, and <span class="purple">24/7 uptime</span> with zero management overhead.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     2. THE PROBLEM
+     ═══════════════════════════════════════ -->
+<section id="the-problem">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>The Problem</h2>
+    </div>
+    <p style="max-width:700px;font-size:1.05rem;color:var(--text);margin-bottom:2rem">
+      Modern businesses are drowning in operational overhead. Growth stalls not because of bad strategy, but because execution cannot keep up.
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,51,85,0.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Hiring Is Slow &amp; Expensive</h3>
+        <p>Finding, vetting, and onboarding VAs or freelancers takes weeks. Average cost for a competent VA is $2,000&ndash;$4,000/month, and turnover means starting over constantly.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,215,0,0.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Tools Require Technical Expertise</h3>
+        <p>Zapier, Make, and n8n can automate simple workflows, but building anything meaningful requires developer-level thinking. Most business owners give up halfway through setup.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(168,85,247,0.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+        </div>
+        <h3>AI Tools Lack Autonomy</h3>
+        <p>ChatGPT and similar tools are reactive &mdash; they answer when asked. They do not proactively execute, coordinate across tasks, or deliver completed work to your inbox unprompted.</p>
+      </div>
+    </div>
+    <div class="glass" style="margin-top:2rem;text-align:center">
+      <p style="font-size:1.05rem;color:var(--text);margin:0">
+        Businesses need <strong class="cyan">autonomous execution</strong>, not another tool to learn.<br>
+        They need agents that <strong class="green">work</strong>, not assistants that <strong>wait</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     3. THE SOLUTION
+     ═══════════════════════════════════════ -->
+<section id="the-solution">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>The Solution</h2>
+    </div>
+    <p style="max-width:700px;font-size:1.05rem;color:var(--text);margin-bottom:2rem">
+      SecondMind Ops deploys an autonomous AI agent fleet that operates your business around the clock.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat-card glass">
+        <div class="stat-value cyan">24/7</div>
+        <div class="stat-label">Always On</div>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-value green">10x</div>
+        <div class="stat-label">Faster Execution</div>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-value purple">90%</div>
+        <div class="stat-label">Cost Reduction</div>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-value yellow">0</div>
+        <div class="stat-label">Management Needed</div>
+      </div>
+    </div>
+
+    <div class="card-grid" style="margin-top:2rem">
+      <div class="card">
+        <h3><span class="cyan">Autonomous Agent Fleet</span></h3>
+        <p>Each agent is a specialist &mdash; content writers, researchers, social media managers, data analysts, outreach coordinators. They work independently and collaborate seamlessly.</p>
+      </div>
+      <div class="card">
+        <h3><span class="green">CEO Agent Delegation</span></h3>
+        <p>A CEO agent receives your high-level objectives and decomposes them into tasks, delegating to the right specialist agents with context, priorities, and deadlines.</p>
+      </div>
+      <div class="card">
+        <h3><span class="purple">Real Outputs, Not Suggestions</span></h3>
+        <p>Agents deliver completed work: published posts, drafted emails, compiled reports, analyzed datasets. Tangible results land in your dashboard and inbox.</p>
+      </div>
+      <div class="card">
+        <h3><span class="yellow">Real-Time Command Centre</span></h3>
+        <p>Watch your agents work on an animated office floor. Monitor progress, review outputs, and adjust priorities through an intuitive, futuristic dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     4. PLATFORM OVERVIEW
+     ═══════════════════════════════════════ -->
+<section id="platform-overview">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Platform Overview &amp; UI</h2>
+    </div>
+
+    <!-- 4a. Office Floor Mockup -->
+    <h3 style="margin-top:2rem;margin-bottom:0.5rem">
+      <span class="badge badge-cyan">Live View</span> &nbsp;The Office Floor
+    </h3>
+    <p>An animated isometric workspace where each agent sits at a virtual desk. Status indicators, task labels, and delegation beams show real-time coordination at a glance.</p>
+
+    <div class="office-floor">
+      <div class="floor-grid"></div>
+      <div class="desk-grid">
+        <div class="desk active">
+          <div class="desk-avatar" style="background:rgba(0,200,255,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>
+          </div>
+          <div class="desk-name">CEO Agent</div>
+          <div class="desk-task">Delegating tasks</div>
+        </div>
+        <div class="desk active">
+          <div class="desk-avatar" style="background:rgba(0,255,136,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="desk-name">Content Writer</div>
+          <div class="desk-task">Blog post draft</div>
+        </div>
+        <div class="desk busy">
+          <div class="desk-avatar" style="background:rgba(168,85,247,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="desk-name">Researcher</div>
+          <div class="desk-task">Market analysis</div>
+        </div>
+        <div class="desk active">
+          <div class="desk-avatar" style="background:rgba(255,215,0,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          </div>
+          <div class="desk-name">Social Media</div>
+          <div class="desk-task">Scheduling posts</div>
+        </div>
+        <div class="desk active">
+          <div class="desk-avatar" style="background:rgba(0,200,255,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 17 9 11 13 11 13 17"/><rect x="15" y="7" width="0" height="10"/><polyline points="15 17 15 7 19 7"/></svg>
+          </div>
+          <div class="desk-name">Data Analyst</div>
+          <div class="desk-task">Revenue report</div>
+        </div>
+        <div class="desk idle">
+          <div class="desk-avatar" style="background:rgba(136,146,168,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="desk-name">Designer</div>
+          <div class="desk-task">Standby</div>
+        </div>
+        <div class="desk busy">
+          <div class="desk-avatar" style="background:rgba(255,51,85,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="desk-name">Outreach Agent</div>
+          <div class="desk-task">Email campaign</div>
+        </div>
+        <div class="desk active">
+          <div class="desk-avatar" style="background:rgba(0,255,136,0.15)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="desk-name">Monitor Agent</div>
+          <div class="desk-task">Health checks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4b. Dashboard Mockup -->
+    <h3 style="margin-top:3rem;margin-bottom:0.5rem">
+      <span class="badge badge-green">Dashboard</span> &nbsp;Real-Time Metrics
+    </h3>
+    <p>Monitor every aspect of your agent fleet from a single, information-dense dashboard with live-updating metrics and system health indicators.</p>
+
+    <div class="dashboard-mock">
+      <div class="dash-topbar">
+        <div class="dash-topbar-left">
+          <div class="dash-logo"></div>
+          <span class="dash-title">SecondMind Ops</span>
+          <span class="badge badge-green" style="font-size:0.6rem">LIVE</span>
+        </div>
+        <div class="dash-tabs">
+          <div class="dash-tab active">Overview</div>
+          <div class="dash-tab">Agents</div>
+          <div class="dash-tab">Tasks</div>
+          <div class="dash-tab">Outputs</div>
+          <div class="dash-tab">Settings</div>
+        </div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-metrics">
+          <div class="dash-metric">
+            <div class="dash-metric-label">Active Agents</div>
+            <div class="dash-metric-value cyan">8 <span style="font-size:0.7rem;color:var(--green)">/ 10</span></div>
+            <div class="dash-metric-sub green">6 active &middot; 1 busy &middot; 1 idle</div>
+            <div class="mini-chart">
+              <div class="mini-bar" style="height:60%;background:var(--cyan)"></div>
+              <div class="mini-bar" style="height:80%;background:var(--cyan)"></div>
+              <div class="mini-bar" style="height:45%;background:var(--cyan)"></div>
+              <div class="mini-bar" style="height:90%;background:var(--cyan)"></div>
+              <div class="mini-bar" style="height:70%;background:var(--cyan)"></div>
+              <div class="mini-bar" style="height:85%;background:var(--cyan)"></div>
+              <div class="mini-bar" style="height:95%;background:var(--cyan)"></div>
+            </div>
+          </div>
+          <div class="dash-metric">
+            <div class="dash-metric-label">Tasks Completed</div>
+            <div class="dash-metric-value green">247</div>
+            <div class="dash-metric-sub" style="color:var(--green)">+34 today</div>
+            <div class="mini-chart">
+              <div class="mini-bar" style="height:40%;background:var(--green)"></div>
+              <div class="mini-bar" style="height:55%;background:var(--green)"></div>
+              <div class="mini-bar" style="height:70%;background:var(--green)"></div>
+              <div class="mini-bar" style="height:65%;background:var(--green)"></div>
+              <div class="mini-bar" style="height:80%;background:var(--green)"></div>
+              <div class="mini-bar" style="height:75%;background:var(--green)"></div>
+              <div class="mini-bar" style="height:95%;background:var(--green)"></div>
+            </div>
+          </div>
+          <div class="dash-metric">
+            <div class="dash-metric-label">System Uptime</div>
+            <div class="dash-metric-value purple">99.9%</div>
+            <div class="dash-metric-sub" style="color:var(--purple)">30-day rolling</div>
+            <div class="mini-chart">
+              <div class="mini-bar" style="height:98%;background:var(--purple)"></div>
+              <div class="mini-bar" style="height:100%;background:var(--purple)"></div>
+              <div class="mini-bar" style="height:99%;background:var(--purple)"></div>
+              <div class="mini-bar" style="height:100%;background:var(--purple)"></div>
+              <div class="mini-bar" style="height:97%;background:var(--purple)"></div>
+              <div class="mini-bar" style="height:100%;background:var(--purple)"></div>
+              <div class="mini-bar" style="height:100%;background:var(--purple)"></div>
+            </div>
+          </div>
+          <div class="dash-metric">
+            <div class="dash-metric-label">Cost Savings</div>
+            <div class="dash-metric-value yellow">$18.4K</div>
+            <div class="dash-metric-sub" style="color:var(--yellow)">vs. traditional staffing</div>
+            <div class="mini-chart">
+              <div class="mini-bar" style="height:30%;background:var(--yellow)"></div>
+              <div class="mini-bar" style="height:45%;background:var(--yellow)"></div>
+              <div class="mini-bar" style="height:55%;background:var(--yellow)"></div>
+              <div class="mini-bar" style="height:60%;background:var(--yellow)"></div>
+              <div class="mini-bar" style="height:70%;background:var(--yellow)"></div>
+              <div class="mini-bar" style="height:85%;background:var(--yellow)"></div>
+              <div class="mini-bar" style="height:95%;background:var(--yellow)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4c. Agent Cards Mockup -->
+    <h3 style="margin-top:3rem;margin-bottom:0.5rem">
+      <span class="badge badge-purple">Agents</span> &nbsp;Agent Cards
+    </h3>
+    <p>Each agent has a live card showing its status, current task, progress, and delegation chain. Status indicators update in real time: <span class="green">active</span>, <span class="yellow">busy</span>, or <span style="color:var(--text-dim)">idle</span>.</p>
+
+    <div class="agent-cards">
+      <div class="agent-card status-active">
+        <div class="agent-card-header">
+          <div class="agent-avatar-lg" style="background:rgba(0,200,255,0.12)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>
+          </div>
+          <div>
+            <div class="agent-name">CEO Agent</div>
+            <div class="agent-role">Fleet Coordinator</div>
+          </div>
+          <span class="badge badge-green" style="margin-left:auto">Active</span>
+        </div>
+        <div class="agent-task-row">
+          <span class="agent-task-label">Current Task</span>
+          <span style="color:var(--text)">Delegating Q1 content strategy across 4 agents</span>
+        </div>
+        <div class="agent-progress">
+          <div class="agent-progress-bar" style="width:72%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div>
+        </div>
+      </div>
+
+      <div class="agent-card status-active">
+        <div class="agent-card-header">
+          <div class="agent-avatar-lg" style="background:rgba(0,255,136,0.12)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/></svg>
+          </div>
+          <div>
+            <div class="agent-name">Content Writer</div>
+            <div class="agent-role">Copy &amp; Blog Specialist</div>
+          </div>
+          <span class="badge badge-green" style="margin-left:auto">Active</span>
+        </div>
+        <div class="agent-task-row">
+          <span class="agent-task-label">Current Task</span>
+          <span style="color:var(--text)">Drafting &ldquo;AI Ops for SMBs&rdquo; blog post (2,400 words)</span>
+        </div>
+        <div class="agent-progress">
+          <div class="agent-progress-bar" style="width:58%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div>
+        </div>
+      </div>
+
+      <div class="agent-card status-busy">
+        <div class="agent-card-header">
+          <div class="agent-avatar-lg" style="background:rgba(255,215,0,0.12)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <div class="agent-name">Research Agent</div>
+            <div class="agent-role">Market Intelligence</div>
+          </div>
+          <span class="badge badge-yellow" style="margin-left:auto">Busy</span>
+        </div>
+        <div class="agent-task-row">
+          <span class="agent-task-label">Current Task</span>
+          <span style="color:var(--text)">Compiling competitor pricing analysis report</span>
+        </div>
+        <div class="agent-progress">
+          <div class="agent-progress-bar" style="width:35%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4d. Tab System -->
+    <h3 style="margin-top:3rem;margin-bottom:0.5rem">
+      <span class="badge badge-yellow">Navigation</span> &nbsp;Tab System
+    </h3>
+    <p>The platform features a multi-tab interface for switching between views: <strong style="color:var(--text)">Overview</strong> for the office floor, <strong style="color:var(--text)">Agents</strong> for individual agent management, <strong style="color:var(--text)">Tasks</strong> for the delegation queue, <strong style="color:var(--text)">Outputs</strong> for completed deliverables, and <strong style="color:var(--text)">Settings</strong> for fleet configuration. Each tab provides a focused lens into a different layer of your autonomous operation.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     5. ARCHITECTURE
+     ═══════════════════════════════════════ -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Architecture</h2>
+    </div>
+    <p style="max-width:700px;margin-bottom:2rem">
+      SecondMind Ops uses an event-driven, hierarchical agent coordination model. Here is how it works at a high level:
+    </p>
+
+    <div class="arch-diagram">
+      <div class="arch-node glass" style="border-color:var(--cyan);min-width:250px">
+        <span class="cyan" style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;display:block;margin-bottom:0.3rem">INPUT LAYER</span>
+        <strong>User Objectives &amp; Priorities</strong>
+      </div>
+      <div class="arch-connector"></div>
+      <div class="arch-node glass" style="border-color:var(--green);min-width:250px">
+        <span class="green" style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;display:block;margin-bottom:0.3rem">COORDINATION</span>
+        <strong>CEO Agent &mdash; Task Decomposition &amp; Delegation</strong>
+      </div>
+      <div class="arch-connector"></div>
+      <div class="arch-fan" style="margin-top:8px">
+        <div class="arch-node glass" style="padding:0.8rem 1.2rem;font-size:0.82rem">
+          <span class="purple" style="font-size:0.65rem;font-family:'JetBrains Mono',monospace;display:block">SPECIALIST</span>
+          Content Writer
+        </div>
+        <div class="arch-node glass" style="padding:0.8rem 1.2rem;font-size:0.82rem">
+          <span class="purple" style="font-size:0.65rem;font-family:'JetBrains Mono',monospace;display:block">SPECIALIST</span>
+          Researcher
+        </div>
+        <div class="arch-node glass" style="padding:0.8rem 1.2rem;font-size:0.82rem">
+          <span class="purple" style="font-size:0.65rem;font-family:'JetBrains Mono',monospace;display:block">SPECIALIST</span>
+          Social Media
+        </div>
+        <div class="arch-node glass" style="padding:0.8rem 1.2rem;font-size:0.82rem">
+          <span class="purple" style="font-size:0.65rem;font-family:'JetBrains Mono',monospace;display:block">SPECIALIST</span>
+          Data Analyst
+        </div>
+        <div class="arch-node glass" style="padding:0.8rem 1.2rem;font-size:0.82rem">
+          <span class="purple" style="font-size:0.65rem;font-family:'JetBrains Mono',monospace;display:block">SPECIALIST</span>
+          Outreach
+        </div>
+      </div>
+      <div class="arch-connector" style="margin-top:8px"></div>
+      <div class="arch-node glass" style="border-color:var(--yellow);min-width:250px">
+        <span class="yellow" style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;display:block;margin-bottom:0.3rem">MONITORING</span>
+        <strong>Real-Time Dashboard &amp; Event Stream</strong>
+      </div>
+      <div class="arch-connector"></div>
+      <div class="arch-node glass" style="border-color:var(--green);min-width:250px">
+        <span class="green" style="font-size:0.75rem;font-family:'JetBrains Mono',monospace;display:block;margin-bottom:0.3rem">OUTPUT</span>
+        <strong>Completed Deliverables &amp; Reports</strong>
+      </div>
+    </div>
+
+    <div class="card-grid" style="margin-top:2rem">
+      <div class="card">
+        <h3 class="cyan">Hierarchical Delegation</h3>
+        <p>The CEO agent receives high-level objectives and intelligently breaks them into discrete tasks, assigning each to the most capable specialist agent with full context.</p>
+      </div>
+      <div class="card">
+        <h3 class="green">Event-Driven Coordination</h3>
+        <p>Agents communicate through an event stream. When one agent completes a task, dependent agents are automatically triggered &mdash; no polling, no delays, no bottlenecks.</p>
+      </div>
+      <div class="card">
+        <h3 class="purple">Self-Monitoring</h3>
+        <p>A dedicated monitor agent continuously checks system health, agent performance, and task completion rates, surfacing anomalies before they become problems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     6. COMPETITIVE POSITIONING
+     ═══════════════════════════════════════ -->
+<section id="competitive-positioning">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Competitive Positioning</h2>
+    </div>
+    <p style="max-width:700px;margin-bottom:2rem">
+      SecondMind Ops occupies a unique position in the market. Here is how we compare to the alternatives businesses use today:
+    </p>
+
+    <div style="overflow-x:auto;border-radius:16px;border:1px solid var(--border)">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>Hiring VAs</th>
+            <th>Zapier / Make</th>
+            <th>Building In-House</th>
+            <th class="highlight-col" style="color:var(--cyan)">SecondMind Ops</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--text);font-weight:500">Autonomous Execution</td>
+            <td><span class="partial">Partial</span></td>
+            <td><span class="cross">No</span></td>
+            <td><span class="partial">Partial</span></td>
+            <td class="highlight-col"><span class="check">Yes</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">24/7 Availability</td>
+            <td><span class="cross">No</span></td>
+            <td><span class="check">Yes</span></td>
+            <td><span class="check">Yes</span></td>
+            <td class="highlight-col"><span class="check">Yes</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">Multi-Agent Coordination</td>
+            <td><span class="cross">No</span></td>
+            <td><span class="cross">No</span></td>
+            <td><span class="partial">Complex</span></td>
+            <td class="highlight-col"><span class="check">Built-In</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">No Technical Setup</td>
+            <td><span class="check">Yes</span></td>
+            <td><span class="cross">No</span></td>
+            <td><span class="cross">No</span></td>
+            <td class="highlight-col"><span class="check">Yes</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">Cost per Month</td>
+            <td><span class="red">$2K&ndash;$10K+</span></td>
+            <td><span class="yellow">$50&ndash;$500</span></td>
+            <td><span class="red">$10K&ndash;$50K+</span></td>
+            <td class="highlight-col"><span class="check">$49&ndash;$499</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">Time to Value</td>
+            <td>2&ndash;4 weeks</td>
+            <td>Days&ndash;weeks</td>
+            <td>Months</td>
+            <td class="highlight-col"><span class="check" style="color:var(--green)">Minutes</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">Scales Instantly</td>
+            <td><span class="cross">No</span></td>
+            <td><span class="partial">Limited</span></td>
+            <td><span class="partial">Expensive</span></td>
+            <td class="highlight-col"><span class="check">Yes</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text);font-weight:500">Intelligent Delegation</td>
+            <td><span class="partial">Manual</span></td>
+            <td><span class="cross">No</span></td>
+            <td><span class="partial">Custom Build</span></td>
+            <td class="highlight-col"><span class="check">Autonomous</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     7. MARKET OPPORTUNITY
+     ═══════════════════════════════════════ -->
+<section id="market-opportunity">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Market Opportunity</h2>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card glass">
+        <div class="stat-value cyan">$185B</div>
+        <div class="stat-label">AI Automation Market by 2030</div>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-value green">38%</div>
+        <div class="stat-label">CAGR (2024&ndash;2030)</div>
+      </div>
+      <div class="stat-card glass">
+        <div class="stat-value purple">72%</div>
+        <div class="stat-label">SMBs Seeking AI Automation</div>
+      </div>
+    </div>
+
+    <div class="card-grid" style="margin-top:2rem">
+      <div class="card">
+        <h3><span class="cyan">SMBs &amp; Solopreneurs</span></h3>
+        <p>Small businesses and solo founders who need operational capacity but cannot afford full-time staff. They want to punch above their weight and operate like a team of 10 with a team of 1.</p>
+        <div class="badge badge-cyan" style="margin-top:0.5rem">30M+ addressable businesses in the US alone</div>
+      </div>
+      <div class="card">
+        <h3><span class="green">Agencies &amp; Consultancies</span></h3>
+        <p>Marketing agencies, consulting firms, and service businesses that manage multiple clients and need to scale delivery without scaling headcount. Agent fleets multiply their output per client.</p>
+        <div class="badge badge-green" style="margin-top:0.5rem">$500B+ global agency market</div>
+      </div>
+      <div class="card">
+        <h3><span class="purple">Mid-Market &amp; Enterprise</span></h3>
+        <p>Established companies looking to automate repetitive operational functions: reporting, data processing, content production, and internal communications. Reduce headcount costs at scale.</p>
+        <div class="badge badge-purple" style="margin-top:0.5rem">Fastest-growing AI adoption segment</div>
+      </div>
+    </div>
+
+    <div class="glass" style="margin-top:2rem;text-align:center">
+      <p style="color:var(--text);font-size:1.05rem;margin:0">
+        The market is moving from <strong>tool-based automation</strong> (Zapier, Make) to <strong class="cyan">agent-based autonomy</strong>.<br>
+        SecondMind Ops is built for where the market is going, not where it has been.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     8. REVENUE MODEL
+     ═══════════════════════════════════════ -->
+<section id="revenue-model">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Revenue Model</h2>
+    </div>
+    <p style="max-width:700px;margin-bottom:2rem">
+      Three clear tiers designed for different stages of growth. All plans include the core command centre, animated office floor, and real-time dashboard.
+    </p>
+
+    <div class="pricing-grid">
+      <!-- Solo -->
+      <div class="pricing-card">
+        <div class="pricing-tier cyan">Solo</div>
+        <div class="pricing-price cyan">$49</div>
+        <div class="pricing-period">per month</div>
+        <ul class="pricing-features">
+          <li>5 AI agents</li>
+          <li>Basic command centre dashboard</li>
+          <li>Office floor view</li>
+          <li>Email support</li>
+          <li>Standard agent types</li>
+          <li>Weekly output reports</li>
+        </ul>
+        <a class="pricing-cta pricing-cta-outline">Get Started</a>
+      </div>
+      <!-- Team -->
+      <div class="pricing-card featured">
+        <div class="pricing-tier cyan">Team</div>
+        <div class="pricing-price cyan">$149</div>
+        <div class="pricing-period">per month</div>
+        <ul class="pricing-features">
+          <li>15 AI agents</li>
+          <li>Full command centre dashboard</li>
+          <li>Priority support</li>
+          <li>Custom workflow configuration</li>
+          <li>Advanced agent types</li>
+          <li>Daily output reports</li>
+          <li>Delegation beam visualization</li>
+          <li>Task queue management</li>
+        </ul>
+        <a class="pricing-cta pricing-cta-solid">Get Started</a>
+      </div>
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <div class="pricing-tier purple">Enterprise</div>
+        <div class="pricing-price purple">$499</div>
+        <div class="pricing-period">per month</div>
+        <ul class="pricing-features">
+          <li>Unlimited AI agents</li>
+          <li>Dedicated account manager</li>
+          <li>Full API access</li>
+          <li>White-label option</li>
+          <li>Custom agent development</li>
+          <li>Real-time output streaming</li>
+          <li>SLA guarantees</li>
+          <li>SSO &amp; team management</li>
+        </ul>
+        <a class="pricing-cta pricing-cta-outline" style="border-color:var(--purple);color:var(--purple)">Contact Sales</a>
+      </div>
+    </div>
+
+    <div class="glass" style="margin-top:2rem">
+      <h3 style="margin-bottom:1rem">Revenue Projections</h3>
+      <div class="stats-row" style="margin:0">
+        <div style="text-align:center">
+          <div style="font-size:1.6rem;font-weight:800;color:var(--yellow)">$1M</div>
+          <div style="font-size:0.8rem;color:var(--text-dim)">Year 1 ARR Target</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:1.6rem;font-weight:800;color:var(--cyan)">$5M</div>
+          <div style="font-size:0.8rem;color:var(--text-dim)">Year 2 ARR Target</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:1.6rem;font-weight:800;color:var(--green)">$20M</div>
+          <div style="font-size:0.8rem;color:var(--text-dim)">Year 3 ARR Target</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:1.6rem;font-weight:800;color:var(--purple)">85%</div>
+          <div style="font-size:0.8rem;color:var(--text-dim)">Gross Margin Target</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     9. INVESTOR SECTION
+     ═══════════════════════════════════════ -->
+<section id="investors">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Why Invest Now</h2>
+    </div>
+
+    <div class="investor-grid">
+      <div class="card">
+        <h3><span class="cyan">Timing Is Everything</span></h3>
+        <p>The AI agent market is at an inflection point. Foundation model costs are dropping 10x per year while capabilities increase exponentially. The window to build the definitive agent orchestration platform is now.</p>
+      </div>
+      <div class="card">
+        <h3><span class="green">Product-Led Growth</span></h3>
+        <p>SecondMind Ops sells itself. Users see agents working in real time on their animated office floor. The visual, tangible nature of the product drives organic virality and dramatically reduces sales friction.</p>
+      </div>
+      <div class="card">
+        <h3><span class="purple">Capital-Efficient Model</span></h3>
+        <p>Our AI-native team means low burn. The agent fleet that runs customer operations also helps build the product itself. We practice what we sell &mdash; autonomous operations from day one.</p>
+      </div>
+      <div class="card">
+        <h3><span class="yellow">Massive TAM, Clear Wedge</span></h3>
+        <p>Starting with SMBs and agencies ($500B+ market), expanding to enterprise. Our unique UX &mdash; the command centre with animated agents &mdash; is a defensible differentiator no competitor has replicated.</p>
+      </div>
+    </div>
+
+    <div class="glass" style="margin-top:2rem">
+      <h3 style="margin-bottom:1.5rem">Traction &amp; Milestones</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem">
+        <div>
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.5rem">Platform Status</div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--green)">Fully functional command centre</div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.5rem">Agent Fleet</div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--cyan)">Multi-agent coordination live</div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.5rem">Go-To-Market</div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--purple)">SaaS launch imminent</div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.5rem">Vision</div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--yellow)">$1M ARR within 12 months</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass" style="margin-top:1.5rem;border-left:3px solid var(--cyan)">
+      <p style="font-size:1.05rem;color:var(--text);margin:0">
+        <strong>The vision:</strong> Every business has a SecondMind &mdash; an autonomous AI workforce that handles operations so founders and leaders can focus exclusively on vision, strategy, and growth. We are building the operating system for the autonomous enterprise.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     10. TEAM
+     ═══════════════════════════════════════ -->
+<section id="team">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Team</h2>
+    </div>
+    <p style="max-width:700px;margin-bottom:2rem;font-size:1.05rem;color:var(--text)">
+      Built by a lean, AI-native team. Our greatest asset is not just the humans behind the product &mdash; it is the agent fleet itself.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="text-align:center">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));margin:0 auto 1rem;display:flex;align-items:center;justify-content:center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>
+        </div>
+        <h3>Human Leadership</h3>
+        <p>Founder-led with deep expertise in AI systems, product development, and business operations. Lean by design &mdash; we build with agents, not bloated teams.</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--cyan));margin:0 auto 1rem;display:flex;align-items:center;justify-content:center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+        </div>
+        <h3>The Agent Fleet</h3>
+        <p>Our AI agents are not just the product &mdash; they are the team. They write content, conduct research, manage social channels, and generate reports. We are our own best customer.</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--yellow));margin:0 auto 1rem;display:flex;align-items:center;justify-content:center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>AI-Native DNA</h3>
+        <p>Every process, from product development to go-to-market, runs through our own agent fleet. This gives us unmatched insight into the product and a cost structure competitors cannot match.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <p style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">SecondMind Ops</p>
+    <p style="color:var(--text-dim);margin-bottom:1rem">The Autonomous AI Agent Fleet Platform</p>
+    <p style="font-size:0.75rem;color:var(--text-dim);opacity:0.6">Confidential &mdash; For Authorized Recipients Only &mdash; 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>

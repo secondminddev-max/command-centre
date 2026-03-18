@@ -1,0 +1,10 @@
+{
+  "competitor": "BetaTools",
+  "url": "https://beta-tools.example.com/pricing",
+  "change_type": "pricing",
+  "summary": "Content changed on https://beta-tools.example.com/pricing",
+  "old_hash": "e873cdf358a5cd0c",
+  "new_hash": "ff774536a2ed88c1",
+  "detected_at": "2026-03-17T22:37:40.811433+00:00",
+  "severity": "critical"
+}

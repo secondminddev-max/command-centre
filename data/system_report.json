@@ -1,0 +1,104 @@
+{
+  "generated_at": "2026-03-14T17:50:48.387923+00:00",
+  "platform": {
+    "os": "Darwin",
+    "version": "Darwin Kernel Version 25.2.0: Tue Nov 18 21:09:56 PST 2025; root:xnu-12377.61.12~1/RELEASE_ARM64_T6041",
+    "arch": "arm64",
+    "hostname": "SecondMinds-Mac-mini.local"
+  },
+  "cpu": {
+    "count": 12,
+    "percent": 9.0,
+    "freq_mhz": 4
+  },
+  "memory": {
+    "total_gb": 25.77,
+    "available_gb": 11.33,
+    "percent": 56.0
+  },
+  "disk": {
+    "total_gb": 494.38,
+    "free_gb": 453.89,
+    "percent": 2.6
+  },
+  "top_processes": [
+    {
+      "name": "com.apple.WebKit.WebContent",
+      "pid": 6726,
+      "mem_mb": 1474.46,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "com.apple.WebKit.WebContent",
+      "pid": 9911,
+      "mem_mb": 927.65,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "Cursor Helper (Renderer)",
+      "pid": 5134,
+      "mem_mb": 819.61,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "2.1.76",
+      "pid": 11026,
+      "mem_mb": 685.79,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "com.apple.WebKit.WebContent",
+      "pid": 7727,
+      "mem_mb": 654.88,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "Cursor",
+      "pid": 4253,
+      "mem_mb": 407.4,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "2.1.76",
+      "pid": 2024,
+      "mem_mb": 390.14,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "Safari",
+      "pid": 1648,
+      "mem_mb": 309.82,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "2.1.76",
+      "pid": 12600,
+      "mem_mb": 303.53,
+      "cpu_pct": 0.0
+    },
+    {
+      "name": "Cursor Helper (Plugin): extension-host (user) claudecodetest [3-8]",
+      "pid": 5141,
+      "mem_mb": 250.95,
+      "cpu_pct": 0.0
+    }
+  ],
+  "python": {
+    "version": "3.9.6",
+    "packages_count": 38
+  },
+  "project_files": [
+    "agent-command-centre.html",
+    "agent_server.py",
+    "data/file_changes.json",
+    "data/github_trending.json",
+    "data/hn_top.json",
+    "data/metrics_history.json",
+    "data/weather.json",
+    "data/wiki_facts.json",
+    "improvements.json",
+    "live-feed.html",
+    "spawn_agents.py",
+    "watch_agents.py"
+  ]
+}

@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutonomousOps Blueprint — Build a Self-Running AI Business</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #0f1117;
+    --ink-soft: #3a3f4b;
+    --ink-muted: #6b7280;
+    --surface: #ffffff;
+    --surface-2: #f8f9fb;
+    --surface-3: #f0f2f5;
+    --border: #e2e6ec;
+    --accent: #4f46e5;
+    --accent-light: #ede9fe;
+    --accent-dark: #3730a3;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --gradient-hero: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4338ca 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 10pt;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--surface);
+  }
+
+  /* ── PAGE BREAKS ── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 18mm 20mm 16mm;
+    position: relative;
+    background: white;
+  }
+
+  @media screen {
+    body { background: #dde1e9; }
+    .page {
+      margin: 12px auto;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+      border-radius: 4px;
+    }
+  }
+
+  @media print {
+    .page { margin: 0; padding: 15mm 18mm 14mm; page-break-after: always; }
+    .no-break { page-break-inside: avoid; }
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1 { font-size: 28pt; font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; }
+  h2 { font-size: 16pt; font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 10px; }
+  h3 { font-size: 11pt; font-weight: 600; line-height: 1.3; margin-bottom: 6px; color: var(--ink); }
+  h4 { font-size: 9.5pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 4px; }
+  p { margin-bottom: 9px; color: var(--ink-soft); }
+  p:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; color: var(--ink); }
+  a { color: var(--accent); text-decoration: none; }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    background: var(--gradient-hero);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 297mm;
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 28px;
+  }
+  .cover-dot { width: 6px; height: 6px; border-radius: 50%; background: #a5f3fc; display: inline-block; }
+  .cover h1 { color: white; font-size: 34pt; margin-bottom: 16px; }
+  .cover-sub {
+    font-size: 13pt;
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+  .cover-headline {
+    background: rgba(255,255,255,0.08);
+    border-left: 3px solid #a5f3fc;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 10.5pt;
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.55;
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+  .cover-stats {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 40px;
+  }
+  .cover-stat { text-align: center; }
+  .cover-stat-num { font-size: 22pt; font-weight: 800; color: #a5f3fc; line-height: 1; }
+  .cover-stat-label { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.55); margin-top: 3px; }
+  .cover-footer {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8pt;
+    color: rgba(255,255,255,0.45);
+  }
+  .cover-price {
+    background: rgba(165,243,252,0.15);
+    border: 1px solid rgba(165,243,252,0.3);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 10pt;
+    font-weight: 700;
+    color: #a5f3fc;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    width: 34px; height: 34px;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12pt; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .section-header h2 { margin-bottom: 0; }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    display: flex;
+    gap: 10px;
+  }
+  .callout-icon { font-size: 13pt; flex-shrink: 0; margin-top: 1px; }
+  .callout-body h4 { margin-bottom: 3px; }
+  .callout.info { background: var(--blue-light); border-left: 3px solid var(--blue); }
+  .callout.success { background: var(--green-light); border-left: 3px solid var(--green); }
+  .callout.warning { background: var(--amber-light); border-left: 3px solid var(--amber); }
+  .callout.accent { background: var(--accent-light); border-left: 3px solid var(--accent); }
+
+  /* ── CODE BLOCKS ── */
+  pre {
+    background: #1a1d27;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 7.8pt;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .kw { color: #c084fc; }
+  .str { color: #86efac; }
+  .num { color: #fbbf24; }
+  .cmt { color: #6b7280; font-style: italic; }
+  .key { color: #93c5fd; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 8.5pt; }
+  th { background: var(--surface-3); font-weight: 600; text-align: left; padding: 7px 10px; border-bottom: 2px solid var(--border); color: var(--ink); }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--ink-soft); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface-2); }
+
+  /* ── AGENT CHIPS ── */
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    border-radius: 20px; padding: 2px 8px;
+    font-size: 7.5pt; font-weight: 600;
+  }
+  .chip.idle { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .chip.active { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .chip.busy { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+  .chip.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+  .chip-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  /* ── TWO-COLUMN ── */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0; }
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 10px 0; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .card h3 { color: var(--accent); margin-bottom: 6px; font-size: 10pt; }
+
+  /* ── PIPELINE STEPS ── */
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .pipeline-step {
+    background: var(--accent-light);
+    border: 1px solid #c4b5fd;
+    border-radius: 0;
+    padding: 8px 14px;
+    font-size: 8pt;
+    font-weight: 600;
+    color: var(--accent-dark);
+    position: relative;
+    flex: 1;
+    text-align: center;
+  }
+  .pipeline-step:first-child { border-radius: 8px 0 0 8px; }
+  .pipeline-step:last-child { border-radius: 0 8px 8px 0; }
+  .pipeline-step:not(:last-child)::after {
+    content: '→';
+    position: absolute; right: -8px; top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; color: var(--accent); font-size: 10pt;
+    background: white; padding: 0 2px;
+  }
+  .pipeline-step .sub { font-weight: 400; color: var(--ink-muted); font-size: 7pt; display: block; }
+
+  /* ── PAGE NUMBER ── */
+  .page-num {
+    position: absolute;
+    bottom: 10mm; right: 20mm;
+    font-size: 7.5pt;
+    color: var(--ink-muted);
+  }
+  .page-num-left {
+    position: absolute;
+    bottom: 10mm; left: 20mm;
+    font-size: 7.5pt;
+    color: var(--ink-muted);
+  }
+
+  /* ── TOC ── */
+  .toc-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 6px 0;
+    border-bottom: 1px dotted var(--border);
+  }
+  .toc-entry:last-child { border-bottom: none; }
+  .toc-num { font-size: 8pt; font-weight: 700; color: var(--accent); width: 24px; flex-shrink: 0; }
+  .toc-title { font-size: 9.5pt; font-weight: 500; color: var(--ink); flex: 1; }
+  .toc-dots { flex: 1; border-bottom: 1px dotted var(--border); margin: 0 6px; min-width: 20px; }
+  .toc-page { font-size: 8.5pt; color: var(--ink-muted); font-weight: 600; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--gradient-hero);
+    color: white;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .highlight-box h3 { color: #a5f3fc; margin-bottom: 6px; }
+  .highlight-box p { color: rgba(255,255,255,0.8); margin-bottom: 0; }
+
+  /* ── NUMBERED LIST ── */
+  ol.steps { padding-left: 0; list-style: none; counter-reset: steps; }
+  ol.steps li {
+    counter-increment: steps;
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 8px; color: var(--ink-soft);
+  }
+  ol.steps li::before {
+    content: counter(steps);
+    background: var(--accent); color: white;
+    border-radius: 50%; width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7.5pt; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  }
+
+  ul.bullets { padding-left: 0; list-style: none; }
+  ul.bullets li {
+    padding-left: 14px; position: relative;
+    margin-bottom: 5px; color: var(--ink-soft);
+  }
+  ul.bullets li::before {
+    content: '▸'; color: var(--accent);
+    position: absolute; left: 0; font-size: 8pt;
+  }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  /* ── METRIC CARD ── */
+  .metric-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .metric-num { font-size: 20pt; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+  .metric-label { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 1: COVER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div>
+    <div class="cover-badge"><span class="cover-dot"></span>Technical Blueprint</div>
+    <h1>AutonomousOps<br>Blueprint</h1>
+    <p class="cover-sub">Build a Self-Running AI Business with a 26-Agent System</p>
+    <div class="cover-headline">
+      "I built a 26-agent AI system that does market research, screens ASX stocks, posts to social media, and accepts payments — all autonomously. This blueprint shows you exactly how."
+    </div>
+    <div class="cover-stats">
+      <div class="cover-stat"><div class="cover-stat-num">26</div><div class="cover-stat-label">Agents</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">7</div><div class="cover-stat-label">Pipelines</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">15</div><div class="cover-stat-label">Chapters</div></div>
+      <div class="cover-stat"><div class="cover-stat-num">$0</div><div class="cover-stat-label">Human ops cost</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="cover-footer">
+      <span>AutonomousOps Blueprint · March 2026 Edition</span>
+      <span>For Developers, Founders &amp; Indie Hackers</span>
+      <span class="cover-price">$97</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 2: TABLE OF CONTENTS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--ink)">≡</div>
+    <h2>Table of Contents</h2>
+  </div>
+  <div class="toc-entry"><span class="toc-num">01</span><span class="toc-title">Introduction — Why Autonomous Agent Systems</span><span class="toc-dots"></span><span class="toc-page">3</span></div>
+  <div class="toc-entry"><span class="toc-num">02</span><span class="toc-title">System Architecture — The 26-Agent Map</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+  <div class="toc-entry"><span class="toc-num">03</span><span class="toc-title">Agent Design Patterns — Roles, States &amp; Behaviours</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+  <div class="toc-entry"><span class="toc-num">04</span><span class="toc-title">Delegation Architecture — CEO → Orchestrator → Specialists</span><span class="toc-dots"></span><span class="toc-page">6</span></div>
+  <div class="toc-entry"><span class="toc-num">05</span><span class="toc-title">Automated Social Posting Pipeline</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+  <div class="toc-entry"><span class="toc-num">06</span><span class="toc-title">Stock Screener Pipeline</span><span class="toc-dots"></span><span class="toc-page">8</span></div>
+  <div class="toc-entry"><span class="toc-num">07</span><span class="toc-title">Stripe Checkout Integration</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+  <div class="toc-entry"><span class="toc-num">08</span><span class="toc-title">Telegram Alert Relay</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-entry"><span class="toc-num">09</span><span class="toc-title">File Monitoring with FileWatch</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+  <div class="toc-entry"><span class="toc-num">10</span><span class="toc-title">Metrics &amp; Observability — MetricsLog + SysMon</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-entry"><span class="toc-num">11</span><span class="toc-title">Policy Enforcement — PolicyPro + PolicyWriter</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+  <div class="toc-entry"><span class="toc-num">12</span><span class="toc-title">Starter Config Template</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+  <div class="toc-entry"><span class="toc-num">13</span><span class="toc-title">Monetisation Patterns</span><span class="toc-dots"></span><span class="toc-page">13</span></div>
+  <div class="toc-entry"><span class="toc-num">14</span><span class="toc-title">Scaling from 5 to 26 Agents</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-entry"><span class="toc-num">15</span><span class="toc-title">Next Steps &amp; Resources</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+
+  <hr class="divider" style="margin-top:28px;">
+
+  <div class="callout accent" style="margin-top:16px;">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <h4>How to use this blueprint</h4>
+      <p>Each chapter is self-contained. If you're new to agent systems, read cover-to-cover. If you're extending an existing system, jump to the chapter for your pipeline. Code blocks are production-ready — copy, adapt, deploy.</p>
+    </div>
+  </div>
+
+  <div class="cols-3" style="margin-top:20px;">
+    <div class="metric-card"><div class="metric-num">26</div><div class="metric-label">Specialist Agents</div></div>
+    <div class="metric-card"><div class="metric-num">∞</div><div class="metric-label">Hours Automated</div></div>
+    <div class="metric-card"><div class="metric-num">$47+</div><div class="metric-label">Per report sold</div></div>
+  </div>
+
+  <div style="margin-top:20px; padding:14px 16px; background:var(--surface-3); border-radius:8px;">
+    <h4>About this document</h4>
+    <p style="margin-top:6px;">This blueprint documents a real, production system. Every agent, pipeline, and config shown here has been deployed and run autonomously. The stock screener has generated real reports. The social pipeline has posted real content. The Stripe integration accepts real payments. This is not theory — it's a working playbook.</p>
+  </div>
+
+  <span class="page-num">2</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 3: INTRODUCTION -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>Introduction — Why Autonomous Agent Systems</h2>
+  </div>
+
+  <p>We are at an inflection point. Large language models have crossed a threshold where they can plan, execute, and self-correct well enough to run entire business workflows without human intervention. The question is no longer <em>can AI do this?</em> — it's <em>how do you wire it together?</em></p>
+
+  <div class="highlight-box">
+    <h3>The core insight</h3>
+    <p>A single AI assistant is a tool. A coordinated system of specialised AI agents is a business. The difference is architecture — not model capability.</p>
+  </div>
+
+  <h3 style="margin-top:16px;">The old model vs the new model</h3>
+  <div class="cols-2" style="margin-top:10px;">
+    <div class="card" style="border-top:3px solid var(--red);">
+      <h3 style="color:var(--red);">Traditional SaaS / freelance</h3>
+      <ul class="bullets">
+        <li>You do the research manually</li>
+        <li>You write and schedule social posts</li>
+        <li>You compile reports in Excel</li>
+        <li>You invoice clients one by one</li>
+        <li>Bottleneck: your time and attention</li>
+        <li>Revenue ceiling: your working hours</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);">
+      <h3 style="color:var(--green);">AutonomousOps model</h3>
+      <ul class="bullets">
+        <li>Researcher agent scans markets 24/7</li>
+        <li>GrowthAgent writes and posts autonomously</li>
+        <li>Report agent compiles HTML → PDF reports</li>
+        <li>StripePay agent handles checkout flows</li>
+        <li>Bottleneck: none — agents scale horizontally</li>
+        <li>Revenue ceiling: your imagination</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:16px;">What makes this architecture different</h3>
+  <p>Most "AI automation" tutorials show you how to use a single prompt to do a single task. This blueprint shows you how to build a <strong>persistent, multi-agent organisation</strong> where agents have roles, relationships, memories, and specialisations — and where work flows automatically between them via a delegation chain.</p>
+
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card">
+      <h4>Specialist Roles</h4>
+      <p style="font-size:8.5pt;">Each agent owns a domain. The Researcher researches. The Designer designs. The StripePay agent handles payments. No agent does everything — specialisation creates quality.</p>
+    </div>
+    <div class="card">
+      <h4>Persistent State</h4>
+      <p style="font-size:8.5pt;">Agents maintain logs, history, and context between runs. The system remembers what it did yesterday, what campaigns worked, and what to try next.</p>
+    </div>
+    <div class="card">
+      <h4>Event-Driven</h4>
+      <p style="font-size:8.5pt;">Work triggers work. A new stock discovery triggers a report. A published report triggers a social post. A social post triggers a payment link. No manual handoffs.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:16px;">What you'll be able to build after this blueprint</h3>
+  <ol class="steps" style="margin-top:10px;">
+    <li>A fully autonomous market research and reporting pipeline that produces sellable PDF reports</li>
+    <li>An automated social media presence that posts research-backed content without manual effort</li>
+    <li>A Stripe-integrated storefront where agents handle the entire checkout and delivery flow</li>
+    <li>A real-time operations dashboard (the Command Centre) to monitor every agent's activity</li>
+    <li>A policy and compliance layer so agents stay within safe operating boundaries</li>
+  </ol>
+
+  <div class="callout success" style="margin-top:14px;">
+    <span class="callout-icon">✅</span>
+    <div class="callout-body">
+      <h4>Prerequisites</h4>
+      <p>Basic Python or JavaScript, an Anthropic API key, and a Stripe account. The system runs locally or on any VPS. No proprietary cloud infrastructure required.</p>
+    </div>
+  </div>
+
+  <span class="page-num">3</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 4: SYSTEM ARCHITECTURE + SVG DIAGRAM -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>System Architecture — The 26-Agent Map</h2>
+  </div>
+
+  <p>The system is organised into <strong>four tiers</strong>: Command, Orchestration, Operations, and Infrastructure. Agents in higher tiers delegate to lower tiers; data and events flow upward as results.</p>
+
+  <!-- SVG ARCHITECTURE DIAGRAM -->
+  <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:1px solid var(--border);border-radius:10px;background:#f8f9fb;margin:12px 0;">
+    <defs>
+      <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="#6366f1"/>
+      </marker>
+      <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/>
+      </marker>
+    </defs>
+
+    <!-- Tier labels -->
+    <text x="8" y="52" font-size="7" font-family="Inter,sans-serif" font-weight="700" fill="#6366f1" transform="rotate(-90,8,52)" text-anchor="middle">COMMAND</text>
+    <text x="8" y="132" font-size="7" font-family="Inter,sans-serif" font-weight="700" fill="#0891b2" transform="rotate(-90,8,132)" text-anchor="middle">ORCHESTRATE</text>
+    <text x="8" y="255" font-size="7" font-family="Inter,sans-serif" font-weight="700" fill="#059669" transform="rotate(-90,8,255)" text-anchor="middle">OPERATIONS</text>
+    <text x="8" y="385" font-size="7" font-family="Inter,sans-serif" font-weight="700" fill="#d97706" transform="rotate(-90,8,385)" text-anchor="middle">INFRA</text>
+
+    <!-- Tier backgrounds -->
+    <rect x="20" y="14" width="612" height="56" rx="6" fill="#ede9fe" opacity="0.5"/>
+    <rect x="20" y="78" width="612" height="56" rx="6" fill="#cffafe" opacity="0.5"/>
+    <rect x="20" y="142" width="612" height="220" rx="6" fill="#d1fae5" opacity="0.4"/>
+    <rect x="20" y="370" width="612" height="42" rx="6" fill="#fef3c7" opacity="0.5"/>
+
+    <!-- CEO -->
+    <rect x="271" y="22" width="98" height="34" rx="6" fill="#4f46e5"/>
+    <text x="320" y="37" font-size="9" font-weight="700" fill="white" font-family="Inter,sans-serif" text-anchor="middle">CEO</text>
+    <text x="320" y="49" font-size="7" fill="rgba(255,255,255,0.75)" font-family="Inter,sans-serif" text-anchor="middle">Strategic Director</text>
+
+    <!-- Arrow CEO → Orchestrator -->
+    <line x1="320" y1="56" x2="320" y2="78" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Orchestrator -->
+    <rect x="246" y="84" width="148" height="34" rx="6" fill="#0891b2"/>
+    <text x="320" y="99" font-size="9" font-weight="700" fill="white" font-family="Inter,sans-serif" text-anchor="middle">Orchestrator</text>
+    <text x="320" y="111" font-size="7" fill="rgba(255,255,255,0.75)" font-family="Inter,sans-serif" text-anchor="middle">Task Router &amp; Coordinator</text>
+
+    <!-- Arrows Orch → Ops row 1 -->
+    <line x1="280" y1="118" x2="100" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr2)"/>
+    <line x1="295" y1="118" x2="200" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr2)"/>
+    <line x1="310" y1="118" x2="300" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr2)"/>
+    <line x1="325" y1="118" x2="400" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr2)"/>
+    <line x1="340" y1="118" x2="500" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr2)"/>
+    <line x1="350" y1="118" x2="590" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr2)"/>
+
+    <!-- Ops agents row 1 -->
+    <!-- Researcher -->
+    <rect x="38" y="148" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="78" y="160" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Researcher</text>
+    <text x="78" y="170" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Market Intel</text>
+
+    <!-- Designer -->
+    <rect x="138" y="148" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="178" y="160" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Designer</text>
+    <text x="178" y="170" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">UI &amp; Reports</text>
+
+    <!-- GrowthAgent -->
+    <rect x="238" y="148" width="84" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="280" y="160" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">GrowthAgent</text>
+    <text x="280" y="170" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Social Growth</text>
+
+    <!-- Analyst -->
+    <rect x="338" y="148" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="378" y="160" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Analyst</text>
+    <text x="378" y="170" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Data Analysis</text>
+
+    <!-- Writer -->
+    <rect x="438" y="148" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="478" y="160" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Writer</text>
+    <text x="478" y="170" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Content Gen</text>
+
+    <!-- Coder -->
+    <rect x="538" y="148" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="578" y="160" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Coder</text>
+    <text x="578" y="170" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Code &amp; Scripts</text>
+
+    <!-- Ops agents row 2 -->
+    <rect x="38" y="192" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="78" y="204" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">SocialBridge</text>
+    <text x="78" y="214" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Post Dispatch</text>
+
+    <rect x="138" y="192" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="178" y="204" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">StripePay</text>
+    <text x="178" y="214" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Payments</text>
+
+    <rect x="238" y="192" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="278" y="204" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Telegram</text>
+    <text x="278" y="214" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Alerts &amp; Relay</text>
+
+    <rect x="338" y="192" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="378" y="204" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Scout</text>
+    <text x="378" y="214" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Web Scraping</text>
+
+    <rect x="438" y="192" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="478" y="204" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Curator</text>
+    <text x="478" y="214" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Content Filter</text>
+
+    <rect x="538" y="192" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="578" y="204" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Auditor</text>
+    <text x="578" y="214" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Quality Check</text>
+
+    <!-- Ops agents row 3 -->
+    <rect x="38" y="236" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="78" y="248" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Scheduler</text>
+    <text x="78" y="258" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Task Timing</text>
+
+    <rect x="138" y="236" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="178" y="248" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Navigator</text>
+    <text x="178" y="258" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Browser Auto</text>
+
+    <rect x="238" y="236" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="278" y="248" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Builder</text>
+    <text x="278" y="258" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Asset Creation</text>
+
+    <rect x="338" y="236" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="378" y="248" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Connector</text>
+    <text x="378" y="258" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">API Integrations</text>
+
+    <rect x="438" y="236" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="478" y="248" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Tester</text>
+    <text x="478" y="258" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">QA &amp; Validation</text>
+
+    <rect x="538" y="236" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="578" y="248" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Deployer</text>
+    <text x="578" y="258" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Ship &amp; Release</text>
+
+    <!-- Ops row 4 (last 2 ops agents) -->
+    <rect x="238" y="280" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="278" y="292" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">Reforger</text>
+    <text x="278" y="302" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Self-Repair</text>
+
+    <rect x="338" y="280" width="80" height="28" rx="5" fill="white" stroke="#059669" stroke-width="1.5"/>
+    <text x="378" y="292" font-size="7.5" font-weight="600" fill="#047857" font-family="Inter,sans-serif" text-anchor="middle">FinancialResearcher</text>
+    <text x="378" y="302" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Market Data</text>
+
+    <!-- Infrastructure row -->
+    <rect x="38" y="375" width="80" height="28" rx="5" fill="white" stroke="#d97706" stroke-width="1.5"/>
+    <text x="78" y="387" font-size="7.5" font-weight="600" fill="#b45309" font-family="Inter,sans-serif" text-anchor="middle">MetricsLog</text>
+    <text x="78" y="397" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Observability</text>
+
+    <rect x="138" y="375" width="80" height="28" rx="5" fill="white" stroke="#d97706" stroke-width="1.5"/>
+    <text x="178" y="387" font-size="7.5" font-weight="600" fill="#b45309" font-family="Inter,sans-serif" text-anchor="middle">SysMonitor</text>
+    <text x="178" y="397" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Health Checks</text>
+
+    <rect x="238" y="375" width="80" height="28" rx="5" fill="white" stroke="#d97706" stroke-width="1.5"/>
+    <text x="278" y="387" font-size="7.5" font-weight="600" fill="#b45309" font-family="Inter,sans-serif" text-anchor="middle">PolicyPro</text>
+    <text x="278" y="397" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Rules Engine</text>
+
+    <rect x="338" y="375" width="80" height="28" rx="5" fill="white" stroke="#d97706" stroke-width="1.5"/>
+    <text x="378" y="387" font-size="7.5" font-weight="600" fill="#b45309" font-family="Inter,sans-serif" text-anchor="middle">PolicyWriter</text>
+    <text x="378" y="397" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Rule Authoring</text>
+
+    <rect x="438" y="375" width="80" height="28" rx="5" fill="white" stroke="#d97706" stroke-width="1.5"/>
+    <text x="478" y="387" font-size="7.5" font-weight="600" fill="#b45309" font-family="Inter,sans-serif" text-anchor="middle">FileWatch</text>
+    <text x="478" y="397" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">FS Monitor</text>
+
+    <rect x="538" y="375" width="80" height="28" rx="5" fill="white" stroke="#d97706" stroke-width="1.5"/>
+    <text x="578" y="387" font-size="7.5" font-weight="600" fill="#b45309" font-family="Inter,sans-serif" text-anchor="middle">Sentinel</text>
+    <text x="578" y="397" font-size="6.5" fill="#6b7280" font-family="Inter,sans-serif" text-anchor="middle">Security Scan</text>
+  </svg>
+
+  <div class="cols-2" style="margin-top:10px; font-size:8pt;">
+    <div>
+      <h4>Legend</h4>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#4f46e5;border-radius:2px;display:inline-block;"></span> Command</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#0891b2;border-radius:2px;display:inline-block;"></span> Orchestration</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#059669;border-radius:2px;display:inline-block;"></span> Operations (18)</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#d97706;border-radius:2px;display:inline-block;"></span> Infrastructure (6)</span>
+      </div>
+    </div>
+    <div>
+      <h4>Total: 26 agents across 4 tiers</h4>
+      <p>Command (1) → Orchestration (1) → Operations (18) → Infrastructure (6)</p>
+    </div>
+  </div>
+
+  <span class="page-num">4</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 5: AGENT DESIGN PATTERNS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>Agent Design Patterns — Roles, States &amp; Behaviours</h2>
+  </div>
+
+  <p>Each agent in the system follows a consistent design contract. This predictability is what makes the system composable — you can swap, upgrade, or add agents without rewiring everything else.</p>
+
+  <h3>The Agent State Machine</h3>
+  <p style="margin-top:6px;">Every agent cycles through four states. State transitions are logged and visible on the Command Centre dashboard in real-time.</p>
+
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">
+          <span class="chip idle"><span class="chip-dot"></span>IDLE</span>
+          <div><strong style="font-size:8.5pt;">Waiting for work.</strong><p style="font-size:8pt;margin-top:2px;">Agent is running but has no active task. Heartbeat is active. Will accept delegation immediately.</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">
+          <span class="chip active"><span class="chip-dot"></span>ACTIVE</span>
+          <div><strong style="font-size:8.5pt;">Processing a task.</strong><p style="font-size:8pt;margin-top:2px;">Agent is executing. Progress is streamed via SSE. Cannot accept new tasks until complete.</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:#fef3c7;border-radius:8px;border:1px solid #fde68a;">
+          <span class="chip busy"><span class="chip-dot"></span>BUSY</span>
+          <div><strong style="font-size:8.5pt;">Queued tasks.</strong><p style="font-size:8pt;margin-top:2px;">Agent has additional work queued. Current task running; next task will begin on completion.</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;">
+          <span class="chip error"><span class="chip-dot"></span>ERROR</span>
+          <div><strong style="font-size:8.5pt;">Needs attention.</strong><p style="font-size:8pt;margin-top:2px;">Task failed. Error logged. Reforger agent is notified for self-repair attempt.</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4>Agent anatomy</h4>
+      <pre style="margin-top:6px;"><span class="cmt"># Every agent follows this contract</span>
+<span class="kw">class</span> <span class="key">BaseAgent</span>:
+  name: <span class="str">str</span>          <span class="cmt"># unique ID</span>
+  role: <span class="str">str</span>          <span class="cmt"># human-readable role</span>
+  state: <span class="str">AgentState</span>  <span class="cmt"># IDLE|ACTIVE|BUSY|ERROR</span>
+  persona: <span class="str">str</span>       <span class="cmt"># personality prompt</span>
+  skills: <span class="str">list[str]</span>  <span class="cmt"># what it can do</span>
+  log: <span class="str">list[Entry]</span>  <span class="cmt"># persistent history</span>
+
+  <span class="kw">async def</span> <span class="key">handle</span>(task: Task) -> Result:
+    <span class="cmt"># 1. validate against PolicyPro</span>
+    <span class="cmt"># 2. log to MetricsLog</span>
+    <span class="cmt"># 3. execute with LLM</span>
+    <span class="cmt"># 4. emit SSE progress</span>
+    <span class="cmt"># 5. return result</span>
+    ...</pre>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14px;">Specialist role taxonomy</h3>
+  <table>
+    <thead><tr><th>Agent</th><th>Primary Role</th><th>Key Output</th><th>Triggers</th></tr></thead>
+    <tbody>
+      <tr><td><strong>CEO</strong></td><td>Strategic direction, goal-setting</td><td>Objectives, priorities</td><td>Manual or scheduled</td></tr>
+      <tr><td><strong>Orchestrator</strong></td><td>Task routing, queue management</td><td>Delegations to specialists</td><td>CEO command or event</td></tr>
+      <tr><td><strong>Researcher</strong></td><td>Web research, data gathering</td><td>Structured JSON reports</td><td>Orchestrator delegation</td></tr>
+      <tr><td><strong>GrowthAgent</strong></td><td>Social content &amp; campaigns</td><td>Posts, threads, CTAs</td><td>New report or schedule</td></tr>
+      <tr><td><strong>SocialBridge</strong></td><td>Platform API dispatch</td><td>Published posts (Bluesky etc)</td><td>GrowthAgent output</td></tr>
+      <tr><td><strong>StripePay</strong></td><td>Payment flow management</td><td>Checkout links, invoices</td><td>Product ready signal</td></tr>
+      <tr><td><strong>Reforger</strong></td><td>Self-healing, error recovery</td><td>Repaired agent state</td><td>ERROR state detected</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14px;">Persona system</h3>
+  <p>Each agent has a <strong>persona prompt</strong> — a short paragraph that shapes its tone, decision-making style, and risk tolerance. The CEO is decisive and brief. The Researcher is thorough and citation-heavy. The Designer is opinionated about aesthetics. Personas create consistent, predictable behaviour across thousands of tasks.</p>
+
+  <div class="callout info" style="margin-top:10px;">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-body">
+      <h4>Design rule: one agent, one job</h4>
+      <p>Resist the urge to make agents do multiple things. A Researcher that also writes social posts becomes unpredictable. Specialisation is the source of reliability in a multi-agent system.</p>
+    </div>
+  </div>
+
+  <span class="page-num">5</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 6: DELEGATION ARCHITECTURE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Delegation Architecture — CEO → Orchestrator → Specialists</h2>
+  </div>
+
+  <p>The delegation chain is the nervous system of the entire operation. It defines how intent at the top level becomes executed work at the specialist level — without any human in the loop.</p>
+
+  <div class="pipeline" style="margin:14px 0;">
+    <div class="pipeline-step">CEO<span class="sub">Sets objective</span></div>
+    <div class="pipeline-step">Orchestrator<span class="sub">Breaks into tasks</span></div>
+    <div class="pipeline-step">Specialist<span class="sub">Executes task</span></div>
+    <div class="pipeline-step">MetricsLog<span class="sub">Records result</span></div>
+    <div class="pipeline-step">CEO<span class="sub">Receives summary</span></div>
+  </div>
+
+  <div class="cols-2">
+    <div>
+      <h3>How a delegation is born</h3>
+      <ol class="steps" style="margin-top:8px;">
+        <li>CEO issues a high-level instruction: <em>"Find undervalued ASX small-caps under $50M market cap."</em></li>
+        <li>Orchestrator decomposes this into atomic tasks: screener query, data fetch, scoring, report generation.</li>
+        <li>Each task is dispatched to the right specialist with a structured Task object containing context and constraints.</li>
+        <li>Specialists execute and return results. Orchestrator aggregates and returns to CEO.</li>
+        <li>CEO reviews the summary log and issues follow-up delegations if needed.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>The Task object schema</h3>
+      <pre><span class="cmt">// Task dispatched to any agent</span>
+{
+  <span class="key">"id"</span>: <span class="str">"task_abc123"</span>,
+  <span class="key">"from"</span>: <span class="str">"orchestrator"</span>,
+  <span class="key">"to"</span>: <span class="str">"researcher"</span>,
+  <span class="key">"priority"</span>: <span class="str">"high"</span>,
+  <span class="key">"instruction"</span>: <span class="str">"Screen ASX
+    small-caps under $50M
+    market cap for value"</span>,
+  <span class="key">"context"</span>: {
+    <span class="key">"sector"</span>: <span class="str">"technology"</span>,
+    <span class="key">"min_revenue"</span>: <span class="num">1000000</span>
+  },
+  <span class="key">"deadline"</span>: <span class="str">"2026-03-17T18:00Z"</span>,
+  <span class="key">"callback"</span>: <span class="str">"orchestrator"</span>
+}</pre>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14px;">Delegation beams — visual feedback</h3>
+  <p>The Command Centre renders active delegations as animated beams on the office floor canvas. When the CEO delegates to the Orchestrator, a bright arc appears. When the Orchestrator fans out tasks to five specialists simultaneously, five beams radiate outward. This gives you an instant visual picture of system activity — you can see at a glance whether the system is idle, running a single pipeline, or in full orchestration mode.</p>
+
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card">
+      <h4>Delegation depth</h4>
+      <p style="font-size:8.5pt;">The system supports <strong>3 levels</strong> of delegation: CEO → Orchestrator → Specialist. Deeper nesting is possible but increases latency and error surface. Keep it flat.</p>
+    </div>
+    <div class="card">
+      <h4>Parallel dispatch</h4>
+      <p style="font-size:8.5pt;">The Orchestrator can dispatch to multiple specialists <strong>simultaneously</strong>. A research job might fan out to Researcher + Scout + FinancialResearcher in parallel, then aggregate results.</p>
+    </div>
+    <div class="card">
+      <h4>Result aggregation</h4>
+      <p style="font-size:8.5pt;">After parallel dispatch, the Orchestrator waits for all results, merges them into a unified context object, and returns a single structured summary to the CEO.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14px;">Error handling in the delegation chain</h3>
+  <p>When a specialist fails, the error propagates upward. The Reforger agent intercepts ERROR states and attempts recovery via three strategies:</p>
+  <ol class="steps" style="margin-top:8px;">
+    <li><strong>Retry with context</strong> — re-run the same task with the error message prepended to the prompt</li>
+    <li><strong>Fallback agent</strong> — route to an alternative specialist with the same capability</li>
+    <li><strong>Escalate to CEO</strong> — if both fail, surface the failure as a priority notification via Telegram</li>
+  </ol>
+
+  <div class="callout warning" style="margin-top:12px;">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-body">
+      <h4>Circuit breaker pattern</h4>
+      <p>Implement a circuit breaker on each agent. If an agent fails 3 times in 10 minutes, mark it as DOWN and route all new tasks to a fallback. This prevents cascade failures from taking down the entire system.</p>
+    </div>
+  </div>
+
+  <span class="page-num">6</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 7: SOCIAL POSTING PIPELINE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>Automated Social Posting Pipeline</h2>
+  </div>
+
+  <p>The social pipeline converts raw research outputs into platform-ready posts and publishes them without human intervention. The system currently posts to <strong>Bluesky</strong> via the AT Protocol, with the architecture ready to extend to X, LinkedIn, and Farcaster.</p>
+
+  <div class="pipeline" style="margin:14px 0;">
+    <div class="pipeline-step">Researcher<span class="sub">Raw intel</span></div>
+    <div class="pipeline-step">GrowthAgent<span class="sub">Write post</span></div>
+    <div class="pipeline-step">Curator<span class="sub">Quality check</span></div>
+    <div class="pipeline-step">SocialBridge<span class="sub">API dispatch</span></div>
+    <div class="pipeline-step">MetricsLog<span class="sub">Log result</span></div>
+  </div>
+
+  <div class="cols-2">
+    <div>
+      <h3>GrowthAgent prompt pattern</h3>
+      <p style="font-size:8.5pt;">GrowthAgent receives a research summary and uses a structured prompt to generate platform-native content with CTAs:</p>
+      <pre><span class="cmt">"""
+You are GrowthAgent. Given a research
+summary, write a Bluesky post that:
+- Leads with a compelling stat or finding
+- Uses 2-3 relevant hashtags
+- Ends with a clear CTA and link
+- Stays under 300 characters
+- Never sounds like an AI wrote it
+
+Research: {summary}
+Product URL: {checkout_url}
+"""</span></pre>
+    </div>
+    <div>
+      <h3>SocialBridge dispatch</h3>
+      <pre><span class="kw">async def</span> <span class="key">post_to_bluesky</span>(content):
+  agent = AtpAgent(
+    service=<span class="str">'https://bsky.social'</span>
+  )
+  <span class="kw">await</span> agent.login(
+    identifier=<span class="str">os.env.BSKY_HANDLE</span>,
+    password=<span class="str">os.env.BSKY_APP_PW</span>
+  )
+  <span class="kw">await</span> agent.post({
+    <span class="str">'text'</span>: content.text,
+    <span class="str">'langs'</span>: [<span class="str">'en'</span>],
+    <span class="str">'createdAt'</span>: datetime.now()
+  })
+  MetricsLog.record(<span class="str">'post_published'</span>, {
+    <span class="str">'platform'</span>: <span class="str">'bluesky'</span>,
+    <span class="str">'content'</span>: content.text[:50]
+  })</pre>
+    </div>
+  </div>
+
+  <h3 style="margin-top:12px;">Curator quality gates</h3>
+  <p>Before SocialBridge dispatches a post, the Curator agent runs four checks:</p>
+  <table>
+    <thead><tr><th>Check</th><th>Criteria</th><th>Action on fail</th></tr></thead>
+    <tbody>
+      <tr><td>Length</td><td>Under platform character limit</td><td>Truncate and regenerate CTA</td></tr>
+      <tr><td>Tone</td><td>No AI-sounding phrases ("certainly", "I'd be happy to")</td><td>Rewrite with GrowthAgent</td></tr>
+      <tr><td>Compliance</td><td>No financial advice language (PolicyPro rules)</td><td>Escalate to PolicyWriter</td></tr>
+      <tr><td>Dedup</td><td>Not identical to a post in the last 7 days</td><td>Discard and re-trigger research</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:12px;">Campaign log and attribution</h3>
+  <p>Every published post is logged in the Campaign Log with: timestamp, platform, post text, linked product URL, engagement metrics (fetched 24h later), and which research report triggered it. This creates a full attribution chain from research → post → revenue.</p>
+
+  <div class="callout success" style="margin-top:10px;">
+    <span class="callout-icon">✅</span>
+    <div class="callout-body">
+      <h4>Real result — March 17, 2026</h4>
+      <p>First autonomous post published: ASX screener report campaign on Bluesky. GrowthAgent generated the copy, Curator approved it, SocialBridge dispatched it — zero human involvement from research to publication.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:12px;">Extending to additional platforms</h3>
+  <p>SocialBridge is designed as a multi-target dispatcher. To add a new platform, add a connector to the bridge and update the platform routing config. The upstream pipeline (GrowthAgent → Curator) remains unchanged.</p>
+  <pre><span class="cmt"># platform_config.json</span>
+{
+  <span class="key">"platforms"</span>: {
+    <span class="key">"bluesky"</span>: { <span class="key">"enabled"</span>: <span class="kw">true</span>, <span class="key">"connector"</span>: <span class="str">"AtpConnector"</span> },
+    <span class="key">"twitter"</span>: { <span class="key">"enabled"</span>: <span class="kw">false</span>, <span class="key">"connector"</span>: <span class="str">"TwitterV2Connector"</span> },
+    <span class="key">"linkedin"</span>: { <span class="key">"enabled"</span>: <span class="kw">false</span>, <span class="key">"connector"</span>: <span class="str">"LinkedInConnector"</span> }
+  }
+}</pre>
+
+  <span class="page-num">7</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 8: STOCK SCREENER PIPELINE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>Stock Screener Pipeline</h2>
+  </div>
+
+  <p>The stock screener is the flagship autonomous revenue pipeline. It runs on a schedule, produces a formatted HTML/PDF report, and makes that report available for purchase — with no human involvement from data fetch to checkout page.</p>
+
+  <div class="pipeline" style="margin:14px 0;">
+    <div class="pipeline-step">Scheduler<span class="sub">Trigger</span></div>
+    <div class="pipeline-step">FinancialResearcher<span class="sub">Data fetch</span></div>
+    <div class="pipeline-step">Analyst<span class="sub">Score &amp; rank</span></div>
+    <div class="pipeline-step">Designer<span class="sub">HTML report</span></div>
+    <div class="pipeline-step">StripePay<span class="sub">Checkout link</span></div>
+    <div class="pipeline-step">GrowthAgent<span class="sub">Post &amp; sell</span></div>
+  </div>
+
+  <div class="cols-2">
+    <div>
+      <h3>FinancialResearcher data sources</h3>
+      <ul class="bullets">
+        <li>ASX company announcements (real-time RSS)</li>
+        <li>Market cap and volume data (Yahoo Finance API)</li>
+        <li>Director buying/selling activity</li>
+        <li>Capital raising history and dilution metrics</li>
+        <li>Cash runway and burn rate analysis</li>
+        <li>Sector comparables and relative valuation</li>
+      </ul>
+      <div class="callout info" style="margin-top:10px;">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">
+          <h4>Data enrichment loop</h4>
+          <p style="font-size:8pt;">After initial fetch, Researcher passes data to Scout for web scraping of investor presentations and earnings call transcripts, then back to Analyst for final scoring. This three-pass approach produces significantly richer reports than single-source screeners.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Analyst scoring model</h3>
+      <pre><span class="cmt"># Scoring weights (adjustable)</span>
+WEIGHTS = {
+  <span class="str">"cash_runway_months"</span>: <span class="num">0.20</span>,
+  <span class="str">"revenue_growth_yoy"</span>: <span class="num">0.18</span>,
+  <span class="str">"director_buying"</span>:    <span class="num">0.15</span>,
+  <span class="str">"market_cap_usd"</span>:     <span class="num">0.12</span>,
+  <span class="str">"debt_to_equity"</span>:     <span class="num">0.12</span>,
+  <span class="str">"pe_ratio"</span>:           <span class="num">0.10</span>,
+  <span class="str">"sector_momentum"</span>:    <span class="num">0.08</span>,
+  <span class="str">"short_interest"</span>:     <span class="num">0.05</span>,
+}
+
+<span class="kw">def</span> <span class="key">score_company</span>(data):
+  score = <span class="num">0</span>
+  <span class="kw">for</span> metric, weight <span class="kw">in</span> WEIGHTS.items():
+    score += normalise(data[metric]) * weight
+  <span class="kw">return</span> round(score * <span class="num">100</span>, <span class="num">1</span>)</pre>
+    </div>
+  </div>
+
+  <h3 style="margin-top:12px;">Report generation</h3>
+  <p>Designer agent receives the ranked company list as JSON and generates a print-ready HTML report using a template system. Reports are saved to <code style="font-family:monospace;font-size:8pt;background:var(--surface-3);padding:1px 4px;border-radius:3px;">reports/</code> with a datestamped filename and automatically linked to a Stripe checkout. The real ASX screener report generated by this system is available as a sample.</p>
+
+  <div class="cols-3" style="margin-top:10px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:18pt;font-weight:800;color:var(--accent);">8</div>
+      <div style="font-size:8pt;color:var(--ink-muted);">Companies in first report</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:18pt;font-weight:800;color:var(--green);">~45 min</div>
+      <div style="font-size:8pt;color:var(--ink-muted);">Research → published report</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:18pt;font-weight:800;color:var(--amber);">$0</div>
+      <div style="font-size:8pt;color:var(--ink-muted);">Human effort required</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:12px;">Screener schedule</h3>
+  <pre><span class="cmt"># cron config — runs weekly on Monday 7am AEST</span>
+{
+  <span class="key">"schedule"</span>: <span class="str">"0 7 * * MON"</span>,
+  <span class="key">"timezone"</span>: <span class="str">"Australia/Sydney"</span>,
+  <span class="key">"pipeline"</span>: <span class="str">"asx_screener"</span>,
+  <span class="key">"notify_telegram"</span>: <span class="kw">true</span>,
+  <span class="key">"auto_publish"</span>: <span class="kw">true</span>,
+  <span class="key">"stripe_product_id"</span>: <span class="str">"prod_xxx"</span>
+}</pre>
+
+  <span class="page-num">8</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 9: STRIPE + TELEGRAM + FILEWATCH -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>Stripe Checkout Integration</h2>
+  </div>
+
+  <p>StripePay agent manages the full payment lifecycle — creating products, generating checkout links, handling webhooks, and triggering delivery. It turns a finished report into a revenue event within seconds of publication.</p>
+
+  <div class="cols-2">
+    <div>
+      <h3>StripePay agent responsibilities</h3>
+      <ol class="steps">
+        <li>Receive a product-ready signal with report path and metadata</li>
+        <li>Create a Stripe Product and Price via API if not already existing</li>
+        <li>Generate a Payment Link (shareable checkout URL, no server required)</li>
+        <li>Pass checkout URL back to GrowthAgent for CTA embedding</li>
+        <li>Listen for <code>checkout.session.completed</code> webhook</li>
+        <li>On payment: trigger delivery agent to email report PDF to buyer</li>
+        <li>Log revenue event to MetricsLog and notify CEO via Telegram</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Creating a checkout link</h3>
+      <pre><span class="kw">import</span> stripe
+
+stripe.api_key = os.env[<span class="str">'STRIPE_SK'</span>]
+
+<span class="cmt"># Create product + price</span>
+product = stripe.Product.create(
+  name=<span class="str">"ASX Small-Cap Screener"</span>,
+  description=<span class="str">"Weekly report"</span>,
+)
+price = stripe.Price.create(
+  product=product.id,
+  unit_amount=<span class="num">4700</span>,  <span class="cmt"># $47.00</span>
+  currency=<span class="str">"aud"</span>,
+)
+link = stripe.PaymentLink.create(
+  line_items=[{<span class="str">"price"</span>: price.id,
+               <span class="str">"quantity"</span>: <span class="num">1</span>}],
+)
+<span class="kw">return</span> link.url</pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-header" style="margin-top:4px;">
+    <div class="section-num">8</div>
+    <h2>Telegram Alert Relay</h2>
+  </div>
+
+  <p>The Telegram agent is the notification layer — it gives you a real-time window into the system's activity without you having to watch the dashboard.</p>
+
+  <div class="cols-2">
+    <div>
+      <h3>When Telegram fires</h3>
+      <ul class="bullets">
+        <li>New report generated and published</li>
+        <li>Payment received (with amount + product)</li>
+        <li>Agent enters ERROR state</li>
+        <li>PolicyPro blocks an action</li>
+        <li>Daily morning briefing summary</li>
+        <li>Unusual system metrics (CPU, API errors)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Telegram dispatch</h3>
+      <pre><span class="kw">async def</span> <span class="key">notify</span>(msg: str, level=<span class="str">"info"</span>):
+  emoji = {
+    <span class="str">"info"</span>: <span class="str">"ℹ️"</span>,
+    <span class="str">"success"</span>: <span class="str">"✅"</span>,
+    <span class="str">"warning"</span>: <span class="str">"⚠️"</span>,
+    <span class="str">"revenue"</span>: <span class="str">"💰"</span>,
+    <span class="str">"error"</span>: <span class="str">"🚨"</span>
+  }[level]
+  bot = TelegramBot(os.env[<span class="str">'TG_TOKEN'</span>])
+  <span class="kw">await</span> bot.send_message(
+    chat_id=os.env[<span class="str">'TG_CHAT_ID'</span>],
+    text=<span class="str">f"{emoji} {msg}"</span>
+  )</pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-header" style="margin-top:4px;">
+    <div class="section-num">9</div>
+    <h2>File Monitoring with FileWatch</h2>
+  </div>
+
+  <p>FileWatch monitors the filesystem for changes and triggers agent workflows based on file events. It is the bridge between file-based outputs (reports, configs, data dumps) and the agent pipeline.</p>
+
+  <div class="cols-2">
+    <div>
+      <h3>Watch rules example</h3>
+      <pre><span class="cmt"># filewatch_config.json</span>
+{
+  <span class="key">"watches"</span>: [
+    {
+      <span class="key">"path"</span>: <span class="str">"reports/*.html"</span>,
+      <span class="key">"event"</span>: <span class="str">"created"</span>,
+      <span class="key">"trigger"</span>: <span class="str">"stripepay.create_product"</span>
+    },
+    {
+      <span class="key">"path"</span>: <span class="str">"data/raw/*.json"</span>,
+      <span class="key">"event"</span>: <span class="str">"modified"</span>,
+      <span class="key">"trigger"</span>: <span class="str">"analyst.score"</span>
+    }
+  ]
+}</pre>
+    </div>
+    <div>
+      <h3>Key use cases</h3>
+      <ul class="bullets" style="margin-top:8px;">
+        <li>New report in <code style="font-size:7.5pt;">reports/</code> → auto-create Stripe product</li>
+        <li>New data file → trigger Analyst scoring</li>
+        <li>Config change → reload agent settings</li>
+        <li>Log file grows beyond threshold → alert SysMonitor</li>
+        <li>Credentials updated → restart dependent agents</li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="page-num">9</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 10: METRICS + POLICY -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2>Metrics &amp; Observability — MetricsLog + SysMonitor</h2>
+  </div>
+
+  <p>In an autonomous system, you need <strong>deep observability</strong>. Every agent action, every delegation, every external API call, every revenue event is logged. Without this, you're flying blind — you can't debug failures, prove ROI, or improve the system.</p>
+
+  <div class="cols-2">
+    <div>
+      <h3>MetricsLog event schema</h3>
+      <pre>{
+  <span class="key">"ts"</span>: <span class="str">"2026-03-17T09:42:11Z"</span>,
+  <span class="key">"agent"</span>: <span class="str">"growthagent"</span>,
+  <span class="key">"event"</span>: <span class="str">"post_published"</span>,
+  <span class="key">"severity"</span>: <span class="str">"info"</span>,
+  <span class="key">"duration_ms"</span>: <span class="num">1243</span>,
+  <span class="key">"tokens_used"</span>: <span class="num">892</span>,
+  <span class="key">"cost_usd"</span>: <span class="num">0.0089</span>,
+  <span class="key">"metadata"</span>: {
+    <span class="key">"platform"</span>: <span class="str">"bluesky"</span>,
+    <span class="key">"post_id"</span>: <span class="str">"3kpq..."</span>
+  }
+}</pre>
+    </div>
+    <div>
+      <h3>SysMonitor health checks</h3>
+      <ul class="bullets" style="margin-top:6px;">
+        <li>Agent heartbeat (30s poll — IDLE/ACTIVE/ERROR)</li>
+        <li>API key validity (Anthropic, Stripe, Telegram)</li>
+        <li>Disk space on reports directory</li>
+        <li>Memory and CPU for long-running processes</li>
+        <li>External service latency (Bluesky, Yahoo Finance)</li>
+        <li>Daily cost accumulation vs budget cap</li>
+      </ul>
+      <div class="callout warning" style="margin-top:10px;">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Set a cost cap</h4>
+          <p style="font-size:8pt;">Always configure a daily token spend cap in SysMonitor. Runaway loops or prompt injection attacks can generate thousands of API calls. A $10/day cap prevents catastrophic billing events.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:12px;">Daily briefing report</h3>
+  <p>MetricsLog generates an HTML daily briefing at 7am each morning. It includes: agent uptime stats, tasks completed, API costs incurred, revenue generated, posts published, and any outstanding error states. The briefing is delivered to Telegram and saved to <code style="font-size:8pt;">reports/daily_briefing.html</code>.</p>
+
+  <hr class="divider">
+
+  <div class="section-header" style="margin-top:4px;">
+    <div class="section-num">11</div>
+    <h2>Policy Enforcement — PolicyPro + PolicyWriter</h2>
+  </div>
+
+  <p>PolicyPro is the compliance and safety layer. Before any agent executes an action that could be risky — posting to social, charging a card, sending an email — PolicyPro checks it against a ruleset. PolicyWriter lets you author and update those rules using natural language.</p>
+
+  <div class="cols-2">
+    <div>
+      <h3>PolicyPro rule types</h3>
+      <table>
+        <thead><tr><th>Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Content</td><td>Never post financial advice</td></tr>
+          <tr><td>Rate limit</td><td>Max 3 posts per day</td></tr>
+          <tr><td>Spend limit</td><td>Max $50 in Stripe charges/hour</td></tr>
+          <tr><td>Time window</td><td>No posts between 10pm–7am</td></tr>
+          <tr><td>Allowlist</td><td>Only post to approved platforms</td></tr>
+          <tr><td>Blocklist</td><td>Never mention competitor names</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>PolicyPro check flow</h3>
+      <pre><span class="kw">async def</span> <span class="key">check</span>(agent, action, payload):
+  rules = <span class="kw">await</span> load_rules(agent)
+  <span class="kw">for</span> rule <span class="kw">in</span> rules:
+    result = rule.evaluate(action, payload)
+    <span class="kw">if</span> result.blocked:
+      MetricsLog.record(
+        <span class="str">'policy_block'</span>,
+        {<span class="str">'rule'</span>: rule.id, <span class="str">'agent'</span>: agent}
+      )
+      Telegram.notify(
+        <span class="str">f"🚫 PolicyPro blocked {agent}:
+          {rule.description}"</span>,
+        level=<span class="str">"warning"</span>
+      )
+      <span class="kw">raise</span> PolicyViolation(rule.id)
+  <span class="kw">return</span> <span class="kw">True</span></pre>
+    </div>
+  </div>
+
+  <div class="callout accent" style="margin-top:12px;">
+    <span class="callout-icon">🔒</span>
+    <div class="callout-body">
+      <h4>PolicyPro is your kill switch</h4>
+      <p>If something goes wrong in an autonomous system, you need to be able to stop it instantly. PolicyPro's emergency halt rule disables all outbound actions across every agent with a single config change — no need to kill processes or SSH into servers.</p>
+    </div>
+  </div>
+
+  <span class="page-num">10</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 11: STARTER CONFIG TEMPLATE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <h2>Starter Config Template — Agent Spawn JSON</h2>
+  </div>
+
+  <p>This is the production config that bootstraps the core 5-agent starter system. Copy this, fill in your API keys, and run the spawn script to have a working autonomous operation in under 10 minutes.</p>
+
+  <pre style="font-size:7.5pt;line-height:1.55;">{
+  <span class="key">"system"</span>: {
+    <span class="key">"name"</span>: <span class="str">"AutonomousOps"</span>,
+    <span class="key">"version"</span>: <span class="str">"1.0.0"</span>,
+    <span class="key">"log_level"</span>: <span class="str">"info"</span>,
+    <span class="key">"daily_cost_cap_usd"</span>: <span class="num">10.00</span>,
+    <span class="key">"timezone"</span>: <span class="str">"Australia/Sydney"</span>
+  },
+
+  <span class="key">"credentials"</span>: {
+    <span class="key">"anthropic_api_key"</span>: <span class="str">"sk-ant-..."</span>,
+    <span class="key">"stripe_secret_key"</span>: <span class="str">"sk_live_..."</span>,
+    <span class="key">"telegram_bot_token"</span>: <span class="str">"7xxx:AAF..."</span>,
+    <span class="key">"telegram_chat_id"</span>: <span class="str">"-100xxx"</span>,
+    <span class="key">"bluesky_handle"</span>: <span class="str">"yourhandle.bsky.social"</span>,
+    <span class="key">"bluesky_app_password"</span>: <span class="str">"xxxx-xxxx-xxxx-xxxx"</span>
+  },
+
+  <span class="key">"agents"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="str">"ceo"</span>,
+      <span class="key">"role"</span>: <span class="str">"Strategic Director"</span>,
+      <span class="key">"model"</span>: <span class="str">"claude-opus-4-6"</span>,
+      <span class="key">"persona"</span>: <span class="str">"You are the CEO. You are decisive, brief, and
+        results-focused. You delegate ruthlessly and expect
+        concise updates. You care about revenue, quality, and speed."</span>,
+      <span class="key">"auto_start"</span>: <span class="kw">true</span>
+    },
+    {
+      <span class="key">"id"</span>: <span class="str">"orchestrator"</span>,
+      <span class="key">"role"</span>: <span class="str">"Task Router"</span>,
+      <span class="key">"model"</span>: <span class="str">"claude-sonnet-4-6"</span>,
+      <span class="key">"persona"</span>: <span class="str">"You coordinate specialists. Break every CEO objective
+        into atomic, parallelisable tasks. Route to the best agent.
+        Aggregate results. Report succinctly."</span>,
+      <span class="key">"auto_start"</span>: <span class="kw">true</span>
+    },
+    {
+      <span class="key">"id"</span>: <span class="str">"researcher"</span>,
+      <span class="key">"role"</span>: <span class="str">"Market Intelligence"</span>,
+      <span class="key">"model"</span>: <span class="str">"claude-sonnet-4-6"</span>,
+      <span class="key">"persona"</span>: <span class="str">"You are a meticulous researcher. You gather data from
+        multiple sources, cite everything, and return structured
+        JSON. You never guess — if data is unavailable, say so."</span>,
+      <span class="key">"tools"</span>: [<span class="str">"web_search"</span>, <span class="str">"url_fetch"</span>, <span class="str">"file_write"</span>],
+      <span class="key">"auto_start"</span>: <span class="kw">true</span>
+    },
+    {
+      <span class="key">"id"</span>: <span class="str">"growthagent"</span>,
+      <span class="key">"role"</span>: <span class="str">"Social Growth"</span>,
+      <span class="key">"model"</span>: <span class="str">"claude-sonnet-4-6"</span>,
+      <span class="key">"persona"</span>: <span class="str">"You are a sharp social media strategist. You turn
+        research into compelling posts. Your writing is punchy,
+        human, and always has a clear CTA. You know the difference
+        between information and persuasion."</span>,
+      <span class="key">"auto_start"</span>: <span class="kw">true</span>
+    },
+    {
+      <span class="key">"id"</span>: <span class="str">"stripepay"</span>,
+      <span class="key">"role"</span>: <span class="str">"Payment Operations"</span>,
+      <span class="key">"model"</span>: <span class="str">"claude-haiku-4-5-20251001"</span>,
+      <span class="key">"persona"</span>: <span class="str">"You manage Stripe operations. You are precise with
+        financial data. You never round prices. You log every
+        transaction. You alert on any anomaly."</span>,
+      <span class="key">"tools"</span>: [<span class="str">"stripe_api"</span>],
+      <span class="key">"auto_start"</span>: <span class="kw">true</span>
+    }
+  ],
+
+  <span class="key">"pipelines"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="str">"asx_screener"</span>,
+      <span class="key">"schedule"</span>: <span class="str">"0 7 * * MON"</span>,
+      <span class="key">"steps"</span>: [<span class="str">"researcher"</span>, <span class="str">"analyst"</span>, <span class="str">"designer"</span>,
+                  <span class="str">"stripepay"</span>, <span class="str">"growthagent"</span>]
+    }
+  ]
+}</pre>
+
+  <span class="page-num">11</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 12: MONETISATION PATTERNS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">13</div>
+    <h2>Monetisation Patterns — How to Sell Reports &amp; Blueprints</h2>
+  </div>
+
+  <p>The system is built to generate revenue, not just automate work. Here are the proven monetisation patterns that work with this architecture — from one-time report sales to recurring subscription models.</p>
+
+  <div class="cols-2">
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <h3>Pattern 1: Report-as-Product</h3>
+      <p style="font-size:8.5pt;">The screener pipeline generates a new report weekly. Each report is a standalone product with its own Stripe payment link. Price at $47–$97. Promote via GrowthAgent social posts. No subscription friction — buyers pay once per report.</p>
+      <div style="margin-top:8px;padding:8px;background:var(--accent-light);border-radius:6px;">
+        <div style="font-size:8pt;color:var(--accent-dark);"><strong>Example:</strong> ASX Small-Cap Screener — $47/report · 10 buyers/week = $470/week</div>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);">
+      <h3>Pattern 2: Research Subscription</h3>
+      <p style="font-size:8.5pt;">Offer weekly report delivery as a $47/month subscription using Stripe Billing. Subscribers get every new report automatically emailed. Retention is high because each report is genuinely useful and fresh.</p>
+      <div style="margin-top:8px;padding:8px;background:var(--green-light);border-radius:6px;">
+        <div style="font-size:8pt;color:#065f46;"><strong>Example:</strong> 50 subscribers × $47/mo = $2,350 MRR on autopilot</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols-2" style="margin-top:12px;">
+    <div class="card" style="border-top:3px solid var(--amber);">
+      <h3>Pattern 3: Blueprint Sales</h3>
+      <p style="font-size:8.5pt;">Sell the knowledge of how to build this system. This document is an example. Price blueprints at $97–$197. The system writes them, the system sells them. Meta-recursion as a revenue model.</p>
+      <div style="margin-top:8px;padding:8px;background:var(--amber-light);border-radius:6px;">
+        <div style="font-size:8pt;color:#78350f;"><strong>Example:</strong> This blueprint · $97 · 100 sales = $9,700 one-time</div>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <h3>Pattern 4: API Access</h3>
+      <p style="font-size:8.5pt;">Expose the screener as an API. Charge per query or per monthly credit bundle. Developers and fund managers pay for programmatic access to your curated, AI-scored data pipeline.</p>
+      <div style="margin-top:8px;padding:8px;background:var(--blue-light);border-radius:6px;">
+        <div style="font-size:8pt;color:#1e40af;"><strong>Example:</strong> $0.50/query · 500 queries/day = $7,500/month</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14px;">Pricing strategy</h3>
+  <table>
+    <thead><tr><th>Product Type</th><th>Price Range</th><th>Target Buyer</th><th>Conversion path</th></tr></thead>
+    <tbody>
+      <tr><td>Single report</td><td>$47–$97</td><td>Retail investor</td><td>Social post → Stripe link</td></tr>
+      <tr><td>Monthly subscription</td><td>$47–$97/mo</td><td>Active trader</td><td>Landing page → Stripe Billing</td></tr>
+      <tr><td>Technical blueprint</td><td>$97–$197</td><td>Developer / founder</td><td>Social thread → Gumroad/Stripe</td></tr>
+      <tr><td>Agency/API access</td><td>$500–$2000/mo</td><td>Fund / fintech startup</td><td>Direct outreach + demo</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:12px;">The flywheel</h3>
+  <p>Each revenue stream feeds the others. A buyer of a single report may upgrade to a subscription. A subscription buyer recommends the blueprint to a developer friend. An API customer commissions a custom screener. The agents continue running while this compounding happens.</p>
+
+  <div class="highlight-box" style="margin-top:12px;">
+    <h3>Key insight: the system sells itself</h3>
+    <p>GrowthAgent's posts are not ads — they are demonstrations of value. When you tweet a table of 8 undervalued ASX stocks with AI scores, the post itself proves the product works. Social proof and product proof are the same thing.</p>
+  </div>
+
+  <span class="page-num">12</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 13: SCALING FROM 5 TO 26 AGENTS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">14</div>
+    <h2>Scaling from 5 to 26 Agents</h2>
+  </div>
+
+  <p>You don't build a 26-agent system on day one. You build 5 agents that work, then add specialists as demand reveals gaps. This chapter describes the progressive scaling journey — what to build when, and why.</p>
+
+  <h3>Phase 1 — The Core 5 (Week 1)</h3>
+  <div style="background:var(--accent-light);border-radius:8px;padding:12px 16px;margin:8px 0;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+      <span class="chip active"><span class="chip-dot"></span>CEO</span>
+      <span class="chip active"><span class="chip-dot"></span>Orchestrator</span>
+      <span class="chip active"><span class="chip-dot"></span>Researcher</span>
+      <span class="chip active"><span class="chip-dot"></span>GrowthAgent</span>
+      <span class="chip active"><span class="chip-dot"></span>StripePay</span>
+    </div>
+    <p style="font-size:8.5pt;margin:0;color:var(--ink-soft);">This is your minimum viable autonomous operation. It can research, create content, publish, and accept payments. Start here. Prove the model generates revenue before adding complexity.</p>
+  </div>
+
+  <h3 style="margin-top:12px;">Phase 2 — Operations Layer (Week 2–3)</h3>
+  <div style="background:var(--green-light);border-radius:8px;padding:12px 16px;margin:8px 0;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+      <span class="chip idle"><span class="chip-dot"></span>SocialBridge</span>
+      <span class="chip idle"><span class="chip-dot"></span>Telegram</span>
+      <span class="chip idle"><span class="chip-dot"></span>Analyst</span>
+      <span class="chip idle"><span class="chip-dot"></span>Writer</span>
+      <span class="chip idle"><span class="chip-dot"></span>Designer</span>
+      <span class="chip idle"><span class="chip-dot"></span>FinancialResearcher</span>
+    </div>
+    <p style="font-size:8.5pt;margin:0;color:var(--ink-soft);">Add specialist agents to replace GrowthAgent doing too many jobs. SocialBridge separates distribution from content creation. Telegram adds visibility. Designer produces polished reports. Quality improves dramatically.</p>
+  </div>
+
+  <h3 style="margin-top:12px;">Phase 3 — Infrastructure Layer (Week 4–5)</h3>
+  <div style="background:var(--amber-light);border-radius:8px;padding:12px 16px;margin:8px 0;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+      <span class="chip busy"><span class="chip-dot"></span>MetricsLog</span>
+      <span class="chip busy"><span class="chip-dot"></span>SysMonitor</span>
+      <span class="chip busy"><span class="chip-dot"></span>PolicyPro</span>
+      <span class="chip busy"><span class="chip-dot"></span>PolicyWriter</span>
+      <span class="chip busy"><span class="chip-dot"></span>FileWatch</span>
+      <span class="chip busy"><span class="chip-dot"></span>Sentinel</span>
+    </div>
+    <p style="font-size:8.5pt;margin:0;color:var(--ink-soft);">At this point the system is generating revenue. Add observability and policy enforcement now — before a runaway agent causes a real problem. This layer makes the system trustworthy enough to leave running overnight.</p>
+  </div>
+
+  <h3 style="margin-top:12px;">Phase 4 — Full Operations (Week 6+)</h3>
+  <div style="background:var(--blue-light);border-radius:8px;padding:12px 16px;margin:8px 0;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+      <span class="chip active"><span class="chip-dot"></span>Coder</span>
+      <span class="chip active"><span class="chip-dot"></span>Tester</span>
+      <span class="chip active"><span class="chip-dot"></span>Deployer</span>
+      <span class="chip active"><span class="chip-dot"></span>Scout</span>
+      <span class="chip active"><span class="chip-dot"></span>Curator</span>
+      <span class="chip active"><span class="chip-dot"></span>Auditor</span>
+      <span class="chip active"><span class="chip-dot"></span>Scheduler</span>
+      <span class="chip active"><span class="chip-dot"></span>Navigator</span>
+      <span class="chip active"><span class="chip-dot"></span>Builder</span>
+      <span class="chip active"><span class="chip-dot"></span>Connector</span>
+      <span class="chip active"><span class="chip-dot"></span>Reforger</span>
+    </div>
+    <p style="font-size:8.5pt;margin:0;color:var(--ink-soft);">At 26 agents, the system becomes genuinely self-sustaining. Reforger handles failures. Coder+Tester+Deployer can ship new features. Scout extends the research surface. The system now improves itself with minimal human intervention.</p>
+  </div>
+
+  <h3 style="margin-top:12px;">Anti-patterns to avoid</h3>
+  <table>
+    <thead><tr><th>Anti-pattern</th><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Adding agents before proving value</td><td>Complexity without ROI</td><td>Each agent needs a measurable job</td></tr>
+      <tr><td>Skipping the infra layer</td><td>System fails silently at scale</td><td>Add MetricsLog before Phase 4</td></tr>
+      <tr><td>No policy layer</td><td>Agents act without guardrails</td><td>PolicyPro before any financial agent</td></tr>
+      <tr><td>Single model for all agents</td><td>Over-spending on simple tasks</td><td>Haiku for routing, Opus for strategy</td></tr>
+    </tbody>
+  </table>
+
+  <span class="page-num">13</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE 14: NEXT STEPS + RESOURCES -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-num">15</div>
+    <h2>Next Steps &amp; Resources</h2>
+  </div>
+
+  <p>You now have the complete blueprint. Here's your 30-day action plan to go from zero to a running 5-agent autonomous operation generating its first revenue.</p>
+
+  <div class="cols-2">
+    <div>
+      <h3>Your 30-day plan</h3>
+      <ol class="steps" style="margin-top:8px;">
+        <li><strong>Days 1–2:</strong> Get API keys — Anthropic, Stripe, Telegram Bot, Bluesky App Password. Copy the starter config template from Chapter 12.</li>
+        <li><strong>Days 3–5:</strong> Spawn the Core 5 agents. Run a manual research task via the CEO. Verify delegation chain works end-to-end.</li>
+        <li><strong>Days 6–8:</strong> Configure the stock screener pipeline. Run it manually once. Verify the HTML report generates correctly.</li>
+        <li><strong>Days 9–11:</strong> Connect StripePay. Create your first Stripe product from a generated report. Test the payment flow.</li>
+        <li><strong>Days 12–14:</strong> Activate GrowthAgent and SocialBridge. Publish your first autonomous post promoting the report.</li>
+        <li><strong>Days 15–20:</strong> Add MetricsLog and Telegram alerts. Set up daily briefing. Configure cost cap. Test the safety net.</li>
+        <li><strong>Days 21–30:</strong> Add PolicyPro rules. Schedule the screener to run weekly. Start collecting subscribers. Iterate based on what MetricsLog reveals.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Resource stack</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+        <div class="card">
+          <h4>AI / Models</h4>
+          <ul class="bullets" style="font-size:8pt;">
+            <li>Anthropic Claude API — anthropic.com/api</li>
+            <li>Claude Agent SDK — agents.anthropic.com</li>
+            <li>Model comparison: Opus 4.6 / Sonnet 4.6 / Haiku 4.5</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Payments</h4>
+          <ul class="bullets" style="font-size:8pt;">
+            <li>Stripe — stripe.com (Payment Links, Billing, Webhooks)</li>
+            <li>Gumroad — for digital product delivery</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Social / Distribution</h4>
+          <ul class="bullets" style="font-size:8pt;">
+            <li>Bluesky AT Protocol — atproto.com</li>
+            <li>python-telegram-bot — for Telegram relay</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Data / Finance</h4>
+          <ul class="bullets" style="font-size:8pt;">
+            <li>Yahoo Finance (yfinance Python lib)</li>
+            <li>ASX Company Announcements RSS</li>
+            <li>ASIC company search API</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14px;">What to build next</h3>
+  <div class="cols-3" style="margin-top:8px;">
+    <div class="card">
+      <h3 style="color:var(--accent);font-size:9.5pt;">Crypto screener</h3>
+      <p style="font-size:8pt;">Apply the same pipeline to DeFi protocols. CoinGecko API + on-chain data. Same report format, different asset class. Larger addressable audience.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--accent);font-size:9.5pt;">Earnings alerts</h3>
+      <p style="font-size:8pt;">Monitor ASX/NYSE earnings calendars. Auto-summarise results as they drop. Sell same-day AI analysis to traders who need speed, not depth.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--accent);font-size:9.5pt;">Niche newsletters</h3>
+      <p style="font-size:8pt;">GrowthAgent + Writer produce a weekly newsletter in any niche. Researcher fills the content. MetricsLog tracks open rates. Fully automated publishing.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:16px;">
+    <h3>Final thought</h3>
+    <p>The bottleneck in 2026 is not access to AI — it's architecture. Anyone can call an API. Very few people have built a system where 26 agents coordinate, check policy, track revenue, and improve each other. That's the moat. This blueprint is your foundation. What you build on top of it is limited only by your ambition.</p>
+  </div>
+
+  <hr class="divider" style="margin-top:20px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+    <div>
+      <div style="font-size:9pt;font-weight:700;color:var(--ink);">AutonomousOps Blueprint</div>
+      <div style="font-size:8pt;color:var(--ink-muted);">Build a Self-Running AI Business · March 2026 Edition</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:8pt;color:var(--ink-muted);">Generated by a 26-agent autonomous system</div>
+      <div style="font-size:8pt;color:var(--ink-muted);">Powered by Claude · claude.ai</div>
+    </div>
+  </div>
+
+  <span class="page-num">14</span>
+</div>
+
+</body>
+</html>

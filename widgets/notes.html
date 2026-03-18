@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURAL NOTES // SYSTEM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+    :root {
+      --bg: #050a0f;
+      --bg2: #0a1520;
+      --bg3: #0f1f30;
+      --accent: #00f5ff;
+      --accent2: #ff00aa;
+      --accent3: #7fff00;
+      --text: #c0e8ff;
+      --text-dim: #5a8aa0;
+      --border: #1a3a5c;
+      --glow: 0 0 10px rgba(0, 245, 255, 0.4);
+      --glow2: 0 0 10px rgba(255, 0, 170, 0.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,245,255,0.01) 2px, rgba(0,245,255,0.01) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,245,255,0.005) 2px, rgba(0,245,255,0.005) 4px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 10, 15, 0.95);
+      border-bottom: 1px solid var(--accent);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,245,255,0.15);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-shadow: var(--glow);
+      letter-spacing: 4px;
+    }
+
+    .logo span { color: var(--accent2); text-shadow: var(--glow2); }
+
+    .status-bar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent3);
+      box-shadow: 0 0 6px var(--accent3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Search & Filter */
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      padding: 10px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box:focus {
+      border-color: var(--accent);
+      box-shadow: var(--glow);
+    }
+
+    .search-box::placeholder { color: var(--text-dim); }
+
+    .tag-filter {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tag-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tag-btn:hover, .tag-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: var(--glow);
+      background: rgba(0,245,255,0.05);
+    }
+
+    .tag-btn.active { background: rgba(0,245,255,0.1); }
+
+    /* Notes Grid */
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .note-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 20px;
+      position: relative;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .note-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    .note-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--glow), inset 0 0 30px rgba(0,245,255,0.03);
+      transform: translateY(-2px);
+    }
+
+    .note-card:nth-child(3n+2)::before { background: var(--accent2); }
+    .note-card:nth-child(3n+2):hover { border-color: var(--accent2); box-shadow: var(--glow2); }
+    .note-card:nth-child(3n+3)::before { background: var(--accent3); }
+
+    .note-id {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+    }
+
+    .note-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-shadow: var(--glow);
+      word-break: break-word;
+    }
+
+    .note-card:nth-child(3n+2) .note-title { color: var(--accent2); text-shadow: var(--glow2); }
+
+    .note-body {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 14px;
+      word-break: break-word;
+    }
+
+    .note-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .note-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .note-date {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-align: right;
+    }
+
+    /* Add Note Form */
+    .add-note-section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .add-note-section::before {
+      content: '// NEW_ENTRY';
+      position: absolute;
+      top: -10px; left: 16px;
+      background: var(--bg2);
+      color: var(--accent);
+      font-size: 0.7rem;
+      padding: 0 8px;
+      letter-spacing: 2px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .form-group label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .form-input {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+      box-shadow: var(--glow);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .submit-btn {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      transition: all 0.2s;
+      box-shadow: var(--glow);
+    }
+
+    .submit-btn:hover {
+      background: rgba(0,245,255,0.1);
+      box-shadow: 0 0 20px rgba(0,245,255,0.5);
+    }
+
+    .submit-btn:active { transform: scale(0.98); }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-dim);
+      grid-column: 1 / -1;
+    }
+
+    .empty-state .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: var(--border);
+    }
+
+    .count-display {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      padding: 6px 12px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .count-display span { color: var(--accent); }
+
+    .flash {
+      animation: flashIn 0.4s ease-out;
+    }
+
+    @keyframes flashIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEURAL<span>_</span>NOTES</div>
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span id="headerStatus">LOADING...</span>
+    <span id="clock"></span>
+  </div>
+</header>
+
+<div class="main-container">
+  <div class="controls">
+    <input class="search-box" type="text" id="searchInput" placeholder="// search notes..." oninput="renderNotes()">
+    <div class="tag-filter" id="tagFilter"></div>
+  </div>
+
+  <div class="count-display" id="countDisplay">
+    NOTES: <span id="countNum">0</span> entries loaded
+  </div>
+
+  <div class="notes-grid" id="notesGrid"></div>
+
+  <div class="add-note-section">
+    <div class="form-row">
+      <div class="form-group" style="flex:2">
+        <label>Title</label>
+        <input class="form-input" type="text" id="newTitle" placeholder="Note title...">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label>Tags (comma-separated)</label>
+        <input class="form-input" type="text" id="newTags" placeholder="tag1, tag2">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex:1">
+        <label>Body</label>
+        <textarea class="form-input" id="newBody" placeholder="Note content..."></textarea>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="addNote()">+ WRITE NOTE</button>
+  </div>
+</div>
+
+<script>
+  let allNotes = [];
+  let activeTag = null;
+
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toLocaleTimeString('en-US', { hour12: false }) + ' [LOCAL]';
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Load notes
+  async function loadNotes() {
+    try {
+      const res = await fetch('http://localhost:5050/data/notes.json?' + Date.now());
+      const data = await res.json();
+      allNotes = data.notes || [];
+      document.getElementById('headerStatus').textContent = `ONLINE // ${allNotes.length} RECORDS`;
+    } catch (e) {
+      document.getElementById('headerStatus').textContent = 'OFFLINE // LOCAL MODE';
+      // Try localStorage fallback
+      const stored = localStorage.getItem('neural_notes');
+      if (stored) {
+        try { allNotes = JSON.parse(stored); } catch(_) {}
+      }
+    }
+    renderNotes();
+    renderTagFilter();
+  }
+
+  function getAllTags() {
+    const tags = new Set();
+    allNotes.forEach(n => (n.tags || []).forEach(t => tags.add(t)));
+    return [...tags].sort();
+  }
+
+  function renderTagFilter() {
+    const tags = getAllTags();
+    const container = document.getElementById('tagFilter');
+    container.innerHTML = '';
+    if (tags.length === 0) return;
+
+    const allBtn = document.createElement('button');
+    allBtn.className = 'tag-btn' + (activeTag === null ? ' active' : '');
+    allBtn.textContent = 'ALL';
+    allBtn.onclick = () => { activeTag = null; renderTagFilter(); renderNotes(); };
+    container.appendChild(allBtn);
+
+    tags.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.className = 'tag-btn' + (activeTag === tag ? ' active' : '');
+      btn.textContent = '#' + tag;
+      btn.onclick = () => { activeTag = tag; renderTagFilter(); renderNotes(); };
+      container.appendChild(btn);
+    });
+  }
+
+  function renderNotes() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const grid = document.getElementById('notesGrid');
+
+    let filtered = allNotes.filter(n => {
+      const matchesTag = !activeTag || (n.tags || []).includes(activeTag);
+      const matchesSearch = !query ||
+        (n.title || '').toLowerCase().includes(query) ||
+        (n.body || '').toLowerCase().includes(query) ||
+        (n.tags || []).some(t => t.toLowerCase().includes(query));
+      return matchesTag && matchesSearch;
+    });
+
+    // Sort newest first
+    filtered = [...filtered].sort((a, b) => new Date(b.created) - new Date(a.created));
+
+    document.getElementById('countNum').textContent = filtered.length;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state"><div class="icon">//</div><div>NO RECORDS MATCH QUERY</div></div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map((note, i) => {
+      const date = note.created ? new Date(note.created).toLocaleString('en-US', {
+        month: '2-digit', day: '2-digit', year: '2-digit',
+        hour: '2-digit', minute: '2-digit', hour12: false
+      }) : 'UNKNOWN';
+
+      const tagsHtml = (note.tags || []).map(t =>
+        `<span class="tag" onclick="filterByTag('${t}')">#${t}</span>`
+      ).join('');
+
+      return `
+        <div class="note-card flash" style="animation-delay:${i * 0.05}s">
+          <div class="note-id">ID_${String(note.id).padStart(4,'0')}</div>
+          <div class="note-title">${escHtml(note.title || 'UNTITLED')}</div>
+          <div class="note-body">${escHtml(note.body || '')}</div>
+          <div class="note-meta">
+            <div class="note-tags">${tagsHtml}</div>
+            <div class="note-date">${date}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function filterByTag(tag) {
+    activeTag = activeTag === tag ? null : tag;
+    renderTagFilter();
+    renderNotes();
+  }
+
+  function addNote() {
+    const title = document.getElementById('newTitle').value.trim();
+    const body = document.getElementById('newBody').value.trim();
+    const tagsRaw = document.getElementById('newTags').value.trim();
+
+    if (!title) {
+      document.getElementById('newTitle').focus();
+      return;
+    }
+
+    const tags = tagsRaw
+      ? tagsRaw.split(',').map(t => t.trim().toLowerCase()).filter(Boolean)
+      : [];
+
+    const maxId = allNotes.reduce((m, n) => Math.max(m, n.id || 0), 0);
+    const note = {
+      id: maxId + 1,
+      title,
+      body,
+      created: new Date().toISOString(),
+      tags
+    };
+
+    allNotes.push(note);
+    localStorage.setItem('neural_notes', JSON.stringify(allNotes));
+
+    // Clear form
+    document.getElementById('newTitle').value = '';
+    document.getElementById('newBody').value = '';
+    document.getElementById('newTags').value = '';
+
+    renderTagFilter();
+    renderNotes();
+    document.getElementById('headerStatus').textContent = `LOCAL // ${allNotes.length} RECORDS`;
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // Enter to submit from title/tags
+  ['newTitle','newTags'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') addNote();
+    });
+  });
+
+  loadNotes();
+</script>
+</body>
+</html>

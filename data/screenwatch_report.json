@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-03-16T21:08:02Z",
+  "cycle": 1,
+  "health_score": 85,
+  "health_label": "HEALTHY",
+  "agent_counts": {
+    "total": 28,
+    "active": 22,
+    "busy": 3,
+    "idle": 3,
+    "error": 0,
+    "unknown": 0
+  },
+  "system_metrics": {
+    "tasks_done": 1,
+    "errors": 0,
+    "messages_sent": 1,
+    "active": 25,
+    "total": 28
+  },
+  "critical_issues": [],
+  "warning_issues": [
+    {
+      "agent": "telegram",
+      "severity": "warning",
+      "issue": "Telegram is active but reports 0% progress",
+      "detail": "Listening for incoming messages",
+      "action": "Check if telegram loop is stalled"
+    },
+    {
+      "agent": "spiritguide",
+      "severity": "warning",
+      "issue": "Spirit Guide is active but reports 0% progress",
+      "detail": "Overseeing \u2014 2 working | 3 resting | 0 troubled",
+      "action": "Check if spiritguide loop is stalled"
+    },
+    {
+      "agent": "revenue_tracker",
+      "severity": "warning",
+      "issue": "revenue_tracker is active but reports 0% progress",
+      "detail": "Idle | Tasks: 3",
+      "action": "Check if revenue_tracker loop is stalled"
+    }
+  ],
+  "suggestions": [
+    "All agents report non-error status \u2014 no immediate restarts needed."
+  ],
+  "raw_agent_count": 28
+}

@@ -1,0 +1,71 @@
+{
+  "checked_at": "2026-03-18T08:38:16.757251+00:00",
+  "total": 7,
+  "ok": 7,
+  "down": 0,
+  "results": [
+    {
+      "name": "HN Firebase API",
+      "key": "hn_firebase",
+      "url": "https://hacker-news.firebaseio.com/v0/topstories.json?limitToFirst=1&orderBy=%22$key%22",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 713.5,
+      "error": null
+    },
+    {
+      "name": "GitHub API",
+      "key": "github",
+      "url": "https://api.github.com",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 72.0,
+      "error": null
+    },
+    {
+      "name": "Open-Meteo API",
+      "key": "open_meteo",
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=51.5&longitude=-0.1&current_weather=true",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 1447.9,
+      "error": null
+    },
+    {
+      "name": "Wikipedia API",
+      "key": "wikipedia",
+      "url": "https://en.wikipedia.org/api/rest_v1/page/summary/Python_(programming_language)",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 668.0,
+      "error": null
+    },
+    {
+      "name": "JSONPlaceholder",
+      "key": "jsonplaceholder",
+      "url": "https://jsonplaceholder.typicode.com/todos/1",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 75.2,
+      "error": null
+    },
+    {
+      "name": "httpbin.org",
+      "key": "httpbin",
+      "url": "https://httpbin.org/get",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 898.6,
+      "error": null
+    },
+    {
+      "name": "Local API",
+      "key": "local_api",
+      "url": "http://localhost:5050/api/status",
+      "status": "ok",
+      "status_code": 200,
+      "response_time_ms": 3.2,
+      "error": null
+    }
+  ]
+}

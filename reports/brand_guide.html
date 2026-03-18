@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecondMind Ops — Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #050810;
+    --panel: #080d1a;
+    --panel2: #0c1220;
+    --cyan: #00c8ff;
+    --green: #00ff88;
+    --purple: #a855f7;
+    --yellow: #ffd700;
+    --red: #ff3355;
+    --orange: #ff8c00;
+    --text-muted: rgba(255,255,255,0.72);
+    --text-body: rgba(255,255,255,0.85);
+    --border-glow: rgba(0,200,255,0.22);
+    --glass-bg: rgba(8,13,26,0.65);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    background: var(--bg);
+    color: var(--text-body);
+    line-height: 1.65;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Scan-line overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,200,255,0.015) 2px,
+      rgba(0,200,255,0.015) 4px
+    );
+  }
+
+  /* --- Layout --- */
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+  /* --- Header / Hero --- */
+  .hero {
+    padding: 100px 0 80px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 6px 18px;
+    border: 1px solid var(--border-glow);
+    border-radius: 100px;
+    backdrop-filter: blur(20px) saturate(180%);
+    background: var(--glass-bg);
+  }
+  .hero h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--cyan); }
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+  .hero-version {
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  /* --- Navigation --- */
+  .toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,8,16,0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border-glow);
+    padding: 14px 0;
+    margin-bottom: 60px;
+  }
+  .toc-inner {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .toc a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .toc a:hover {
+    color: var(--cyan);
+    background: rgba(0,200,255,0.08);
+  }
+
+  /* --- Sections --- */
+  .section {
+    margin-bottom: 100px;
+    scroll-margin-top: 70px;
+  }
+  .section-header {
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .section-header p {
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 600px;
+  }
+
+  /* --- Panels / Cards --- */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border-glow);
+    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0.4;
+  }
+  .panel-light {
+    background: var(--panel2);
+  }
+  .panel h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .panel-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* --- Grid --- */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 860px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* --- Logo Section --- */
+  .logo-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    border-radius: 10px;
+    padding: 40px;
+  }
+  .logo-dark { background: var(--bg); }
+  .logo-light { background: #f0f2f5; }
+  .logo-display svg { max-width: 100%; height: auto; }
+
+  /* --- Color Swatches --- */
+  .swatch-card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .swatch-preview {
+    height: 100px;
+    position: relative;
+  }
+  .swatch-info {
+    padding: 14px 16px;
+    background: var(--panel);
+  }
+  .swatch-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .swatch-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    margin-bottom: 2px;
+  }
+  .swatch-rgb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .swatch-usage {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* --- Typography Specimens --- */
+  .type-specimen {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .type-specimen:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .type-meta {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .type-meta span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+  }
+
+  /* --- UI Component Examples --- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--cyan);
+    color: var(--bg);
+  }
+  .btn-primary:hover { background: #33d4ff; box-shadow: 0 0 24px rgba(0,200,255,0.3); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cyan);
+    border: 1px solid var(--border-glow);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+  .btn-secondary:hover { background: rgba(0,200,255,0.08); }
+  .btn-success { background: var(--green); color: var(--bg); }
+  .btn-premium { background: var(--purple); color: #fff; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+  .btn-lg { padding: 14px 32px; font-size: 15px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 5px;
+  }
+  .badge-cyan { background: rgba(0,200,255,0.12); color: var(--cyan); border: 1px solid rgba(0,200,255,0.25); }
+  .badge-green { background: rgba(0,255,136,0.10); color: var(--green); border: 1px solid rgba(0,255,136,0.25); }
+  .badge-purple { background: rgba(168,85,247,0.12); color: var(--purple); border: 1px solid rgba(168,85,247,0.25); }
+  .badge-yellow { background: rgba(255,215,0,0.10); color: var(--yellow); border: 1px solid rgba(255,215,0,0.25); }
+  .badge-red { background: rgba(255,51,85,0.10); color: var(--red); border: 1px solid rgba(255,51,85,0.25); }
+  .badge-orange { background: rgba(255,140,0,0.10); color: var(--orange); border: 1px solid rgba(255,140,0,0.25); }
+
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .dot-cyan { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .dot-red { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .dot-yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+
+  .card-demo {
+    background: var(--panel);
+    border: 1px solid var(--border-glow);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-demo-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-demo-header h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .card-demo-body { padding: 20px; }
+  .card-demo-body p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .card-demo-footer {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .glass-panel {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glow);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  /* Metric tile */
+  .metric-tile {
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .metric-tile .metric-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .metric-tile .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 6px;
+  }
+  .metric-tile .metric-delta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  /* Code block */
+  .code-block {
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-body);
+    overflow-x: auto;
+  }
+  .code-block .kw { color: var(--purple); }
+  .code-block .fn { color: var(--cyan); }
+  .code-block .str { color: var(--green); }
+  .code-block .cm { color: rgba(255,255,255,0.3); }
+  .code-block .num { color: var(--orange); }
+
+  /* Dos and Donts */
+  .do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 700px) { .do-dont-grid { grid-template-columns: 1fr; } }
+  .do-list, .dont-list { list-style: none; }
+  .do-list li, .dont-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.5;
+  }
+  .do-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(0,255,136,0.12);
+    border: 1.5px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .dont-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(255,51,85,0.12);
+    border: 1.5px solid var(--red);
+    margin-top: 2px;
+  }
+
+  .check-icon, .x-icon {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    margin-top: 2px;
+  }
+
+  /* Gradient bar */
+  .gradient-bar {
+    height: 48px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .gradient-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  /* Voice card */
+  .voice-card {
+    background: var(--panel2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .voice-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .voice-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .phrase-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    padding: 5px 14px;
+    border: 1px solid var(--border-glow);
+    border-radius: 100px;
+    margin: 4px;
+    background: rgba(0,200,255,0.05);
+  }
+
+  .example-block {
+    background: var(--panel);
+    border-left: 3px solid var(--cyan);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 14px;
+    color: var(--text-body);
+    font-style: italic;
+  }
+
+  /* Weight strip */
+  .weight-strip {
+    display: flex;
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .weight-cell {
+    flex: 1;
+    padding: 16px 12px;
+    text-align: center;
+    background: var(--panel2);
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+  .weight-cell:last-child { border-right: none; }
+  .weight-cell .w-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* Spacing / utilities */
+  .mb-16 { margin-bottom: 16px; }
+  .mb-24 { margin-bottom: 24px; }
+  .mb-32 { margin-bottom: 32px; }
+  .mb-48 { margin-bottom: 48px; }
+  .mt-24 { margin-top: 24px; }
+  .mt-32 { margin-top: 32px; }
+  .gap-12 { gap: 12px; }
+  .flex { display: flex; }
+  .flex-wrap { flex-wrap: wrap; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .text-center { text-align: center; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+    margin: 60px 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    margin-top: 40px;
+  }
+  .footer p {
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-label">Brand Guidelines v1.0</span>
+    <h1>SECOND<span>MIND</span> OPS</h1>
+    <p>Complete brand identity system for the autonomous AI agent fleet platform.</p>
+    <div class="hero-version">Last updated: March 2026</div>
+  </div>
+</section>
+
+<!-- ==================== NAV ==================== -->
+<nav class="toc">
+  <div class="container">
+    <div class="toc-inner">
+      <a href="#logos">01 Logos</a>
+      <a href="#colors">02 Colors</a>
+      <a href="#typography">03 Typography</a>
+      <a href="#voice">04 Brand Voice</a>
+      <a href="#components">05 UI Components</a>
+      <a href="#guidelines">06 Do's &amp; Don'ts</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ==================== 01 LOGO CONCEPTS ==================== -->
+<section class="section" id="logos">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2>Logo Concepts</h2>
+    <p>The SecondMind Ops identity represents interconnected autonomous agents working in concert. The mark is built on a network topology.</p>
+  </div>
+
+  <!-- Primary Mark — Dark -->
+  <div class="panel">
+    <span class="panel-label">Primary Mark &mdash; Dark Background</span>
+    <div class="logo-display logo-dark">
+      <svg width="360" height="100" viewBox="0 0 360 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Network lines -->
+        <line x1="30" y1="50" x2="58" y2="28" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+        <line x1="30" y1="50" x2="58" y2="72" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+        <line x1="58" y1="28" x2="88" y2="38" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+        <line x1="58" y1="72" x2="88" y2="62" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+        <line x1="88" y1="38" x2="88" y2="62" stroke="#00c8ff" stroke-width="1.2" opacity="0.4"/>
+        <line x1="58" y1="28" x2="88" y2="62" stroke="#00c8ff" stroke-width="0.8" opacity="0.25"/>
+        <line x1="58" y1="72" x2="88" y2="38" stroke="#00c8ff" stroke-width="0.8" opacity="0.25"/>
+        <line x1="30" y1="50" x2="88" y2="50" stroke="#00c8ff" stroke-width="0.6" opacity="0.15"/>
+        <!-- Central hub glow -->
+        <circle cx="30" cy="50" r="12" fill="none" stroke="#00c8ff" stroke-width="0.6" opacity="0.2"/>
+        <!-- Nodes -->
+        <circle cx="30" cy="50" r="6" fill="#00c8ff"/>
+        <circle cx="58" cy="28" r="4.5" fill="#00c8ff" opacity="0.85"/>
+        <circle cx="58" cy="72" r="4.5" fill="#00c8ff" opacity="0.85"/>
+        <circle cx="88" cy="38" r="3.5" fill="#00c8ff" opacity="0.7"/>
+        <circle cx="88" cy="62" r="3.5" fill="#00c8ff" opacity="0.7"/>
+        <circle cx="88" cy="50" r="2" fill="#00c8ff" opacity="0.45"/>
+        <!-- Wordmark -->
+        <text x="115" y="46" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="22" letter-spacing="0.15em" fill="#ffffff">SECONDMIND</text>
+        <text x="115" y="68" font-family="'JetBrains Mono', monospace" font-weight="400" font-size="12" letter-spacing="0.3em" fill="#00c8ff">OPS</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Primary Mark — Light -->
+  <div class="panel">
+    <span class="panel-label">Primary Mark &mdash; Light Background</span>
+    <div class="logo-display logo-light">
+      <svg width="360" height="100" viewBox="0 0 360 100" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="50" x2="58" y2="28" stroke="#050810" stroke-width="1.2" opacity="0.4"/>
+        <line x1="30" y1="50" x2="58" y2="72" stroke="#050810" stroke-width="1.2" opacity="0.4"/>
+        <line x1="58" y1="28" x2="88" y2="38" stroke="#050810" stroke-width="1.2" opacity="0.4"/>
+        <line x1="58" y1="72" x2="88" y2="62" stroke="#050810" stroke-width="1.2" opacity="0.4"/>
+        <line x1="88" y1="38" x2="88" y2="62" stroke="#050810" stroke-width="1.2" opacity="0.3"/>
+        <line x1="58" y1="28" x2="88" y2="62" stroke="#050810" stroke-width="0.8" opacity="0.2"/>
+        <line x1="58" y1="72" x2="88" y2="38" stroke="#050810" stroke-width="0.8" opacity="0.2"/>
+        <circle cx="30" cy="50" r="12" fill="none" stroke="#050810" stroke-width="0.6" opacity="0.15"/>
+        <circle cx="30" cy="50" r="6" fill="#050810"/>
+        <circle cx="58" cy="28" r="4.5" fill="#050810" opacity="0.85"/>
+        <circle cx="58" cy="72" r="4.5" fill="#050810" opacity="0.85"/>
+        <circle cx="88" cy="38" r="3.5" fill="#050810" opacity="0.7"/>
+        <circle cx="88" cy="62" r="3.5" fill="#050810" opacity="0.7"/>
+        <circle cx="88" cy="50" r="2" fill="#050810" opacity="0.45"/>
+        <text x="115" y="46" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="22" letter-spacing="0.15em" fill="#050810">SECONDMIND</text>
+        <text x="115" y="68" font-family="'JetBrains Mono', monospace" font-weight="400" font-size="12" letter-spacing="0.3em" fill="#0a6e8c">OPS</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Wordmark Only -->
+    <div class="panel">
+      <span class="panel-label">Wordmark Only</span>
+      <div class="logo-display logo-dark">
+        <svg width="280" height="50" viewBox="0 0 280 50" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="30" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="24" letter-spacing="0.15em" fill="#00c8ff">SECONDMIND</text>
+          <text x="0" y="47" font-family="'JetBrains Mono', monospace" font-weight="400" font-size="10" letter-spacing="0.35em" fill="rgba(255,255,255,0.5)">AUTONOMOUS AGENT FLEET</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Icon Mark / Favicon -->
+    <div class="panel">
+      <span class="panel-label">Icon Mark / Favicon</span>
+      <div class="logo-display logo-dark" style="gap: 40px;">
+        <!-- 64px version -->
+        <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="14" fill="#080d1a"/>
+          <line x1="22" y1="32" x2="35" y2="20" stroke="#00c8ff" stroke-width="1.5" opacity="0.5"/>
+          <line x1="22" y1="32" x2="35" y2="44" stroke="#00c8ff" stroke-width="1.5" opacity="0.5"/>
+          <line x1="35" y1="20" x2="46" y2="27" stroke="#00c8ff" stroke-width="1.5" opacity="0.5"/>
+          <line x1="35" y1="44" x2="46" y2="37" stroke="#00c8ff" stroke-width="1.5" opacity="0.5"/>
+          <line x1="46" y1="27" x2="46" y2="37" stroke="#00c8ff" stroke-width="1.2" opacity="0.4"/>
+          <circle cx="22" cy="32" r="5" fill="#00c8ff"/>
+          <circle cx="35" cy="20" r="3.5" fill="#00c8ff" opacity="0.85"/>
+          <circle cx="35" cy="44" r="3.5" fill="#00c8ff" opacity="0.85"/>
+          <circle cx="46" cy="27" r="2.5" fill="#00c8ff" opacity="0.7"/>
+          <circle cx="46" cy="37" r="2.5" fill="#00c8ff" opacity="0.7"/>
+        </svg>
+        <!-- 32px version -->
+        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="7" fill="#080d1a"/>
+          <line x1="11" y1="16" x2="17" y2="10" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+          <line x1="11" y1="16" x2="17" y2="22" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+          <line x1="17" y1="10" x2="23" y2="13" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+          <line x1="17" y1="22" x2="23" y2="19" stroke="#00c8ff" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="11" cy="16" r="3" fill="#00c8ff"/>
+          <circle cx="17" cy="10" r="2" fill="#00c8ff" opacity="0.85"/>
+          <circle cx="17" cy="22" r="2" fill="#00c8ff" opacity="0.85"/>
+          <circle cx="23" cy="13" r="1.5" fill="#00c8ff" opacity="0.7"/>
+          <circle cx="23" cy="19" r="1.5" fill="#00c8ff" opacity="0.7"/>
+        </svg>
+        <!-- 16px version -->
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="16" height="16" rx="3" fill="#080d1a"/>
+          <line x1="5" y1="8" x2="8" y2="5" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+          <line x1="5" y1="8" x2="8" y2="11" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+          <line x1="8" y1="5" x2="12" y2="7" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+          <line x1="8" y1="11" x2="12" y2="9" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+          <circle cx="5" cy="8" r="2" fill="#00c8ff"/>
+          <circle cx="8" cy="5" r="1.3" fill="#00c8ff" opacity="0.85"/>
+          <circle cx="8" cy="11" r="1.3" fill="#00c8ff" opacity="0.85"/>
+          <circle cx="12" cy="7" r="1" fill="#00c8ff" opacity="0.7"/>
+          <circle cx="12" cy="9" r="1" fill="#00c8ff" opacity="0.7"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-light mt-24">
+    <span class="panel-label">Clear Space &amp; Minimum Size</span>
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">Maintain a clear space equal to the height of the "S" character around all sides of the logo. Minimum reproduction size: 24px height for icon mark, 120px width for full lockup.</p>
+    <div class="logo-display logo-dark" style="min-height:140px;">
+      <svg width="320" height="100" viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Clear space box -->
+        <rect x="20" y="10" width="280" height="80" fill="none" stroke="rgba(0,200,255,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+        <rect x="40" y="25" width="240" height="50" fill="none" stroke="rgba(0,200,255,0.4)" stroke-width="1"/>
+        <!-- Logo inside -->
+        <circle cx="62" cy="50" r="5" fill="#00c8ff"/>
+        <circle cx="80" cy="36" r="3.5" fill="#00c8ff" opacity="0.85"/>
+        <circle cx="80" cy="64" r="3.5" fill="#00c8ff" opacity="0.85"/>
+        <line x1="62" y1="50" x2="80" y2="36" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+        <line x1="62" y1="50" x2="80" y2="64" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+        <text x="100" y="52" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="16" letter-spacing="0.15em" fill="#fff">SECONDMIND</text>
+        <!-- Dimension arrows -->
+        <text x="148" y="8" font-family="'JetBrains Mono', monospace" font-size="8" fill="#00c8ff" text-anchor="middle" opacity="0.7">CLEAR SPACE</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 02 COLOR PALETTE ==================== -->
+<section class="section" id="colors">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2>Color Palette</h2>
+    <p>A dark-first palette engineered for high-contrast data-dense interfaces. Every color serves a functional purpose.</p>
+  </div>
+
+  <!-- Backgrounds -->
+  <h3 class="mb-16" style="color:var(--text-muted); font-size:13px; letter-spacing:0.1em; text-transform:uppercase;">Background System</h3>
+  <div class="grid-3 mb-48">
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#050810;border:1px solid rgba(255,255,255,0.06);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Background</div>
+        <div class="swatch-hex">#050810</div>
+        <div class="swatch-rgb">rgb(5, 8, 16)</div>
+        <div class="swatch-usage">Page background, deepest layer</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#080d1a;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Panel</div>
+        <div class="swatch-hex">#080d1a</div>
+        <div class="swatch-rgb">rgb(8, 13, 26)</div>
+        <div class="swatch-usage">Cards, panels, elevated surfaces</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#0c1220;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Panel 2</div>
+        <div class="swatch-hex">#0c1220</div>
+        <div class="swatch-rgb">rgb(12, 18, 32)</div>
+        <div class="swatch-usage">Secondary panels, nested containers</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accent Colors -->
+  <h3 class="mb-16" style="color:var(--text-muted); font-size:13px; letter-spacing:0.1em; text-transform:uppercase;">Accent &amp; Status Colors</h3>
+  <div class="grid-3 mb-48">
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#00c8ff;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cyan (Primary)</div>
+        <div class="swatch-hex">#00c8ff</div>
+        <div class="swatch-rgb">rgb(0, 200, 255)</div>
+        <div class="swatch-usage">Primary actions, links, active states, brand accent</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#00ff88;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Green (Success)</div>
+        <div class="swatch-hex">#00ff88</div>
+        <div class="swatch-rgb">rgb(0, 255, 136)</div>
+        <div class="swatch-usage">Online status, success, positive metrics, active agents</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#a855f7;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Purple (Premium)</div>
+        <div class="swatch-hex">#a855f7</div>
+        <div class="swatch-rgb">rgb(168, 85, 247)</div>
+        <div class="swatch-usage">Premium features, AI/intelligence, upgrades</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#ffd700;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Yellow (Warning)</div>
+        <div class="swatch-hex">#ffd700</div>
+        <div class="swatch-rgb">rgb(255, 215, 0)</div>
+        <div class="swatch-usage">Warnings, attention items, caution states</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#ff3355;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Red (Error)</div>
+        <div class="swatch-hex">#ff3355</div>
+        <div class="swatch-rgb">rgb(255, 51, 85)</div>
+        <div class="swatch-usage">Errors, destructive actions, critical alerts</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#ff8c00;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Orange</div>
+        <div class="swatch-hex">#ff8c00</div>
+        <div class="swatch-rgb">rgb(255, 140, 0)</div>
+        <div class="swatch-usage">Secondary warnings, numeric highlights, progress</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Text Colors -->
+  <h3 class="mb-16" style="color:var(--text-muted); font-size:13px; letter-spacing:0.1em; text-transform:uppercase;">Text Colors</h3>
+  <div class="grid-3 mb-48">
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:#ffffff;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">White (Headings)</div>
+        <div class="swatch-hex">#FFFFFF</div>
+        <div class="swatch-rgb">rgb(255, 255, 255)</div>
+        <div class="swatch-usage">Headings, high-emphasis text</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:rgba(255,255,255,0.85);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Body Text</div>
+        <div class="swatch-hex">rgba(255,255,255,0.85)</div>
+        <div class="swatch-rgb">~rgb(217, 217, 217)</div>
+        <div class="swatch-usage">Primary body text, descriptions</div>
+      </div>
+    </div>
+    <div class="swatch-card">
+      <div class="swatch-preview" style="background:rgba(255,255,255,0.72);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Muted Text</div>
+        <div class="swatch-hex">rgba(255,255,255,0.72)</div>
+        <div class="swatch-rgb">~rgb(184, 184, 184)</div>
+        <div class="swatch-usage">Secondary text, labels, captions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gradients -->
+  <h3 class="mb-16" style="color:var(--text-muted); font-size:13px; letter-spacing:0.1em; text-transform:uppercase;">Gradients</h3>
+  <div class="panel">
+    <div class="gradient-bar" style="background: linear-gradient(135deg, #00c8ff 0%, #a855f7 100%);"></div>
+    <div class="gradient-label">Cyan to Purple &mdash; Premium CTA, hero sections &mdash; <code style="color:var(--cyan);">linear-gradient(135deg, #00c8ff, #a855f7)</code></div>
+
+    <div class="gradient-bar" style="background: linear-gradient(135deg, #00c8ff 0%, #00ff88 100%);"></div>
+    <div class="gradient-label">Cyan to Green &mdash; Active/success states &mdash; <code style="color:var(--cyan);">linear-gradient(135deg, #00c8ff, #00ff88)</code></div>
+
+    <div class="gradient-bar" style="background: linear-gradient(135deg, #ff3355 0%, #ff8c00 100%);"></div>
+    <div class="gradient-label">Red to Orange &mdash; Alerts, urgency &mdash; <code style="color:var(--cyan);">linear-gradient(135deg, #ff3355, #ff8c00)</code></div>
+
+    <div class="gradient-bar" style="background: linear-gradient(180deg, rgba(0,200,255,0.15) 0%, transparent 100%);"></div>
+    <div class="gradient-label">Cyan Fade &mdash; Ambient glow, section headers &mdash; <code style="color:var(--cyan);">linear-gradient(180deg, rgba(0,200,255,0.15), transparent)</code></div>
+  </div>
+</section>
+
+<!-- ==================== 03 TYPOGRAPHY ==================== -->
+<section class="section" id="typography">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2>Typography</h2>
+    <p>Two typefaces form the typographic system: Inter for readability and JetBrains Mono for technical precision.</p>
+  </div>
+
+  <div class="grid-2 mb-48">
+    <div class="panel">
+      <span class="panel-label">Primary &mdash; Inter</span>
+      <p style="font-size:42px; font-weight:700; color:#fff; line-height:1.1; margin-bottom:12px;">Inter</p>
+      <p style="font-size:14px; color:var(--text-muted);">Body text, UI elements, navigation, descriptions. Optimized for screen readability across all sizes.</p>
+      <div style="margin-top:20px; font-size:14px; color:var(--text-body);">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+        abcdefghijklmnopqrstuvwxyz<br>
+        0123456789 !@#$%^&amp;*()
+      </div>
+    </div>
+    <div class="panel">
+      <span class="panel-label">Technical &mdash; JetBrains Mono</span>
+      <p style="font-family:'JetBrains Mono',monospace; font-size:36px; font-weight:700; color:#fff; line-height:1.1; margin-bottom:12px;">JetBrains Mono</p>
+      <p style="font-size:14px; color:var(--text-muted);">Code, badges, labels, metrics, the wordmark. Conveys technical authority and precision.</p>
+      <div style="margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-body);">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+        abcdefghijklmnopqrstuvwxyz<br>
+        0123456789 !@#$%^&amp;*()
+      </div>
+    </div>
+  </div>
+
+  <!-- Weight strips -->
+  <div class="panel mb-24">
+    <span class="panel-label">Inter Weight Scale</span>
+    <div class="weight-strip">
+      <div class="weight-cell"><span style="font-weight:300; font-size:18px; color:#fff;">Aa</span><span class="w-label">300 Light</span></div>
+      <div class="weight-cell"><span style="font-weight:400; font-size:18px; color:#fff;">Aa</span><span class="w-label">400 Regular</span></div>
+      <div class="weight-cell"><span style="font-weight:500; font-size:18px; color:#fff;">Aa</span><span class="w-label">500 Medium</span></div>
+      <div class="weight-cell"><span style="font-weight:600; font-size:18px; color:#fff;">Aa</span><span class="w-label">600 Semi</span></div>
+      <div class="weight-cell"><span style="font-weight:700; font-size:18px; color:#fff;">Aa</span><span class="w-label">700 Bold</span></div>
+    </div>
+  </div>
+
+  <div class="panel mb-24">
+    <span class="panel-label">JetBrains Mono Weight Scale</span>
+    <div class="weight-strip">
+      <div class="weight-cell"><span style="font-family:'JetBrains Mono',monospace; font-weight:300; font-size:18px; color:#fff;">Aa</span><span class="w-label">300 Light</span></div>
+      <div class="weight-cell"><span style="font-family:'JetBrains Mono',monospace; font-weight:400; font-size:18px; color:#fff;">Aa</span><span class="w-label">400 Regular</span></div>
+      <div class="weight-cell"><span style="font-family:'JetBrains Mono',monospace; font-weight:500; font-size:18px; color:#fff;">Aa</span><span class="w-label">500 Medium</span></div>
+      <div class="weight-cell"><span style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:18px; color:#fff;">Aa</span><span class="w-label">600 Semi</span></div>
+      <div class="weight-cell"><span style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:#fff;">Aa</span><span class="w-label">700 Bold</span></div>
+    </div>
+  </div>
+
+  <!-- Type specimens -->
+  <div class="panel">
+    <span class="panel-label">Type Scale</span>
+
+    <div class="type-specimen">
+      <div style="font-size:40px; font-weight:700; color:#fff; line-height:1.15;">Page Heading H1</div>
+      <div class="type-meta">
+        <span>Inter Bold 700</span>
+        <span>40px / 46px</span>
+        <span>letter-spacing: -0.02em</span>
+        <span>color: #FFFFFF</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-size:32px; font-weight:700; color:#fff; line-height:1.2;">Section Heading H2</div>
+      <div class="type-meta">
+        <span>Inter Bold 700</span>
+        <span>32px / 38px</span>
+        <span>letter-spacing: -0.01em</span>
+        <span>color: #FFFFFF</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-size:22px; font-weight:600; color:#fff; line-height:1.3;">Card Heading H3</div>
+      <div class="type-meta">
+        <span>Inter SemiBold 600</span>
+        <span>22px / 29px</span>
+        <span>letter-spacing: normal</span>
+        <span>color: #FFFFFF</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-size:18px; font-weight:600; color:#fff; line-height:1.35;">Subsection H4</div>
+      <div class="type-meta">
+        <span>Inter SemiBold 600</span>
+        <span>18px / 24px</span>
+        <span>letter-spacing: normal</span>
+        <span>color: #FFFFFF</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-size:15px; font-weight:400; color:var(--text-body); line-height:1.65;">Body text is set in Inter Regular at 15px. It provides comfortable reading density for data-rich interfaces while maintaining the clean, technical feel of the platform. Line-height of 1.65 ensures readability across long passages.</div>
+      <div class="type-meta">
+        <span>Inter Regular 400</span>
+        <span>15px / 25px</span>
+        <span>letter-spacing: normal</span>
+        <span>color: rgba(255,255,255,0.85)</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-size:13px; font-weight:400; color:var(--text-muted); line-height:1.5;">Small body and caption text for secondary information, timestamps, and metadata labels.</div>
+      <div class="type-meta">
+        <span>Inter Regular 400</span>
+        <span>13px / 20px</span>
+        <span>color: rgba(255,255,255,0.72)</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); line-height:1.4;">BADGE / LABEL TEXT</div>
+      <div class="type-meta">
+        <span>JetBrains Mono SemiBold 600</span>
+        <span>10-11px / 14px</span>
+        <span>letter-spacing: 0.15em</span>
+        <span>text-transform: uppercase</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:400; color:var(--text-body); line-height:1.7;">const agent = fleet.deploy({ mode: 'autonomous' });</div>
+      <div class="type-meta">
+        <span>JetBrains Mono Regular 400</span>
+        <span>13px / 22px</span>
+        <span>Code blocks, inline code, terminal output</span>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:700; color:#fff; line-height:1.1;">1,247<span style="font-size:14px; color:var(--green); font-weight:500; margin-left:8px;">+12.4%</span></div>
+      <div class="type-meta">
+        <span>JetBrains Mono Bold 700</span>
+        <span>28px / 31px</span>
+        <span>Metric / KPI values</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04 BRAND VOICE ==================== -->
+<section class="section" id="voice">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <h2>Brand Voice</h2>
+    <p>How SecondMind Ops communicates: professional authority backed by genuine technical substance.</p>
+  </div>
+
+  <div class="grid-2 mb-32">
+    <div class="voice-card">
+      <h4 style="color:var(--cyan);">Professional, Not Corporate</h4>
+      <p>We speak with the confidence of engineers who have built real systems. No jargon walls, no empty buzzwords. Every claim is grounded in capability.</p>
+    </div>
+    <div class="voice-card">
+      <h4 style="color:var(--cyan);">Technical, But Accessible</h4>
+      <p>We make autonomous operations understandable without dumbing them down. Complexity is presented clearly, not hidden behind marketing language.</p>
+    </div>
+    <div class="voice-card">
+      <h4 style="color:var(--cyan);">Confident, Not Hype-y</h4>
+      <p>We state what the platform does, not what it might do. We let results speak. No "revolutionary", no "game-changing" -- just clear capability statements.</p>
+    </div>
+    <div class="voice-card">
+      <h4 style="color:var(--cyan);">Cutting-Edge, But Stable</h4>
+      <p>We are at the frontier of autonomous systems, but we communicate reliability. The future is here, and it is operational -- not experimental.</p>
+    </div>
+  </div>
+
+  <div class="panel mb-32">
+    <span class="panel-label">Key Brand Phrases</span>
+    <div class="flex flex-wrap mt-24" style="gap:8px;">
+      <span class="phrase-tag">autonomous operations</span>
+      <span class="phrase-tag">agent fleet</span>
+      <span class="phrase-tag">command centre</span>
+      <span class="phrase-tag">AI-native</span>
+      <span class="phrase-tag">fleet intelligence</span>
+      <span class="phrase-tag">operational autonomy</span>
+      <span class="phrase-tag">agent orchestration</span>
+      <span class="phrase-tag">real-time coordination</span>
+      <span class="phrase-tag">self-directed agents</span>
+    </div>
+  </div>
+
+  <div class="panel mb-32">
+    <span class="panel-label">Tone Examples</span>
+
+    <h4 style="font-size:13px; color:var(--green); margin-bottom:8px; margin-top:16px;">Correct</h4>
+    <div class="example-block">"Deploy autonomous agent fleets that operate around the clock. Monitor, coordinate, and scale -- all from one command centre."</div>
+
+    <h4 style="font-size:13px; color:var(--green); margin-bottom:8px; margin-top:24px;">Correct</h4>
+    <div class="example-block">"SecondMind Ops manages 47 agents across 12 workstreams with zero manual intervention in the last 72 hours."</div>
+
+    <h4 style="font-size:13px; color:var(--red); margin-bottom:8px; margin-top:24px;">Incorrect</h4>
+    <div class="example-block" style="border-left-color:var(--red); opacity:0.7;">"Our revolutionary AI platform is disrupting the industry with game-changing next-gen technology that will transform everything you know about automation!!!"</div>
+
+    <h4 style="font-size:13px; color:var(--red); margin-bottom:8px; margin-top:24px;">Incorrect</h4>
+    <div class="example-block" style="border-left-color:var(--red); opacity:0.7;">"Leverage synergistic AI paradigms to unlock exponential value across your enterprise stack."</div>
+  </div>
+
+  <div class="panel">
+    <span class="panel-label">Writing Guidelines</span>
+    <div class="grid-2 mt-24" style="gap:32px;">
+      <div>
+        <h4 style="font-size:14px; margin-bottom:12px;">Headlines</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7;">Short, declarative statements. Lead with the outcome. Use active voice. Sentence case, not Title Case (except proper nouns). Max two lines.</p>
+      </div>
+      <div>
+        <h4 style="font-size:14px; margin-bottom:12px;">Body Copy</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7;">Concise paragraphs, 2-3 sentences max. Lead with the most important information. Use technical terms where they add precision, plain language everywhere else.</p>
+      </div>
+      <div>
+        <h4 style="font-size:14px; margin-bottom:12px;">UI Labels</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7;">Minimal, verb-first for actions ("Deploy agent", "View logs"). Noun-first for navigation ("Agent fleet", "Command centre"). Never end with a period.</p>
+      </div>
+      <div>
+        <h4 style="font-size:14px; margin-bottom:12px;">Error Messages</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7;">State what happened, then what to do. Be specific ("Agent alpha-7 lost connection" not "Something went wrong"). No blame, no apology -- just facts and a path forward.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05 UI COMPONENTS ==================== -->
+<section class="section" id="components">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2>UI Components</h2>
+    <p>Core interface elements styled with the SecondMind Ops brand system. Glass-morphism, subtle glow, and functional clarity.</p>
+  </div>
+
+  <!-- Buttons -->
+  <div class="panel mb-24">
+    <span class="panel-label">Buttons</span>
+    <div class="flex flex-wrap items-center mb-24" style="gap:12px;">
+      <button class="btn btn-primary">Primary Action</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-success">Deploy Agent</button>
+      <button class="btn btn-premium">Upgrade Plan</button>
+      <button class="btn btn-danger">Terminate</button>
+    </div>
+    <div class="flex flex-wrap items-center" style="gap:12px;">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <div class="panel mb-24">
+    <span class="panel-label">Badges &amp; Status Indicators</span>
+    <div class="flex flex-wrap items-center mb-24" style="gap:10px;">
+      <span class="badge badge-cyan"><span class="dot dot-cyan"></span> Active</span>
+      <span class="badge badge-green"><span class="dot dot-green"></span> Online</span>
+      <span class="badge badge-purple">Premium</span>
+      <span class="badge badge-yellow"><span class="dot dot-yellow"></span> Warning</span>
+      <span class="badge badge-red"><span class="dot dot-red"></span> Error</span>
+      <span class="badge badge-orange">In Progress</span>
+    </div>
+    <div class="flex flex-wrap items-center" style="gap:10px;">
+      <span class="badge badge-cyan">v2.4.1</span>
+      <span class="badge badge-green">Fleet: 47 agents</span>
+      <span class="badge badge-purple">AI-Native</span>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="grid-2 mb-24">
+    <div class="card-demo">
+      <div class="card-demo-header">
+        <h4>Agent Fleet Overview</h4>
+        <span class="badge badge-green"><span class="dot dot-green"></span> All Systems Go</span>
+      </div>
+      <div class="card-demo-body">
+        <p>47 autonomous agents deployed across 12 workstreams. Average response latency 23ms. Zero manual interventions required in the last 72 hours.</p>
+      </div>
+      <div class="card-demo-footer">
+        <button class="btn btn-secondary btn-sm">View Logs</button>
+        <button class="btn btn-primary btn-sm">Open Fleet</button>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <span class="panel-label">Glass Panel</span>
+      <h4 style="font-size:16px; color:#fff; margin-bottom:12px;">Glass-morphism Effect</h4>
+      <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:16px;">
+        Used for overlays, modals, sticky headers, and floating panels. Combines backdrop blur with subtle border glow.
+      </p>
+      <div class="code-block" style="font-size:12px;">
+        <span class="kw">backdrop-filter</span>: blur(20px) saturate(180%);<br>
+        <span class="kw">background</span>: rgba(8,13,26,0.65);<br>
+        <span class="kw">border</span>: 1px solid rgba(0,200,255,0.22);
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="panel mb-24">
+    <span class="panel-label">Metric Tiles</span>
+    <div class="grid-4 mt-24">
+      <div class="metric-tile">
+        <div class="metric-label">Active Agents</div>
+        <div class="metric-value" style="color:var(--cyan);">47</div>
+        <div class="metric-delta" style="color:var(--green);">+3 today</div>
+      </div>
+      <div class="metric-tile">
+        <div class="metric-label">Tasks / Hour</div>
+        <div class="metric-value">1,247</div>
+        <div class="metric-delta" style="color:var(--green);">+12.4%</div>
+      </div>
+      <div class="metric-tile">
+        <div class="metric-label">Latency (avg)</div>
+        <div class="metric-value">23<span style="font-size:14px; opacity:0.6;">ms</span></div>
+        <div class="metric-delta" style="color:var(--green);">-8.2%</div>
+      </div>
+      <div class="metric-tile">
+        <div class="metric-label">Error Rate</div>
+        <div class="metric-value" style="color:var(--green);">0.02<span style="font-size:14px; opacity:0.6;">%</span></div>
+        <div class="metric-delta" style="color:var(--green);">Nominal</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Block -->
+  <div class="panel mb-24">
+    <span class="panel-label">Code Block</span>
+    <div class="code-block mt-24">
+      <span class="cm">// Deploy an autonomous agent fleet</span><br>
+      <span class="kw">const</span> fleet = <span class="kw">await</span> SecondMind.<span class="fn">createFleet</span>({<br>
+      &nbsp;&nbsp;name: <span class="str">'revenue-ops'</span>,<br>
+      &nbsp;&nbsp;agents: <span class="num">12</span>,<br>
+      &nbsp;&nbsp;mode: <span class="str">'autonomous'</span>,<br>
+      &nbsp;&nbsp;coordination: <span class="str">'mesh'</span>,<br>
+      });<br><br>
+      fleet.<span class="fn">on</span>(<span class="str">'task:complete'</span>, (result) => {<br>
+      &nbsp;&nbsp;CommandCentre.<span class="fn">log</span>(result);<br>
+      });<br><br>
+      <span class="kw">await</span> fleet.<span class="fn">deploy</span>();
+    </div>
+  </div>
+
+  <!-- Scan-line panel -->
+  <div class="panel" style="position:relative; overflow:hidden;">
+    <span class="panel-label">Scan-line Overlay Effect</span>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">Applied to dark backgrounds for the signature SecondMind Ops visual texture. Subtle, never distracting.</p>
+    <div style="position:relative; background:var(--bg); border-radius:8px; padding:40px; text-align:center; overflow:hidden;">
+      <div style="position:absolute; inset:0; pointer-events:none; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,200,255,0.03) 2px, rgba(0,200,255,0.03) 4px);"></div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--cyan); position:relative;">SCAN-LINE OVERLAY ACTIVE</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-top:8px; position:relative;">repeating-linear-gradient with 2px transparent + 2px rgba(0,200,255,0.015-0.03)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06 DO'S AND DON'TS ==================== -->
+<section class="section" id="guidelines">
+  <div class="section-header">
+    <span class="section-number">06</span>
+    <h2>Do's and Don'ts</h2>
+    <p>Essential guidelines for maintaining brand consistency across all touchpoints.</p>
+  </div>
+
+  <div class="do-dont-grid mb-48">
+    <div class="panel">
+      <h3 style="color:var(--green);">Do</h3>
+      <ul class="do-list">
+        <li>Use the full dark palette hierarchy: Background > Panel > Panel 2 for depth</li>
+        <li>Maintain the cyan accent as the primary interactive color across all interfaces</li>
+        <li>Use JetBrains Mono for all technical content: code, metrics, labels, badges</li>
+        <li>Apply glass-morphism sparingly for elevated elements like modals and sticky headers</li>
+        <li>Keep plenty of whitespace (darkspace) between elements -- let the interface breathe</li>
+        <li>Use status colors consistently: green for success/active, yellow for warning, red for error</li>
+        <li>Write in active voice with specific, measurable claims</li>
+        <li>Use the network-node logo at appropriate sizes with required clear space</li>
+        <li>Prefer sentence case for headlines and UI labels</li>
+        <li>Use subtle border glow (rgba(0,200,255,0.22)) to define panel edges</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3 style="color:var(--red);">Don't</h3>
+      <ul class="dont-list">
+        <li>Never place the logo on busy or patterned backgrounds without a solid panel behind it</li>
+        <li>Never use light/white backgrounds for primary interfaces -- dark theme is core to the brand</li>
+        <li>Never stretch, rotate, or modify the logo proportions</li>
+        <li>Avoid using cyan on cyan, or any accent color for large background fills</li>
+        <li>Don't mix Inter and JetBrains Mono within the same sentence or label</li>
+        <li>Don't use heavy box shadows -- prefer subtle border glow and backdrop blur instead</li>
+        <li>Avoid hype language: "revolutionary", "game-changing", "disruptive", "synergy"</li>
+        <li>Don't use more than two accent colors in a single component</li>
+        <li>Never reduce the logo below minimum size (24px icon, 120px full lockup)</li>
+        <li>Don't add color to the logo mark beyond the approved cyan, white, or dark variants</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <span class="panel-label">Logo Misuse Examples</span>
+    <div class="grid-3 mt-24">
+      <div style="text-align:center;">
+        <div style="background:var(--bg); border-radius:8px; padding:24px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.06);">
+          <svg width="80" height="40" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" style="transform:skewX(-15deg);">
+            <circle cx="16" cy="20" r="4" fill="#00c8ff"/>
+            <circle cx="32" cy="10" r="3" fill="#00c8ff" opacity="0.8"/>
+            <circle cx="32" cy="30" r="3" fill="#00c8ff" opacity="0.8"/>
+            <line x1="16" y1="20" x2="32" y2="10" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+            <line x1="16" y1="20" x2="32" y2="30" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+            <text x="42" y="22" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="8" letter-spacing="0.1em" fill="#fff">SECONDMIND</text>
+          </svg>
+        </div>
+        <span style="font-size:11px; color:var(--red);">Do not distort or skew</span>
+      </div>
+      <div style="text-align:center;">
+        <div style="background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77); border-radius:8px; padding:24px; margin-bottom:10px;">
+          <svg width="80" height="40" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="20" r="4" fill="#ff6b6b"/>
+            <circle cx="32" cy="10" r="3" fill="#ffd93d" opacity="0.8"/>
+            <circle cx="32" cy="30" r="3" fill="#6bcb77" opacity="0.8"/>
+            <line x1="16" y1="20" x2="32" y2="10" stroke="#fff" stroke-width="1" opacity="0.5"/>
+            <line x1="16" y1="20" x2="32" y2="30" stroke="#fff" stroke-width="1" opacity="0.5"/>
+            <text x="42" y="22" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="8" letter-spacing="0.1em" fill="#fff">SECONDMIND</text>
+          </svg>
+        </div>
+        <span style="font-size:11px; color:var(--red);">Do not use unapproved colors</span>
+      </div>
+      <div style="text-align:center;">
+        <div style="background:var(--bg); border-radius:8px; padding:24px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.06);">
+          <svg width="80" height="40" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" opacity="0.25">
+            <circle cx="16" cy="20" r="4" fill="#00c8ff"/>
+            <circle cx="32" cy="10" r="3" fill="#00c8ff" opacity="0.8"/>
+            <circle cx="32" cy="30" r="3" fill="#00c8ff" opacity="0.8"/>
+            <line x1="16" y1="20" x2="32" y2="10" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+            <line x1="16" y1="20" x2="32" y2="30" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+            <text x="42" y="22" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="8" letter-spacing="0.1em" fill="#fff">SECONDMIND</text>
+          </svg>
+        </div>
+        <span style="font-size:11px; color:var(--red);">Do not reduce opacity below 50%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--cyan); margin-bottom:8px; opacity:0.7;">SECONDMIND OPS</p>
+    <p>Brand Guidelines v1.0 &mdash; March 2026</p>
+    <p style="margin-top:4px;">Internal use. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

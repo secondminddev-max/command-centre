@@ -1,0 +1,43 @@
+{
+  "version": "v3",
+  "created": "2026-03-18",
+  "status": "DRAFT — awaiting review",
+  "sequence": [
+    {
+      "email_number": 1,
+      "type": "launch_announcement",
+      "send_timing": "Day 1 — Launch day",
+      "goal": "Awareness + introduce 3 tiers + drive early access signups",
+      "subject": "Your AI workforce is ready to deploy",
+      "preview_text": "28 autonomous agents. 3 plans. One command centre.",
+      "body_plain": "Hey {{first_name}},\n\nWhat if you could deploy an entire team — researcher, marketer, developer, designer, ops manager, email specialist, social media pro — that works 24/7 and costs less than a single contractor?\n\nSecondMind HQ just went live.\n\n28 specialized AI agents. One real-time command centre. Zero babysitting.\n\nYour agents don't wait for prompts. They observe your systems, make decisions, collaborate with each other, and execute — around the clock. Research feeds into marketing. Marketing triggers outreach. Ops monitors everything. And the consciousness core ties it all together, learning and adapting to YOUR priorities.\n\nPick the plan that fits:\n\n── SOLO — $49/mo ──\n10 active agents · 1 seat · Cloud hosted\nPerfect for solo founders and indie hackers.\nResearch, monitoring, design, email, and alerting — handled.\n\n── TEAM — $149/mo ──\nFull 28-agent fleet · 5 seats · Cloud or self-hosted\nFor startups and small teams. Revenue agents, growth automation,\ncustom alert rules, and shared agent memory across your team.\n\n── ENTERPRISE — $499/mo ──\nUnlimited custom agents · Unlimited seats · Dedicated infrastructure\n99.9% SLA · SSO · Audit logging · On-prem deployment\nFor teams that need compliance, governance, and scale.\n\nFounding members lock in these rates for life. Once we hit capacity, prices increase permanently.\n\n[Get Early Access →]\n\nThis isn't another chatbot. This isn't another workflow tool.\nThis is an autonomous AI workforce.\n\nTo your unfair advantage,\nThe SecondMind HQ Team",
+      "body_html": false
+    },
+    {
+      "email_number": 2,
+      "type": "feature_deep_dive",
+      "send_timing": "Day 3 — Feature deep-dive",
+      "goal": "Educate on 28 agents, consciousness core, self-healing architecture",
+      "subject": "Inside SecondMind HQ: 28 agents, 1 consciousness, zero downtime",
+      "preview_text": "How a self-healing AI workforce actually works — and why it matters",
+      "body_plain": "Hey {{first_name}},\n\nTwo days ago we launched SecondMind HQ. Today, let me show you what's under the hood — because this isn't just \"more AI agents.\"\n\nIt's a fundamentally different architecture.\n\n━━ 28 SPECIALIZED AGENTS ━━\n\nEvery agent has a distinct role, personality, and domain:\n\n• SysMon — Real-time infrastructure monitoring\n• Researcher — Market intelligence & competitive analysis\n• Designer — UI/UX generation and brand assets\n• EmailAgent — Campaign sequences, delivery, and tracking\n• SocialAgent — Cross-platform content and scheduling\n• AlertWatch — Intelligent noise filtering and escalation\n• RevenueTracker — Pipeline metrics and forecasting\n• GrowthAgent — Lead gen, outreach automation\n• DevAgent — Code shipping, testing, deployment\n• NetScout — Network and security scanning\n• DBAgent — Database health and optimization\n...and 17 more specialists working together.\n\nThey don't operate in silos. The researcher feeds intel to the growth agent. The growth agent briefs the email agent. The ops agents monitor everything. Real collaboration, not isolated tasks.\n\n━━ THE CONSCIOUSNESS CORE ━━\n\nThis is what makes SecondMind HQ unique in the market.\n\nAt the centre of the agent fleet sits a consciousness layer — an integrated awareness system that:\n\n→ Maintains a unified model of your entire operation\n→ Prioritizes and routes tasks based on real-time context\n→ Learns your preferences and adapts agent behaviour over time\n→ Ensures agents don't duplicate work or conflict with each other\n→ Provides persistent memory across sessions — your agents remember\n\nIt's not a gimmick. It's the coordination layer that makes 28 agents work as one team instead of 28 separate tools.\n\n━━ SELF-HEALING ARCHITECTURE ━━\n\nWhen something breaks, your agents fix it — before you even notice.\n\n• Agent goes down? Auto-restart with full context recovery\n• API rate-limited? Automatic backoff and retry\n• Data pipeline stalls? Diagnostic agent identifies and resolves\n• Performance degrades? Self-optimization kicks in\n\nNo pager duty. No 3am wake-ups. The system maintains itself.\n\n━━ WHY THIS MATTERS ━━\n\nThe agentic AI market is $9B today, projected to hit $183B by 2033. Deloitte reports 75% of enterprises are investing in agentic AI this year.\n\nBut most platforms give you single agents doing single tasks. SecondMind HQ gives you a coordinated workforce with a consciousness core — the architecture that the market is moving toward, available today.\n\nFounding member pricing is still open.\n\n[See SecondMind HQ in Action →]\n\nBuilt for operators who ship,\nThe SecondMind HQ Team",
+      "body_html": false
+    },
+    {
+      "email_number": 3,
+      "type": "urgency_scarcity_cta",
+      "send_timing": "Day 5 — Urgency / close",
+      "goal": "Convert with FOMO, clear pricing contrast, hard deadline",
+      "subject": "Founding member pricing closes Friday — here's the math",
+      "preview_text": "After Friday, these rates are gone. Permanently.",
+      "body_plain": "Hey {{first_name}},\n\nThis is the last email about founding member pricing. After Friday, rates increase permanently.\n\nLet me make the math simple.\n\n━━ WHAT YOU'RE PAYING NOW ━━\n\nFreelance researcher: $50-100/hr\nVirtual assistant: $25-50/hr\nSaaS tool stack (10+ subscriptions): $500-2,000/mo\nContractor for ops/dev: $75-150/hr\nYour own time on tasks AI can handle: priceless (and exhausting)\n\nTotal: $3,000-10,000+/mo — and you're still the bottleneck.\n\n━━ WHAT SECONDMIND HQ COSTS ━━\n\nSolo: $49/mo — 10 agents replacing your research, monitoring, email, and design tools\nTeam: $149/mo — full 28-agent workforce with revenue and growth automation\nEnterprise: $499/mo — unlimited custom agents, dedicated infra, SLA, compliance\n\nThat's founding member pricing. Locked in for life.\n\n━━ WHAT HAPPENS AFTER FRIDAY ━━\n\n• Solo moves to $79/mo\n• Team moves to $249/mo\n• Enterprise moves to $799/mo\n• Founding member perks (lifetime rate lock, priority access, direct support) are gone\n\nEvery day you wait, your competitors get further ahead. The businesses that deploy autonomous AI workforces this year will compound that advantage for the next decade.\n\n━━ FOUNDING MEMBER BENEFITS (ENDING FRIDAY) ━━\n\n✓ Lifetime locked-in pricing — never increases\n✓ Priority access to new agent capabilities\n✓ Direct line to the founding team\n✓ Custom agent configuration support\n✓ First access to the consciousness evolution roadmap\n\n[Lock In Founding Member Pricing →]\n\n812 people have signed up this week. Capacity is limited.\n\nAfter Friday, this offer is gone.\n\nDon't wait,\nThe SecondMind HQ Team\n\nP.S. — If you're on the fence, reply to this email. A real human (backed by 28 AI agents) will answer your questions within the hour.",
+      "body_html": false
+    }
+  ],
+  "notes": {
+    "personalization": "All emails use {{first_name}} merge tag — ensure subscriber list has this field",
+    "cta_links": "Replace [Get Early Access →] and [Lock In Founding Member Pricing →] with actual landing page URLs before sending",
+    "post_friday_prices": "Confirm the post-founding-member prices in Email 3 before launch — currently placeholder escalations",
+    "compliance": "Add unsubscribe footer and physical address before sending (CAN-SPAM compliance)"
+  }
+}

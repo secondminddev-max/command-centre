@@ -1,0 +1,23 @@
+{
+  "_comment": "API key pool for round-robin rotation. Add real keys under each service. AccountProvisioner rotates through keys round-robin and parks a key for 60s after a 429.",
+  "guerrillamail": {
+    "keys": [],
+    "current_index": 0,
+    "parked_until": {}
+  },
+  "openai": {
+    "keys": [],
+    "current_index": 0,
+    "parked_until": {}
+  },
+  "anthropic": {
+    "keys": [],
+    "current_index": 0,
+    "parked_until": {}
+  },
+  "github": {
+    "keys": [],
+    "current_index": 0,
+    "parked_until": {}
+  }
+}

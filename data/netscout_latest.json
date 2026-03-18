@@ -1,0 +1,40 @@
+{
+  "scan_type": "pre_launch_connectivity",
+  "timestamp": "2026-03-18T00:00:00Z",
+  "endpoints": [
+    {
+      "name": "Stripe API",
+      "url": "https://api.stripe.com/v1/",
+      "status": "REACHABLE",
+      "http_code": 404,
+      "latency_ms": 52,
+      "connect_ms": 25,
+      "notes": "404 expected — unauthenticated root endpoint. TLS handshake and DNS resolution successful. API is live."
+    },
+    {
+      "name": "Bluesky API",
+      "url": "https://bsky.social/xrpc/_health",
+      "status": "HEALTHY",
+      "http_code": 200,
+      "latency_ms": 664,
+      "connect_ms": 228,
+      "notes": "Health endpoint returned 200 with version hash. Service fully operational."
+    },
+    {
+      "name": "Local Server (Port 5050)",
+      "url": "http://localhost:5050/",
+      "status": "HEALTHY",
+      "http_code": 200,
+      "latency_ms": 1,
+      "connect_ms": 0.3,
+      "notes": "Agent Command Centre serving HTML. Sub-millisecond response."
+    }
+  ],
+  "summary": {
+    "total_checks": 3,
+    "healthy": 3,
+    "degraded": 0,
+    "down": 0,
+    "verdict": "ALL SYSTEMS GO"
+  }
+}

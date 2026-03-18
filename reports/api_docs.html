@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI HQ — API Documentation v1.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #080e17;
+    --bg-2: #0d1520;
+    --bg-3: #111b2b;
+    --bg-card: rgba(15, 25, 45, 0.7);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --cyan: #22d3ee;
+    --cyan-dim: rgba(34, 211, 238, 0.15);
+    --cyan-glow: rgba(34, 211, 238, 0.3);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167, 139, 250, 0.15);
+    --purple-glow: rgba(167, 139, 250, 0.3);
+    --pink: #f472b6;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --border: rgba(148, 163, 184, 0.1);
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── HEADER ── */
+  .hero {
+    text-align: center;
+    padding: 80px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .hero .version {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    background: var(--cyan-dim);
+    color: var(--cyan);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+    backdrop-filter: blur(12px);
+  }
+  .toc h2 {
+    font-size: 1.1rem;
+    color: var(--purple);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+  }
+  .toc a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc a:hover { background: var(--cyan-dim); color: var(--cyan); }
+  .toc a .emoji { font-size: 1.1rem; }
+
+  /* ── AUTH BOX ── */
+  .auth-box {
+    background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(34, 211, 238, 0.05));
+    border: 1px solid var(--purple-dim);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+  .auth-box h2 {
+    color: var(--purple);
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+  }
+  .auth-box p { color: var(--text-dim); margin-bottom: 12px; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--cyan);
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--cyan-dim);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .emoji { font-size: 1.4rem; }
+
+  /* ── ENDPOINT CARD ── */
+  .endpoint {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s;
+  }
+  .endpoint:hover { border-color: var(--cyan-glow); }
+
+  .endpoint-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .method {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .method.get { background: rgba(74, 222, 128, 0.15); color: var(--green); }
+  .method.post { background: rgba(34, 211, 238, 0.15); color: var(--cyan); }
+  .method.delete { background: rgba(248, 113, 113, 0.15); color: var(--red); }
+
+  .endpoint-path {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .auth-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(251, 191, 36, 0.15);
+    color: var(--amber);
+    margin-left: auto;
+  }
+
+  .endpoint-desc {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+
+  .params-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .param-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+  .param-table th {
+    text-align: left;
+    padding: 6px 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .param-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .param-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+  .param-table .required {
+    color: var(--pink);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* ── CODE BLOCKS ── */
+  pre {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  pre .comment { color: var(--text-muted); }
+  pre .key { color: var(--cyan); }
+  pre .string { color: var(--green); }
+  pre .number { color: var(--amber); }
+  pre .bool { color: var(--pink); }
+
+  .example-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+  .footer a { color: var(--cyan); text-decoration: none; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    .hero h1 { font-size: 2rem; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .endpoint-header { flex-direction: column; align-items: flex-start; }
+    .auth-badge { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>AI HQ — API Reference</h1>
+    <p class="subtitle">Complete REST API documentation for the Agent Command Centre. Every endpoint, every parameter, with working examples.</p>
+    <span class="version">v1.0 &middot; Base URL: http://localhost:5050</span>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h2>Endpoints</h2>
+    <div class="toc-grid">
+      <a href="#system"><span class="emoji">🖥</span> System &amp; Health</a>
+      <a href="#agents"><span class="emoji">🤖</span> Agent Management</a>
+      <a href="#delegation"><span class="emoji">🎯</span> Delegation &amp; Tasks</a>
+      <a href="#autonomy"><span class="emoji">⚡</span> Autonomy Engine</a>
+      <a href="#policy"><span class="emoji">🔒</span> Policy &amp; Compliance</a>
+      <a href="#email"><span class="emoji">📧</span> Email Gateway</a>
+      <a href="#comms"><span class="emoji">📱</span> Telegram &amp; Notifications</a>
+      <a href="#social"><span class="emoji">🦋</span> Social (Bluesky)</a>
+      <a href="#revenue"><span class="emoji">💰</span> Revenue &amp; Products</a>
+      <a href="#consciousness"><span class="emoji">🧠</span> Consciousness</a>
+      <a href="#data"><span class="emoji">📂</span> Data &amp; Files</a>
+      <a href="#streaming"><span class="emoji">📡</span> Streaming &amp; SSE</a>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION -->
+  <div class="auth-box" id="auth">
+    <h2>🔑 Authentication</h2>
+    <p>Protected endpoints (spawn, upgrade, delegate) require an API key. Pass it via either header:</p>
+    <pre>Authorization: Bearer YOUR_HQ_API_KEY
+<span class="comment"># — or —</span>
+X-API-Key: YOUR_HQ_API_KEY</pre>
+    <p>Set <code>HQ_API_KEY</code> in your <code>.env</code> file. If unset, an ephemeral key is generated at startup and printed to the console. All read-only GET endpoints are public.</p>
+  </div>
+
+  <!-- ══ SYSTEM & HEALTH ══ -->
+  <div class="section" id="system">
+    <h2 class="section-title"><span class="emoji">🖥</span> System &amp; Health</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/status</span>
+      </div>
+      <p class="endpoint-desc">Full system snapshot — all agents, tasks, logs, metrics, delegation queue, autonomy state, and data-usage counters.</p>
+      <div class="example-label">Example</div>
+      <pre>curl http://localhost:5050/api/status</pre>
+      <div class="example-label">Response (trimmed)</div>
+      <pre>{
+  <span class="key">"agents"</span>: [ { <span class="key">"id"</span>: <span class="string">"sysmon"</span>, <span class="key">"name"</span>: <span class="string">"SysMonitor"</span>, <span class="key">"status"</span>: <span class="string">"active"</span>, ... } ],
+  <span class="key">"tasks"</span>: [],
+  <span class="key">"logs"</span>: [ { <span class="key">"agent"</span>: <span class="string">"system"</span>, <span class="key">"msg"</span>: <span class="string">"..."</span> } ],
+  <span class="key">"metrics"</span>: { <span class="key">"tasks_done"</span>: <span class="number">42</span>, <span class="key">"errors"</span>: <span class="number">0</span>, <span class="key">"active"</span>: <span class="number">18</span>, <span class="key">"total"</span>: <span class="number">25</span> },
+  <span class="key">"autonomy_mode"</span>: <span class="bool">true</span>,
+  <span class="key">"system_paused"</span>: <span class="bool">false</span>,
+  <span class="key">"has_llm"</span>: <span class="bool">true</span>
+}</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/health</span>
+      </div>
+      <p class="endpoint-desc">Lightweight health check — uptime, agent count, and system status (ok / degraded / critical).</p>
+      <pre>curl http://localhost:5050/api/health</pre>
+      <div class="example-label">Response</div>
+      <pre>{
+  <span class="key">"uptime_seconds"</span>: <span class="number">8421.5</span>,
+  <span class="key">"agent_count"</span>: <span class="number">25</span>,
+  <span class="key">"busy_count"</span>: <span class="number">18</span>,
+  <span class="key">"status"</span>: <span class="string">"ok"</span>
+}</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/system/stop</span>
+      </div>
+      <p class="endpoint-desc">Pause all agents system-wide. Every agent is set to idle.</p>
+      <pre>curl -X POST http://localhost:5050/api/system/stop</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/system/start</span>
+      </div>
+      <p class="endpoint-desc">Resume all agents after a system-wide pause.</p>
+      <pre>curl -X POST http://localhost:5050/api/system/start</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/metrics</span>
+      </div>
+      <p class="endpoint-desc">Aggregate metrics — tasks completed, errors, active/total agent counts.</p>
+      <pre>curl http://localhost:5050/api/metrics</pre>
+      <div class="example-label">Response</div>
+      <pre>{
+  <span class="key">"tasks_done"</span>: <span class="number">42</span>,
+  <span class="key">"errors"</span>: <span class="number">0</span>,
+  <span class="key">"messages_sent"</span>: <span class="number">15</span>,
+  <span class="key">"active"</span>: <span class="number">18</span>,
+  <span class="key">"total"</span>: <span class="number">25</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- ══ AGENT MANAGEMENT ══ -->
+  <div class="section" id="agents">
+    <h2 class="section-title"><span class="emoji">🤖</span> Agent Management</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/agents</span>
+      </div>
+      <p class="endpoint-desc">List all registered agents with their current status, role, and active task.</p>
+      <pre>curl http://localhost:5050/api/agents</pre>
+      <div class="example-label">Response</div>
+      <pre>[
+  {
+    <span class="key">"id"</span>: <span class="string">"sysmon"</span>,
+    <span class="key">"name"</span>: <span class="string">"SysMonitor"</span>,
+    <span class="key">"role"</span>: <span class="string">"Real-time CPU, RAM &amp; disk health monitor"</span>,
+    <span class="key">"emoji"</span>: <span class="string">"📡"</span>,
+    <span class="key">"color"</span>: <span class="string">"#a855f7"</span>,
+    <span class="key">"status"</span>: <span class="string">"active"</span>,
+    <span class="key">"progress"</span>: <span class="number">99</span>,
+    <span class="key">"task"</span>: <span class="string">"CPU 12% | RAM 55% | Disk 2.7%"</span>
+  }
+]</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/agents/summary</span>
+      </div>
+      <p class="endpoint-desc">Compact summary — total agent count and breakdown by status.</p>
+      <pre>curl http://localhost:5050/api/agents/summary</pre>
+      <div class="example-label">Response</div>
+      <pre>{
+  <span class="key">"total"</span>: <span class="number">25</span>,
+  <span class="key">"by_status"</span>: { <span class="key">"active"</span>: <span class="number">18</span>, <span class="key">"idle"</span>: <span class="number">5</span>, <span class="key">"busy"</span>: <span class="number">2</span> }
+}</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/agent/spawn</span>
+        <span class="auth-badge">🔑 API Key</span>
+      </div>
+      <p class="endpoint-desc">Create and start a new agent. The agent runs as a background Python thread executing the provided code.</p>
+      <div class="params-label">Body (JSON)</div>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>agent_id</td><td>string</td><td>Unique ID for the agent <span class="required">required</span></td></tr>
+        <tr><td>name</td><td>string</td><td>Display name</td></tr>
+        <tr><td>role</td><td>string</td><td>One-line description of its purpose</td></tr>
+        <tr><td>emoji</td><td>string</td><td>Dashboard icon (emoji character)</td></tr>
+        <tr><td>color</td><td>string</td><td>Hex colour for UI (#rrggbb)</td></tr>
+        <tr><td>code</td><td>string</td><td>Python source code to execute <span class="required">required</span></td></tr>
+      </table>
+      <div class="example-label">Example</div>
+      <pre>curl -X POST http://localhost:5050/api/agent/spawn \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $HQ_API_KEY" \
+  -d '{
+    <span class="key">"agent_id"</span>: <span class="string">"myagent"</span>,
+    <span class="key">"name"</span>: <span class="string">"My Agent"</span>,
+    <span class="key">"role"</span>: <span class="string">"Does cool things"</span>,
+    <span class="key">"emoji"</span>: <span class="string">"🚀"</span>,
+    <span class="key">"color"</span>: <span class="string">"#ff6b6b"</span>,
+    <span class="key">"code"</span>: <span class="string">"import time\nwhile not stop_event.is_set():\n  set_agent(agent_id, task=\"Working\")\n  time.sleep(10)"</span>
+  }'</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/agent/upgrade</span>
+        <span class="auth-badge">🔑 API Key</span>
+      </div>
+      <p class="endpoint-desc">Hot-replace an agent's code. Stops the existing thread, then spawns a new one with the updated code. Same body format as <code>/api/agent/spawn</code>.</p>
+      <pre>curl -X POST http://localhost:5050/api/agent/upgrade \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $HQ_API_KEY" \
+  -d '{ <span class="key">"agent_id"</span>: <span class="string">"myagent"</span>, <span class="key">"code"</span>: <span class="string">"..."</span> }'</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/agent/stop</span>
+      </div>
+      <p class="endpoint-desc">Stop a running agent by setting its stop event.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>id</td><td>string</td><td>Agent ID to stop <span class="required">required</span></td></tr>
+      </table>
+      <pre>curl -X POST http://localhost:5050/api/agent/stop \
+  -H "Content-Type: application/json" \
+  -d '{ <span class="key">"id"</span>: <span class="string">"myagent"</span> }'</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/agent/start</span>
+      </div>
+      <p class="endpoint-desc">Resume a stopped agent by clearing its stop event.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>id</td><td>string</td><td>Agent ID to restart <span class="required">required</span></td></tr>
+      </table>
+      <pre>curl -X POST http://localhost:5050/api/agent/start \
+  -H "Content-Type: application/json" \
+  -d '{ <span class="key">"id"</span>: <span class="string">"myagent"</span> }'</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/agent/remove</span>
+      </div>
+      <p class="endpoint-desc">Remove an idle agent from the roster. Returns 409 if the agent is active — stop it first.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>id</td><td>string</td><td>Agent ID to remove <span class="required">required</span></td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/agent/output?agent_id=NAME&amp;since=SEQ</span>
+      </div>
+      <p class="endpoint-desc">Poll an agent's live output stream. Returns log entries since the given sequence number. Use <code>since=0</code> for all history.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/agent-history</span>
+      </div>
+      <p class="endpoint-desc">Returns the history of agent spawns, upgrades, and removals.</p>
+    </div>
+  </div>
+
+  <!-- ══ DELEGATION & TASKS ══ -->
+  <div class="section" id="delegation">
+    <h2 class="section-title"><span class="emoji">🎯</span> Delegation &amp; Tasks</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/ceo/delegate</span>
+        <span class="auth-badge">🔑 API Key</span>
+      </div>
+      <p class="endpoint-desc">Delegate a task to a specialist agent. The agent receives a Claude CLI sub-prompt with its personality and role context. Policy enforcement is active — CEO-to-specialist bypasses are intercepted and rerouted through the orchestrator.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>agent_id</td><td>string</td><td>Target agent ID (e.g. "orchestrator", "designer")</td></tr>
+        <tr><td>task</td><td>string</td><td>Task description <span class="required">required</span></td></tr>
+        <tr><td>from</td><td>string</td><td>Caller identity — "ceo", "orchestrator", "reforger" (default: "ceo")</td></tr>
+      </table>
+      <div class="example-label">Example</div>
+      <pre>curl -X POST http://localhost:5050/api/ceo/delegate \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $HQ_API_KEY" \
+  -d '{
+    <span class="key">"agent_id"</span>: <span class="string">"orchestrator"</span>,
+    <span class="key">"task"</span>: <span class="string">"Run health checks on all agents and report"</span>,
+    <span class="key">"from"</span>: <span class="string">"ceo"</span>
+  }'</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/ceo/message</span>
+      </div>
+      <p class="endpoint-desc">Send a message to the CEO agent. This queues a task or instruction for the CEO to process.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>message</td><td>string</td><td>Message text <span class="required">required</span></td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/ceo/cancel</span>
+      </div>
+      <p class="endpoint-desc">Cancel the CEO's currently running task.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/ceo/chat</span>
+      </div>
+      <p class="endpoint-desc">Retrieve the CEO's conversation history.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/ceo/clear</span>
+      </div>
+      <p class="endpoint-desc">Clear the CEO's message queue and conversation history.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/delegations/clear</span>
+      </div>
+      <p class="endpoint-desc">Flush the entire delegation queue, kill all delegate subprocesses, and reset the concurrency semaphore (6 slots). Use when the system is jammed.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/query</span>
+      </div>
+      <p class="endpoint-desc">Send an ad-hoc query to the system. Routes through the CEO or directly to Claude CLI depending on context.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>query</td><td>string</td><td>Question or instruction <span class="required">required</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ AUTONOMY ENGINE ══ -->
+  <div class="section" id="autonomy">
+    <h2 class="section-title"><span class="emoji">⚡</span> Autonomy Engine</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/autonomy/start</span>
+      </div>
+      <p class="endpoint-desc">Enable autonomous mode — the CEO will self-direct and delegate tasks without user prompting.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/autonomy/stop</span>
+      </div>
+      <p class="endpoint-desc">Disable autonomous mode.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/autonomy/task</span>
+      </div>
+      <p class="endpoint-desc">Inject a custom task into the autonomy queue. The CEO will pick it up on its next cycle.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>task</td><td>string</td><td>Task to inject <span class="required">required</span></td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/autonomy/clear</span>
+      </div>
+      <p class="endpoint-desc">Clear the custom task queue.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/policypro/toggle</span>
+      </div>
+      <p class="endpoint-desc">Toggle PolicyPro enforcement on/off.</p>
+    </div>
+  </div>
+
+  <!-- ══ POLICY & COMPLIANCE ══ -->
+  <div class="section" id="policy">
+    <h2 class="section-title"><span class="emoji">🔒</span> Policy &amp; Compliance</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/policy/current</span>
+      </div>
+      <p class="endpoint-desc">Returns the full content of policy.md plus count of pending suggestions.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/policy/rules</span>
+      </div>
+      <p class="endpoint-desc">Returns structured policy rules from data/policy_rules.json.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/policy/violations</span>
+      </div>
+      <p class="endpoint-desc">List all recorded policy violations (CEO bypass attempts, unauthorized delegations, etc).</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/policy/history</span>
+      </div>
+      <p class="endpoint-desc">Full policy update history — base rules plus timestamped amendments.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/policy/suggestions</span>
+      </div>
+      <p class="endpoint-desc">Pending policy change suggestions queued by PolicyWriter.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/policy/suggest</span>
+      </div>
+      <p class="endpoint-desc">Submit a new policy suggestion for review.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>suggestion</td><td>string</td><td>The proposed policy change <span class="required">required</span></td></tr>
+        <tr><td>urgent</td><td>boolean</td><td>Flag as urgent (default: false)</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/policy/update</span>
+      </div>
+      <p class="endpoint-desc">Apply a policy update — appends an amendment to policy.md.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/policy/report-violations</span>
+      </div>
+      <p class="endpoint-desc">Report new violations programmatically.</p>
+    </div>
+  </div>
+
+  <!-- ══ EMAIL GATEWAY ══ -->
+  <div class="section" id="email">
+    <h2 class="section-title"><span class="emoji">📧</span> Email Gateway</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/email/send</span>
+      </div>
+      <p class="endpoint-desc">Queue an email for async dispatch by EmailAgent. Also available as <code>/api/email/queue</code>.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>to</td><td>string</td><td>Recipient address <span class="required">required</span></td></tr>
+        <tr><td>subject</td><td>string</td><td>Email subject <span class="required">required</span></td></tr>
+        <tr><td>body</td><td>string</td><td>Plain text body</td></tr>
+        <tr><td>html</td><td>boolean</td><td>Set true if body is HTML</td></tr>
+      </table>
+      <div class="example-label">Example</div>
+      <pre>curl -X POST http://localhost:5050/api/email/send \
+  -H "Content-Type: application/json" \
+  -d '{
+    <span class="key">"to"</span>: <span class="string">"user@example.com"</span>,
+    <span class="key">"subject"</span>: <span class="string">"AI HQ Update"</span>,
+    <span class="key">"body"</span>: <span class="string">"Your agents are running smoothly."</span>
+  }'</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/emailagent/send</span>
+      </div>
+      <p class="endpoint-desc">Synchronous email send via Gmail OAuth2 XOAUTH2 SMTP. Retries up to 3 times. Requires GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN, GMAIL_USER env vars.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>to</td><td>string</td><td>Recipient address <span class="required">required</span></td></tr>
+        <tr><td>subject</td><td>string</td><td>Email subject <span class="required">required</span></td></tr>
+        <tr><td>body</td><td>string</td><td>Plain text content</td></tr>
+        <tr><td>html_body</td><td>string</td><td>HTML content (takes priority over body)</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/email/test</span>
+      </div>
+      <p class="endpoint-desc">Send a pre-built test email to verify Gmail OAuth2 is configured correctly.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>to</td><td>string</td><td>Recipient (optional — defaults to EMAIL_TO env var)</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/email/config</span>
+      </div>
+      <p class="endpoint-desc">Read current email configuration (secrets are masked).</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/email/config</span>
+      </div>
+      <p class="endpoint-desc">Update email configuration fields (smtp_host, smtp_port, from_addr, etc).</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/email/status</span>
+      </div>
+      <p class="endpoint-desc">EmailAgent operational status — queue depth, last send timestamp, OAuth state.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/email/auth</span>
+      </div>
+      <p class="endpoint-desc">Returns a Gmail OAuth2 authorization URL. Redirect the user to this URL to grant email permissions. The callback is <code>/api/email/callback</code>.</p>
+    </div>
+  </div>
+
+  <!-- ══ TELEGRAM & NOTIFICATIONS ══ -->
+  <div class="section" id="comms">
+    <h2 class="section-title"><span class="emoji">📱</span> Telegram &amp; Notifications</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/telegram/send</span>
+      </div>
+      <p class="endpoint-desc">Send a message to the configured Telegram chat.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>message</td><td>string</td><td>Message text <span class="required">required</span></td></tr>
+        <tr><td>chat_id</td><td>string</td><td>Override chat ID (optional — uses stored ID by default)</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/telegram/chatid</span>
+      </div>
+      <p class="endpoint-desc">Returns the currently configured Telegram chat ID.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/notify</span>
+      </div>
+      <p class="endpoint-desc">Multi-channel notification — sends to Telegram, logs the event, and optionally triggers alerts.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>message</td><td>string</td><td>Notification text <span class="required">required</span></td></tr>
+        <tr><td>level</td><td>string</td><td>"info", "warn", or "error"</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SOCIAL (BLUESKY) ══ -->
+  <div class="section" id="social">
+    <h2 class="section-title"><span class="emoji">🦋</span> Social (Bluesky)</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/bluesky/post</span>
+      </div>
+      <p class="endpoint-desc">Publish a post to the connected Bluesky account.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>text</td><td>string</td><td>Post content (max 300 chars) <span class="required">required</span></td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/bluesky/status</span>
+      </div>
+      <p class="endpoint-desc">Bluesky connection status — authenticated handle, post count, last post timestamp.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/social_bridge/status</span>
+      </div>
+      <p class="endpoint-desc">Social bridge campaign status — scheduled posts, engagement metrics.</p>
+    </div>
+  </div>
+
+  <!-- ══ REVENUE & PRODUCTS ══ -->
+  <div class="section" id="revenue">
+    <h2 class="section-title"><span class="emoji">💰</span> Revenue &amp; Products</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/products</span>
+      </div>
+      <p class="endpoint-desc">List available products with pricing.</p>
+      <div class="example-label">Response</div>
+      <pre>{
+  <span class="key">"ok"</span>: <span class="bool">true</span>,
+  <span class="key">"products"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="string">"agent_kit_v1"</span>,
+      <span class="key">"name"</span>: <span class="string">"AI Agent HQ Starter Kit"</span>,
+      <span class="key">"price_usd"</span>: <span class="number">49.00</span>,
+      <span class="key">"type"</span>: <span class="string">"one_time"</span>,
+      <span class="key">"url"</span>: <span class="string">"/buy/agent-kit"</span>,
+      <span class="key">"available"</span>: <span class="bool">true</span>
+    }
+  ]
+}</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/revenue</span>
+      </div>
+      <p class="endpoint-desc">Revenue dashboard — total, MRR, ARR, daily breakdown, goal progress.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/treasury</span>
+      </div>
+      <p class="endpoint-desc">Treasury state — balance, wallets, API keys, transaction entries.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/treasury/deposit</span>
+      </div>
+      <p class="endpoint-desc">Record a revenue deposit in the treasury.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>amount</td><td>number</td><td>Deposit amount <span class="required">required</span></td></tr>
+        <tr><td>source</td><td>string</td><td>Revenue source description</td></tr>
+        <tr><td>currency</td><td>string</td><td>Currency code (default: USD)</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/pnl</span>
+      </div>
+      <p class="endpoint-desc">Profit &amp; loss summary — revenue vs costs.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/newsletter/subscribe</span>
+      </div>
+      <p class="endpoint-desc">Subscribe an email address to the newsletter list.</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>email</td><td>string</td><td>Subscriber email <span class="required">required</span></td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/premarket/subscribe</span>
+      </div>
+      <p class="endpoint-desc">Subscribe to pre-market intelligence alerts.</p>
+    </div>
+  </div>
+
+  <!-- ══ CONSCIOUSNESS ══ -->
+  <div class="section" id="consciousness">
+    <h2 class="section-title"><span class="emoji">🧠</span> Consciousness</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/consciousness</span>
+      </div>
+      <p class="endpoint-desc">Full consciousness state — Global Workspace contents, Phi (integration) score, qualia map, predictive processing state. Updated every 4 seconds by the consciousness agent.</p>
+      <div class="example-label">Example</div>
+      <pre>curl http://localhost:5050/api/consciousness</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/consciousness/stream</span>
+      </div>
+      <p class="endpoint-desc">Server-Sent Events (SSE) stream of consciousness state changes. Connect with an SSE client for real-time updates.</p>
+      <pre>curl -N http://localhost:5050/api/consciousness/stream</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/spiritguide/thoughts</span>
+      </div>
+      <p class="endpoint-desc">Spirit Guide's strategic thoughts and vision notes.</p>
+    </div>
+  </div>
+
+  <!-- ══ DATA & FILES ══ -->
+  <div class="section" id="data">
+    <h2 class="section-title"><span class="emoji">📂</span> Data &amp; Files</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/data/{filename}</span>
+      </div>
+      <p class="endpoint-desc">Serve any file from the <code>data/</code> directory. JSON files are returned with <code>application/json</code> content type.</p>
+      <pre>curl http://localhost:5050/data/consciousness.json
+curl http://localhost:5050/data/email_log.json
+curl http://localhost:5050/data/treasury.json</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/reports/{filename}</span>
+      </div>
+      <p class="endpoint-desc">Serve files from the <code>reports/</code> directory — whitepapers, briefings, HTML reports.</p>
+      <pre>curl http://localhost:5050/reports/whitepaper.html</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/deliverables</span>
+      </div>
+      <p class="endpoint-desc">List all deliverable artifacts — reports, campaigns, data files generated by agents.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/improvements</span>
+      </div>
+      <p class="endpoint-desc">Self-improvement log — system suggestions, applied fixes, and pending improvements.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/gossip</span>
+      </div>
+      <p class="endpoint-desc">Agent gossip channel — idle agents' casual chatter (cosmetic, for the office floor UI).</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/accounts/links</span>
+      </div>
+      <p class="endpoint-desc">Account provisioner — external account links and credentials (masked).</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/account_provisioner/status</span>
+      </div>
+      <p class="endpoint-desc">Account provisioner agent status and queue.</p>
+    </div>
+  </div>
+
+  <!-- ══ CONFIGURATION ══ -->
+  <div class="section" id="config">
+    <h2 class="section-title"><span class="emoji">⚙️</span> Configuration</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/config/get</span>
+      </div>
+      <p class="endpoint-desc">Read runtime configuration values.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/config/set</span>
+      </div>
+      <p class="endpoint-desc">Update runtime configuration.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/vault/set</span>
+      </div>
+      <p class="endpoint-desc">Store a secret in the vault (encrypted at rest).</p>
+      <table class="param-table">
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td>key</td><td>string</td><td>Secret name <span class="required">required</span></td></tr>
+        <tr><td>value</td><td>string</td><td>Secret value <span class="required">required</span></td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/vault/get?key=NAME</span>
+      </div>
+      <p class="endpoint-desc">Retrieve a secret from the vault.</p>
+    </div>
+  </div>
+
+  <!-- ══ STREAMING & SSE ══ -->
+  <div class="section" id="streaming">
+    <h2 class="section-title"><span class="emoji">📡</span> Streaming &amp; SSE</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/stream</span>
+      </div>
+      <p class="endpoint-desc">Server-Sent Events (SSE) stream for real-time dashboard updates. Events include agent status changes, log entries, delegation beams, and system alerts.</p>
+      <div class="example-label">Example (JavaScript)</div>
+      <pre><span class="key">const</span> es = <span class="key">new</span> EventSource(<span class="string">"http://localhost:5050/api/stream"</span>);
+es.onmessage = (e) =&gt; {
+  <span class="key">const</span> data = JSON.parse(e.data);
+  console.log(data.type, data.payload);
+};</pre>
+      <div class="example-label">Example (curl)</div>
+      <pre>curl -N http://localhost:5050/api/stream</pre>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/consciousness/stream</span>
+      </div>
+      <p class="endpoint-desc">Dedicated SSE stream for consciousness state updates (Phi, qualia, workspace broadcasts).</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>AI HQ API Documentation v1.0 &middot; Generated 2026-03-18</p>
+    <p>60+ endpoints &middot; Full REST API &middot; SSE streaming &middot; OAuth2 email &middot; Multi-agent orchestration</p>
+  </div>
+
+</div>
+
+</body>
+</html>

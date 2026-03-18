@@ -1,0 +1,23 @@
+{
+  "builder": {
+    "structure": "Server Vault",
+    "phase": "Systems",
+    "progress_pct": 80,
+    "completed_structures": [
+      "Agent Barracks",
+      "Server Vault",
+      "Server Vault",
+      "Monitor Station",
+      "Monitor Station",
+      "API Gateway Tower",
+      "Server Vault",
+      "API Gateway Tower"
+    ]
+  },
+  "janitor": {
+    "timestamp": "2026-03-15T15:07:42Z",
+    "freed_mb": 0.0,
+    "zombie_procs": 0,
+    "old_logs": 0
+  }
+}

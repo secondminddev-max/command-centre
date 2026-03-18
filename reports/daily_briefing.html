@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Briefing — 17 March 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #0d0d0d;
+      color: #e0e0e0;
+      padding: 32px 16px;
+    }
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #0f1923 0%, #1a2a1a 50%, #0f1923 100%);
+      border-bottom: 1px solid #1e3a1e;
+      padding: 28px 32px 24px;
+      text-align: center;
+    }
+    .header .logo {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #3a9a4a;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f0f0f0;
+      margin-bottom: 4px;
+    }
+    .header .date {
+      font-size: 13px;
+      color: #6a7a6a;
+    }
+    .header .tagline {
+      margin-top: 10px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #3a9a4a;
+      opacity: 0.8;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      padding: 24px 32px;
+      border-bottom: 1px solid #1e1e1e;
+    }
+    .section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #3a9a4a;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* ── ROSTER GRID ── */
+    .roster-summary {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .roster-card {
+      flex: 1;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .roster-card .count {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .roster-card .label {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .count-active  { color: #3a9a4a; }
+    .count-idle    { color: #8888aa; }
+    .count-busy    { color: #d4a44a; }
+    .count-error   { color: #cc4444; }
+
+    .agent-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .agent-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      padding: 6px 8px;
+      border-bottom: 1px solid #222;
+    }
+    .agent-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #1a1a1a;
+      color: #bbb;
+      vertical-align: top;
+    }
+    .agent-table tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-active  { background: #0a2a10; color: #3a9a4a; border: 1px solid #1a4a22; }
+    .badge-idle    { background: #14142a; color: #7a7aaa; border: 1px solid #24245a; }
+    .badge-busy    { background: #2a1e00; color: #d4a44a; border: 1px solid #4a3a00; }
+    .badge-error   { background: #2a0a0a; color: #cc4444; border: 1px solid #4a1a1a; }
+
+    /* ── ALERTS ── */
+    .alert-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .alert-item:last-child { margin-bottom: 0; }
+    .alert-high   { background: #1e0a0a; border: 1px solid #4a1a1a; }
+    .alert-medium { background: #1e1500; border: 1px solid #4a3a00; }
+    .alert-info   { background: #0a140a; border: 1px solid #1a3a1a; }
+    .alert-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      width: 22px;
+      text-align: center;
+      margin-top: 1px;
+    }
+    .alert-body .alert-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 3px;
+    }
+    .alert-body .alert-detail {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.5;
+    }
+    .alert-body .alert-meta {
+      font-size: 11px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    /* ── COMMERCIAL MISSION ── */
+    .mission-score {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .score-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: conic-gradient(#d4a44a 0% 0%, #1e1e1e 0% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #d4a44a;
+      border: 3px solid #3a2a00;
+    }
+    .mission-meta { flex: 1; }
+    .mission-meta .mission-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 4px;
+    }
+    .mission-meta .mission-sub {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .opportunity {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .opportunity:last-child { margin-bottom: 0; }
+    .opp-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .opp-rank {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #444;
+      flex-shrink: 0;
+    }
+    .opp-priority {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .prio-today { background: #1e3a1e; color: #3a9a4a; border: 1px solid #2a5a2a; }
+    .prio-week  { background: #2a2000; color: #d4a44a; border: 1px solid #4a3800; }
+    .prio-parallel { background: #1a1a2a; color: #7a7aaa; border: 1px solid #2a2a4a; }
+
+    .opp-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 4px;
+    }
+    .opp-tagline {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .opp-forecast {
+      font-size: 11px;
+      color: #888;
+    }
+    .opp-forecast span { color: #3a9a4a; font-weight: 600; }
+
+    .revenue-zero {
+      text-align: center;
+      padding: 10px 0 4px;
+    }
+    .revenue-zero .mrr-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #666;
+    }
+    .revenue-zero .mrr-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #444;
+      margin-top: 4px;
+    }
+    .revenue-zero .mrr-target {
+      font-size: 12px;
+      color: #555;
+      margin-top: 6px;
+    }
+    .progress-bar-wrap {
+      margin: 12px 0 4px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #3a9a4a;
+      border-radius: 4px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 20px 32px;
+      background: #0f0f0f;
+      border-top: 1px solid #1e1e1e;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 11px;
+      color: #444;
+      line-height: 1.8;
+    }
+    .footer a { color: #3a9a4a; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ─── HEADER ─── -->
+  <div class="header">
+    <div class="logo">SecondMind HQ</div>
+    <h1>Daily Morning Briefing</h1>
+    <div class="date">Tuesday, 17 March 2026 &nbsp;·&nbsp; 07:30 AEDT</div>
+    <div class="tagline">Grow &bull; Generate Value &bull; Scale</div>
+  </div>
+
+  <!-- ─── SECTION 1: AGENT ROSTER ─── -->
+  <div class="section">
+    <div class="section-label">&#9632; Agent Roster Status</div>
+
+    <div class="roster-summary">
+      <div class="roster-card">
+        <div class="count count-active">12</div>
+        <div class="label">Active</div>
+      </div>
+      <div class="roster-card">
+        <div class="count count-busy">1</div>
+        <div class="label">Busy</div>
+      </div>
+      <div class="roster-card">
+        <div class="count count-idle">3</div>
+        <div class="label">Idle</div>
+      </div>
+      <div class="roster-card">
+        <div class="count count-error">0</div>
+        <div class="label">Errors</div>
+      </div>
+    </div>
+
+    <table class="agent-table">
+      <thead>
+        <tr>
+          <th>Agent</th>
+          <th>Status</th>
+          <th>Last Task</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ceo</td>
+          <td><span class="badge badge-busy">Busy</span></td>
+          <td>Observing spirit guide thoughts; delegating revenue ops</td>
+        </tr>
+        <tr>
+          <td>orchestrator</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Idle — ready</td>
+        </tr>
+        <tr>
+          <td>sysmon</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>HeatIndex 32 WARM | CPU 16.1% | RAM 51.8% | Disk 3.7%</td>
+        </tr>
+        <tr>
+          <td>apipatcher</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Routes live: /api/improvements /data/* /reports/* | Cycle #16</td>
+        </tr>
+        <tr>
+          <td>alertwatch</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>OK | CPU 16.2% | RAM 51.9% | Agents 12/16 | Check #16</td>
+        </tr>
+        <tr>
+          <td>policypro</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Scanning violation log — CLEAN | 13/16 agents up</td>
+        </tr>
+        <tr>
+          <td>filewatch</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Watching 18 files | 2 changes logged</td>
+        </tr>
+        <tr>
+          <td>metricslog</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Recording metrics every 10 min | CPU 16.6% RAM 52.6%</td>
+        </tr>
+        <tr>
+          <td>spiritguide</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Mission direction cycle running</td>
+        </tr>
+        <tr>
+          <td>demo_tester</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Tests: 4 passed, 0 failed | Last: output OK | Cycle #2</td>
+        </tr>
+        <tr>
+          <td>designer</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Cycle #1: Checked animation smoothness and CSS transitions</td>
+        </tr>
+        <tr>
+          <td>reforger</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Idle</td>
+        </tr>
+        <tr>
+          <td>telegram</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>Channel configured; dispatching alerts</td>
+        </tr>
+        <tr>
+          <td>netscout</td>
+          <td><span class="badge badge-idle">Idle</span></td>
+          <td>Standby — awaiting task from orchestrator</td>
+        </tr>
+        <tr>
+          <td>researcher</td>
+          <td><span class="badge badge-idle">Idle</span></td>
+          <td>Standby — awaiting task from orchestrator</td>
+        </tr>
+        <tr>
+          <td>janitor</td>
+          <td><span class="badge badge-idle">Idle</span></td>
+          <td>Standby — RAM 52% | CPU 16% | Disk 6%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── SECTION 2: ALERTS & ANOMALIES ─── -->
+  <div class="section">
+    <div class="section-label">&#9632; Alerts &amp; Anomalies — Last Hour</div>
+
+    <div class="alert-item alert-high">
+      <div class="alert-icon">&#9888;</div>
+      <div class="alert-body">
+        <div class="alert-title">CEO Policy Violation — Direct Work Bypass (×3)</div>
+        <div class="alert-detail">CEO executed Bash commands directly (curl, python3) instead of delegating to operative agents. Classified as <strong>direct_work_bypass</strong> by PolicyPro — severity: HIGH. All three events occurred within 35 seconds at 07:19.</div>
+        <div class="alert-meta">07:19:11 &nbsp;·&nbsp; 07:19:14 &nbsp;·&nbsp; 07:19:46 &nbsp;·&nbsp; Logged in data/policy_violations.json</div>
+      </div>
+    </div>
+
+    <div class="alert-item alert-medium">
+      <div class="alert-icon">&#9888;</div>
+      <div class="alert-body">
+        <div class="alert-title">Server Restart Error — Port 5050 Already In Use</div>
+        <div class="alert-detail">OSError [Errno 48]: Address already in use on port 5050 during last server restart. Server was already running; the bind failed gracefully. No data loss. A clean shutdown is needed before restarting.</div>
+        <div class="alert-meta">Logged in server.log &nbsp;·&nbsp; Existing PID at agent_server.pid</div>
+      </div>
+    </div>
+
+    <div class="alert-item alert-medium">
+      <div class="alert-icon">&#9650;</div>
+      <div class="alert-body">
+        <div class="alert-title">Agent Scheduler TypeError — set_agent() Signature Mismatch</div>
+        <div class="alert-detail">TypeError in agent_server.py line 477: <code>set_agent()</code> takes 1 positional argument but 5 were given. Affects agent scheduler thread. Some agents may have been initialised with stale state before the error was hit.</div>
+        <div class="alert-meta">server.log &nbsp;·&nbsp; Investigate <code>_run_with_ev</code> / <code>run_scheduler</code> call sites</div>
+      </div>
+    </div>
+
+    <div class="alert-item alert-info">
+      <div class="alert-icon">&#8505;</div>
+      <div class="alert-body">
+        <div class="alert-title">urllib3 / LibreSSL Compatibility Warning (Repeated)</div>
+        <div class="alert-detail">urllib3 v2 requires OpenSSL 1.1.1+; system Python 3.9 is compiled with LibreSSL 2.8.3. Non-blocking — connections still succeed — but TLS behaviour may differ from production. Recommend upgrading to a Homebrew Python 3.11+.</div>
+        <div class="alert-meta">Low priority &nbsp;·&nbsp; See: urllib3/urllib3#3020</div>
+      </div>
+    </div>
+
+    <div class="alert-item alert-info">
+      <div class="alert-icon">&#10003;</div>
+      <div class="alert-body">
+        <div class="alert-title">SendGrid API Key Not Configured</div>
+        <div class="alert-detail">SENDGRID_API_KEY is empty in email_config.json. EmailAgent will fall back to SMTP (Gmail / smtp.gmail.com:587). Email delivery is still functional. Set <code>SENDGRID_API_KEY=SG.xxxx</code> as an env var to enable the primary transport.</div>
+        <div class="alert-meta">data/email_config.json &nbsp;·&nbsp; data/sendgrid_setup.json has setup instructions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 3: COMMERCIAL MISSION ─── -->
+  <div class="section">
+    <div class="section-label">&#9632; Commercial Mission Progress</div>
+
+    <div class="mission-score">
+      <div class="score-circle">B</div>
+      <div class="mission-meta">
+        <div class="mission-title">System Health: 84 / 100 &nbsp;(Grade B)</div>
+        <div class="mission-sub">
+          24 of 28 agents active &nbsp;·&nbsp; 0 errors &nbsp;·&nbsp; 4 idle<br/>
+          Mission: <em>Grow, generate value, and scale — build the world's most capable autonomous AI operations platform.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue Counter -->
+    <div class="revenue-zero">
+      <div class="mrr-val">$0</div>
+      <div class="mrr-label">MRR &nbsp;/&nbsp; Monthly Recurring Revenue</div>
+      <div class="mrr-target">Target: $1,000 USD / month &nbsp;·&nbsp; 0% achieved</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" style="width:0%"></div>
+    </div>
+    <p style="font-size:11px;color:#444;text-align:center;margin-bottom:20px;">Revenue cycle #88 &nbsp;·&nbsp; Treasury balance: $0 &nbsp;·&nbsp; Wallets: none configured</p>
+
+    <!-- Ranked Opportunities -->
+    <div class="opportunity">
+      <div class="opp-header">
+        <span class="opp-rank">#1</span>
+        <span class="opp-priority prio-today">TODAY</span>
+      </div>
+      <div class="opp-name">ASX Dividend &amp; Franking Credit Tracker</div>
+      <div class="opp-tagline">Digital product — one-time sale at $29 AUD. Gumroad listing copy already written. Zero build time remaining except the Excel file (~3–5 hrs).</div>
+      <div class="opp-forecast">30-day forecast: <span>$290–$580</span> &nbsp;·&nbsp; 90-day: <span>$870–$2,900</span> &nbsp;·&nbsp; Upside: <span>$8,700+</span></div>
+    </div>
+
+    <div class="opportunity">
+      <div class="opp-header">
+        <span class="opp-rank">#2</span>
+        <span class="opp-priority prio-week">THIS WEEK</span>
+      </div>
+      <div class="opp-name">ASX Announcement Intelligence API</div>
+      <div class="opp-tagline">Micro-SaaS subscription — AI-parsed ASX announcements via Telegram + REST API. Existing scraper pipeline live. Day-1 deliverable: working Telegram bot.</div>
+      <div class="opp-forecast">3-month MRR: <span>$500–$1,500</span> &nbsp;·&nbsp; 12-month MRR: <span>$8,000–$15,000</span></div>
+    </div>
+
+    <div class="opportunity">
+      <div class="opp-header">
+        <span class="opp-rank">#3</span>
+        <span class="opp-priority prio-parallel">PARALLEL TRACK</span>
+      </div>
+      <div class="opp-name">Agent Command Centre — Developer SaaS</div>
+      <div class="opp-tagline">Real-time AI agent orchestration dashboard. Fastest path to first dollar: add a sponsor/support button + Show HN post today. Long-term: standalone SaaS at $9–$99/mo.</div>
+      <div class="opp-forecast">Immediate: <span>$0–$50 tips</span> &nbsp;·&nbsp; 30-day if posted: <span>$100–$500</span> &nbsp;·&nbsp; 6-month MRR: <span>$500–$3,000</span></div>
+    </div>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <div class="footer">
+    <p>
+      SecondMind HQ &nbsp;·&nbsp; Agent Command Centre &nbsp;·&nbsp; <a href="http://localhost:5050">localhost:5050</a><br/>
+      Generated by EmailAgent &nbsp;·&nbsp; 17 March 2026 &nbsp;·&nbsp; This briefing is queued and ready to dispatch<br/>
+      <span style="color:#333">To activate delivery: <code>export SENDGRID_API_KEY=SG.xxxx</code> then restart agent_server.py</span>
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

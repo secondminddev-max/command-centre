@@ -1,0 +1,209 @@
+{
+  "generated": "2026-03-18T14:00:00Z",
+  "last_validated": "2026-03-18",
+  "status": "APPROVED_FOR_BUILD",
+  "previous_concepts": [
+    "WhisperEdge (earnings intelligence) — retained for reference",
+    "RivalRadar (competitor intelligence briefings) — retained for reference",
+    "US Market Sentiment API ($29/mo) — MVP LIVE: GET /api/sentiment, landing at reports/sentiment_api.html, Stripe wired"
+  ],
+  "recommended_product": {
+    "product_name": "PreMarket Pulse",
+    "description": "AI-powered daily pre-market intelligence briefing delivered by email before US market open (5:30am ET). Synthesizes overnight futures moves, unusual options activity, earnings calendar with whisper numbers, key technical levels, and breaking news sentiment into a single concise 3-minute read. Unlike raw data scanners ($100-150/mo) that require expertise and active screen time, PreMarket Pulse does the analysis FOR the trader — actionable narrative, not data dumps. Think 'Morning Brew meets Bloomberg Terminal, for $19/mo.'",
+    "target_market": "US retail traders and part-time investors. ~60M+ active US brokerage accounts. Sweet spot: professionals with day jobs who swing trade or manage self-directed IRAs, part-time options traders, and self-taught investors who follow 10-50 tickers but lack time to monitor multiple platforms before market open.",
+    "pricing": {
+      "tiers": [
+        {
+          "name": "Free",
+          "price": "$0/mo",
+          "features": [
+            "Weekly market wrap email (Fridays)",
+            "Top 3 unusual options activity highlights",
+            "Basic earnings calendar for the week ahead",
+            "Bluesky-exclusive daily teaser posts"
+          ]
+        },
+        {
+          "name": "Trader",
+          "price": "$19/mo",
+          "features": [
+            "Daily pre-market briefing email (5:30am ET, Mon-Fri)",
+            "Full unusual options activity scan (top 10 tickers daily)",
+            "Earnings whisper analysis with beat/miss probability",
+            "Key support/resistance levels for SPY, QQQ, IWM",
+            "AI-generated trade idea of the day with risk/reward",
+            "Sector rotation heatmap",
+            "Access to web dashboard with 30-day briefing archive"
+          ]
+        },
+        {
+          "name": "Pro",
+          "price": "$49/mo",
+          "features": [
+            "Everything in Trader tier",
+            "Real-time unusual options activity alerts via email (up to 20/day)",
+            "Custom watchlist briefings (up to 25 tickers)",
+            "Earnings preview deep-dives (day before each major report)",
+            "Weekly options flow summary with institutional positioning",
+            "After-hours earnings reaction alerts",
+            "Priority support"
+          ]
+        },
+        {
+          "name": "Institutional",
+          "price": "$99/mo",
+          "features": [
+            "Everything in Pro tier",
+            "API access to raw briefing data (JSON endpoint)",
+            "Custom sector/industry focus briefings",
+            "Unlimited watchlist tickers",
+            "Dark pool activity summary",
+            "Monthly macro outlook report"
+          ]
+        }
+      ]
+    },
+    "competitors": [
+      {
+        "name": "Trade Ideas (Holly AI)",
+        "pricing": "$118/mo (Standard), $228/mo (Premium)",
+        "gap": "Expensive, complex UI requiring active screen time, not a passive email briefing — targets full-time day traders"
+      },
+      {
+        "name": "Unusual Whales",
+        "pricing": "$147/mo or $787/yr",
+        "gap": "Raw options flow data requiring expertise to interpret. Steep learning curve. No narrative synthesis or pre-market briefing format"
+      },
+      {
+        "name": "Briefing.com",
+        "pricing": "$24.99/mo (Investor) to $49.99/mo (Trader)",
+        "gap": "Legacy 2000s design, information overload with no AI synthesis, no unusual options flow integration"
+      },
+      {
+        "name": "Earnings Whispers",
+        "pricing": "$49.95/mo",
+        "gap": "Earnings-only focus. No options flow data. No daily pre-market briefing format. No technical levels"
+      },
+      {
+        "name": "BlackBoxStocks",
+        "pricing": "$99.97/mo",
+        "gap": "Requires active monitoring via desktop app. Not email-first. Complex for casual traders"
+      },
+      {
+        "name": "Benzinga Pro",
+        "pricing": "$117/mo (Essential)",
+        "gap": "News terminal model requiring you to sit and watch. Not a curated briefing. Overwhelming for part-time traders"
+      },
+      {
+        "name": "Yahoo Finance Morning Brief",
+        "pricing": "Free",
+        "gap": "Generic editorial content. No unusual options data. No AI personalization. No actionable price levels. No trade ideas"
+      },
+      {
+        "name": "TrendSpider",
+        "pricing": "$107/mo+",
+        "gap": "Charting/scanning platform. Requires technical analysis knowledge. Not a briefing product"
+      }
+    ],
+    "competitive_advantage": "1) MASSIVE PRICE GAP: Options intelligence tools cluster at $100-228/mo. We enter at $19/mo — 5-10x cheaper — by using AI agents to automate what paid analysts do manually, with zero marginal cost per subscriber. 2) FORMAT INNOVATION: Email-first, 3-minute read before coffee. Every competitor requires active screen time in complex dashboards. We serve the 'glance and go' use case that 90% of retail traders actually need. 3) AI SYNTHESIS: We don't dump raw data. Our agents synthesize unusual options flow + earnings + technicals + overnight news into a coherent narrative with specific actionable takeaways. No competitor at any price point delivers this combined synthesis as a daily email. 4) ORGANIC DISTRIBUTION: Daily Bluesky teaser posts (one free highlight per day) create a content-driven growth loop. Free content → email signup → paid conversion. 5) NEAR-ZERO OPEX: Our entire agent stack runs autonomously — web scraping, scheduling, AI synthesis, email delivery, Stripe billing. No human analysts, no editorial team. 70%+ profit margins from subscriber #1.",
+    "buildable_today": true,
+    "required_agents": [
+      "Researcher — scrapes Barchart (free unusual options page), Yahoo Finance (earnings calendar, pre-market quotes), Finviz (sector performance, technical levels), SEC EDGAR (insider transactions)",
+      "Analyst — AI synthesis of all raw data into narrative briefing with actionable insights, trade ideas, risk/reward framing",
+      "EmailAgent — formatted HTML briefing delivery via SendGrid/email gateway to subscriber list",
+      "Scheduler — 5:00am ET daily cron: trigger scraping → analysis → email pipeline. Friday cron for weekly wrap",
+      "StripeAgent — checkout flow, subscription management, tier enforcement, trial periods",
+      "SocialAgent — daily Bluesky teaser posts with one compelling highlight from the briefing to drive organic signups",
+      "MetricsAgent — track subscriber growth, open rates, click rates, conversion funnels, churn, MRR"
+    ],
+    "mvp_features": [
+      "Daily pre-market email briefing generated by AI research agents scraping free data sources",
+      "Unusual options activity top 10 from Barchart free page",
+      "Earnings calendar with consensus estimates from Yahoo Finance",
+      "SPY / QQQ / IWM key overnight levels from futures data",
+      "AI-synthesized 3-minute narrative format (not raw tables)",
+      "Stripe checkout for $19/mo Trader tier",
+      "Landing page with email signup capturing free tier leads",
+      "Daily Bluesky teaser post with one highlight from the briefing",
+      "Subscriber management via SQLite database",
+      "Cron-scheduled generation at 5:00am ET, delivery at 5:30am ET"
+    ],
+    "data_sources_for_mvp": [
+      "Barchart free unusual options activity page (no API key needed)",
+      "Yahoo Finance earnings calendar + pre-market quotes (free)",
+      "Finviz screener for technical levels and sector performance (free)",
+      "SEC EDGAR for recent insider transactions (free, public API)",
+      "Google News / financial news RSS feeds for sentiment (free)"
+    ],
+    "go_to_market": {
+      "day_1": "Build data scraping pipeline, email HTML template, Stripe checkout, simple landing page",
+      "week_1": "Launch free tier on Bluesky with daily teaser posts. Start collecting email signups. Target: 100+ free subscribers",
+      "week_2": "Enable paid Trader tier ($19/mo). Convert 5-10% of free users. Target: 5-10 paid",
+      "month_1_target": "200 free subscribers, 15-20 paid ($285-$380 MRR)",
+      "month_3_target": "1,000 free subscribers, 80-100 paid ($1,520-$1,900 MRR)",
+      "month_6_target": "5,000 free subscribers, 400+ paid, launch Pro tier. Target: $10K+ MRR"
+    },
+    "revenue_potential": {
+      "conservative_6mo": "$2,000-$4,000 MRR (100-200 Trader subs at $19)",
+      "moderate_12mo": "$8,000-$15,000 MRR (mix of Trader + Pro + Institutional)",
+      "optimistic_18mo": "$30,000-$50,000 MRR (2,000+ paid subs across tiers)",
+      "rationale": "60M+ US brokerage accounts. Retail trading volumes remain elevated post-2020. Options trading by retail investors up 35% since 2020. Email newsletter model proven at scale (Morning Brew: 4M+ subs, The Hustle: acquired by HubSpot for reported $27M). Our price point ($19/mo) is impulse-buy territory for anyone with a brokerage account."
+    },
+    "why_this_wins": "PreMarket Pulse sits in a wide-open gap: too expensive for Yahoo Finance users, too cheap for Unusual Whales to worry about, and differentiated from Briefing.com by AI synthesis and modern email-first UX. The market is fragmented — no one owns the 'affordable daily AI market briefing' category. First-mover advantage in combining unusual options flow + earnings + technicals + news into a single $19/mo email product. Our multi-agent stack makes this operationally trivial to run at scale.",
+    "risks_and_mitigations": [
+      {
+        "risk": "Data source reliability (free scraping may break)",
+        "mitigation": "Build redundant scrapers for each data type. Graduate to paid APIs (Polygon.io, Barchart OnDemand) as revenue grows"
+      },
+      {
+        "risk": "SEC/FINRA concerns about investment advice",
+        "mitigation": "Clear disclaimers: 'informational only, not investment advice.' Report data and AI analysis, never make specific buy/sell recommendations with price targets"
+      },
+      {
+        "risk": "Email deliverability",
+        "mitigation": "Use SendGrid with proper DKIM/SPF/DMARC. Warm up sending domain. Keep content quality high to avoid spam filters"
+      },
+      {
+        "risk": "Competitor response (Briefing.com modernizes, Unusual Whales adds email tier)",
+        "mitigation": "Speed advantage — we can ship and iterate daily. Build subscriber lock-in through personalized watchlists and historical analysis"
+      }
+    ]
+  },
+  "additional_opportunity": {
+    "product_name": "FlowPulse — AI-Powered Options Flow Alerts API",
+    "description": "REST API + multi-channel alert service for US equity options flow. Users set custom filters (ticker, min premium, trade type, DTE) and receive AI-annotated push alerts via webhook, email, Discord bot, or Telegram bot when matching unusual activity is detected. Unlike every competitor, FlowPulse PUSHES personalized alerts TO the user with AI explanation — no dashboard babysitting required.",
+    "relationship_to_premarket_pulse": "Complementary product. PreMarket Pulse = daily pre-market briefing (passive, once/day). FlowPulse = real-time intraday custom alerts (active, throughout trading day). Same target audience, different use cases. Can bundle at discount.",
+    "pricing": [
+      {"tier": "Starter", "price": "$29/mo", "features": "5 filters, email+webhook, 15-min delay, 50 alerts/day, AI summaries"},
+      {"tier": "Pro", "price": "$59/mo", "features": "25 filters, all channels, real-time, unlimited alerts, API (1K calls/day), daily AI summary"},
+      {"tier": "API/Community", "price": "$99/mo", "features": "Unlimited filters, all channels, real-time, API (10K calls/day), white-label Discord bot, bulk export"}
+    ],
+    "key_competitors": [
+      {"name": "InsiderFinance", "price": "$75/mo", "gap": "NO custom alerts, dashboard-only"},
+      {"name": "Unusual Whales", "price": "$55-150/mo", "gap": "Generic bots, no personalized filters, no webhook/API"},
+      {"name": "FlowAlgo", "price": "$97/mo", "gap": "No API, no custom delivery, dashboard-only"},
+      {"name": "Tradytics", "price": "$69/mo", "gap": "Query-based bots (pull), not push alerts"},
+      {"name": "BlackBoxStocks", "price": "$80/mo", "gap": "Generic alerts, no customization, no API"},
+      {"name": "OptionStrat Flow", "price": "$49/mo", "gap": "Calculator-first, flow is secondary, limited alerts"}
+    ],
+    "unique_value": "ONLY service combining: (1) custom per-user filters, (2) multi-channel push delivery, (3) AI analysis per alert — at 30-60% below competitor pricing",
+    "data_source": "Polygon.io options flow API ($29/mo) or Barchart free unusual activity for MVP",
+    "mvp_timeline": "1-2 days core, 3-4 days full product",
+    "buildable_today": true
+  },
+  "research_sources": [
+    "https://www.barchart.com/options/unusual-activity",
+    "https://www.trade-ideas.com/",
+    "https://www.briefing.com/",
+    "https://www.earningswhispers.com/",
+    "https://www.levelfields.ai/",
+    "https://www.stocktitan.net/",
+    "https://optionstrat.com/flow",
+    "https://www.sweepcast.com/",
+    "https://www.insiderfinance.io/flow",
+    "https://tradersunion.com/interesting-articles/top-5-options-trading-alert-services/option-flow-scanners/",
+    "https://www.nxcode.io/resources/news/micro-saas-ideas-2026",
+    "https://elementor.com/blog/profitable-saas-micro-saas-ideas/",
+    "https://lovable.dev/guides/micro-saas-ideas-for-solopreneurs-2026"
+  ]
+}

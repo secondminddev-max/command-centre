@@ -1,0 +1,108 @@
+{
+  "agents": {
+    "sysmon": {
+      "name": "SysMonitor",
+      "role": "Real-time CPU, RAM & disk health monitor",
+      "emoji": "\ud83d\udce1",
+      "color": "#a855f7"
+    },
+    "ceo": {
+      "name": "CEO",
+      "role": "Chief Executive \u2014 routes all work, never executes directly",
+      "emoji": "\ud83d\udc54",
+      "color": "#ff6b6b"
+    },
+    "orchestrator": {
+      "name": "Orchestrator",
+      "role": "Mission Control \u2014 decomposes tasks and routes to specialist agents",
+      "emoji": "\ud83c\udfaf",
+      "color": "#ff6b35"
+    },
+    "apipatcher": {
+      "name": "APIPatcher",
+      "role": "API Gateway \u2014 extends and manages HTTP routes beyond core server",
+      "emoji": "\ud83d\udd0c",
+      "color": "#7b68ee"
+    },
+    "netscout": {
+      "name": "NetScout",
+      "role": "Network Scout \u2014 on-demand web intelligence and connectivity checks",
+      "emoji": "\ud83c\udf10",
+      "color": "#20b2aa"
+    },
+    "filewatch": {
+      "name": "FileWatch",
+      "role": "File Sentinel \u2014 monitors project directory for changes in real time",
+      "emoji": "\ud83d\udc41",
+      "color": "#daa520"
+    },
+    "metricslog": {
+      "name": "MetricsLog",
+      "role": "Metrics Historian \u2014 records CPU/RAM/disk performance over time",
+      "emoji": "\ud83d\udcca",
+      "color": "#3cb371"
+    },
+    "researcher": {
+      "name": "Researcher",
+      "role": "Intelligence Analyst \u2014 on-demand web research, data gathering and synthesis",
+      "emoji": "\ud83d\udd2c",
+      "color": "#9370db"
+    },
+    "alertwatch": {
+      "name": "AlertWatch",
+      "role": "Threshold Guardian \u2014 alerts on CPU, RAM, and agent health anomalies",
+      "emoji": "\ud83d\udea8",
+      "color": "#dc143c"
+    },
+    "demo_tester": {
+      "name": "DemoTester",
+      "role": "QA Validator \u2014 continuously tests key API endpoints and reports failures",
+      "emoji": "\ud83e\uddea",
+      "color": "#ff8c00"
+    },
+    "reforger": {
+      "name": "Reforger",
+      "role": "System Engineer \u2014 code changes, agent upgrades, spawning and repairs via Claude CLI",
+      "emoji": "\u26a1",
+      "color": "#00bfff"
+    },
+    "policypro": {
+      "name": "PolicyPro",
+      "role": "Compliance Sentinel \u2014 enforces chain-of-command and delegation policy",
+      "emoji": "\ud83d\udd2d",
+      "color": "#ffd700"
+    },
+    "designer": {
+      "name": "Designer",
+      "role": "UI Engineer \u2014 continuously improves and maintains the command centre dashboard",
+      "emoji": "\ud83c\udfa8",
+      "color": "#ff69b4"
+    },
+    "janitor": {
+      "name": "Janitor",
+      "role": "System Hygienist \u2014 auto-cleans orphan processes, memory bloat and log overflow",
+      "emoji": "\ud83e\uddf9",
+      "color": "#8b7355"
+    },
+    "telegram": {
+      "name": "Telegram",
+      "role": "Comms Gateway \u2014 relays user messages from Telegram to CEO and replies back",
+      "emoji": "\ud83d\udcf1",
+      "color": "#29a8e0"
+    },
+    "spiritguide": {
+      "name": "Spirit Guide",
+      "role": "Strategic Vision \u2014 aligns all agents toward the commercial mission",
+      "emoji": "\ud83d\udd2e",
+      "color": "#a855f7"
+    },
+    "clerk": {
+      "name": "Clerk",
+      "role": "CEO Clerk \u2014 collects and delivers reports and documents to the customer mailbox",
+      "emoji": "\ud83d\udcec",
+      "color": "#f5c842"
+    }
+  },
+  "saved_at": 1773824028.632832,
+  "ceo_policy_violations": 3
+}

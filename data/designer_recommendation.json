@@ -1,0 +1,6 @@
+{
+  "asset": "screener_report",
+  "change_name": "Semantic colour-coded stat cards",
+  "description": "The 8 summary stat cards (.stat-card) all render their headline number in the same flat accent-blue (#58a6ff) regardless of what the value represents. Growth figures like +127% and 27% should glow green (var(--accent2)), aggregate dollar values like $882M should stay blue, and scarcity/count figures like '6 full qualifiers' should use a warm amber border-left accent — matching the visual language already established by the .criterion cards directly below. Concretely: add a 3px coloured left-border per card category, and colour the .num element to match. This lets an investor's eye land instantly on the standout growth stat without reading every label.",
+  "commercial_impact": "Investors and fund screeners spend 3–5 seconds deciding whether a research report is worth reading. Colour-coded KPI cards reduce that cognitive load to near-zero — the green glow on +127% and 27% EBITDA margin signals 'quality names found here' before a word is read. This directly increases report credibility and the likelihood that decision-makers share it or act on it. It also elevates the perceived quality of the AI agent that produced the report, reinforcing the command-centre brand."
+}

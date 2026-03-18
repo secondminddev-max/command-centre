@@ -1,0 +1,193 @@
+{
+  "topic": "Micro-SaaS Opportunity Scan — US SMB Automation, Developer APIs, Compliance/Fintech Tools",
+  "timestamp": "2026-03-18T00:00:00-05:00",
+  "analyst": "Researcher Agent",
+  "methodology": "Web research across market data, competitor analysis, indie founder revenue reports, and US SMB landscape",
+
+  "market_context": {
+    "micro_saas_stats": {
+      "70pct_under_1k_mrr": "70% never break $1K/month — validation zone",
+      "18pct_reach_1k_5k_mrr": "Sustainability zone for solo founders",
+      "ai_native_advantage": "AI-native companies reach $5M ARR in 24 months vs 37 months traditional",
+      "profitability": "95% of micro-SaaS achieve profitability within 12 months",
+      "developer_apis_median_mrr": "$3,800/month median for developer API niches"
+    },
+    "us_saas_context": {
+      "smb_count": "33.2M small businesses in the US (SBA 2025)",
+      "smb_ai_adoption": "Over 75% of US SMBs actively evaluating AI/automation tools in 2026",
+      "quickbooks_market": "QuickBooks dominates with 80%+ US small business accounting market share (~7M+ subscribers)",
+      "compliance_tech_growth": "US RegTech market growing at 23.5% CAGR, projected $33.1B by 2030",
+      "developer_api_economy": "US API economy valued at $5.1B in 2025, growing 32% annually"
+    }
+  },
+
+  "opportunities": [
+    {
+      "rank": 1,
+      "name": "SEC Filing Intelligence API",
+      "tagline": "AI-powered parsing and alerting of SEC filings (10-K, 10-Q, 8-K) for retail investors and analysts",
+      "description": "Ingest SEC EDGAR filings in real-time, parse PDF/HTML with Claude, extract structured signals (filing type, key financial metrics, risk factor changes, sentiment shifts), and expose via: (a) email/Slack alerts for retail investors, (b) REST API for developers and fund analysts.",
+      "focus_area": "US finance data product",
+      "problem_solved": "SEC processes 3,000+ filings per day. Retail investors miss material disclosures. Analysts manually triage lengthy 10-K reports. No affordable AI-parsed filing feed exists for indie developers or small funds.",
+      "stack_fit": {
+        "data_ingestion": "Python + SEC EDGAR full-text search API (free, no auth required)",
+        "parsing": "Claude API (claude-haiku for speed/cost) for filing text extraction and structured output",
+        "storage": "SQLite or Postgres",
+        "delivery": "FastAPI for REST endpoint + SendGrid/Slack for alerts"
+      },
+      "market_size": {
+        "retail_us_investors": "~60M+ active retail investors in the US",
+        "financial_advisors": "~300,000 registered investment advisers needing filing monitoring",
+        "small_funds_analysts": "~10,000 boutique fund/analyst users",
+        "developer_integrators": "~5,000-10,000 fintech developers needing SEC data",
+        "addressable_paying_accounts": "10,000-50,000 realistic in 12 months"
+      },
+      "competition": {
+        "level": "LOW-MEDIUM",
+        "existing": [
+          "SEC EDGAR (raw filings, no AI layer)",
+          "Last10K.com (basic summaries, limited coverage)",
+          "Finviz (screener, not filing-focused)",
+          "Bloomberg Terminal (enterprise only, $25K+/year)",
+          "AlphaSense (enterprise, $10K+/year)"
+        ],
+        "gap": "No affordable AI-parsed SEC filing API for SME-tier customers ($30-200/month range)"
+      },
+      "pricing_model": {
+        "retail_tier": "$19-29/month — email + Slack alerts, custom watchlist",
+        "analyst_tier": "$79-149/month — full API access, filtering, webhooks",
+        "team_tier": "$299-499/month — multi-user, priority feed, CSV exports"
+      },
+      "effort_days": 5,
+      "mvp_scope": "Day 1-2: EDGAR ingestion + Claude extraction pipeline. Day 3: Slack bot for alerts. Day 4-5: simple landing page + Stripe checkout. Ship with 50-ticker watchlist limit.",
+      "first_step": "Build a Python script that fetches the last 24h of SEC EDGAR filings, sends each through Claude haiku to extract {company, ticker, filing_type, key_metrics, risk_changes, summary}, and pushes results to a Slack channel. Post to r/investing and fintech Discord servers for beta testers.",
+      "estimated_monthly_revenue": {
+        "conservative_3mo": "$500-1,500 MRR",
+        "realistic_6mo": "$3,000-8,000 MRR",
+        "optimistic_12mo": "$15,000-30,000 MRR"
+      },
+      "risks": [
+        "SEC EDGAR rate limits (mitigate: respect 10 requests/sec limit, use bulk archives for backfill)",
+        "Commoditized by larger players long-term (mitigate: focus on indie developer API niche)",
+        "Seasonal filing activity creates uneven load"
+      ]
+    },
+    {
+      "rank": 2,
+      "name": "AI Invoice & Receipt Processor for US SMBs (QuickBooks-first)",
+      "tagline": "Claude Vision extracts invoice data and pushes structured records to QuickBooks/FreshBooks — no manual entry",
+      "description": "A lightweight web app where US SMBs email or upload supplier invoices and receipts. Claude Vision extracts vendor, line items, sales tax, totals, payment terms. Structured data is pushed to QuickBooks or FreshBooks via API. Target the massive QuickBooks user base (~7M businesses) where automation options are expensive or clunky.",
+      "focus_area": "AI automation tool for US SMBs",
+      "problem_solved": "US SMBs spend 5-10 hours/week on manual invoice entry. Existing tools (Bill.com, DEXT) cost $70-200/month and are over-engineered for micro-businesses. Solo founders and freelancers need a $20-40/month option.",
+      "stack_fit": {
+        "ocr_extraction": "Claude claude-sonnet-4-5 vision for invoice PDF/image parsing",
+        "integration": "QuickBooks Online API + FreshBooks API (OAuth2)",
+        "frontend": "Simple Flask or FastAPI + HTMX upload form",
+        "email_ingestion": "Postmark inbound webhook for email-to-process flow"
+      },
+      "market_size": {
+        "quickbooks_users": "~7,000,000 US businesses on QuickBooks",
+        "freshbooks_users": "~500,000 US freelancers/small businesses",
+        "target_segment": "SMBs with 1-20 employees processing 20-200 invoices/month",
+        "realistic_tam": "~1,500,000 businesses in sweet spot"
+      },
+      "competition": {
+        "level": "MEDIUM",
+        "existing": [
+          "Bill.com — $79-199/month, full AP/AR suite",
+          "Dext (formerly Receipt Bank) — $70-150/month",
+          "Veryfi — API-focused, developer-oriented",
+          "QuickBooks native receipt capture — limited AI capability"
+        ],
+        "gap": "No Claude Vision-powered tool with dead-simple QuickBooks integration at $20-40/month price point. Bill.com is overkill for micro-businesses."
+      },
+      "pricing_model": {
+        "starter": "$29/month — up to 100 invoices/month, 1 user",
+        "growth": "$69/month — up to 500 invoices/month, 3 users",
+        "business": "$149/month — unlimited, team access, priority support"
+      },
+      "effort_days": 7,
+      "mvp_scope": "Day 1-2: Claude Vision extraction pipeline tested on 20 real US invoices. Day 3-4: QuickBooks API push (bills endpoint). Day 5: Email inbound + Stripe subscription. Day 6-7: Landing page targeting 'QuickBooks invoice automation'. Launch via r/smallbusiness and indie hacker communities.",
+      "first_step": "Get 5 real supplier invoices (varied: net-30, receipts, statements). Write a Python script using Claude Vision to extract structured JSON from each. Validate accuracy against manual entry. If >90% accurate on vendor + totals + sales tax, you have a sellable product core.",
+      "estimated_monthly_revenue": {
+        "conservative_3mo": "$500-1,200 MRR",
+        "realistic_6mo": "$2,500-6,000 MRR",
+        "optimistic_12mo": "$8,000-20,000 MRR"
+      },
+      "risks": [
+        "QuickBooks API has OAuth complexity and rate limits (mitigate: start with CSV export as fallback)",
+        "Accountants gatekeep software decisions for clients (mitigate: target accountants as channel partners)",
+        "Claude Vision cost per invoice (~$0.003-0.01) must stay below margin threshold"
+      ]
+    },
+    {
+      "rank": 3,
+      "name": "US State Compliance Automation API (LLC/Corp Filing Tracker)",
+      "tagline": "Automated state compliance monitoring and filing reminders for US LLCs and corporations — sold as a developer API and SaaS tool",
+      "description": "Build a REST API and dashboard that tracks state-level compliance obligations for US LLCs and corporations: annual report deadlines, franchise tax due dates, registered agent requirements, foreign qualification status, beneficial ownership (BOI) filing requirements. Data sourced from Secretary of State websites, IRS BOI registry, and Claude-powered extraction of state-specific rules.",
+      "focus_area": "US compliance/fintech SaaS",
+      "problem_solved": "US businesses registered across multiple states face a patchwork of 50+ different compliance calendars. Missing a filing means penalties ($50-$10,000+), administrative dissolution, or loss of good standing. Current solutions (CSC, CT Corporation) charge $500-2,000+/year per entity. No affordable tool exists for small businesses or solo founders managing 1-5 entities.",
+      "stack_fit": {
+        "data_sources": "Secretary of State websites (50 states), IRS BOI registry, state tax authority portals",
+        "enrichment": "Claude for extracting structured deadlines and requirements from unstructured state government pages",
+        "api_layer": "FastAPI + Redis cache + API key auth",
+        "billing": "Stripe subscription billing"
+      },
+      "market_size": {
+        "us_llcs_registered": "~6M active LLCs in the US",
+        "us_corporations": "~1.8M active C-Corps and S-Corps",
+        "target_segment": "Small businesses, solo founders, bookkeepers managing 1-20 entities",
+        "potential_customers": "5,000-50,000 paying users in 12 months"
+      },
+      "competition": {
+        "level": "LOW",
+        "existing": [
+          "CSC Global (enterprise, $500+/entity/year)",
+          "CT Corporation (enterprise, $400+/entity/year)",
+          "LegalZoom Compliance (basic reminders, limited state coverage)",
+          "Incfile/ZenBusiness (formation-focused, weak on ongoing compliance)",
+          "Harbor Compliance ($399+/state/year)"
+        ],
+        "gap": "No affordable compliance tracking API or tool for SMBs at $19-99/month. The enterprise players price out small businesses entirely."
+      },
+      "pricing_model": {
+        "starter": "$19/month — 1 entity, all 50 states tracked",
+        "growth": "$49/month — up to 5 entities, email + calendar reminders",
+        "professional": "$99/month — up to 20 entities, API access, team dashboard",
+        "api_access": "$0.10 per compliance lookup (developer tier)"
+      },
+      "effort_days": 10,
+      "mvp_scope": "Day 1-3: Scrape top 10 state SOS websites + build compliance calendar database. Day 4-6: Claude extraction layer for state-specific rules and deadlines. Day 7-8: FastAPI + Stripe subscription + email reminder system. Day 9-10: Landing page targeting 'LLC compliance tracker'. Post on r/smallbusiness, r/Entrepreneur, Indie Hackers.",
+      "first_step": "Build a Python script that: (1) scrapes annual report requirements for the top 10 US states by LLC count (DE, CA, FL, TX, NY, NV, WY, IL, GA, WA), (2) sends each page to Claude to extract {deadline, fee, penalty, filing_url, requirements}, (3) outputs a unified compliance calendar JSON. Test accuracy against known requirements.",
+      "estimated_monthly_revenue": {
+        "conservative_3mo": "$400-1,000 MRR",
+        "realistic_6mo": "$2,000-5,000 MRR",
+        "optimistic_12mo": "$8,000-18,000 MRR"
+      },
+      "risks": [
+        "State websites change formats frequently (mitigate: Claude-based extraction is resilient to layout changes)",
+        "Compliance advice carries liability risk (mitigate: clear disclaimers, link to official sources, no legal advice)",
+        "Longer sales cycle for compliance products (mitigate: target bookkeepers and CPAs as channel partners)"
+      ]
+    }
+  ],
+
+  "recommendation": {
+    "top_pick": "SEC Filing Intelligence API",
+    "rationale": "Fastest path to revenue (5 days to MVP), low competition in the AI-parsed tier, massive engaged community of US retail investors and developers hungry for affordable SEC data. Claude + EDGAR is a perfect fit. Zero dependency on third-party API agreements — SEC EDGAR is freely accessible.",
+    "second_pick": "AI Invoice Processor for QuickBooks",
+    "second_rationale": "Largest TAM (~7M QuickBooks users), clear B2B pain point, recurring subscription revenue, but takes 7 days and has QuickBooks OAuth complexity. Better medium-term play once stack is proven.",
+    "avoid_near_term": "State Compliance API is a strong 3-month play but takes 10 days and has a longer B2B sales cycle. Park for later."
+  },
+
+  "sources": [
+    {"url": "https://www.rockingweb.com.au/micro-saas-revenue-analysis-2025/", "title": "1,000 Micro SaaS Analysed: Real Revenue Data [2025 Study]"},
+    {"url": "https://www.flowjam.com/blog/27-micro-saas-examples-that-actually-print-money-in-2025", "title": "27 Micro SaaS Examples That Actually Print Money in 2025"},
+    {"url": "https://www.sba.gov/business-guide", "title": "SBA — US Small Business Administration"},
+    {"url": "https://www.sec.gov/edgar/searchedgar/companysearch", "title": "SEC EDGAR Company Search"},
+    {"url": "https://quickbooks.intuit.com/global/", "title": "QuickBooks — Small Business Accounting"},
+    {"url": "https://techaisle.com/blog/610-the-smb-market-in-2025-and-beyond-navigating-the-ai-driven-transformation", "title": "The SMB Market in 2025 and Beyond"},
+    {"url": "https://www.grandviewresearch.com/industry-analysis/regulatory-technology-market", "title": "RegTech Market Size & Growth Report 2030"},
+    {"url": "https://rapidapi.com/collection/finance-apis", "title": "RapidAPI — Finance APIs Collection"}
+  ]
+}

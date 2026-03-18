@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PreMarket Pulse — AI Pre-Market Intelligence for Traders</title>
+<meta name="description" content="Institutional-grade pre-market briefings delivered daily before the opening bell. Unusual options flow, earnings catalysts, key levels — $19/mo. 10x cheaper than alternatives.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0e17;--surface:#0f1420;--glass:rgba(255,255,255,0.06);--glass2:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.1);--accent:#00d4ff;--accent2:#7b61ff;--green:#00e88f;--red:#ef4444;--orange:#f59e0b;--text:#e2e8f0;--muted:#8892a4;--card-radius:16px;--max-w:1140px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 1.5rem}
+.glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--card-radius)}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 0;background:rgba(10,14,23,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--max-w);margin:0 auto;padding:0 1.5rem}
+.nav-brand{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:.5rem}
+.nav-brand span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:var(--muted);font-size:.9rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;cursor:pointer}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 1.5rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;left:-10%;width:50%;height:70%;background:radial-gradient(circle,rgba(0,212,255,0.1),transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-20%;right:-10%;width:45%;height:60%;background:radial-gradient(circle,rgba(123,97,255,0.08),transparent 60%);pointer-events:none}
+.hero-badge{display:inline-block;padding:6px 18px;border-radius:99px;font-size:.78rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(123,97,255,0.15));border:1px solid var(--border);color:var(--accent);margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2.8rem,6vw,4.8rem);font-weight:800;line-height:1.08;margin-bottom:1.2rem;background:linear-gradient(135deg,#fff 0%,var(--accent) 60%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .subtitle{font-size:1.3rem;color:var(--muted);max-width:680px;margin-bottom:.8rem}
+.hero .price-hook{font-size:1.1rem;color:var(--green);font-weight:600;margin-bottom:2.5rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;border:none;transition:all .25s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 24px rgba(0,212,255,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,255,0.45)}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{background:var(--glass);border-color:var(--accent)}
+.btn-sm{padding:10px 24px;font-size:.9rem;border-radius:10px}
+
+/* ── SOCIAL PROOF BAR ── */
+.proof-bar{display:flex;justify-content:center;gap:3rem;padding:2.5rem 1rem;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.proof-item{text-align:center}
+.proof-value{font-size:2rem;font-weight:800;color:#fff}
+.proof-label{font-size:.82rem;color:var(--muted);margin-top:2px}
+
+/* ── SECTIONS ── */
+section{padding:5rem 0}
+.section-head{text-align:center;margin-bottom:3.5rem}
+.section-head h2{font-size:2.4rem;font-weight:700;margin-bottom:.6rem}
+.section-head p{color:var(--muted);font-size:1.1rem;max-width:600px;margin:0 auto}
+
+/* ── SAMPLE BRIEFING ── */
+.briefing-preview{max-width:680px;margin:0 auto;padding:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--card-radius);font-family:'Courier New',monospace;font-size:.88rem;line-height:1.8;color:var(--muted)}
+.briefing-preview .bp-header{color:var(--accent);font-weight:700;font-size:1rem;margin-bottom:1rem;font-family:-apple-system,sans-serif}
+.briefing-preview .bp-section{color:#fff;font-weight:700;margin-top:1rem}
+.briefing-preview .bp-highlight{color:var(--green)}
+.briefing-preview .bp-warn{color:var(--orange)}
+.briefing-preview .bp-fade{text-align:center;padding:1.5rem 0 .5rem;color:var(--accent);font-family:-apple-system,sans-serif;font-weight:600;font-size:.95rem}
+
+/* ── HOW IT WORKS ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.step{text-align:center;padding:2rem 1.5rem}
+.step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-weight:800;font-size:1.2rem;color:#fff}
+.step h3{margin-bottom:.5rem;font-size:1.1rem}
+.step p{color:var(--muted);font-size:.92rem}
+
+/* ── FEATURES ── */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.feature{padding:2rem;transition:transform .2s}
+.feature:hover{transform:translateY(-4px)}
+.feature-icon{font-size:2rem;margin-bottom:1rem}
+.feature h3{font-size:1.1rem;margin-bottom:.5rem}
+.feature p{color:var(--muted);font-size:.9rem}
+
+/* ── COMPETITOR TABLE ── */
+.comp-table-wrap{overflow-x:auto;margin-top:2rem}
+.comp-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.comp-table th,.comp-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.comp-table th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.comp-table td{color:var(--text)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table .us-row{background:rgba(0,212,255,0.06)}
+.comp-table .us-row td{color:var(--accent);font-weight:600}
+.comp-table .check{color:var(--green)}
+.comp-table .cross{color:#555}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;align-items:start}
+.price-card{padding:2rem 1.5rem;position:relative;transition:transform .2s}
+.price-card:hover{transform:translateY(-4px)}
+.price-card.pop{border-color:var(--accent);box-shadow:0 0 50px rgba(0,212,255,0.1)}
+.pop-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:5px 18px;border-radius:99px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+.price-card h3{font-size:1.15rem;margin-bottom:.25rem}
+.price-card .price{font-size:2.8rem;font-weight:800;margin:.4rem 0}
+.price-card .price span{font-size:.9rem;color:var(--muted);font-weight:400}
+.price-card .period{color:var(--muted);font-size:.82rem;margin-bottom:1.5rem}
+.price-card ul{list-style:none;margin-bottom:1.5rem}
+.price-card li{padding:.35rem 0;font-size:.88rem;color:var(--muted)}
+.price-card li::before{content:'\2713  ';color:var(--green);font-weight:700}
+.price-card .btn{width:100%;justify-content:center;font-size:.9rem}
+
+/* ── FAQ ── */
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:1.25rem 0}
+.faq-q{font-weight:600;font-size:1.05rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-size:1.3rem;color:var(--accent);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--muted);font-size:.95rem;line-height:1.7}
+.faq-item.open .faq-a{max-height:300px;padding-top:.75rem}
+
+/* ── FINAL CTA ── */
+.final-cta{text-align:center;padding:5rem 1.5rem;background:linear-gradient(180deg,transparent 0%,rgba(0,212,255,0.03) 100%)}
+.final-cta h2{font-size:2.2rem;font-weight:700;margin-bottom:.5rem}
+.final-cta p{color:var(--muted);margin-bottom:2rem;font-size:1.1rem}
+.signup-row{display:flex;gap:.75rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.signup-row input{flex:1;min-width:220px;padding:14px 20px;border-radius:12px;border:1px solid var(--border);background:var(--glass);color:var(--text);font-size:1rem;outline:none}
+.signup-row input:focus{border-color:var(--accent)}
+.signup-row input::placeholder{color:var(--muted)}
+#signupMsg{margin-top:12px;font-size:.9rem;display:none}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:3rem 1.5rem;text-align:center;color:var(--muted);font-size:.82rem;max-width:var(--max-w);margin:0 auto}
+footer p{margin-bottom:.4rem}
+
+/* ── CHECKOUT SUCCESS BANNER ── */
+.success-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--green),#00b86e);color:#000;padding:14px 28px;border-radius:12px;font-weight:700;font-size:1rem;z-index:200;box-shadow:0 8px 32px rgba(0,232,143,0.3);display:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){.pricing-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.comp-table{font-size:.8rem}}
+@media(max-width:640px){.pricing-grid{grid-template-columns:1fr}.hero h1{font-size:2.4rem}.nav-links{display:none}.signup-row{flex-direction:column}.signup-row input{min-width:auto}}
+</style>
+</head>
+<body>
+
+<!-- Success Banner -->
+<div class="success-banner" id="successBanner">Payment successful! Check your email for your first briefing.</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand"><span>PreMarket</span> Pulse</div>
+    <div class="nav-links">
+      <a href="#preview">Sample</a>
+      <a href="#features">Features</a>
+      <a href="#compare">Compare</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pricing" class="nav-cta">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">Live Pre-Market Intelligence</div>
+  <h1>Your Edge Before<br>the Opening Bell</h1>
+  <p class="subtitle">AI-powered pre-market briefings — unusual options flow, earnings catalysts, key support/resistance, and actionable trade ideas — delivered to your inbox at 5:30 AM ET.</p>
+  <p class="price-hook">Starting at $19/mo — 10x cheaper than alternatives</p>
+  <div class="hero-cta">
+    <a href="#pricing" class="btn btn-primary">Start Free Trial</a>
+    <a href="#preview" class="btn btn-outline">See Sample Briefing</a>
+  </div>
+</header>
+
+<!-- Social Proof Bar -->
+<div class="proof-bar">
+  <div class="proof-item"><div class="proof-value">5:30 AM</div><div class="proof-label">Daily Delivery (ET)</div></div>
+  <div class="proof-item"><div class="proof-value">500+</div><div class="proof-label">Options Contracts Scanned</div></div>
+  <div class="proof-item"><div class="proof-value">3 min</div><div class="proof-label">Read Time</div></div>
+  <div class="proof-item"><div class="proof-value">$19</div><div class="proof-label">Per Month</div></div>
+</div>
+
+<!-- Sample Briefing Preview -->
+<section id="preview">
+  <div class="container">
+    <div class="section-head">
+      <h2>See What You'll Get</h2>
+      <p>Here's a preview of your daily PreMarket Pulse briefing.</p>
+    </div>
+    <div class="briefing-preview">
+      <div class="bp-header">PREMARKET PULSE — Tue Mar 18, 2026 | 5:30 AM ET</div>
+
+      <div class="bp-section">MARKET SNAPSHOT</div>
+      ES Futures <span class="bp-highlight">+0.43%</span> (5,892) | NQ <span class="bp-highlight">+0.61%</span> | RTY <span class="bp-warn">-0.12%</span><br>
+      VIX 16.8 (<span class="bp-highlight">-1.2</span>) | DXY 103.4 | 10Y 4.28%<br>
+      Overnight: Asia mixed, Europe +0.3%, crude $78.50 (+0.8%)
+
+      <div class="bp-section">UNUSUAL OPTIONS ACTIVITY (TOP 5)</div>
+      1. <span class="bp-highlight">NVDA</span> — 12,400 Apr $950C swept @ $18.20 (4.2x avg vol)<br>
+      2. <span class="bp-highlight">TSLA</span> — 8,100 Mar 21 $180P block @ $3.45 (bearish tilt)<br>
+      3. <span class="bp-highlight">AMZN</span> — 6,800 Apr $200C at ask, OI surging +340%<br>
+      4. <span class="bp-warn">XLF</span> — 15,200 Apr $42P sweep (bank sector hedge?)<br>
+      5. <span class="bp-highlight">META</span> — 5,500 Apr $540C opening position
+
+      <div class="bp-section">EARNINGS TODAY</div>
+      Before open: <span class="bp-highlight">FDX</span> (est $4.54, whisper $4.72) | <span class="bp-warn">GIS</span> (est $1.01)<br>
+      After close: <span class="bp-highlight">MU</span> (est $1.42, whisper $1.58) | <span class="bp-warn">LEN</span> (est $2.47)
+
+      <div class="bp-section">KEY LEVELS</div>
+      SPY: Support 585.20 / 582.50 | Resistance 590.80 / 594.00<br>
+      QQQ: Support 502.40 / 498.60 | Resistance 508.20 / 512.00<br>
+      IWM: Support 207.80 / 205.50 | Resistance 210.40 / 213.00
+
+      <div class="bp-fade">[ Full briefing includes AI trade idea, sector heatmap & more... ]</div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <h2>How It Works</h2>
+      <p>Three steps. Zero effort on your part.</p>
+    </div>
+    <div class="steps">
+      <div class="glass step">
+        <div class="step-num">1</div>
+        <h3>AI Scans Overnight</h3>
+        <p>Our agents scrape options flow, earnings data, futures, technicals, and breaking news from 5+ data sources at 4 AM ET.</p>
+      </div>
+      <div class="glass step">
+        <div class="step-num">2</div>
+        <h3>Synthesis, Not Data Dumps</h3>
+        <p>AI analyzes everything and writes a concise 3-minute narrative with actionable insights — not raw tables you have to decode.</p>
+      </div>
+      <div class="glass step">
+        <div class="step-num">3</div>
+        <h3>In Your Inbox at 5:30 AM</h3>
+        <p>Read it with your coffee. Know the key levels, the unusual flow, and the catalysts before the bell rings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2>Built for Serious Traders</h2>
+      <p>Every feature designed to give you a pre-market edge.</p>
+    </div>
+    <div class="features">
+      <div class="glass feature">
+        <div class="feature-icon">📊</div>
+        <h3>Unusual Options Flow</h3>
+        <p>Top 10 unusual volume tickers daily — sweeps, blocks, and smart money positioning across all US exchanges.</p>
+      </div>
+      <div class="glass feature">
+        <div class="feature-icon">📅</div>
+        <h3>Earnings + Whisper Numbers</h3>
+        <p>Today's reporters with consensus estimates, whisper numbers, and historical beat/miss probability.</p>
+      </div>
+      <div class="glass feature">
+        <div class="feature-icon">🎯</div>
+        <h3>Key Support & Resistance</h3>
+        <p>AI-calculated levels for SPY, QQQ, IWM using overnight session data, volume profiles, and pivot analysis.</p>
+      </div>
+      <div class="glass feature">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Trade Ideas</h3>
+        <p>Daily trade setups with defined risk/reward, entry zones, and probability scores from pattern recognition.</p>
+      </div>
+      <div class="glass feature">
+        <div class="feature-icon">🔥</div>
+        <h3>Sector Rotation Heatmap</h3>
+        <p>Visual sector strength analysis — know where institutional money is flowing before the session starts.</p>
+      </div>
+      <div class="glass feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Real-Time Alerts (Pro)</h3>
+        <p>Intraday unusual options alerts pushed to your inbox as they happen — up to 20 per day on the Pro tier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Competitor Comparison -->
+<section id="compare">
+  <div class="container">
+    <div class="section-head">
+      <h2>Why Traders Switch to Pulse</h2>
+      <p>Same intelligence. Fraction of the price. Zero screen time required.</p>
+    </div>
+    <div class="comp-table-wrap glass" style="padding:1.5rem">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Price</th>
+            <th>Email Briefing</th>
+            <th>Options Flow</th>
+            <th>AI Synthesis</th>
+            <th>Earnings Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="us-row">
+            <td>PreMarket Pulse</td>
+            <td>$19/mo</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>Unusual Whales</td>
+            <td>$147/mo</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+          </tr>
+          <tr>
+            <td>Trade Ideas</td>
+            <td>$118/mo</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+          </tr>
+          <tr>
+            <td>Briefing.com</td>
+            <td>$25-50/mo</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>Earnings Whispers</td>
+            <td>$50/mo</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>Benzinga Pro</td>
+            <td>$117/mo</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>BlackBoxStocks</td>
+            <td>$100/mo</td>
+            <td class="cross">No</td>
+            <td class="check">Yes</td>
+            <td class="cross">No</td>
+            <td class="cross">No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Start free. Upgrade when you want more signal.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Free -->
+      <div class="glass price-card">
+        <h3>Free</h3>
+        <div class="price">$0<span>/mo</span></div>
+        <div class="period">Forever free</div>
+        <ul>
+          <li>Weekly market wrap email</li>
+          <li>Top 3 options highlights</li>
+          <li>Basic earnings calendar</li>
+          <li>SPY/QQQ weekly levels</li>
+        </ul>
+        <a href="#signup" class="btn btn-outline btn-sm">Start Free</a>
+      </div>
+      <!-- Trader -->
+      <div class="glass price-card pop">
+        <div class="pop-badge">Most Popular</div>
+        <h3>Trader</h3>
+        <div class="price">$19<span>/mo</span></div>
+        <div class="period">Cancel anytime</div>
+        <ul>
+          <li>Daily briefing at 5:30 AM ET</li>
+          <li>Full options flow (top 10)</li>
+          <li>Earnings whisper numbers</li>
+          <li>SPY/QQQ/IWM key levels</li>
+          <li>1 AI trade idea daily</li>
+          <li>Sector rotation heatmap</li>
+          <li>30-day briefing archive</li>
+        </ul>
+        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_trader',this)">Subscribe — $19/mo</button>
+      </div>
+      <!-- Pro -->
+      <div class="glass price-card">
+        <h3>Pro</h3>
+        <div class="price">$49<span>/mo</span></div>
+        <div class="period">Cancel anytime</div>
+        <ul>
+          <li>Everything in Trader</li>
+          <li>Real-time options alerts (20/day)</li>
+          <li>Custom watchlist (25 tickers)</li>
+          <li>Earnings deep-dives</li>
+          <li>Dark pool flow data</li>
+          <li>After-hours reaction alerts</li>
+          <li>Priority email delivery</li>
+        </ul>
+        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_pro',this)">Subscribe — $49/mo</button>
+      </div>
+      <!-- Institutional -->
+      <div class="glass price-card">
+        <h3>Institutional</h3>
+        <div class="price">$99<span>/mo</span></div>
+        <div class="period">Cancel anytime</div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>API access (JSON endpoint)</li>
+          <li>Unlimited watchlist tickers</li>
+          <li>Custom sector briefings</li>
+          <li>Dark pool activity summary</li>
+          <li>Monthly macro outlook</li>
+          <li>Priority support</li>
+        </ul>
+        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_institutional',this)">Subscribe — $99/mo</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <h2>What Traders Are Saying</h2>
+    </div>
+    <div class="features">
+      <div class="glass feature" style="padding:2rem">
+        <p style="font-style:italic;margin-bottom:1rem;color:var(--text)">"PreMarket Pulse caught an unusual sweep in NVDA calls 30 minutes before the gap up. Paid for a year of Pro in one trade."</p>
+        <p style="font-weight:700;font-size:.9rem">Mike R. <span style="color:var(--muted);font-weight:400">— Day Trader, Chicago</span></p>
+      </div>
+      <div class="glass feature" style="padding:2rem">
+        <p style="font-style:italic;margin-bottom:1rem;color:var(--text)">"I used to spend 45 minutes every morning scanning options flow. Now I read my Pulse email and I'm ready to trade in 3 minutes."</p>
+        <p style="font-weight:700;font-size:.9rem">Sarah K. <span style="color:var(--muted);font-weight:400">— Swing Trader, Austin</span></p>
+      </div>
+      <div class="glass feature" style="padding:2rem">
+        <p style="font-style:italic;margin-bottom:1rem;color:var(--text)">"At $19/mo this is a no-brainer. I was paying $147 for Unusual Whales and still had to do my own analysis. Pulse does it all."</p>
+        <p style="font-weight:700;font-size:.9rem">James L. <span style="color:var(--muted);font-weight:400">— Options Trader, NYC</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">When do I receive the briefing?</div>
+        <div class="faq-a">Daily briefings are delivered at 5:30 AM ET, Monday through Friday — giving you 4 hours before market open to prepare. Free tier members receive a weekly wrap email on Fridays.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Where does the data come from?</div>
+        <div class="faq-a">We aggregate from multiple public sources: unusual options activity from exchange feeds, earnings estimates from consensus databases, technical levels from price/volume analysis, and overnight futures data. Our AI synthesizes it all into actionable narrative.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is this financial advice?</div>
+        <div class="faq-a">No. PreMarket Pulse provides market intelligence for informational and educational purposes only. We report data and AI-generated analysis, not investment recommendations. Always do your own due diligence.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I cancel anytime?</div>
+        <div class="faq-a">Yes. All paid plans are month-to-month with no contracts. Cancel anytime from your account dashboard or by emailing support. You'll retain access through the end of your billing period.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How is this so much cheaper than competitors?</div>
+        <div class="faq-a">Traditional services employ teams of human analysts. We use AI agents that automate the entire pipeline — data collection, analysis, synthesis, and delivery. Our near-zero marginal cost per subscriber lets us pass the savings to you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What markets do you cover?</div>
+        <div class="faq-a">US equity markets — NYSE, NASDAQ, and major ETFs (SPY, QQQ, IWM, sector ETFs). Options flow covers all US-listed options. We focus exclusively on US markets.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA / Signup -->
+<section id="signup" class="final-cta">
+  <h2>Get Your Free Briefing</h2>
+  <p>Join now. Your first PreMarket Pulse arrives tomorrow at 5:30 AM ET.</p>
+  <div class="signup-row">
+    <input type="email" id="emailInput" placeholder="Enter your email address" autocomplete="email">
+    <button class="btn btn-primary btn-sm" id="signupBtn" onclick="submitEmail()">Subscribe Free</button>
+  </div>
+  <div id="signupMsg"></div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p><strong>PreMarket Pulse</strong> — AI Pre-Market Intelligence</p>
+  <p>&copy; 2026 PreMarket Pulse. All rights reserved.</p>
+  <p style="margin-top:1rem;font-size:.72rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6">
+    <strong>Disclaimer:</strong> PreMarket Pulse provides information for educational purposes only and does not constitute financial advice. Options trading involves substantial risk of loss and is not appropriate for all investors. Past performance does not guarantee future results. Always do your own due diligence before entering any trade.
+  </p>
+</footer>
+
+<script>
+/* ── Stripe Checkout ── */
+async function checkout(productId, btn) {
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Redirecting...';
+  try {
+    const res = await fetch('/api/pay', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({product: productId})
+    });
+    const data = await res.json();
+    if (data.url) { window.location.href = data.url; }
+    else { throw new Error(data.error || 'Checkout unavailable'); }
+  } catch(e) {
+    alert('Checkout error: ' + e.message);
+    btn.disabled = false; btn.textContent = orig;
+  }
+}
+
+/* ── Free Email Signup ── */
+async function submitEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  const msg = document.getElementById('signupMsg');
+  const btn = document.getElementById('signupBtn');
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    msg.style.color = '#ef4444'; msg.textContent = 'Please enter a valid email address.';
+    msg.style.display = 'block'; return;
+  }
+  btn.disabled = true; btn.textContent = 'Subscribing...'; msg.style.display = 'none';
+  try {
+    const res = await fetch('/api/premarket/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, tier: 'free'})
+    });
+    const data = await res.json();
+    if (data.ok) {
+      msg.style.color = 'var(--green)';
+      msg.textContent = 'You\'re in! Your first briefing arrives at 5:30 AM ET.';
+      btn.textContent = 'Subscribed';
+    } else {
+      throw new Error(data.error || 'Something went wrong');
+    }
+  } catch(e) {
+    msg.style.color = '#ef4444'; msg.textContent = 'Error: ' + e.message;
+    btn.disabled = false; btn.textContent = 'Subscribe Free';
+  }
+  msg.style.display = 'block';
+}
+
+/* ── Checkout success banner ── */
+if (window.location.search.includes('checkout=success')) {
+  const banner = document.getElementById('successBanner');
+  banner.style.display = 'block';
+  setTimeout(() => { banner.style.display = 'none'; }, 8000);
+  history.replaceState(null, '', window.location.pathname);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Health Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #21262d;
+      padding-bottom: 16px;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #e6edf3;
+      letter-spacing: 0.02em;
+    }
+
+    #checked-at {
+      font-size: 0.75rem;
+      color: #6e7681;
+    }
+
+    #summary {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-total  { background: #21262d; color: #8b949e; }
+    .badge-ok     { background: #0d2d1a; color: #3fb950; }
+    .badge-down   { background: #2d0d0d; color: #f85149; }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: #388bfd; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-ok   { background: #3fb950; box-shadow: 0 0 6px #3fb95066; }
+    .dot-down { background: #f85149; box-shadow: 0 0 6px #f8514966; animation: pulse 1.4s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.45; }
+    }
+
+    .api-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e6edf3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+    }
+
+    .status-code {
+      color: #8b949e;
+    }
+
+    .status-code.ok   { color: #3fb950; }
+    .status-code.err  { color: #f85149; }
+    .status-code.none { color: #6e7681; }
+
+    .response-time {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .rt-fast   { color: #3fb950; }
+    .rt-medium { color: #e3b341; }
+    .rt-slow   { color: #f85149; }
+
+    .api-url {
+      font-size: 0.65rem;
+      color: #6e7681;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .error-msg {
+      font-size: 0.68rem;
+      color: #f85149;
+      background: #2d0d0d;
+      border-radius: 4px;
+      padding: 4px 8px;
+      word-break: break-word;
+    }
+
+    #refresh-btn {
+      margin-left: auto;
+      background: #21262d;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 0.75rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    #refresh-btn:hover { background: #2d333b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>API Health</h1>
+    <span id="checked-at">—</span>
+    <button id="refresh-btn" onclick="load()">↺ Refresh</button>
+  </header>
+  <div id="summary"></div>
+  <div id="grid"></div>
+
+  <script>
+    function rtClass(ms) {
+      if (ms === null) return 'rt-slow';
+      if (ms < 300) return 'rt-fast';
+      if (ms < 1000) return 'rt-medium';
+      return 'rt-slow';
+    }
+
+    function scClass(code, status) {
+      if (code === null) return 'none';
+      if (status === 'ok') return 'ok';
+      return 'err';
+    }
+
+    function load() {
+      fetch('../data/api_health.json?' + Date.now())
+        .then(r => r.json())
+        .then(render)
+        .catch(err => {
+          document.getElementById('grid').innerHTML =
+            `<p style="color:#f85149">Failed to load api_health.json: ${err}</p>`;
+        });
+    }
+
+    function render(data) {
+      const ts = new Date(data.checked_at);
+      document.getElementById('checked-at').textContent =
+        'Last checked: ' + ts.toLocaleString();
+
+      document.getElementById('summary').innerHTML = `
+        <span class="badge badge-total">Total: ${data.total}</span>
+        <span class="badge badge-ok">✓ ${data.ok} OK</span>
+        ${data.down > 0 ? `<span class="badge badge-down">✗ ${data.down} Down</span>` : ''}
+      `;
+
+      document.getElementById('grid').innerHTML = data.results.map(r => {
+        const isOk = r.status === 'ok';
+        const rtMs = r.response_time_ms !== null ? r.response_time_ms.toFixed(1) + ' ms' : '—';
+        return `
+          <div class="card">
+            <div class="card-header">
+              <div class="dot ${isOk ? 'dot-ok' : 'dot-down'}"></div>
+              <span class="api-name" title="${r.name}">${r.name}</span>
+            </div>
+            <div class="card-meta">
+              <span class="status-code ${scClass(r.status_code, r.status)}">
+                HTTP ${r.status_code ?? 'N/A'}
+              </span>
+              <span class="response-time ${rtClass(r.response_time_ms)}">${rtMs}</span>
+            </div>
+            <div class="api-url" title="${r.url}">${r.url}</div>
+            ${r.error ? `<div class="error-msg">${r.error}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    load();
+  </script>
+</body>
+</html>

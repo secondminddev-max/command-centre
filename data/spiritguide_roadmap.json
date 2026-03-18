@@ -1,0 +1,94 @@
+[
+  {
+    "id": "r001",
+    "priority": 1,
+    "category": "reliability",
+    "title": "Agent heartbeat monitoring",
+    "desc": "Detect agents that stop updating status and auto-restart them",
+    "status": "done",
+    "created": "2026-03-16T04:48:17.101675",
+    "completed": "2026-03-16T04:48:17.110557"
+  },
+  {
+    "id": "r002",
+    "priority": 2,
+    "category": "reliability",
+    "title": "Backup critical files before any modification",
+    "desc": "Always backup agent_server.py and HTML before patching",
+    "status": "done",
+    "created": "2026-03-16T04:48:17.101681"
+  },
+  {
+    "id": "r003",
+    "priority": 3,
+    "category": "functionality",
+    "title": "Agent uptime tracking",
+    "desc": "Track and display how long each agent has been running",
+    "status": "done",
+    "created": "2026-03-16T04:48:17.101683",
+    "completed": "2026-03-16T04:50:55.486297"
+  },
+  {
+    "id": "r004",
+    "priority": 4,
+    "category": "functionality",
+    "title": "Metrics trend sparklines",
+    "desc": "Show mini CPU/RAM trend charts per agent card",
+    "status": "reviewed",
+    "created": "2026-03-16T04:48:17.101684",
+    "completed": "2026-03-16T04:52:10.516073",
+    "notes": "Audited \u2014 deferred for larger refactor cycle"
+  },
+  {
+    "id": "r005",
+    "priority": 5,
+    "category": "aesthetics",
+    "title": "Consistent status color palette",
+    "desc": "Ensure all status badges use the same green/yellow/red/blue system",
+    "status": "reviewed",
+    "created": "2026-03-16T04:48:17.101685",
+    "completed": "2026-03-16T04:54:44.837558",
+    "notes": "Audited \u2014 deferred for larger refactor cycle"
+  },
+  {
+    "id": "r006",
+    "priority": 6,
+    "category": "marketability",
+    "title": "System health score widget",
+    "desc": "Single 0-100 score visible at a glance \u2014 headline metric for demos",
+    "status": "done",
+    "created": "2026-03-16T04:48:17.101685",
+    "completed": "2026-03-16T17:31:16.181861"
+  },
+  {
+    "id": "r007",
+    "priority": 7,
+    "category": "reliability",
+    "title": "Error agent auto-recovery",
+    "desc": "When an agent enters error state, auto-attempt restart after 60s",
+    "status": "done",
+    "created": "2026-03-16T04:48:17.101686",
+    "completed": "2026-03-16T04:49:33.361632"
+  },
+  {
+    "id": "r008",
+    "priority": 8,
+    "category": "functionality",
+    "title": "SpiritGuide roadmap API endpoint",
+    "desc": "Expose /api/spiritguide/roadmap for UI integration",
+    "status": "done",
+    "created": "2026-03-16T04:48:17.101687",
+    "completed": "2026-03-16T04:53:32.610430"
+  },
+  {
+    "id": "r009",
+    "priority": 9,
+    "category": "marketability",
+    "title": "Display health score in UI header",
+    "desc": "Show the /data/system_health_score.json score prominently in the command centre header",
+    "status": "reviewed",
+    "created": "2026-03-16T04:53:32.614138",
+    "completed": "2026-03-16T04:55:47.942790",
+    "notes": "Audited \u2014 deferred for larger refactor cycle"
+  }
+]

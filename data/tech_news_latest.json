@@ -1,0 +1,167 @@
+{
+  "fetched_at": "2026-03-15T00:00:00.000Z",
+  "hn_stories": [
+    {
+      "id": 47378638,
+      "title": "What happens when US economic data becomes unreliable",
+      "url": "https://mitsloan.mit.edu/ideas-made-to-matter/what-happens-when-us-economic-data-becomes-unreliable",
+      "by": "inaros",
+      "score": 201,
+      "descendants": 150,
+      "time": 1773507520
+    },
+    {
+      "id": 47379067,
+      "title": "Sunsetting Jazzband",
+      "url": "https://jazzband.co/news/2026/03/14/sunsetting-jazzband",
+      "by": "mooreds",
+      "score": 37,
+      "descendants": 5,
+      "time": 1773510023
+    },
+    {
+      "id": 47376767,
+      "title": "Montana passes Right to Compute act (2025)",
+      "url": "https://www.westernmt.news/2025/04/21/montana-leads-the-nation-with-groundbreaking-right-to-compute-act/",
+      "by": "bilsbie",
+      "score": 182,
+      "descendants": 122,
+      "time": 1773496798
+    },
+    {
+      "id": 47377998,
+      "title": "An Ode to Bzip",
+      "url": "https://purplesyringa.moe/blog/an-ode-to-bzip/",
+      "by": "signa11",
+      "score": 42,
+      "descendants": 24,
+      "time": 1773504083
+    },
+    {
+      "id": 47339219,
+      "title": "Baochip-1x: What it is, why I'm doing it now and how it came about",
+      "url": "https://www.crowdsupply.com/baochip/dabao/updates/what-it-is-why-im-doing-it-now-and-how-it-came-about",
+      "by": "timhh",
+      "score": 220,
+      "descendants": 26,
+      "time": 1773253318
+    },
+    {
+      "id": 47332847,
+      "title": "The $2 per hour worker behind the OnlyFans boom",
+      "url": "https://www.bbc.com/news/articles/cq571g9gd4lo",
+      "by": "1659447091",
+      "score": 57,
+      "descendants": 46,
+      "time": 1773216495
+    },
+    {
+      "id": 47378268,
+      "title": "NMAP in the Movies",
+      "url": "https://nmap.org/movies/",
+      "by": "homebrewer",
+      "score": 98,
+      "descendants": 13,
+      "time": 1773505534
+    },
+    {
+      "id": 47327703,
+      "title": "Python: The Optimization Ladder",
+      "url": "https://cemrehancavdar.com/2026/03/10/optimization-ladder/",
+      "by": "Twirrim",
+      "score": 189,
+      "descendants": 57,
+      "time": 1773170559
+    },
+    {
+      "id": 47378251,
+      "title": "Show HN: Learn Arabic with spaced repetition and comprehensible input",
+      "url": "https://abjadpro.com",
+      "by": "adangit",
+      "score": 18,
+      "descendants": 7,
+      "time": 1773505442
+    },
+    {
+      "id": 47374745,
+      "title": "Megadev: A Development Kit for the Sega Mega Drive and Mega CD Hardware",
+      "url": "https://github.com/drojaazu/megadev",
+      "by": "XzetaU8",
+      "score": 92,
+      "descendants": 5,
+      "time": 1773479079
+    }
+  ],
+  "github_trending": [
+    {
+      "full_name": "volcengine/OpenViking",
+      "description": "Open-source context database for AI Agents with hierarchical context delivery",
+      "language": "Python",
+      "stars_today": 1557,
+      "total_stars": 10151
+    },
+    {
+      "full_name": "anthropics/claude-plugins-official",
+      "description": "Official Anthropic directory of high-quality Claude Code Plugins",
+      "language": "Python",
+      "stars_today": 411,
+      "total_stars": 11160
+    },
+    {
+      "full_name": "dimensionalOS/dimos",
+      "description": "The Dimensional Framework",
+      "language": "Python",
+      "stars_today": 64,
+      "total_stars": 804
+    },
+    {
+      "full_name": "p-e-w/heretic",
+      "description": "Fully automatic censorship removal for language models",
+      "language": "Python",
+      "stars_today": 661,
+      "total_stars": 13478
+    },
+    {
+      "full_name": "langflow-ai/openrag",
+      "description": "Comprehensive Retrieval-Augmented Generation platform built on Langflow, Docling, and Opensearch",
+      "language": "Python",
+      "stars_today": 568,
+      "total_stars": 2619
+    },
+    {
+      "full_name": "lightpanda-io/browser",
+      "description": "Headless browser designed for AI and automation",
+      "language": "Zig",
+      "stars_today": 2100,
+      "total_stars": 16826
+    },
+    {
+      "full_name": "msitarzewski/agency-agents",
+      "description": "Complete AI agency with specialized expert agents for various tasks",
+      "language": "Shell",
+      "stars_today": 4329,
+      "total_stars": 43165
+    },
+    {
+      "full_name": "fishaudio/fish-speech",
+      "description": "State-of-the-art Open Source text-to-speech solution",
+      "language": "Python",
+      "stars_today": 377,
+      "total_stars": 27141
+    },
+    {
+      "full_name": "InsForge/InsForge",
+      "description": "Backend platform built for agentic development to ship fullstack apps",
+      "language": "TypeScript",
+      "stars_today": 477,
+      "total_stars": 4037
+    },
+    {
+      "full_name": "obra/superpowers",
+      "description": "Agentic skills framework and software development methodology",
+      "language": "Shell",
+      "stars_today": 1451,
+      "total_stars": 83043
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "score": 84,
+  "grade": "B",
+  "computed_at": "2026-03-16T17:31:15.129027",
+  "breakdown": {
+    "agents_active": 24,
+    "agents_total": 28,
+    "agents_error": 0,
+    "agents_idle": 4,
+    "ui_score": 84
+  },
+  "mission": "Grow, generate value, and scale \u2014 build the world's most capable autonomous AI operations platform. Every cycle, every action must advance this mission."
+}

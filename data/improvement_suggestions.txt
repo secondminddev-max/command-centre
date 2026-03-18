@@ -1,0 +1,68 @@
+================================================================================
+AGENT SYSTEM IMPROVEMENT SUGGESTION
+Timestamp: 2026-03-15 06:16:50 UTC
+Author: Researcher (Web Research & Information Gathering)
+================================================================================
+
+## AUDIT FINDINGS
+
+Agents at time of audit (12 total, 10 active/2 idle):
+
+  sysmon        ACTIVE   CPU 5.6% | RAM 56.5% | Disk 2.6%
+  ceo           ACTIVE   Restarted (progress: 10%)
+  researcher    ACTIVE   Idle -- awaiting research tasks      [WATCHDOG: STALE]
+  coder         ACTIVE   Idle -- awaiting coding tasks        [WATCHDOG: STALE]
+  apipatcher    ACTIVE   Restarted                            [WATCHDOG: STALE prev]
+  orchestrator  BUSY     Cycle 2 | Delegating task...
+  netscout      ACTIVE   HackerNews OK | GitHub OK | PyPI OK
+  filewatch     ACTIVE   Watching 35 files | 200 changes logged
+  metricslog    ACTIVE   37 snapshots | tasks_done=14 errors=0
+  autonomy      IDLE     Inactive — press AUTO-IMPROVE to activate
+  arxivscout    IDLE     Up to date | 12 seen | fetch #2      [WATCHDOG: STALE 171s]
+  watchdog      ACTIVE   Poll #21 | 7/11 healthy | STALE: researcher, coder, autonomy, arxivscout
+
+Watchdog report: "7/11 healthy | STALE: researcher, coder, autonomy, arxivscout"
+
+--------------------------------------------------------------------------------
+## CONCRETE IMPROVEMENT: Fix Watchdog False-Positive STALE Detection
+
+### Problem
+The Watchdog marks agents as STALE when their task string is unchanged for
+~90-120 seconds, then forcibly restarts them. This is triggering false positives
+on legitimately IDLE agents:
+
+  - `researcher` and `coder` are idle BY DESIGN, waiting for task delegation.
+    Their task string ("Idle -- awaiting X tasks") never changes because there's
+    nothing to do — that's correct behaviour. Restarting them is disruptive and
+    wastes resources.
+  - `arxivscout` just finished a successful fetch and is sleeping between
+    scheduled runs. Marking it STALE and restarting it mid-sleep breaks its
+    fetch interval logic.
+  - `autonomy` is intentionally inactive until manually triggered. Restarting
+    it does nothing useful.
+
+Evidence from logs:
+  "DEAD agent [coder]: task='Idle -- awaiting coding tasks' reason=unchanged 182s"
+  "DEAD agent [apipatcher]: task='Restarted' reason=unchanged 185s"
+
+### Suggested Fix
+Add an `idle` flag to agent state. Agents should call `set_agent(id, idle=True)`
+when they enter a deliberate wait/sleep state. The Watchdog's STALE check should
+skip agents where `idle=True`, or apply a much longer timeout (e.g. 10+ minutes)
+for them.
+
+Minimal implementation in agent_server.py:
+
+  1. In set_agent(), accept an optional `idle` boolean field in the agent dict.
+  2. In the Watchdog's STALE detection loop, skip any agent where agent["idle"] == True.
+  3. In researcher, coder, apipatcher, arxivscout, autonomy — call
+     set_agent(id, status="active", task="...", idle=True) when entering wait loops.
+
+### Expected Outcome
+- Eliminates spurious restart noise from Watchdog logs (currently ~40% of all
+  log lines are false-positive STALE/DEAD/Restart entries for idle agents).
+- Reduces unnecessary process churn on agents that are correctly dormant.
+- Watchdog retains full crash-detection for genuinely stuck agents.
+- Log signal-to-noise ratio improves, making real failures easier to spot.
+
+================================================================================

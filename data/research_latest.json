@@ -1,0 +1,29 @@
+{
+  "topic": "AI HQ Launch Marketing Research",
+  "timestamp": "2026-03-18T00:00:00Z",
+  "bullets": [
+    "Top 10 communities identified: Indie Hackers, r/SideProject, r/SaaS, Product Hunt, WIP.chat, Dynamo, TrustMRR, Solofounders Discord, MicroAssets Discord, Bluesky #buildinpublic",
+    "5 competitor tools analysed: n8n (open-source, from $24/mo), Pipedream (dev-first, from $29/mo), Relay.app (human-in-loop, from $20/mo), Gumloop (AI-native, from $37/mo), Lindy.ai (AI employee, from $49.99/mo)",
+    "Free tier is table stakes — every competitor offers one. Paid tiers anchor at $20-50/mo",
+    "Market positioning shifting from 'workflow tool' to 'AI team member/employee'",
+    "Core indie hacker pain: 'hidden infrastructure tax' — hours lost to DevOps instead of building product",
+    "Key language patterns: 'I hate DevOps', 'too many moving parts', 'I just want to ship', 'unpaid DevOps engineer'",
+    "Top Bluesky hashtags: #AI (788/mo), #indiedev (455), #indie (336), #opensource (157), #buildinpublic (37)",
+    "Bluesky has no algorithm — hashtags are the primary discovery mechanism, keep to 3-5 per post",
+    "Recommended positioning: anti-DevOps, 'Ship don't configure', anthropomorphise AI as team member",
+    "Launch strategy: simultaneous push across Indie Hackers, Product Hunt, Reddit, and Bluesky"
+  ],
+  "sources": [
+    "https://syntaxhut.tech/blog/best-indie-hacker-communities",
+    "https://www.indiehackers.com/post/i-suck-hate-devops-please-help-19e2338a78",
+    "https://spacelift.io/blog/devops-challenges",
+    "https://gist.github.com/mackuba/43751fa3facc5893fd0602d146e2aea6",
+    "https://www.gumloop.com/blog/n8n-alternatives",
+    "https://www.relay.app/blog/n8n-alternatives",
+    "https://cybernews.com/ai-tools/pipedream-vs-n8n/",
+    "https://thehiveindex.com/topics/entrepreneurship/platform/discord/",
+    "https://python.plainenglish.io/how-indie-hackers-are-deploying-python-apps-without-touching-devops-d8125bf7dcd6",
+    "https://www.sherpa.sh/blog/indie-hackers-infrastructure-tax",
+    "https://github.com/seanvelasco/bsky-trends"
+  ]
+}

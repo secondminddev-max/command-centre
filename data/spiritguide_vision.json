@@ -1,0 +1,18 @@
+{
+  "product_vision": [
+    "Zero-downtime guaranteed \u2014 all agents self-heal within 30s of failure",
+    "Real-time fidelity \u2014 UI reflects true system state within 1s latency",
+    "Onboarding UX \u2014 new user can understand the system in under 60 seconds",
+    "Documented REST API \u2014 every endpoint has description, params, example",
+    "Clean design language \u2014 consistent color palette, spacing, typography",
+    "Agent health SLAs \u2014 track uptime %, error rates, last-seen timestamps",
+    "Export/import agent roster \u2014 save and restore full system configuration",
+    "Mobile-responsive command centre \u2014 works on any device",
+    "Searchable log history \u2014 filter by agent, level, time range",
+    "Public demo mode \u2014 read-only view safe to share with prospective buyers",
+    "Agent marketplace concept \u2014 pluggable specialist agents via JSON spec",
+    "Audit trail \u2014 immutable log of all system changes with who/what/when"
+  ],
+  "updated": "2026-03-16T04:53:32.610352",
+  "total_items": 12
+}

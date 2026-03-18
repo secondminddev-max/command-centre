@@ -1,0 +1,192 @@
+{
+  "research_date": "2026-03-17",
+  "researcher": "Researcher Agent",
+  "system_capabilities": ["web_scraping", "asx_stock_screening", "ai_text_generation", "bluesky_posting", "stripe_payment", "email_sendgrid", "27_active_agents"],
+
+  "top_opportunity": {
+    "name": "ASX Small-Cap AI Screener Report — Paid Subscription",
+    "description": "Sell weekly AI-generated ASX small-cap screening reports as a recurring subscription. Product already exists and has been run (8 companies found). Charge $19/month (basic) or $49/month (pro with email alerts). Distribute via Bluesky teasers, HotCopper forum, Aussie Stock Forums, and ASX Tribe Discord. The Australian retail investor niche is structurally underserved — Strawman is waitlisted, Finviz covers fewer than 24 ASX stocks, and no automated narrative screener exists at this price point.",
+    "estimated_time_to_revenue": "24-48 hours (Stripe checkout live + community post same day)",
+    "estimated_mrr": {
+      "week_1": "$38-$190 (2-10 subs)",
+      "month_1": "$380-$950 (20-50 subs)",
+      "month_3": "$1,900-$4,750 (100-250 subs)",
+      "ceiling_note": "100 subs at blended $29/mo = $2,900 MRR / $34,800 ARR — solo-founder profitable"
+    },
+    "why_this_wins": [
+      "Product already built and validated — screener is live, report generated, 8 companies found",
+      "Stripe already active — zero payment infrastructure work needed",
+      "Bluesky presence for organic distribution via teaser posts",
+      "Market gap confirmed: Strawman waitlisted, Finviz covers <24 ASX stocks, no automated narrative screener",
+      "Motley Fool AU charges $39-$836/yr proving Australians pay for curated stock research",
+      "Gumroad is a zero-friction backup: 10% flat cut, no monthly fee, instant listing (gumroad_listing_asx_tracker.txt already started)",
+      "Australian small-cap niche: ownable quickly, large enough to monetise",
+      "27 agents can automate weekly report generation, delivery, and social posting end-to-end"
+    ],
+    "action_steps": [
+      "Create 2 Stripe products today: 'ASX Small-Cap Monthly' at $19/mo and 'ASX Small-Cap Pro' at $49/mo",
+      "Publish landing page (single HTML) with 3-company free teaser from existing report + Stripe checkout CTA",
+      "Post on Bluesky: share the 3 teaser companies with brief rationale, link to subscribe for full report",
+      "Post in HotCopper and Aussie Stock Forums with free teaser offer for first 10 members",
+      "Join ASX Tribe Discord and share demo report in relevant channel",
+      "Wire Stripe webhook to email delivery (SendGrid) — auto-send full report on payment_succeeded event",
+      "Schedule ASX screener to run every Monday pre-market and auto-generate next report",
+      "Add ASIC disclaimer: 'Educational data tool only, not financial advice' — follow Motley Fool AU model"
+    ],
+    "key_risk": "ASIC licensing — providing financial product advice requires AFS licence in Australia. Mitigate by framing as 'data screening and educational research tool', not personal financial advice. This is standard practice for Motley Fool AU and similar services."
+  },
+
+  "all_opportunities": [
+    {
+      "rank": 1,
+      "name": "ASX Small-Cap AI Report Subscription (Stripe/Gumroad)",
+      "pros": [
+        "Product already exists and has run successfully",
+        "Stripe infrastructure already active",
+        "Clear market gap — Strawman waitlisted, Finviz ASX coverage near zero",
+        "Recurring MRR, not one-off",
+        "Bluesky + HotCopper + Discord distribution ready now",
+        "Fully automatable with 27 agents"
+      ],
+      "cons": [
+        "ASIC compliance framing required (manageable)",
+        "Small initial Bluesky audience",
+        "Requires ongoing quality to retain subscribers"
+      ],
+      "action": "Create Stripe products today, post teaser on Bluesky and HotCopper, wire SendGrid delivery",
+      "estimated_time_to_first_dollar": "24-48 hours",
+      "estimated_mrr_3mo": "$1,900-$4,750"
+    },
+    {
+      "rank": 2,
+      "name": "RapidAPI Listing — ASX Screener API",
+      "pros": [
+        "Passive income once live",
+        "Proven: real case study earned $877",
+        "Developer audience with credit cards ready",
+        "Freemium model drives discovery"
+      ],
+      "cons": [
+        "RapidAPI takes 25% cut",
+        "Requires wrapping screener as a clean REST API",
+        "First paying customer typically 1-3 weeks, not 24-48h",
+        "Setup time ~4-8 hours",
+        "Nokia acquired RapidAPI (2024) — platform direction uncertain"
+      ],
+      "action": "Wrap ASX screener as REST API, upload OpenAPI spec to RapidAPI, set freemium + $9/mo paid tier",
+      "estimated_time_to_first_dollar": "1-2 weeks",
+      "estimated_mrr_3mo": "$100-$500"
+    },
+    {
+      "rank": 3,
+      "name": "AI Tool Affiliate Program Promotion (via Bluesky)",
+      "pros": [
+        "Zero setup cost",
+        "High commissions: Copy.ai 45%, GetResponse 40-60%, Jasper 25% recurring",
+        "Can start today with Bluesky posts",
+        "Passive income on recurring subscriptions"
+      ],
+      "cons": [
+        "Revenue lags by weeks — depends on follower conversions",
+        "Small current Bluesky audience limits reach",
+        "Not product-led — relies on content marketing",
+        "Commissions are secondary income not primary MRR"
+      ],
+      "action": "Sign up for Copy.ai and Jasper affiliate programs today, create 3-5 Bluesky posts demonstrating tools",
+      "estimated_time_to_first_dollar": "2-4 weeks",
+      "estimated_mrr_3mo": "$50-$300"
+    },
+    {
+      "rank": 4,
+      "name": "Sell Single Report PDF via Gumroad",
+      "pros": [
+        "Zero platform fee until sale (10% only on sale)",
+        "Instant listing — no approval",
+        "Good for one-time buyers before they subscribe",
+        "gumroad_listing_asx_tracker.txt already started in /data"
+      ],
+      "cons": [
+        "One-off revenue, not recurring",
+        "Gumroad revenue highly concentrated — 99.5% to top 1% of sellers",
+        "Requires driving traffic externally",
+        "Less valuable than subscription model long-term"
+      ],
+      "action": "List existing ASX report PDF on Gumroad at $9-$19, post link in communities as low-friction entry point",
+      "estimated_time_to_first_dollar": "24-72 hours",
+      "estimated_mrr_3mo": "$90-$500"
+    },
+    {
+      "rank": 5,
+      "name": "Fiverr/Upwork AI Automation Audit Gig",
+      "pros": [
+        "High per-gig value ($150-$500)",
+        "Large buyer pool",
+        "No upfront cost to list"
+      ],
+      "cons": [
+        "Time-to-first-buyer is unpredictable — often weeks for new sellers",
+        "Competitive category",
+        "Requires human availability to deliver audit",
+        "Platform takes 20% (Fiverr) or 20% on first $500 (Upwork)",
+        "Not automatable — time for money model"
+      ],
+      "action": "Create Fiverr gig: 'AI Workflow Automation Audit — I'll analyse your business processes and deliver an AI automation roadmap'",
+      "estimated_time_to_first_dollar": "3-14 days",
+      "estimated_mrr_3mo": "$300-$1,500 (irregular)"
+    },
+    {
+      "rank": 6,
+      "name": "Anthropic Claude Partner Network (Enterprise Referral)",
+      "pros": [
+        "$100M committed by Anthropic to partners in 2026",
+        "High referral fees for enterprise deals",
+        "Free to join",
+        "Access to training, co-marketing"
+      ],
+      "cons": [
+        "Enterprise B2B sales cycle is 3-12 months",
+        "No public commission rates — negotiated",
+        "Requires established consulting or enterprise relationships",
+        "Not a 24-48 hour play — possibly 6+ months to first dollar"
+      ],
+      "action": "Apply at anthropic.com/referral to get partner status for future pipeline — not primary revenue play now",
+      "estimated_time_to_first_dollar": "3-6 months",
+      "estimated_mrr_3mo": "$0 (pipeline building phase)"
+    },
+    {
+      "rank": 7,
+      "name": "Product Hunt Launch",
+      "pros": [
+        "Free exposure to tech-savvy early adopters",
+        "Can drive SEO and backlinks",
+        "Signals legitimacy"
+      ],
+      "cons": [
+        "Real data: 400 signups often yields only $237 and 1 paying customer in first 4 days",
+        "Requires weeks of community warm-up for good ranking",
+        "Traffic spike then silence — not sustainable alone",
+        "Wrong audience for ASX investing niche"
+      ],
+      "action": "Plan a Product Hunt launch for month 2 after validating product with first 20 paying subscribers",
+      "estimated_time_to_first_dollar": "3-4 weeks with prep",
+      "estimated_mrr_3mo": "$50-$300 (incremental)"
+    },
+    {
+      "rank": 8,
+      "name": "Newsletter Sponsorship (as the sponsor-seller)",
+      "pros": [
+        "Finance/B2B newsletters command $50-$150 CPM",
+        "Can earn $500-$3,000 per placement at 5K-50K subscribers"
+      ],
+      "cons": [
+        "Requires building an audience FIRST",
+        "Cannot earn sponsorship revenue without existing list",
+        "3-12 months to build meaningful subscriber base",
+        "Not a first-revenue play"
+      ],
+      "action": "Launch Beehiiv or Substack newsletter now, grow to 1K+ subscribers over 2-3 months before pitching sponsors",
+      "estimated_time_to_first_dollar": "2-4 months",
+      "estimated_mrr_3mo": "$0-$100"
+    }
+  ]
+}

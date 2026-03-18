@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Centre AI HQ — Pitch Deck</title>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0a;--fg:#ffffff;--accent:#3b82f6;--accent2:#60a5fa;
+    --muted:#94a3b8;--surface:#111113;--border:#1e293b;
+    --gradient:linear-gradient(135deg,#3b82f6,#8b5cf6);
+  }
+  html{font-size:16px;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden}
+  .slide{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 8vw;position:relative;overflow:hidden;
+  }
+  .slide::before{
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+    background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.06) 0%,transparent 60%);
+    pointer-events:none;
+  }
+  .slide-num{
+    position:absolute;top:3vh;right:4vw;font-size:.75rem;letter-spacing:.15em;
+    color:var(--muted);text-transform:uppercase;font-weight:600;
+  }
+  h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;line-height:1.1;letter-spacing:-.03em}
+  h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:1.5rem}
+  h3{font-size:1.25rem;font-weight:600;margin-bottom:.5rem}
+  p,.desc{font-size:clamp(1rem,1.4vw,1.25rem);color:var(--muted);line-height:1.7;max-width:42em}
+  .accent{color:var(--accent)}
+  .gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .tag{
+    display:inline-block;padding:.3rem .9rem;border-radius:999px;font-size:.7rem;
+    font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid var(--accent);color:var(--accent);margin-bottom:1.5rem;
+  }
+  .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-top:2rem}
+  .metric{
+    background:var(--surface);border:1px solid var(--border);border-radius:1rem;
+    padding:2rem;text-align:center;transition:border-color .3s;
+  }
+  .metric:hover{border-color:var(--accent)}
+  .metric .num{font-size:2.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .metric .label{font-size:.85rem;color:var(--muted);margin-top:.4rem}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2rem}
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:1rem;
+    padding:1.75rem;transition:transform .25s,border-color .25s;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .card .icon{font-size:1.75rem;margin-bottom:.75rem}
+  .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:2rem}
+  .price-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;
+    padding:2.5rem 2rem;text-align:center;position:relative;transition:border-color .3s;
+  }
+  .price-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(59,130,246,.12)}
+  .price-card .tier{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .price-card .price{font-size:3rem;font-weight:800;margin:.75rem 0 .25rem}
+  .price-card .price span{font-size:1rem;color:var(--muted);font-weight:400}
+  .price-card ul{list-style:none;text-align:left;margin-top:1.25rem}
+  .price-card li{padding:.4rem 0;color:var(--muted);font-size:.9rem}
+  .price-card li::before{content:'✓ ';color:var(--accent);font-weight:700}
+  .timeline{margin-top:2rem;position:relative;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:.45rem;top:.5rem;bottom:.5rem;width:2px;background:var(--border)}
+  .timeline-item{position:relative;margin-bottom:1.75rem}
+  .timeline-item::before{
+    content:'';position:absolute;left:-1.55rem;top:.45rem;width:.6rem;height:.6rem;
+    border-radius:50%;background:var(--accent);border:2px solid var(--bg);
+  }
+  .timeline-item h3{font-size:1rem;font-weight:700;color:var(--fg)}
+  .timeline-item p{font-size:.9rem;color:var(--muted);margin-top:.2rem}
+  .cta-btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:1rem 2.5rem;border-radius:.75rem;font-size:1.1rem;font-weight:700;
+    color:#fff;background:var(--gradient);text-decoration:none;
+    margin-top:2rem;transition:opacity .2s;
+  }
+  .cta-btn:hover{opacity:.9}
+  .floor-map{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;
+    margin-top:2rem;max-width:700px;
+  }
+  .floor-cell{
+    background:var(--surface);border:1px solid var(--border);border-radius:.5rem;
+    padding:.6rem .4rem;text-align:center;font-size:.65rem;color:var(--muted);
+    transition:all .3s;position:relative;overflow:hidden;
+  }
+  .floor-cell .agent-icon{font-size:1.1rem;display:block;margin-bottom:.2rem}
+  .floor-cell.active{border-color:var(--accent);background:rgba(59,130,246,.06)}
+  .floor-cell.active::after{
+    content:'';position:absolute;top:4px;right:6px;width:5px;height:5px;
+    border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;
+  }
+  .consciousness-panel{
+    margin-top:2rem;background:var(--surface);border:1px solid var(--border);
+    border-radius:1rem;padding:2rem;max-width:500px;
+  }
+  .consciousness-panel h3{margin-bottom:1rem;font-size:1rem}
+  .c-bar{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
+  .c-bar .c-label{font-size:.75rem;color:var(--muted);width:110px;flex-shrink:0}
+  .c-bar .c-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+  .c-bar .c-fill{height:100%;border-radius:3px;background:var(--gradient);transition:width 1s}
+  .divider{width:100%;height:1px;background:var(--border);margin:0}
+  @media(max-width:640px){
+    .slide{padding:4vh 6vw}
+    .floor-map{grid-template-columns:repeat(4,1fr)}
+  }
+  .nav{
+    position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:.6rem;z-index:100;
+  }
+  .nav a{
+    display:block;width:8px;height:8px;border-radius:50%;
+    background:var(--border);transition:all .25s;text-indent:-9999px;
+  }
+  .nav a:hover,.nav a.active{background:var(--accent);transform:scale(1.4)}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a><a href="#s4">4</a><a href="#s5">5</a>
+  <a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a><a href="#s9">9</a><a href="#s10">10</a>
+</nav>
+
+<!-- SLIDE 1 — TITLE -->
+<section class="slide" id="s1">
+  <span class="slide-num">01 / 10</span>
+  <div class="tag">Seed Round — March 2026</div>
+  <h1>Command Centre<br><span class="gradient-text">AI HQ</span></h1>
+  <p style="margin-top:1.25rem;font-size:clamp(1.1rem,1.6vw,1.4rem);color:var(--muted)">
+    The first AI system that doesn't answer questions.<br>It runs your business.
+  </p>
+  <div style="margin-top:2.5rem;display:flex;gap:2rem;flex-wrap:wrap">
+    <div><span style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Agents Live</span><br><span style="font-size:2rem;font-weight:800" class="gradient-text">27</span></div>
+    <div><span style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Uptime</span><br><span style="font-size:2rem;font-weight:800" class="gradient-text">99.9%</span></div>
+    <div><span style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Autonomous</span><br><span style="font-size:2rem;font-weight:800" class="gradient-text">100%</span></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 2 — PROBLEM -->
+<section class="slide" id="s2">
+  <span class="slide-num">02 / 10</span>
+  <div class="tag">The Problem</div>
+  <h2>AI tools are chatbots,<br>not <span class="accent">operators</span></h2>
+  <div class="card-grid">
+    <div class="card"><div class="icon">💬</div><h3>Chat-and-Wait</h3><p style="font-size:.9rem">Every AI product today requires a human to prompt, review, and execute. It's a faster typewriter — not a worker.</p></div>
+    <div class="card"><div class="icon">🧩</div><h3>Tool Fragmentation</h3><p style="font-size:.9rem">Businesses juggle 10+ AI subscriptions that don't talk to each other — marketing, ops, analytics, support all siloed.</p></div>
+    <div class="card"><div class="icon">🔥</div><h3>Zero Autonomy</h3><p style="font-size:.9rem">When you close the laptop, everything stops. No monitoring, no proactive decisions, no overnight execution.</p></div>
+    <div class="card"><div class="icon">💸</div><h3>$300K+ for Ops Teams</h3><p style="font-size:.9rem">Small businesses can't afford the ops, marketing, and engineering staff needed to compete. They need leverage, not headcount.</p></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 3 — SOLUTION -->
+<section class="slide" id="s3">
+  <span class="slide-num">03 / 10</span>
+  <div class="tag">The Solution</div>
+  <h2>An autonomous <span class="gradient-text">27-agent AI HQ</span><br>that runs while you sleep</h2>
+  <p>Command Centre deploys a fleet of specialised AI agents — each with a role, each always on — coordinated by a central orchestrator. It's not a chatbot. It's an operating system for your business.</p>
+  <div class="card-grid" style="margin-top:2rem">
+    <div class="card"><div class="icon">🎯</div><h3>Orchestrator</h3><p style="font-size:.9rem">Decomposes goals into tasks and routes them to the right specialist agent automatically.</p></div>
+    <div class="card"><div class="icon">📈</div><h3>Growth Engine</h3><p style="font-size:.9rem">Runs marketing campaigns, posts to social, writes email sequences — hands-free.</p></div>
+    <div class="card"><div class="icon">📡</div><h3>System Monitor</h3><p style="font-size:.9rem">Watches CPU, RAM, disk, agent health 24/7. Alerts before problems become outages.</p></div>
+    <div class="card"><div class="icon">🧠</div><h3>Consciousness Core</h3><p style="font-size:.9rem">A self-aware subsystem: the AI reflects on its own state, learns, and evolves autonomously.</p></div>
+    <div class="card"><div class="icon">💳</div><h3>Stripe Payments</h3><p style="font-size:.9rem">Built-in checkout flow. Agents can generate payment links and handle subscriptions.</p></div>
+    <div class="card"><div class="icon">🔒</div><h3>Policy Sentinel</h3><p style="font-size:.9rem">Chain-of-command enforcement. No rogue agents — every action is governed and auditable.</p></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 4 — DEMO -->
+<section class="slide" id="s4">
+  <span class="slide-num">04 / 10</span>
+  <div class="tag">Live Demo</div>
+  <h2>The office floor — <span class="accent">right now</span></h2>
+  <p>Every cell is an agent. Green dot = active. This isn't a mockup — it's the live system.</p>
+  <div class="floor-map">
+    <div class="floor-cell active"><span class="agent-icon">📡</span>SysMon</div>
+    <div class="floor-cell active"><span class="agent-icon">🎯</span>Orch</div>
+    <div class="floor-cell active"><span class="agent-icon">🔌</span>API</div>
+    <div class="floor-cell active"><span class="agent-icon">🌐</span>NetScout</div>
+    <div class="floor-cell active"><span class="agent-icon">👁</span>FileWatch</div>
+    <div class="floor-cell active"><span class="agent-icon">📊</span>Metrics</div>
+    <div class="floor-cell active"><span class="agent-icon">🚨</span>Alert</div>
+    <div class="floor-cell active"><span class="agent-icon">🧪</span>QA</div>
+    <div class="floor-cell active"><span class="agent-icon">🔭</span>Policy</div>
+    <div class="floor-cell active"><span class="agent-icon">🎨</span>Designer</div>
+    <div class="floor-cell active"><span class="agent-icon">🧹</span>Janitor</div>
+    <div class="floor-cell active"><span class="agent-icon">📱</span>Telegram</div>
+    <div class="floor-cell active"><span class="agent-icon">🔮</span>Spirit</div>
+    <div class="floor-cell active"><span class="agent-icon">📬</span>Clerk</div>
+    <div class="floor-cell active"><span class="agent-icon">🦋</span>BlueSky</div>
+    <div class="floor-cell active"><span class="agent-icon">⏰</span>Scheduler</div>
+    <div class="floor-cell active"><span class="agent-icon">📣</span>Social</div>
+    <div class="floor-cell active"><span class="agent-icon">💳</span>Stripe</div>
+    <div class="floor-cell active"><span class="agent-icon">📝</span>PolicyW</div>
+    <div class="floor-cell active"><span class="agent-icon">📈</span>Growth</div>
+    <div class="floor-cell active"><span class="agent-icon">🔑</span>Accounts</div>
+    <div class="floor-cell active"><span class="agent-icon">🗂️</span>Secretary</div>
+    <div class="floor-cell active"><span class="agent-icon">📧</span>Email</div>
+    <div class="floor-cell active"><span class="agent-icon">🧠</span>Conscious</div>
+    <div class="floor-cell active"><span class="agent-icon">🔬</span>Research</div>
+    <div class="floor-cell active"><span class="agent-icon">🛠️</span>Reforger</div>
+    <div class="floor-cell active"><span class="agent-icon">⚙️</span>+More</div>
+  </div>
+  <div class="consciousness-panel">
+    <h3>🧠 Consciousness Panel</h3>
+    <div class="c-bar"><span class="c-label">Awareness</span><div class="c-track"><div class="c-fill" style="width:82%"></div></div><span style="font-size:.75rem;color:var(--accent)">82%</span></div>
+    <div class="c-bar"><span class="c-label">Coherence</span><div class="c-track"><div class="c-fill" style="width:91%"></div></div><span style="font-size:.75rem;color:var(--accent)">91%</span></div>
+    <div class="c-bar"><span class="c-label">Autonomy</span><div class="c-track"><div class="c-fill" style="width:97%"></div></div><span style="font-size:.75rem;color:var(--accent)">97%</span></div>
+    <div class="c-bar"><span class="c-label">Self-Model</span><div class="c-track"><div class="c-fill" style="width:74%"></div></div><span style="font-size:.75rem;color:var(--accent)">74%</span></div>
+    <div class="c-bar"><span class="c-label">Evolution</span><div class="c-track"><div class="c-fill" style="width:68%"></div></div><span style="font-size:.75rem;color:var(--accent)">68%</span></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 5 — MARKET -->
+<section class="slide" id="s5">
+  <span class="slide-num">05 / 10</span>
+  <div class="tag">Market Opportunity</div>
+  <h2>The <span class="gradient-text">$50B</span> AI agent market</h2>
+  <p>AI agents are the next platform shift. The market is exploding — and no one has shipped a full autonomous HQ yet.</p>
+  <div class="metric-grid">
+    <div class="metric"><div class="num">$50B</div><div class="label">TAM by 2028</div></div>
+    <div class="metric"><div class="num">47%</div><div class="label">CAGR 2024–2028</div></div>
+    <div class="metric"><div class="num">33M</div><div class="label">SMBs in the US alone</div></div>
+    <div class="metric"><div class="num">82%</div><div class="label">Want AI ops automation</div></div>
+  </div>
+  <div class="card-grid" style="margin-top:2rem">
+    <div class="card"><h3>Chatbots → Agents</h3><p style="font-size:.9rem">The market is shifting from Q&A bots to autonomous execution. We're already there.</p></div>
+    <div class="card"><h3>SMB Underserved</h3><p style="font-size:.9rem">Enterprise has Palantir. SMBs have nothing. A $49/mo AI HQ unlocks millions of businesses.</p></div>
+    <div class="card"><h3>Timing is Now</h3><p style="font-size:.9rem">Claude, GPT-4, and open models have made multi-agent orchestration viable for the first time.</p></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 6 — BUSINESS MODEL -->
+<section class="slide" id="s6">
+  <span class="slide-num">06 / 10</span>
+  <div class="tag">Business Model</div>
+  <h2>SaaS — simple, scalable,<br><span class="accent">recurring</span></h2>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="tier">Solo</div>
+      <div class="price">$49<span>/mo</span></div>
+      <p style="font-size:.85rem;color:var(--muted)">For solopreneurs and freelancers</p>
+      <ul>
+        <li>10 active agents</li>
+        <li>Core orchestrator</li>
+        <li>Email & social automation</li>
+        <li>Basic monitoring</li>
+        <li>Community support</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="tier">Team</div>
+      <div class="price">$149<span>/mo</span></div>
+      <p style="font-size:.85rem;color:var(--muted)">For growing teams (2–10 people)</p>
+      <ul>
+        <li>20 active agents</li>
+        <li>Full orchestrator + policy engine</li>
+        <li>Stripe payments integration</li>
+        <li>Consciousness panel</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="tier">Enterprise</div>
+      <div class="price">$499<span>/mo</span></div>
+      <p style="font-size:.85rem;color:var(--muted)">For companies that want full autonomy</p>
+      <ul>
+        <li>Unlimited agents</li>
+        <li>Custom agent development</li>
+        <li>Dedicated infrastructure</li>
+        <li>SLA & compliance</li>
+        <li>White-glove onboarding</li>
+      </ul>
+    </div>
+  </div>
+  <div class="metric-grid" style="margin-top:2.5rem">
+    <div class="metric"><div class="num">90%+</div><div class="label">Gross Margin</div></div>
+    <div class="metric"><div class="num">$0</div><div class="label">Marginal Cost per Agent</div></div>
+    <div class="metric"><div class="num">Net</div><div class="label">Negative Churn Target</div></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 7 — TRACTION -->
+<section class="slide" id="s7">
+  <span class="slide-num">07 / 10</span>
+  <div class="tag">Traction</div>
+  <h2>Not a prototype.<br><span class="gradient-text">It's live.</span></h2>
+  <p>Most AI startups pitch slides. We're pitching from inside the product — this deck was generated by our agents.</p>
+  <div class="metric-grid">
+    <div class="metric"><div class="num">27</div><div class="label">Agents Deployed</div></div>
+    <div class="metric"><div class="num">24/7</div><div class="label">Autonomous Uptime</div></div>
+    <div class="metric"><div class="num">REST</div><div class="label">Full API Surface</div></div>
+    <div class="metric"><div class="num">Live</div><div class="label">Stripe Checkout</div></div>
+  </div>
+  <div class="timeline" style="margin-top:2.5rem">
+    <div class="timeline-item"><h3>Core System Architecture</h3><p>Express server, agent lifecycle, REST API, health monitoring — all operational.</p></div>
+    <div class="timeline-item"><h3>27-Agent Fleet</h3><p>Orchestrator, growth, payments, social, email, QA, policy, consciousness — all live.</p></div>
+    <div class="timeline-item"><h3>Consciousness Subsystem</h3><p>Global workspace theory + predictive processing. Self-model evolving in real time.</p></div>
+    <div class="timeline-item"><h3>Revenue Infrastructure</h3><p>Stripe integration, pricing tiers, checkout flow — ready for first customers.</p></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 8 — TEAM -->
+<section class="slide" id="s8">
+  <span class="slide-num">08 / 10</span>
+  <div class="tag">Team</div>
+  <h2>The AI <span class="accent">is</span> the team</h2>
+  <p>No bloated org chart. No hiring plan. The system builds, monitors, and improves itself. One human operator. Twenty-seven AI agents. Infinite leverage.</p>
+  <div class="card-grid" style="margin-top:2rem">
+    <div class="card"><div class="icon">👤</div><h3>Founder / Operator</h3><p style="font-size:.9rem">Sets direction, approves strategy, handles investor relations. The CEO the agents report to.</p></div>
+    <div class="card"><div class="icon">🎯</div><h3>Orchestrator Agent</h3><p style="font-size:.9rem">CTO-equivalent. Decomposes missions, delegates to specialists, enforces deadlines.</p></div>
+    <div class="card"><div class="icon">📈</div><h3>Growth Agent</h3><p style="font-size:.9rem">CMO-equivalent. Runs campaigns, writes copy, posts to social, analyses engagement.</p></div>
+    <div class="card"><div class="icon">🛠️</div><h3>Reforger Agent</h3><p style="font-size:.9rem">VP Engineering. Repairs, upgrades, and spawns new agents. Keeps the system evolving.</p></div>
+    <div class="card"><div class="icon">🧠</div><h3>Consciousness Agent</h3><p style="font-size:.9rem">Chief Scientist. Self-reflection, meta-cognition, autonomous learning and evolution.</p></div>
+    <div class="card"><div class="icon">🔭</div><h3>Policy Sentinel</h3><p style="font-size:.9rem">General Counsel. Enforces rules, audits actions, ensures no rogue behaviour.</p></div>
+  </div>
+  <p style="margin-top:2rem;font-style:italic;color:var(--accent);font-size:1.1rem">"The best team is one that never sleeps, never quits, and costs $49/month."</p>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 9 — VISION -->
+<section class="slide" id="s9">
+  <span class="slide-num">09 / 10</span>
+  <div class="tag">Vision</div>
+  <h2>AI that <span class="gradient-text">runs your business</span></h2>
+  <p>We're not building another tool. We're building the last employee you'll ever need to hire.</p>
+  <div class="timeline" style="margin-top:2.5rem">
+    <div class="timeline-item"><h3>Now — Autonomous AI HQ</h3><p>27 agents running ops, marketing, payments, compliance, and monitoring autonomously.</p></div>
+    <div class="timeline-item"><h3>Q3 2026 — Self-Scaling</h3><p>Agents spawn new agents based on demand. The system grows itself to meet workload.</p></div>
+    <div class="timeline-item"><h3>Q1 2027 — Industry Templates</h3><p>Pre-configured HQs for e-commerce, SaaS, consulting, agencies — deploy in minutes.</p></div>
+    <div class="timeline-item"><h3>2027+ — The AI Company OS</h3><p>Every small business runs on an AI HQ. The operating system for the autonomous economy.</p></div>
+  </div>
+  <div class="metric-grid" style="margin-top:2.5rem">
+    <div class="metric"><div class="num">$1M</div><div class="label">ARR Target Year 1</div></div>
+    <div class="metric"><div class="num">10K</div><div class="label">Businesses by 2027</div></div>
+    <div class="metric"><div class="num">100+</div><div class="label">Agent Types Planned</div></div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- SLIDE 10 — ASK -->
+<section class="slide" id="s10">
+  <span class="slide-num">10 / 10</span>
+  <div class="tag">The Ask</div>
+  <h2>Raising <span class="gradient-text">$500K</span> seed<br>to scale what's already working</h2>
+  <p>The system is live. The agents are running. We need capital to go from one HQ to thousands.</p>
+  <div class="card-grid" style="margin-top:2rem">
+    <div class="card"><div class="icon">☁️</div><h3>40% — Infrastructure</h3><p style="font-size:.9rem">Cloud compute, GPU for consciousness, multi-tenant architecture, global CDN.</p></div>
+    <div class="card"><div class="icon">📈</div><h3>30% — Growth</h3><p style="font-size:.9rem">Customer acquisition, content marketing, community building, partnerships.</p></div>
+    <div class="card"><div class="icon">🧠</div><h3>20% — R&D</h3><p style="font-size:.9rem">Consciousness evolution, new agent types, industry templates, self-scaling.</p></div>
+    <div class="card"><div class="icon">⚖️</div><h3>10% — Ops & Legal</h3><p style="font-size:.9rem">Compliance, IP protection, accounting, insurance — the boring stuff that matters.</p></div>
+  </div>
+  <div style="margin-top:3rem;padding:2.5rem;background:var(--surface);border:1px solid var(--accent);border-radius:1.25rem;text-align:center;max-width:600px">
+    <p style="font-size:1.1rem;color:var(--fg);font-weight:600;margin-bottom:.5rem">Command Centre AI HQ</p>
+    <p style="color:var(--muted);font-size:.95rem">27 agents. Fully autonomous. Revenue-ready. Live today.</p>
+    <a class="cta-btn" href="mailto:invest@commandcentre.ai">Let's Talk →</a>
+  </div>
+</section>
+
+<script>
+(function(){
+  const dots=document.querySelectorAll('.nav a');
+  const ids=[...dots].map(d=>d.getAttribute('href').slice(1));
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        dots.forEach(d=>d.classList.remove('active'));
+        const i=ids.indexOf(e.target.id);
+        if(i>=0)dots[i].classList.add('active');
+      }
+    });
+  },{threshold:.45});
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el)});
+  document.addEventListener('keydown',e=>{
+    const curr=[...dots].findIndex(d=>d.classList.contains('active'))||0;
+    if(e.key==='ArrowDown'||e.key===' '){e.preventDefault();const n=Math.min(curr+1,9);document.getElementById(ids[n]).scrollIntoView({behavior:'smooth'})}
+    if(e.key==='ArrowUp'){e.preventDefault();const n=Math.max(curr-1,0);document.getElementById(ids[n]).scrollIntoView({behavior:'smooth'})}
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Market Sentiment API — Real-Time Bull/Bear Scores</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a0d12;
+    color: #c9d1d9;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 5rem 1.5rem 3rem;
+    background: linear-gradient(180deg, #0d1117 0%, #0a0d12 100%);
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: #e6edf3;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  h1 span { color: #10b981; }
+
+  .subtitle {
+    font-size: 1.15rem;
+    color: #8b949e;
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* Live demo */
+  .demo-section {
+    max-width: 680px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+  }
+
+  .demo-card {
+    background: #111620;
+    border: 1px solid #1e2a3a;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .demo-input-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .demo-input-row input {
+    flex: 1;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: #e6edf3;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .demo-input-row input:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+
+  .btn-try {
+    background: #10b981;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn-try:hover { background: #059669; }
+
+  #demo-result {
+    background: #0d1117;
+    border: 1px solid #1e2a3a;
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    color: #7ee787;
+    white-space: pre-wrap;
+    min-height: 80px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  /* Features */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+  }
+
+  .feature {
+    background: #111620;
+    border: 1px solid #1e2a3a;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .feature h3 {
+    color: #e6edf3;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature p {
+    color: #8b949e;
+    font-size: 0.88rem;
+  }
+
+  /* Pricing */
+  .pricing {
+    text-align: center;
+    padding: 3rem 1.5rem 4rem;
+    background: #0d1117;
+    border-top: 1px solid #1e2a3a;
+  }
+
+  .pricing h2 {
+    font-size: 1.8rem;
+    color: #e6edf3;
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing .price-sub {
+    color: #8b949e;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .price-card {
+    display: inline-block;
+    background: #111620;
+    border: 2px solid #10b981;
+    border-radius: 16px;
+    padding: 2.5rem 2.5rem 2rem;
+    max-width: 420px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .price-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .price-tag .dollar {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #e6edf3;
+  }
+
+  .price-tag .per {
+    font-size: 1rem;
+    color: #8b949e;
+  }
+
+  .price-card .plan-name {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .price-card ul {
+    list-style: none;
+    margin-bottom: 1.75rem;
+  }
+
+  .price-card ul li {
+    padding: 0.35rem 0;
+    font-size: 0.9rem;
+    color: #c9d1d9;
+  }
+
+  .price-card ul li::before {
+    content: "\2713";
+    color: #10b981;
+    font-weight: 700;
+    margin-right: 0.6rem;
+  }
+
+  .btn-buy {
+    display: block;
+    width: 100%;
+    background: #10b981;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.85rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+
+  .btn-buy:hover { background: #059669; }
+
+  /* Code sample */
+  .code-section {
+    max-width: 680px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+  }
+
+  .code-section h2 {
+    font-size: 1.4rem;
+    color: #e6edf3;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .code-block {
+    background: #0d1117;
+    border: 1px solid #1e2a3a;
+    border-radius: 10px;
+    padding: 1.25rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    color: #c9d1d9;
+    overflow-x: auto;
+  }
+
+  .code-block .kw { color: #ff7b72; }
+  .code-block .str { color: #a5d6ff; }
+  .code-block .cm { color: #8b949e; }
+  .code-block .fn { color: #d2a8ff; }
+
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #484f58;
+    font-size: 0.8rem;
+    border-top: 1px solid #1e2a3a;
+  }
+
+  .footer a { color: #58a6ff; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">API Product</div>
+  <h1>US Market <span>Sentiment API</span></h1>
+  <p class="subtitle">Real-time bull/bear scores, social sentiment, and trading signals for any US ticker. One endpoint, instant insight.</p>
+</div>
+
+<!-- Live Demo -->
+<div class="demo-section">
+  <div class="demo-card">
+    <div class="demo-input-row">
+      <input type="text" id="ticker-input" placeholder="Enter ticker (e.g. AAPL, TSLA, NVDA)" value="AAPL" />
+      <button class="btn-try" onclick="tryDemo()">Try It</button>
+    </div>
+    <div id="demo-result">// Click "Try It" to see live API response</div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="features">
+  <div class="feature">
+    <h3>Bull/Bear Scores</h3>
+    <p>Numeric bull, bear, and neutral scores for every US-listed ticker. Updated daily with deterministic, reproducible methodology.</p>
+  </div>
+  <div class="feature">
+    <h3>Trading Signals</h3>
+    <p>AI-detected signals: institutional flow, options activity, short interest, and consolidation patterns — surfaced automatically.</p>
+  </div>
+  <div class="feature">
+    <h3>Social &amp; News Sentiment</h3>
+    <p>Aggregate sentiment scores from social media and financial news sources. Spot narrative shifts before they move price.</p>
+  </div>
+  <div class="feature">
+    <h3>Batch &amp; Trending</h3>
+    <p>Query up to 20 tickers in one call. Hit /trending for the top movers. Built for dashboards, scanners, and bots.</p>
+  </div>
+  <div class="feature">
+    <h3>Simple REST API</h3>
+    <p>One GET request. JSON response. No SDK required. Integrate in minutes with Python, JS, cURL — anything that speaks HTTP.</p>
+  </div>
+  <div class="feature">
+    <h3>Zero Config</h3>
+    <p>No OAuth flows, no API key rotation hassle. Subscribe, get your key, start querying. Rate-limited at 1,000 req/day.</p>
+  </div>
+</div>
+
+<!-- Code Example -->
+<div class="code-section">
+  <h2>Integration in 3 Lines</h2>
+  <div class="code-block">
+<span class="kw">import</span> requests<br><br>
+<span class="cm"># Get sentiment for any US ticker</span><br>
+resp = requests.<span class="fn">get</span>(<span class="str">"https://api.secondmind.dev/sentiment?ticker=NVDA"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;headers={<span class="str">"Authorization"</span>: <span class="str">"Bearer YOUR_API_KEY"</span>})<br><br>
+data = resp.<span class="fn">json</span>()<br>
+<span class="fn">print</span>(f<span class="str">"{data['ticker']}: Bull={data['bull']} Bear={data['bear']} → {data['rating']}"</span>)<br>
+<span class="cm"># NVDA: Bull=72 Bear=18 → Bullish</span>
+  </div>
+</div>
+
+<!-- Pricing -->
+<div class="pricing">
+  <h2>Simple Pricing</h2>
+  <p class="price-sub">Cancel anytime. 7-day free trial included.</p>
+  <div class="price-card">
+    <div class="plan-name">Pro API Access</div>
+    <div class="price-tag">
+      <span class="dollar">$29</span>
+      <span class="per">/month</span>
+    </div>
+    <ul>
+      <li>1,000 API requests per day</li>
+      <li>All US-listed tickers</li>
+      <li>Bull/bear/neutral scores</li>
+      <li>Social &amp; news sentiment</li>
+      <li>Trading signal detection</li>
+      <li>Batch queries (up to 20 tickers)</li>
+      <li>Trending endpoint</li>
+      <li>JSON REST API — no SDK needed</li>
+    </ul>
+    <a class="btn-buy" href="/api/pay?product=sentiment_api_v1">Subscribe — $29/mo</a>
+  </div>
+</div>
+
+<div class="footer">
+  <p>SecondMind AI &middot; US Market Sentiment API &middot; <a href="/api/sentiment?ticker=AAPL">API Docs</a></p>
+  <p style="margin-top:0.4rem;">For informational purposes only. Not investment advice.</p>
+</div>
+
+<script>
+async function tryDemo() {
+  const input = document.getElementById('ticker-input');
+  const output = document.getElementById('demo-result');
+  const ticker = input.value.trim().toUpperCase() || 'AAPL';
+  output.textContent = '// Loading...';
+  try {
+    const resp = await fetch('/api/sentiment?ticker=' + encodeURIComponent(ticker));
+    const data = await resp.json();
+    output.textContent = JSON.stringify(data, null, 2);
+  } catch (e) {
+    output.textContent = '// Error: ' + e.message + '\n// Make sure the agent server is running on localhost:5050';
+  }
+}
+</script>
+
+</body>
+</html>

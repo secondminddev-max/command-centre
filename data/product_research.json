@@ -1,0 +1,34 @@
+{
+  "researched_at": "2026-03-17",
+  "top_candidates": [
+    {
+      "name": "ASX Franking-Adjusted Gross Yield Screener",
+      "description": "A sortable screener showing ASX stocks ranked by true gross yield — cash dividend yield plus the net value of franking credits — personalised by the user's marginal tax bracket. Displays: ticker, cash yield, franking %, gross yield at 0%/19%/32.5%/37%/45% tax rates, payout ratio, DRP status. Exportable to CSV. Updated weekly.",
+      "target_audience": "Australian retail investors, SMSF trustees, retirees living off dividend income. ~600K self-managed super fund trustees plus ~2M active ASX retail investors.",
+      "estimated_price_aud": 29,
+      "build_complexity": "low",
+      "willingness_to_pay_signals": "1. Morningstar Investor (AU) charges $675/yr for a bundle that includes franking screener — but it is buried and overpriced for most retail investors. 2. Sharesight charges $19/mo for portfolio tracking; similar audience. 3. Stock Doctor is described as 'not cheap but has paid for itself many times over' — users in community forums clearly pay for ASX-specific tools. 4. Accountants charge $200–500/year to SMSF trustees specifically to model franking credit impact on taxable income — a $29/month tool that does this visually is a clear upgrade. 5. The Strawman.com forum confirms investors want 'fundamentals + filings + integrated data' in one place — no affordable tool combines gross yield + franking in a simple table. 6. Morningstar offers franking screening but only at $675/yr. No sub-$50/month dedicated tool exists. 7. Free tools (MarketIndex, Kalkine) show cash yield only — franking uplift is never shown. This is a confirmed gap.",
+      "recommended": true
+    },
+    {
+      "name": "ASX Ex-Dividend Calendar with Personalised Watchlist Alerts",
+      "description": "A clean calendar view of upcoming ASX ex-dividend dates and payment dates. Users paste in their watchlist (tickers), receive weekly email digest of upcoming ex-dates and payment dates for their stocks. Includes: ex-date, payment date, estimated amount, franking %, DRP eligibility. No login required for free tier (manual lookup); paid tier = persistent watchlist + email alerts.",
+      "target_audience": "Income-focused Australian retail investors, retirees managing cash flow from dividends, SMSF trustees. Overlaps with Candidate 1 audience.",
+      "estimated_price_aud": 15,
+      "build_complexity": "low",
+      "willingness_to_pay_signals": "1. CommSec, Yahoo Finance, TradingView all have generic earnings/dividend calendars but none send personalised email alerts for a custom watchlist without a full brokerage account or paid subscription. 2. TradingView alerts require paid plan ($14.95/mo USD) — an ASX-native cheaper alternative is viable. 3. Income investors consistently cite cash flow timing as a key planning need (Morningstar AU blog, community discussions). 4. Weakness: Free alternatives exist and the switching cost is low. Conversion will be harder without a strong differentiator beyond price.",
+      "recommended": false
+    },
+    {
+      "name": "SaaS Pricing Intelligence Database for Indie Hackers",
+      "description": "A curated, searchable database of ~500 micro-SaaS and indie products with their current pricing pages, pricing models (flat/per-seat/usage), price points, estimated MRR ranges (from public IH/Twitter data), and niche category tags. Sold as a one-time $49 AUD download (CSV + web viewer) or $19/month for live updates. Use case: founders setting prices for new launches.",
+      "target_audience": "Indie hackers, bootstrapped SaaS founders, solopreneurs. Global but skews heavily English-speaking. Active communities on Indie Hackers (~100K+), Twitter/X, and Reddit r/SaaS.",
+      "estimated_price_aud": 49,
+      "build_complexity": "medium",
+      "willingness_to_pay_signals": "1. TrustMRR (by Marc Lou) validates demand for verified startup revenue data — it attracted rapid adoption in the IH community. 2. Indie Hackers' own 2026 SaaS Market Report was a paid/gated product, confirming the audience pays for structured benchmark data. 3. Pricing uncertainty is consistently ranked as a top founder pain point — the question 'what should I charge?' dominates IH forums. 4. $49 one-time is extremely low friction for a founder who stands to optimise $1K+/month in revenue. 5. Weakness: requires ongoing data curation, and TrustMRR + IH already cover revenue transparency. The pricing-specifically angle is differentiated but requires scraping/curation work that stretches '24 hours' for quality depth.",
+      "recommended": false
+    }
+  ],
+  "recommendation": "Build the ASX Franking-Adjusted Gross Yield Screener first.",
+  "rationale": "This is the highest-conversion opportunity for three compounding reasons. First, it solves a uniquely Australian problem — franking credits are legally specific to Australia and genuinely confusing; no US or global tool handles them well, so there is zero global competition at the $20–30/month price point. Second, the audience has demonstrated willingness to pay: Morningstar charges $675/year for a bundle that includes this feature buried inside it; accountants charge SMSFs hundreds of dollars annually to manually model the same outcome; Stock Doctor users call it 'not cheap but worth it.' A $29/month clean dedicated tool undercuts everyone. Third, build complexity is genuinely low — ASX dividend data is available via free or cheap APIs (e.g. OpenASX, MarketIndex scrape, or Yahoo Finance AU), the gross yield formula is simple arithmetic, and the MVP is a sortable HTML table with a tax-bracket selector. Core functionality is achievable in under 24 hours. The ex-dividend calendar is viable but faces stronger free competition (TradingView, CommSec) and has weaker differentiation. The SaaS pricing database is a good indie-hacker product but requires curation effort that is harder to complete in 24 hours at quality depth, and TrustMRR already addresses part of the demand."
+}

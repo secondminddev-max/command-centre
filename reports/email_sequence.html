@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI HQ — Launch Email Sequence</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f5f7; margin: 0; padding: 40px 20px; color: #1a1a2e; }
+  .header { text-align: center; margin-bottom: 48px; }
+  .header h1 { font-size: 28px; color: #1a1a2e; margin-bottom: 8px; }
+  .header p { color: #6b7280; font-size: 15px; }
+  .email-card { max-width: 640px; margin: 0 auto 48px; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
+  .email-label { background: #1a1a2e; color: #fff; padding: 14px 24px; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; display: flex; justify-content: space-between; align-items: center; }
+  .email-label span.tag { background: rgba(255,255,255,0.15); padding: 3px 10px; border-radius: 4px; font-size: 11px; }
+  .email-meta { padding: 20px 32px 0; font-size: 13px; color: #6b7280; border-bottom: 1px solid #f0f0f0; padding-bottom: 16px; }
+  .email-meta strong { color: #1a1a2e; }
+  .email-body { padding: 32px; line-height: 1.7; font-size: 15px; color: #374151; }
+  .email-body h2 { color: #1a1a2e; font-size: 22px; margin-top: 0; }
+  .email-body p { margin: 0 0 16px; }
+  .email-body ul { margin: 0 0 16px; padding-left: 20px; }
+  .email-body li { margin-bottom: 8px; }
+  .cta-btn { display: inline-block; background: #2563eb; color: #fff !important; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 15px; margin: 8px 0 16px; }
+  .cta-btn:hover { background: #1d4ed8; }
+  .cta-btn.urgent { background: #dc2626; }
+  .cta-btn.urgent:hover { background: #b91c1c; }
+  .pricing-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .pricing-table th { background: #f8fafc; text-align: left; padding: 12px 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; border-bottom: 2px solid #e5e7eb; }
+  .pricing-table td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+  .pricing-table tr:last-child td { border-bottom: none; }
+  .tier-name { font-weight: 700; color: #1a1a2e; }
+  .tier-price { font-weight: 700; color: #2563eb; font-size: 18px; }
+  .tier-popular { background: #eff6ff; }
+  .badge { display: inline-block; background: #2563eb; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px; vertical-align: middle; }
+  .countdown-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0; }
+  .countdown-box strong { color: #dc2626; font-size: 18px; }
+  .sig { color: #6b7280; font-size: 14px; border-top: 1px solid #f0f0f0; padding-top: 16px; margin-top: 24px; }
+  .notes { max-width: 640px; margin: 0 auto 48px; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; padding: 16px 24px; font-size: 13px; color: #92400e; }
+  .notes strong { color: #78350f; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AI HQ — Launch Email Sequence</h1>
+  <p>3-email drip campaign &middot; Professional SaaS tone &middot; Draft v1</p>
+</div>
+
+<div class="notes">
+  <strong>Deployment Notes:</strong> Send Email 1 on launch day (Day 0). Email 2 fires Day +2. Email 3 fires Day +5. Segment: all subscribers. Personalise {{FIRST_NAME}} via merge tags before send.
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- EMAIL 1 — WELCOME / INTRODUCTION                              -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-card">
+  <div class="email-label">
+    Email 1 of 3 &mdash; Welcome
+    <span class="tag">Day 0</span>
+  </div>
+  <div class="email-meta">
+    <strong>Subject:</strong> Your AI workforce just arrived &mdash; meet AI HQ<br>
+    <strong>Preview text:</strong> One platform. Every AI agent your business needs.
+  </div>
+  <div class="email-body">
+    <h2>Hi {{FIRST_NAME}},</h2>
+
+    <p>Running a business means juggling dozens of tools, dashboards, and workflows. What if a single platform could handle the heavy lifting &mdash; autonomously?</p>
+
+    <p><strong>AI HQ</strong> is a unified command centre that deploys specialised AI agents across your entire operation:</p>
+
+    <ul>
+      <li><strong>Research &amp; Intelligence</strong> &mdash; market scanning, competitor tracking, trend analysis</li>
+      <li><strong>Content &amp; Marketing</strong> &mdash; copywriting, social scheduling, campaign optimisation</li>
+      <li><strong>Finance &amp; Analytics</strong> &mdash; revenue forecasting, expense tracking, reporting</li>
+      <li><strong>Operations &amp; DevOps</strong> &mdash; monitoring, deployments, incident response</li>
+    </ul>
+
+    <p>No code. No complex integrations. Just results.</p>
+
+    <a href="{{CTA_URL}}" class="cta-btn">Explore AI HQ &rarr;</a>
+
+    <p>We built AI HQ because we believe small teams should have the firepower of large enterprises &mdash; without the headcount or the overhead.</p>
+
+    <div class="sig">
+      Cheers,<br>
+      The AI HQ Team
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- EMAIL 2 — FEATURE HIGHLIGHTS + PRICING TIERS                  -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-card">
+  <div class="email-label">
+    Email 2 of 3 &mdash; Features &amp; Pricing
+    <span class="tag">Day +2</span>
+  </div>
+  <div class="email-meta">
+    <strong>Subject:</strong> 3 plans, one mission: automate everything<br>
+    <strong>Preview text:</strong> Solo, Team, or Enterprise &mdash; pick the tier that fits.
+  </div>
+  <div class="email-body">
+    <h2>Here's what's under the hood, {{FIRST_NAME}}</h2>
+
+    <p>AI HQ isn't a chatbot. It's a fleet of purpose-built agents that work 24/7 so you don't have to. Here's what every plan includes:</p>
+
+    <ul>
+      <li><strong>Agent Orchestration Engine</strong> &mdash; coordinate multiple agents on complex, multi-step tasks</li>
+      <li><strong>Real-Time Dashboard</strong> &mdash; monitor agent activity, outputs, and performance at a glance</li>
+      <li><strong>Secure Data Vault</strong> &mdash; encrypted credential and API key management</li>
+      <li><strong>Smart Scheduling</strong> &mdash; cron-style automation with natural-language configuration</li>
+      <li><strong>Webhook &amp; API Integrations</strong> &mdash; connect to Slack, GitHub, Stripe, and 50+ services</li>
+    </ul>
+
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Price</th>
+          <th>Best For</th>
+          <th>Highlights</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier-name">Solo</span></td>
+          <td><span class="tier-price">$49<small>/mo</small></span></td>
+          <td>Freelancers &amp; solopreneurs</td>
+          <td>5 active agents, 10k tasks/mo, community support</td>
+        </tr>
+        <tr class="tier-popular">
+          <td><span class="tier-name">Team</span> <span class="badge">Popular</span></td>
+          <td><span class="tier-price">$149<small>/mo</small></span></td>
+          <td>Growing teams (up to 10 seats)</td>
+          <td>20 active agents, 100k tasks/mo, priority support, team dashboard</td>
+        </tr>
+        <tr>
+          <td><span class="tier-name">Enterprise</span></td>
+          <td><span class="tier-price">$499<small>/mo</small></span></td>
+          <td>Scaling organisations</td>
+          <td>Unlimited agents &amp; tasks, SSO, SLA, dedicated success manager</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Every plan comes with a <strong>14-day free trial</strong> &mdash; no credit card required.</p>
+
+    <a href="{{CTA_URL}}" class="cta-btn">Start Your Free Trial &rarr;</a>
+
+    <div class="sig">
+      Cheers,<br>
+      The AI HQ Team
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- EMAIL 3 — URGENCY / SCARCITY CTA                              -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="email-card">
+  <div class="email-label">
+    Email 3 of 3 &mdash; Final Call
+    <span class="tag">Day +5</span>
+  </div>
+  <div class="email-meta">
+    <strong>Subject:</strong> Last chance: founding-member pricing closes Friday<br>
+    <strong>Preview text:</strong> Lock in 30% off before it's gone.
+  </div>
+  <div class="email-body">
+    <h2>{{FIRST_NAME}}, this window is closing</h2>
+
+    <p>When we opened AI HQ to early adopters, we offered something we won't repeat: <strong>founding-member pricing &mdash; 30% off every plan, locked in for life.</strong></p>
+
+    <div class="countdown-box">
+      <strong>Founding-member pricing ends Friday at midnight.</strong><br>
+      <span style="font-size:14px; color:#6b7280;">After that, standard rates apply &mdash; no exceptions.</span>
+    </div>
+
+    <p>Here's what founding members are already saying:</p>
+
+    <ul>
+      <li><em>"Replaced 3 SaaS tools in the first week."</em> &mdash; Solo plan user</li>
+      <li><em>"Our ops team went from 12-hour days to 6."</em> &mdash; Team plan user</li>
+      <li><em>"The ROI was obvious within 48 hours."</em> &mdash; Enterprise pilot</li>
+    </ul>
+
+    <p><strong>What you get as a founding member:</strong></p>
+    <ul>
+      <li>30% off your chosen plan &mdash; permanently</li>
+      <li>Priority access to new agents and features</li>
+      <li>Direct Slack channel with the founding team</li>
+      <li>Your name on the AI HQ Wall of Founders</li>
+    </ul>
+
+    <p>We're capping founding memberships at <strong>500 seats</strong>. Once they're gone, they're gone.</p>
+
+    <a href="{{CTA_URL}}" class="cta-btn urgent">Claim Your Founding Spot &rarr;</a>
+
+    <p style="font-size:13px; color:#6b7280; margin-top:16px;">If you've already signed up &mdash; welcome aboard. You can ignore this email.</p>
+
+    <div class="sig">
+      Cheers,<br>
+      The AI HQ Team
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

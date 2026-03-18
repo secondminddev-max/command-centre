@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetricsLog Daily Report — 2026-03-16</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --green: #3cb371;
+      --green-dim: #1e4d30;
+      --yellow: #e3b341;
+      --red: #f85149;
+      --blue: #58a6ff;
+      --purple: #a371f7;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--green-dim);
+      color: var(--green);
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+    h1 { font-size: 1.6rem; color: var(--green); }
+    .subtitle { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+    .card-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .card-value { font-size: 2rem; font-weight: bold; margin: 0.3rem 0; }
+    .card-sub { font-size: 0.75rem; color: var(--muted); }
+    .cpu { color: var(--blue); }
+    .ram { color: var(--purple); }
+    .disk { color: var(--yellow); }
+    .agents { color: var(--green); }
+    .tasks { color: #f0a050; }
+
+    .bar-container { margin-bottom: 2rem; }
+    h2 { font-size: 1rem; color: var(--green); margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .bar-row { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.78rem; }
+    .bar-label { width: 70px; color: var(--muted); flex-shrink: 0; }
+    .bar-track { flex: 1; background: #21262d; border-radius: 4px; height: 16px; overflow: hidden; margin: 0 0.75rem; }
+    .bar-fill { height: 100%; border-radius: 4px; }
+    .bar-fill.cpu { background: var(--blue); }
+    .bar-fill.ram { background: var(--purple); }
+    .bar-val { width: 55px; text-align: right; color: var(--text); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    th { color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; border-bottom: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+    td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #1c2128; }
+    tr:hover td { background: #1c2128; }
+
+    .status-ok { color: var(--green); }
+    .status-warn { color: var(--yellow); }
+    .status-crit { color: var(--red); }
+
+    .alert-box {
+      background: #1e1a0a;
+      border: 1px solid var(--yellow);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.82rem;
+      color: var(--yellow);
+    }
+    .alert-box.ok {
+      background: #0d1f15;
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+    .agent-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem;
+      font-size: 0.76rem;
+    }
+    .agent-name { font-weight: bold; color: var(--text); margin-bottom: 0.2rem; }
+    .agent-status { font-size: 0.7rem; margin-bottom: 0.3rem; }
+    .agent-task { color: var(--muted); font-size: 0.7rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+    .dot.active { background: var(--green); }
+    .dot.busy { background: var(--yellow); }
+    .dot.idle { background: var(--muted); }
+
+    footer { color: var(--muted); font-size: 0.72rem; text-align: center; margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>&#x1F4CA; MetricsLog Daily Summary <span class="badge">2026-03-16</span></h1>
+  <div class="subtitle">Hostname: SecondMinds-Mac-mini.local &nbsp;|&nbsp; Platform: Darwin arm64 (Apple Silicon) &nbsp;|&nbsp; Generated: 2026-03-16T00:00:00 by MetricsLog</div>
+</header>
+
+<!-- ─── KPI CARDS ─── -->
+<div class="grid">
+  <div class="card">
+    <div class="card-label">CPU Average</div>
+    <div class="card-value cpu">12.6%</div>
+    <div class="card-sub">min 3.4% &nbsp;/&nbsp; max 27.6% &nbsp;/&nbsp; σ 5.5%</div>
+  </div>
+  <div class="card">
+    <div class="card-label">RAM Average</div>
+    <div class="card-value ram">52.0%</div>
+    <div class="card-sub">min 30.7% &nbsp;/&nbsp; max 58.1% &nbsp;|&nbsp; 11.6 GB avg used of 25.8 GB</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Disk Used</div>
+    <div class="card-value disk">8.2%</div>
+    <div class="card-sub">40.5 GB used &nbsp;/&nbsp; 453.9 GB free of 494.4 GB</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Peak Agents Active</div>
+    <div class="card-value agents">13</div>
+    <div class="card-sub">avg 7.8 &nbsp;/&nbsp; min 5 active agents</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Tasks Completed</div>
+    <div class="card-value tasks">15</div>
+    <div class="card-sub">+ 16 improvements shipped</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Snapshots Recorded</div>
+    <div class="card-value" style="color:#8b949e;">52</div>
+    <div class="card-sub">04:48 → 19:12 (14h 25m coverage)</div>
+  </div>
+</div>
+
+<!-- ─── ALERT STATUS ─── -->
+<div class="alert-box ok">
+  &#x2705; All thresholds within normal operating range on 2026-03-15.
+  CPU peak 27.6% (threshold 80%) &nbsp;|&nbsp; RAM peak 58.1% (threshold 85%) &nbsp;|&nbsp; Disk 8.2% (threshold 90%).
+  PolicyPro: CLEAN &nbsp;|&nbsp; DemoTester: 4/4 tests passing.
+</div>
+
+<!-- ─── HOURLY CPU/RAM ─── -->
+<div class="bar-container">
+  <h2>Hourly CPU Utilisation — 2026-03-15</h2>
+  <div class="bar-row"><div class="bar-label">04:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:8.5%"></div></div><div class="bar-val cpu">avg 8.5%</div></div>
+  <div class="bar-row"><div class="bar-label">05:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:7.9%"></div></div><div class="bar-val cpu">avg 7.9%</div></div>
+  <div class="bar-row"><div class="bar-label">06:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:5.6%"></div></div><div class="bar-val cpu">avg 5.6%</div></div>
+  <div class="bar-row"><div class="bar-label">07:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:10.3%"></div></div><div class="bar-val cpu">avg 10.3%</div></div>
+  <div class="bar-row"><div class="bar-label">08:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:15%"></div></div><div class="bar-val cpu">avg 15.0%</div></div>
+  <div class="bar-row"><div class="bar-label">09:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:16.1%"></div></div><div class="bar-val cpu">avg 16.1%</div></div>
+  <div class="bar-row"><div class="bar-label">10:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:15.7%"></div></div><div class="bar-val cpu">avg 15.7%</div></div>
+  <div class="bar-row"><div class="bar-label">11:00 &#x26A0;</div><div class="bar-track"><div class="bar-fill cpu" style="width:27.6%; background:#f85149"></div></div><div class="bar-val" style="color:#f85149">avg 21.1% <span style="font-size:0.65rem">(peak 27.6%)</span></div></div>
+  <div class="bar-row"><div class="bar-label">12:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:16.8%"></div></div><div class="bar-val cpu">avg 16.8%</div></div>
+  <div class="bar-row"><div class="bar-label">13:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:14.6%"></div></div><div class="bar-val cpu">avg 14.6%</div></div>
+  <div class="bar-row"><div class="bar-label">14:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:12.2%"></div></div><div class="bar-val cpu">avg 12.2%</div></div>
+  <div class="bar-row"><div class="bar-label">15:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:6.6%"></div></div><div class="bar-val cpu">avg 6.6%</div></div>
+  <div class="bar-row"><div class="bar-label">18:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:15.2%"></div></div><div class="bar-val cpu">avg 15.2%</div></div>
+  <div class="bar-row"><div class="bar-label">19:00</div><div class="bar-track"><div class="bar-fill cpu" style="width:16.4%"></div></div><div class="bar-val cpu">avg 16.4%</div></div>
+</div>
+
+<div class="bar-container">
+  <h2>Hourly RAM Utilisation — 2026-03-15</h2>
+  <div class="bar-row"><div class="bar-label">04:00</div><div class="bar-track"><div class="bar-fill ram" style="width:56%"></div></div><div class="bar-val ram">avg 56.0%</div></div>
+  <div class="bar-row"><div class="bar-label">05:00</div><div class="bar-track"><div class="bar-fill ram" style="width:55.8%"></div></div><div class="bar-val ram">avg 55.8%</div></div>
+  <div class="bar-row"><div class="bar-label">06:00</div><div class="bar-track"><div class="bar-fill ram" style="width:55.8%"></div></div><div class="bar-val ram">avg 55.8%</div></div>
+  <div class="bar-row"><div class="bar-label">07:00</div><div class="bar-track"><div class="bar-fill ram" style="width:54.6%"></div></div><div class="bar-val ram">avg 54.6%</div></div>
+  <div class="bar-row"><div class="bar-label">08:00</div><div class="bar-track"><div class="bar-fill ram" style="width:54%"></div></div><div class="bar-val ram">avg 54.0%</div></div>
+  <div class="bar-row"><div class="bar-label">09:00</div><div class="bar-track"><div class="bar-fill ram" style="width:54.6%"></div></div><div class="bar-val ram">avg 54.6%</div></div>
+  <div class="bar-row"><div class="bar-label">10:00</div><div class="bar-track"><div class="bar-fill ram" style="width:54.5%"></div></div><div class="bar-val ram">avg 54.5%</div></div>
+  <div class="bar-row"><div class="bar-label">11:00</div><div class="bar-track"><div class="bar-fill ram" style="width:56.2%"></div></div><div class="bar-val ram">avg 56.2%</div></div>
+  <div class="bar-row"><div class="bar-label">12:00</div><div class="bar-track"><div class="bar-fill ram" style="width:49.9%"></div></div><div class="bar-val ram">avg 49.9%</div></div>
+  <div class="bar-row"><div class="bar-label">13:00</div><div class="bar-track"><div class="bar-fill ram" style="width:46.8%"></div></div><div class="bar-val ram">avg 46.8%</div></div>
+  <div class="bar-row"><div class="bar-label">14:00</div><div class="bar-track"><div class="bar-fill ram" style="width:52.8%"></div></div><div class="bar-val ram">avg 52.8%</div></div>
+  <div class="bar-row"><div class="bar-label">15:00</div><div class="bar-track"><div class="bar-fill ram" style="width:56.8%"></div></div><div class="bar-val ram">avg 56.8%</div></div>
+  <div class="bar-row"><div class="bar-label">18:00 &#x26A0;</div><div class="bar-track"><div class="bar-fill ram" style="width:58.1%"></div></div><div class="bar-val" style="color:#e3b341">avg 41.8% <span style="font-size:0.65rem">(peak 58.1%)</span></div></div>
+  <div class="bar-row"><div class="bar-label">19:00</div><div class="bar-track"><div class="bar-fill ram" style="width:33.1%"></div></div><div class="bar-val ram">avg 33.1%</div></div>
+</div>
+
+<!-- ─── SNAPSHOT TABLE ─── -->
+<div class="table-wrap">
+  <h2>Key Snapshots — 2026-03-15</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>CPU %</th>
+        <th>RAM %</th>
+        <th>RAM GB</th>
+        <th>Agents Active</th>
+        <th>Tasks Done</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>04:48</td><td class="cpu">9.7%</td><td class="ram">55.8%</td><td>12.79 GB</td><td>9</td><td>1</td><td class="status-ok">OK</td></tr>
+      <tr><td>06:00</td><td class="cpu">4.8%</td><td class="ram">55.9%</td><td>12.78 GB</td><td>9</td><td>2</td><td class="status-ok">OK</td></tr>
+      <tr><td>07:00</td><td class="cpu">21.1%</td><td class="ram">55.2%</td><td>12.63 GB</td><td>7</td><td>4</td><td class="status-ok">OK</td></tr>
+      <tr><td>09:00</td><td class="cpu">16.1%</td><td class="ram">54.6%</td><td>12.5 GB</td><td>7</td><td>6</td><td class="status-ok">OK</td></tr>
+      <tr><td>11:05</td><td class="status-warn">27.6%</td><td class="ram">56.9%</td><td>12.96 GB</td><td>7</td><td>9</td><td class="status-warn">PEAK CPU</td></tr>
+      <tr><td>13:00</td><td class="cpu">14.5%</td><td class="ram">47.6%</td><td>10.85 GB</td><td>7</td><td>11</td><td class="status-ok">OK</td></tr>
+      <tr><td>14:39</td><td class="cpu">11.8%</td><td class="ram">53.5%</td><td>12.07 GB</td><td>8</td><td>9</td><td class="status-ok">OK</td></tr>
+      <tr><td>18:07</td><td class="cpu">18.3%</td><td class="status-warn">58.1%</td><td>13.21 GB</td><td>7</td><td>0</td><td class="status-warn">PEAK RAM</td></tr>
+      <tr><td>18:42</td><td class="cpu">8.3%</td><td class="ram">30.7%</td><td>6.28 GB</td><td>7</td><td>2</td><td class="status-ok">RAM DROP</td></tr>
+      <tr><td>19:12</td><td class="cpu">15.8%</td><td class="ram">33.5%</td><td>7.04 GB</td><td>12</td><td>9</td><td class="status-ok">OK</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─── AGENT STATUS ─── -->
+<div class="bar-container">
+  <h2>Agent Fleet Status — 2026-03-16 04:50 (current)</h2>
+</div>
+<div class="agent-grid">
+  <div class="agent-card">
+    <div class="agent-name">&#x1F4E1; SysMonitor</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">HeatIndex: 32 WARM | CPU 16.1% | RAM 51.8% | Disk 3.7%</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F454; CEO</div>
+    <div class="agent-status"><span class="dot busy"></span><span class="status-warn">busy</span></div>
+    <div class="agent-task">ensure I have full observation of the spirit guide thoughts…</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F3AF; Orchestrator</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Idle — ready</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F50C; APIPatcher</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Routes live: /api/improvements /data/* /reports/* /widgets/* | Cycle #16</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F310; NetScout</div>
+    <div class="agent-status"><span class="dot idle"></span><span style="color:var(--muted)">idle</span></div>
+    <div class="agent-task">Standby — awaiting task from orchestrator</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F441; FileWatch</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Watching 18 files | 2 changes logged</div>
+  </div>
+  <div class="agent-card" style="border-color: var(--green);">
+    <div class="agent-name">&#x1F4CA; MetricsLog (self)</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Recording metrics every 10min | CPU 16.6% RAM 52.6% | #1</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F52C; Researcher</div>
+    <div class="agent-status"><span class="dot idle"></span><span style="color:var(--muted)">idle</span></div>
+    <div class="agent-task">Standby — awaiting task from orchestrator</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F6A8; AlertWatch</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">OK | CPU 16.2% | RAM 51.9% | Agents 12/16 | Check #16</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F9EA; DemoTester</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Tests: 4 passed, 0 failed | Last: output OK | Cycle #2</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x26A1; Reforger</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Idle</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F52D; PolicyPro</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Scanning: violation log | &#x1F7E2; CLEAN | 13/16 up | 04:50:47</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F3A8; Designer</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Cycle #1: Checked animation smoothness and CSS transitions</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F9F9; Janitor</div>
+    <div class="agent-status"><span class="dot idle"></span><span style="color:var(--muted)">idle</span></div>
+    <div class="agent-task">Standby — RAM 52% | CPU 16% | disk 6% | 3 claude proc(s)</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F4F1; Telegram</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Last: [Mathew] You should create another god agent called SpiritG…</div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-name">&#x1F47B; SpiritGuide</div>
+    <div class="agent-status"><span class="dot active"></span><span class="status-ok">active</span></div>
+    <div class="agent-task">Watching over 16 agents | 13 active | UI score: 84/100 | 5 improvements pending</div>
+  </div>
+</div>
+
+<!-- ─── NOTABLE EVENTS ─── -->
+<div class="bar-container">
+  <h2>Notable Events — 2026-03-15</h2>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Time</th><th>Event</th><th>Metric</th><th>Severity</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>11:05</td><td>CPU spike — likely agent task burst</td><td>CPU 27.6%</td><td class="status-warn">WARNING</td></tr>
+      <tr><td>15:00–18:00</td><td>Monitoring gap (no snapshots recorded)</td><td>3h window</td><td class="status-warn">INFO</td></tr>
+      <tr><td>18:07</td><td>RAM peak — large WebKit/Cursor processes</td><td>RAM 58.1% (13.2 GB)</td><td class="status-warn">WARNING</td></tr>
+      <tr><td>18:42</td><td>RAM drop — likely agent/process restart</td><td>RAM 30.7% → 6.28 GB used</td><td class="status-ok">INFO</td></tr>
+      <tr><td>19:12</td><td>Agent fleet expanded to 12 active</td><td>Agents 12/12</td><td class="status-ok">GOOD</td></tr>
+      <tr><td>All day</td><td>Disk utilisation stable</td><td>~8.2% (40.5 GB / 494 GB)</td><td class="status-ok">OK</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─── SYSTEM SUMMARY ─── -->
+<div class="bar-container">
+  <h2>System Hardware Summary</h2>
+</div>
+<div class="grid">
+  <div class="card">
+    <div class="card-label">Host</div>
+    <div class="card-value" style="font-size:1rem; color:var(--text)">SecondMinds-Mac-mini</div>
+    <div class="card-sub">Darwin 25.2.0 · arm64 · Apple Silicon</div>
+  </div>
+  <div class="card">
+    <div class="card-label">CPU Cores</div>
+    <div class="card-value cpu">12</div>
+    <div class="card-sub">Freq: 4 MHz reported (Apple perf core throttled)</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Total RAM</div>
+    <div class="card-value ram">25.8 GB</div>
+    <div class="card-sub">Unified memory architecture</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Storage</div>
+    <div class="card-value disk">494 GB</div>
+    <div class="card-sub">453.9 GB free (91.8% available)</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Python</div>
+    <div class="card-value" style="font-size:1.1rem; color:var(--text)">3.9.6</div>
+    <div class="card-sub">38 packages installed</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Policy Violations</div>
+    <div class="card-value" style="font-size:1.5rem; color:var(--yellow)">1</div>
+    <div class="card-sub">CEO bypass attempt logged (historical)</div>
+  </div>
+</div>
+
+<footer>
+  MetricsLog v1.0 &nbsp;|&nbsp; Metrics Historian Agent &nbsp;|&nbsp; SecondMind Agent Fleet &nbsp;|&nbsp; Report covers 2026-03-15 (52 snapshots over 14h 25m) &nbsp;|&nbsp; Generated 2026-03-16
+</footer>
+
+</body>
+</html>

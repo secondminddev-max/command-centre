@@ -1,0 +1,91 @@
+Code Analysis Report — agent_server.py
+Generated: 2026-03-15
+============================================================
+
+OVERVIEW
+--------
+File: agent_server.py (781 lines)
+Purpose: Multi-agent HTTP command centre with a Claude-powered CEO agent,
+         background worker agents, SSE streaming, and a REST management API.
+
+METRICS
+-------
+  Total lines               : 781
+  Functions / methods       : 20
+  Classes                   : 2  (Handler, ThreadedHTTPServer)
+  API endpoints             : 13  (9 POST, 4 GET)
+  Threads at startup        : 2   (run_sysmonitor, run_ceo)
+  Dynamic threads           : 1 per spawned agent + 1 per HTTP request (ThreadingMixIn)
+
+CYCLOMATIC COMPLEXITY PER FUNCTION
+-----------------------------------
+  Handler.do_POST    : ~31  *** HIGH ***
+  run_ceo            : ~26  *** HIGH ***
+  Handler.do_GET     : ~13  MODERATE
+  run_sysmonitor     :   5  low
+  sse_broadcast      :   3  low
+  agent_sleep        :   3  low
+  finish_task        :   3  low
+  _do_spawn_agent    :   3  low
+  push_output        :   2  low
+  (remaining 11 fns) :   1–2 trivial
+
+  Industry guideline: CC > 10 warrants refactoring; > 20 is high risk.
+  Two functions exceed 20, indicating significant cognitive overhead and test
+  surface.
+
+FINDINGS
+--------
+1. MASSIVE DUPLICATION — tool-dispatch logic
+   run_ceo (lines 375–422) and the delegate block inside do_POST (lines
+   560–616) contain nearly identical 7-way if/elif chains for parsing
+   stream-json tool_use events (Write, Bash, Read/Glob/Grep, Edit,
+   WebSearch, WebFetch, fallback). The two copies are ~80 lines each and
+   diverge only in the agent_id/agent_name values passed to push_output and
+   sse_broadcast. Any future tool addition or summary-format change must be
+   made twice, introducing drift risk.
+
+2. do_POST IS A GOD FUNCTION
+   At 167 lines and CC ~31, Handler.do_POST routes 9 different paths,
+   inline-spawns subprocesses, manages SSE state, and handles subprocess
+   lifecycle — all in a single method. HTTP request handling, business logic,
+   and subprocess orchestration are tightly coupled. This makes the method
+   extremely hard to unit-test or reason about in isolation.
+
+3. UNSAFE exec() ON UNTRUSTED INPUT
+   _do_spawn_agent (line 190–213) executes arbitrary Python code received
+   from an HTTP POST body via exec(). Although the server binds to localhost,
+   there is no authentication, input sanitisation, or sandboxing. Any process
+   with local network access can achieve arbitrary code execution. The code
+   also injects the result directly into globals(), which can silently
+   overwrite existing functions and state.
+
+IMPROVEMENT SUGGESTIONS
+------------------------
+1. Extract a shared _format_tool_event(tname, tinp, agent_id, agent_name)
+   helper that returns (summary, otype, extra_fields).
+   Replace the two near-identical dispatch blocks in run_ceo and the
+   delegate handler with a single call to this helper. This eliminates
+   ~80 lines of duplication and ensures consistent formatting for all
+   future tools.
+
+2. Decompose do_POST into per-route handler functions.
+   Map each path string to a dedicated function, e.g.:
+       ROUTES_POST = {
+           "/api/ceo/message":   _handle_ceo_message,
+           "/api/ceo/delegate":  _handle_delegate,
+           "/api/agent/spawn":   _handle_spawn,
+           ...
+       }
+   do_POST then becomes a 5-line dispatcher. Each handler can be tested
+   independently, and cyclomatic complexity drops from ~31 to ≤5 per unit.
+
+3. Add a token / secret check before executing spawn/upgrade/delegate.
+   Even a simple static bearer token (checked via a config env var) would
+   prevent localhost-only SSRF or local-user privilege escalation through
+   exec(). Alongside that, consider replacing exec()-based dynamic agents
+   with a plugin directory pattern (importlib.import_module on vetted .py
+   files) so that agent code is never sourced from raw HTTP request bodies.
+
+============================================================
+End of report.

@@ -1,0 +1,82 @@
+{
+  "file": "agent_server.py",
+  "analysis_date": "2026-03-15",
+  "summary": {
+    "total_lines": 781,
+    "total_functions_and_methods": 20,
+    "total_classes": 2,
+    "total_api_endpoints": 13,
+    "threads_spawned_at_startup": 2,
+    "threads_spawned_dynamically": "1 per spawned agent + 1 per HTTP request (ThreadingMixIn)"
+  },
+  "classes": [
+    {
+      "name": "Handler",
+      "base": "BaseHTTPRequestHandler",
+      "line": 482,
+      "methods": ["log_message", "do_OPTIONS", "do_POST", "do_GET", "_json", "_cors"]
+    },
+    {
+      "name": "ThreadedHTTPServer",
+      "base": "ThreadingMixIn, HTTPServer",
+      "line": 776,
+      "note": "Defined inline in __main__ block"
+    }
+  ],
+  "functions": [
+    {"name": "push_output",       "line": 35,  "cyclomatic_complexity": 2},
+    {"name": "sse_broadcast",     "line": 53,  "cyclomatic_complexity": 3},
+    {"name": "_stop_ev",          "line": 65,  "cyclomatic_complexity": 2},
+    {"name": "agent_sleep",       "line": 70,  "cyclomatic_complexity": 3},
+    {"name": "agent_should_stop", "line": 76,  "cyclomatic_complexity": 2},
+    {"name": "track_request",     "line": 82,  "cyclomatic_complexity": 2},
+    {"name": "ts",                "line": 93,  "cyclomatic_complexity": 1},
+    {"name": "add_log",           "line": 95,  "cyclomatic_complexity": 2},
+    {"name": "add_task",          "line": 102, "cyclomatic_complexity": 2},
+    {"name": "finish_task",       "line": 110, "cyclomatic_complexity": 3},
+    {"name": "set_agent",         "line": 116, "cyclomatic_complexity": 2},
+    {"name": "_do_spawn_agent",   "line": 190, "cyclomatic_complexity": 3},
+    {"name": "run_ceo",           "line": 295, "cyclomatic_complexity": 26},
+    {"name": "run_sysmonitor",    "line": 464, "cyclomatic_complexity": 5},
+    {"name": "Handler.log_message","line": 483,"cyclomatic_complexity": 1},
+    {"name": "Handler.do_OPTIONS","line": 485, "cyclomatic_complexity": 1},
+    {"name": "Handler.do_POST",   "line": 488, "cyclomatic_complexity": 31},
+    {"name": "Handler.do_GET",    "line": 657, "cyclomatic_complexity": 13},
+    {"name": "Handler._json",     "line": 750, "cyclomatic_complexity": 1},
+    {"name": "Handler._cors",     "line": 757, "cyclomatic_complexity": 1}
+  ],
+  "api_endpoints": {
+    "POST": [
+      "/api/ceo/message",
+      "/api/ceo/clear",
+      "/api/agent/spawn",
+      "/api/agent/upgrade",
+      "/api/ceo/delegate",
+      "/api/agent/stop",
+      "/api/agent/start",
+      "/api/system/stop",
+      "/api/system/start"
+    ],
+    "GET": [
+      "/api/status",
+      "/api/ceo/chat",
+      "/api/agent/output",
+      "/api/stream"
+    ]
+  },
+  "thread_details": {
+    "startup_threads": [
+      {"target": "run_sysmonitor", "daemon": true},
+      {"target": "run_ceo",        "daemon": true}
+    ],
+    "dynamic_threads": [
+      {"source": "_do_spawn_agent", "per": "each spawned agent",  "daemon": true},
+      {"source": "ThreadedHTTPServer (ThreadingMixIn)", "per": "each HTTP request", "daemon": true}
+    ]
+  },
+  "complexity_hotspots": [
+    {"name": "Handler.do_POST", "cc": 31, "note": "Handles 9 distinct route branches, contains full delegate streaming logic inline"},
+    {"name": "run_ceo",         "cc": 26, "note": "Infinite loop with deeply nested JSON stream parsing and 7-way tool_use dispatch"},
+    {"name": "Handler.do_GET",  "cc": 13, "note": "4-way route dispatch plus SSE keep-alive loop"}
+  ]
+}

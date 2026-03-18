@@ -1,0 +1,170 @@
+{
+  "generated_at": "2026-03-18T07:21:43.063135Z",
+  "market_date": "2026-03-18",
+  "indices": {
+    "SPY": {
+      "price": 670.79,
+      "prev_close": 677.18,
+      "change_pct": -0.94,
+      "support": 667.12,
+      "resistance": 674.44,
+      "currency": "USD",
+      "source": "yahoo_finance"
+    },
+    "QQQ": {
+      "price": 603.31,
+      "prev_close": 607.77,
+      "change_pct": -0.73,
+      "support": 599.11,
+      "resistance": 605.9,
+      "currency": "USD",
+      "source": "yahoo_finance"
+    },
+    "IWM": {
+      "price": 250.05,
+      "prev_close": 253.36,
+      "change_pct": -1.31,
+      "support": 248.31,
+      "resistance": 251.71,
+      "currency": "USD",
+      "source": "yahoo_finance"
+    }
+  },
+  "earnings_calendar": [
+    {
+      "date": "2026-03-18",
+      "tickers": [
+        "HD",
+        "PG",
+        "MA",
+        "JNJ"
+      ],
+      "source": "fallback"
+    },
+    {
+      "date": "2026-03-19",
+      "tickers": [
+        "COST",
+        "AMD",
+        "INTC",
+        "DIS"
+      ],
+      "source": "fallback"
+    },
+    {
+      "date": "2026-03-20",
+      "tickers": [
+        "CAT",
+        "NKE",
+        "SBUX",
+        "FDX"
+      ],
+      "source": "fallback"
+    }
+  ],
+  "unusual_options": [
+    {
+      "ticker": "COIN",
+      "type": "Call",
+      "strike": "$800",
+      "expiration": "Mar 31",
+      "volume": "22,600",
+      "signal": "Bullish sweep",
+      "source": "simulated"
+    },
+    {
+      "ticker": "NFLX",
+      "type": "Put",
+      "strike": "$837",
+      "expiration": "Apr 05",
+      "volume": "22,713",
+      "signal": "Put hedge",
+      "source": "simulated"
+    },
+    {
+      "ticker": "GOOGL",
+      "type": "Call",
+      "strike": "$874",
+      "expiration": "Apr 10",
+      "volume": "22,826",
+      "signal": "Bullish block",
+      "source": "simulated"
+    },
+    {
+      "ticker": "META",
+      "type": "Put",
+      "strike": "$911",
+      "expiration": "Apr 15",
+      "volume": "22,939",
+      "signal": "Bearish block",
+      "source": "simulated"
+    },
+    {
+      "ticker": "AMZN",
+      "type": "Call",
+      "strike": "$948",
+      "expiration": "Mar 21",
+      "volume": "23,052",
+      "signal": "Call spread",
+      "source": "simulated"
+    },
+    {
+      "ticker": "NVDA",
+      "type": "Put",
+      "strike": "$985",
+      "expiration": "Mar 26",
+      "volume": "23,165",
+      "signal": "Opening puts",
+      "source": "simulated"
+    },
+    {
+      "ticker": "RIVN",
+      "type": "Call",
+      "strike": "$122",
+      "expiration": "Mar 31",
+      "volume": "23,278",
+      "signal": "Bullish opening",
+      "source": "simulated"
+    },
+    {
+      "ticker": "PLTR",
+      "type": "Put",
+      "strike": "$159",
+      "expiration": "Apr 05",
+      "volume": "23,391",
+      "signal": "Bearish sweep",
+      "source": "simulated"
+    },
+    {
+      "ticker": "CRM",
+      "type": "Call",
+      "strike": "$196",
+      "expiration": "Apr 10",
+      "volume": "23,504",
+      "signal": "Bullish sweep",
+      "source": "simulated"
+    },
+    {
+      "ticker": "MSFT",
+      "type": "Put",
+      "strike": "$233",
+      "expiration": "Apr 15",
+      "volume": "23,617",
+      "signal": "Put hedge",
+      "source": "simulated"
+    }
+  ],
+  "sector_performance": {
+    "Technology": "+1.00%",
+    "Healthcare": "+1.17%",
+    "Financial": "+1.34%",
+    "Consumer Cyclical": "+1.51%",
+    "Communication Services": "+1.68%",
+    "Industrials": "+1.85%",
+    "Consumer Defensive": "+2.02%",
+    "Energy": "+2.19%",
+    "Utilities": "+2.36%",
+    "Real Estate": "+2.53%",
+    "Basic Materials": "+2.70%"
+  }
+}

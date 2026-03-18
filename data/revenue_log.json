@@ -1,0 +1,185 @@
+{
+  "revenue_log": [
+    {
+      "date": "2026-03-16",
+      "amount_usd": 79.0,
+      "source": "stripe_checkout",
+      "product": "asx_screener_report",
+      "session_prefix": "cs_live_",
+      "status": "paid"
+    },
+    {
+      "date": "2026-03-18",
+      "amount_usd": 0,
+      "source": "product_build",
+      "product": "filingedge_mvp",
+      "description": "FilingEdge MVP built \u2014 AI-powered SEC filing alerts for US markets",
+      "status": "mvp_complete",
+      "pricing_tiers": {
+        "starter": "$19/mo (25 tickers, 8-K + Form 4 alerts, AI summaries, daily digest)",
+        "pro": "$49/mo (150 tickers, 13F alerts, API access, webhooks, heat map)"
+      },
+      "components": {
+        "backend": "products/filingedge/server.py (FastAPI: auth, watchlist CRUD, filing endpoints)",
+        "edgar_poller": "products/filingedge/edgar_poller.py (8-K + Form 4 RSS, rate limited)",
+        "landing": "products/filingedge/landing.html (pricing, Stripe checkout)",
+        "stripe": "Wired to POST /api/pay via StripePay agent"
+      },
+      "market": "US"
+    },
+    {
+      "date": "2026-03-18",
+      "amount_usd": 0,
+      "source": "product_build",
+      "product": "sentiment_api_v1",
+      "description": "US Market Sentiment API MVP built \u2014 bull/bear scores, trading signals, social sentiment for US tickers",
+      "status": "mvp_complete",
+      "pricing": "$29/mo (Pro API Access: 1000 req/day, all US tickers, batch queries, trending endpoint)",
+      "components": {
+        "agent": "agents/sentiment_api.py (SentimentAPI agent, mock sentiment engine)",
+        "endpoint": "GET /api/sentiment?ticker=AAPL (bull/bear/neutral scores, signals)",
+        "trending": "GET /api/sentiment/trending (top 10 movers)",
+        "landing": "reports/sentiment_api.html (product page with live demo + Stripe checkout)",
+        "stripe": "Wired to GET /api/pay?product=sentiment_api_v1 via StripePay agent (subscription mode)"
+      },
+      "market": "US"
+    },
+    {
+      "date": "2026-03-18",
+      "amount_usd": 0,
+      "source": "product_build",
+      "product": "premarket_pulse",
+      "description": "PreMarket Pulse MVP built \u2014 AI-powered pre-market intelligence briefing for US equity traders",
+      "status": "mvp_complete",
+      "pricing_tiers": {
+        "free": "$0/mo (delayed daily summary, weekly earnings preview)",
+        "trader": "$19/mo (real-time pre-market briefing, options flow, earnings, key levels)",
+        "pro": "$49/mo (everything + custom alerts, sector rotation, dark pool, API access)"
+      },
+      "components": {
+        "landing": "reports/premarket_pulse.html (product page with pricing + Stripe checkout)",
+        "scraper": "agents/premarket_scraper.py (Barchart options, Yahoo earnings, SPY/QQQ/IWM levels, Finviz sectors)",
+        "email_template": "reports/premarket_email.html (dark-theme email briefing)",
+        "data": "data/premarket_raw.json (scraped market data with timestamps)",
+        "subscribe_api": "POST /api/premarket/subscribe (email + tier signup)",
+        "stripe": "Wired to POST /api/pay via StripePay agent (Trader $19/mo, Pro $49/mo)"
+      },
+      "routes": [
+        "/premarket",
+        "/premarket-pulse",
+        "/reports/premarket_pulse.html"
+      ],
+      "market": "US"
+    },
+    {
+      "date": "2026-03-18",
+      "amount_usd": 0,
+      "source": "product_launch",
+      "product": "premarket_pulse",
+      "product_name": "PreMarket Pulse",
+      "type": "micro-saas",
+      "status": "production-deployed",
+      "description": "PreMarket Pulse production landing page deployed \u2014 full rebuild with 4 pricing tiers, competitor comparison table, sample briefing preview, how-it-works flow, FAQ, and live Stripe checkout for all paid tiers",
+      "url": "http://localhost:5050/reports/premarket_pulse.html",
+      "pricing_tiers": {
+        "free": "$0/mo (weekly wrap, top 3 options, basic earnings calendar)",
+        "trader": "$19/mo (daily briefing, full options flow, whispers, key levels, AI trade ideas)",
+        "pro": "$49/mo (real-time alerts, custom watchlist, dark pool, earnings deep-dives)",
+        "institutional": "$99/mo (API access, unlimited watchlist, custom sector briefings, macro outlook)"
+      },
+      "stripe_products": {
+        "premarket_pulse_trader": "registered \u2014 $19/mo recurring",
+        "premarket_pulse_pro": "registered \u2014 $49/mo recurring",
+        "premarket_pulse_institutional": "registered \u2014 $99/mo recurring"
+      },
+      "checkout_verified": true,
+      "subscribe_endpoint": "POST /api/premarket/subscribe",
+      "assets_built": [
+        "reports/premarket_pulse.html (production landing page \u2014 nav, hero, sample briefing, how-it-works, features, competitor comparison, 4-tier pricing, testimonials, FAQ, email signup, footer)",
+        "agents/stripepay.py (3 new product entries: premarket_pulse_trader/pro/institutional)"
+      ],
+      "deployment": {
+        "served_by": "command centre static file server at /reports/premarket_pulse.html",
+        "http_status": 200,
+        "stripe_checkout": "live \u2014 all 3 paid tiers generating checkout.stripe.com URLs",
+        "email_signup": "live \u2014 POST /api/premarket/subscribe returns {ok: true}"
+      },
+      "next_steps": [
+        "wire scheduler for 5am ET daily cron",
+        "connect email delivery pipeline",
+        "post launch announcement on Bluesky"
+      ],
+      "market": "US"
+    }
+  ],
+  "total_revenue_usd": 79.0,
+  "last_updated": "2026-03-18T18:30:00Z",
+  "email_captures": [
+    {
+      "timestamp": "2026-03-18T17:36:44.473260",
+      "event": "email_capture",
+      "email": "qatest@example.com",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T18:17:18.199166",
+      "event": "premarket_signup",
+      "email": "verify@test.com",
+      "tier": "trader",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T18:18:30.138422",
+      "event": "premarket_signup",
+      "email": "final@verify.com",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T18:19:04.568757",
+      "event": "premarket_signup",
+      "email": "test_reforger@check.com",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T18:21:49.976729",
+      "event": "premarket_signup",
+      "email": "reforger_verify@test.com",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T19:26:54.936472",
+      "event": "email_capture",
+      "email": "test@example.com",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T19:37:33.478601",
+      "event": "email_capture",
+      "email": "test@demo.test",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T19:37:33.492426",
+      "event": "premarket_signup",
+      "email": "test@demo.test",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T19:50:58.003596",
+      "event": "email_capture",
+      "email": "test@demotester.local",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T19:50:58.011662",
+      "event": "premarket_signup",
+      "email": "test@demotester.local",
+      "tier": "free",
+      "source": "premarket_pulse"
+    }
+  ]
+}

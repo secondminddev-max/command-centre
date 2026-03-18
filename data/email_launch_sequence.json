@@ -1,0 +1,29 @@
+[
+  {
+    "sequence": 1,
+    "name": "Teaser",
+    "to": "secondminddev@gmail.com",
+    "subject": "Something big is coming...",
+    "html": true,
+    "status": "DRAFT — awaiting GrowthAgent final copy",
+    "body": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; color: #1a1a2e;\">\n<h1 style=\"font-size: 28px; margin-bottom: 8px;\">Your AI workforce is almost here.</h1>\n<p style=\"font-size: 16px; line-height: 1.6; color: #444;\">\nImagine a command centre where autonomous AI agents handle your research, outreach, growth, and ops — while you focus on what matters.\n</p>\n<p style=\"font-size: 16px; line-height: 1.6; color: #444;\">\n<strong>AI Command Centre HQ</strong> launches soon. Early access spots are limited.\n</p>\n<p style=\"font-size: 16px; line-height: 1.6; color: #444;\">\nStay tuned — we'll reveal everything in the next email.\n</p>\n<p style=\"font-size: 14px; color: #888; margin-top: 32px;\">— The Second Mind Team</p>\n</div>"
+  },
+  {
+    "sequence": 2,
+    "name": "Launch Day",
+    "to": "secondminddev@gmail.com",
+    "subject": "AI Command Centre HQ is LIVE — Choose Your Tier",
+    "html": true,
+    "status": "DRAFT — awaiting GrowthAgent final copy",
+    "body": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; color: #1a1a2e;\">\n<h1 style=\"font-size: 28px; margin-bottom: 8px;\">It's here. Your AI-powered command centre.</h1>\n<p style=\"font-size: 16px; line-height: 1.6; color: #444;\">\nAI Command Centre HQ gives you a team of autonomous agents — research, email, social, growth, and more — all orchestrated from one dashboard.\n</p>\n\n<table style=\"width: 100%; border-collapse: collapse; margin: 24px 0;\">\n<tr style=\"background: #f8f9fa;\">\n  <td style=\"padding: 16px; border: 1px solid #e0e0e0;\"><strong>Solo</strong><br/><span style=\"font-size: 24px; color: #2d6a4f;\">$49/mo</span><br/><span style=\"font-size: 13px; color: #666;\">5 agents, 1 user, core features</span></td>\n  <td style=\"padding: 16px; border: 1px solid #e0e0e0; background: #eef6ff;\"><strong>Team</strong> <span style=\"background: #2d6a4f; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px;\">POPULAR</span><br/><span style=\"font-size: 24px; color: #2d6a4f;\">$149/mo</span><br/><span style=\"font-size: 13px; color: #666;\">Unlimited agents, 5 users, priority support</span></td>\n  <td style=\"padding: 16px; border: 1px solid #e0e0e0;\"><strong>Enterprise</strong><br/><span style=\"font-size: 24px; color: #2d6a4f;\">$499/mo</span><br/><span style=\"font-size: 13px; color: #666;\">Custom agents, SSO, dedicated success manager</span></td>\n</tr>\n</table>\n\n<p style=\"text-align: center;\">\n<a href=\"#\" style=\"display: inline-block; background: #2d6a4f; color: #fff; padding: 14px 32px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px;\">Get Started Now</a>\n</p>\n\n<p style=\"font-size: 14px; color: #888; margin-top: 32px;\">— The Second Mind Team</p>\n</div>"
+  },
+  {
+    "sequence": 3,
+    "name": "Follow-up",
+    "to": "secondminddev@gmail.com",
+    "subject": "People are already building with AI Command Centre HQ",
+    "html": true,
+    "status": "DRAFT — awaiting GrowthAgent final copy",
+    "body": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; color: #1a1a2e;\">\n<h1 style=\"font-size: 28px; margin-bottom: 8px;\">The early results are in.</h1>\n<p style=\"font-size: 16px; line-height: 1.6; color: #444;\">\nSince launch, users are already putting their AI agents to work:\n</p>\n\n<blockquote style=\"border-left: 3px solid #2d6a4f; padding: 12px 16px; margin: 16px 0; background: #f8f9fa; font-style: italic; color: #555;\">\n\"I replaced 4 hours of daily research with one agent. It just runs.\" — Early access user\n</blockquote>\n\n<blockquote style=\"border-left: 3px solid #2d6a4f; padding: 12px 16px; margin: 16px 0; background: #f8f9fa; font-style: italic; color: #555;\">\n\"The growth agent posted to Bluesky and drafted my newsletter while I slept.\" — Solo tier user\n</blockquote>\n\n<p style=\"font-size: 16px; line-height: 1.6; color: #444;\">\n<strong>Launch pricing won't last.</strong> Lock in your tier before prices go up.\n</p>\n\n<p style=\"text-align: center;\">\n<a href=\"#\" style=\"display: inline-block; background: #c1121f; color: #fff; padding: 14px 32px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px;\">Claim Your Spot</a>\n</p>\n\n<p style=\"font-size: 14px; color: #888; margin-top: 32px;\">— The Second Mind Team</p>\n</div>"
+  }
+]

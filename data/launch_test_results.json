@@ -1,0 +1,81 @@
+{
+  "test_run": {
+    "timestamp": "2026-03-18T18:15:00+11:00",
+    "tester": "DemoTester",
+    "type": "LAUNCH READINESS TEST",
+    "overall_result": "FAIL — 2/4 required assets missing, 2/4 passed"
+  },
+  "checks": {
+    "1_api_status": {
+      "endpoint": "GET /api/status",
+      "http_status": 200,
+      "result": "PASS",
+      "details": "Returns full agent roster (28+ agents) with metadata, status, progress, tasks. Response is valid JSON.",
+      "response_sample": "agents array with sysmon, ceo, orchestrator, apipatcher, etc."
+    },
+    "2_api_pay_stripe": {
+      "endpoint": "POST /api/pay",
+      "http_status": 200,
+      "result": "PASS",
+      "details": "Returns live Stripe checkout URL. Tested with {tier: 'solo', amount_cents: 4900}. Session ID returned, checkout_url points to checkout.stripe.com. LIVE mode confirmed.",
+      "response_fields": {
+        "ok": true,
+        "checkout_url": "https://checkout.stripe.com/c/pay/cs_live_...",
+        "session_id": "cs_live_a1GbWGbJEE2XmIhHG41htjCtZvaVVBOdQg1D1WQOw2FDpJHyz8wt4e8pyd",
+        "amount_cents": 4900,
+        "currency": "usd",
+        "mode": "subscription",
+        "tier": "solo",
+        "tier_label": "$49/mo"
+      },
+      "note": "Endpoint returns 400 if wrong field names used (e.g. 'plan' instead of 'tier'). Correct required fields: tier, amount_cents."
+    },
+    "3_landing_page": {
+      "path": "public/index.html",
+      "result": "FAIL",
+      "details": "File does NOT exist. The public/ directory contains: buy.html, buy-agent-kit.html, buy-us-market.html, buy/agent-kit/index.html. No index.html landing page found anywhere in public/.",
+      "existing_alternatives": [
+        "reports/autonomousops_landing.html",
+        "reports/hq_landing_page.html",
+        "reports/product_landing.html",
+        "hq-product.html (root)",
+        "product.html (root)"
+      ],
+      "recommendation": "BLOCKER — Must create public/index.html or designate one of the existing landing pages as the canonical entry point."
+    },
+    "4_white_paper": {
+      "path": "reports/autonomousops_whitepaper.html",
+      "result": "FAIL",
+      "details": "File does NOT exist. No file in reports/ contains 'whitepaper' in its name. Closest match is reports/autonomousops_blueprint.html which is a technical blueprint, not a white paper.",
+      "existing_alternatives": [
+        "reports/autonomousops_blueprint.html",
+        "reports/autonomousops_landing.html"
+      ],
+      "recommendation": "BLOCKER — White paper has not been created. The blueprint is a code-heavy technical doc, not the professional white paper specified in the product launch requirements."
+    }
+  },
+  "summary": {
+    "passed": 2,
+    "failed": 2,
+    "total": 4,
+    "pass_rate": "50%"
+  },
+  "launch_readiness": {
+    "verdict": "NOT READY",
+    "score": "50/100",
+    "critical_failures": 2,
+    "blockers": [
+      "public/index.html — Landing page missing. No canonical entry point for visitors.",
+      "reports/autonomousops_whitepaper.html — White paper missing entirely. Blueprint exists but is not a white paper."
+    ],
+    "what_works": [
+      "/api/status — Fully operational, returns complete agent fleet data",
+      "/api/pay — Stripe checkout LIVE, generating real checkout sessions with correct pricing"
+    ],
+    "actions_required": [
+      "Create or copy a landing page to public/index.html",
+      "Create the white paper at reports/autonomousops_whitepaper.html (professional, not code-heavy)",
+      "Re-run this test after fixes"
+    ]
+  }
+}

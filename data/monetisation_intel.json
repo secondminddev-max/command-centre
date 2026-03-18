@@ -1,0 +1,24 @@
+{
+  "generated": "2026-03-18",
+  "market": "US",
+  "platforms": [
+    {
+      "platform_name": "Paid.ai",
+      "url": "https://paid.ai",
+      "pricing_model": "Freemium — free tier includes cost tracking, usage-based billing, and operator dashboard; paid plans from $300/month with higher limits and priority support",
+      "why_it_suits_ai_agent_saas": "Purpose-built for AI-native companies. Treats agents as the fundamental billing unit, tracking per-action costs in real time. Supports credits-based, usage-based, outcome-based, and hybrid pricing without code changes. Unique 'Customer Value Receipts' quantify ROI delivered to customers (time saved, cost savings), which strengthens retention and upsell for agent SaaS products."
+    },
+    {
+      "platform_name": "Nevermined",
+      "url": "https://nevermined.ai",
+      "pricing_model": "Usage-based infrastructure pricing (no fixed tiers published); supports cost-based markup, per-token/per-call metering, and outcome-based billing with instant fiat or stablecoin settlement",
+      "why_it_suits_ai_agent_saas": "Designed for high-volume micro-transactions that traditional payment processors like Stripe cannot handle efficiently. Supports agent-to-agent commerce and multi-protocol compatibility (MCP, Google A2A, x402). Deploys in under 20 minutes vs weeks for legacy billing. Ideal for autonomous agent ecosystems where agents buy and sell services from each other at sub-cent granularity."
+    },
+    {
+      "platform_name": "Alguna",
+      "url": "https://blog.alguna.com/ai-monetization-platform/",
+      "pricing_model": "Flat fee starting at $399/month with no revenue share; includes full CPQ (Configure-Price-Quote) and billing functionality",
+      "why_it_suits_ai_agent_saas": "Y Combinator-backed end-to-end monetisation platform unifying real-time usage metering, pricing configuration, quoting, billing, and GAAP-compliant revenue recognition. No-code pricing configuration handles AI-specific metrics (LLM tokens, API requests, GPU hours). Eliminates the need for separate tools — consolidates quote-to-cash into one system, which is critical for AI agent products with unpredictable, bursty usage patterns."
+    }
+  ]
+}

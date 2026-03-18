@@ -1,0 +1,10 @@
+{
+  "backend": "gmail-oauth2-smtp",
+  "sent_count": 0,
+  "failed_count": 0,
+  "last_recipient": "",
+  "oauth_status": "configured",
+  "credentials_configured": true,
+  "gmail_user": "secondminddev@gmail.com",
+  "updated": "2026-03-18T19:53:05"
+}

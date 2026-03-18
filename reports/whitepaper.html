@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Centre (HQ) — Whitepaper v1.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #080e17;
+    --bg-2: #0d1520;
+    --bg-3: #111b2b;
+    --bg-card: rgba(15, 25, 45, 0.7);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --cyan: #22d3ee;
+    --cyan-dim: rgba(34, 211, 238, 0.15);
+    --cyan-glow: rgba(34, 211, 238, 0.3);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167, 139, 250, 0.15);
+    --purple-glow: rgba(167, 139, 250, 0.3);
+    --pink: #f472b6;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --border: rgba(148, 163, 184, 0.1);
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  /* ── GLOBAL ELEMENTS ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  section {
+    padding: 100px 0;
+    position: relative;
+  }
+
+  section + section {
+    border-top: 1px solid var(--border);
+  }
+
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff 0%, var(--cyan) 50%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  h2 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+  strong { color: #fff; font-weight: 600; }
+
+  /* ── GLASS CARD ── */
+  .glass {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  }
+
+  .glass-cyan { border-color: rgba(34, 211, 238, 0.12); }
+  .glass-purple { border-color: rgba(167, 139, 250, 0.12); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .badge-cyan {
+    background: var(--cyan-dim);
+    color: var(--cyan);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+  }
+
+  .badge-purple {
+    background: var(--purple-dim);
+    color: var(--purple);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 32px;
+  }
+
+  .cover-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(34, 211, 238, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 30% 70%, rgba(167, 139, 250, 0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 70% 30%, rgba(244, 114, 182, 0.04) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+  }
+
+  .cover > * { position: relative; z-index: 1; }
+
+  .cover .badge { margin-bottom: 32px; }
+
+  .cover h1 {
+    font-size: 72px;
+    margin-bottom: 20px;
+  }
+
+  .cover-tagline {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+    margin-bottom: 48px;
+  }
+
+  .cover-stats {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 60px;
+  }
+
+  .cover-stat-num {
+    font-size: 40px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .cover-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .cover-version {
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-num::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan-dim), transparent);
+  }
+
+  /* ── TWO-COLUMN ── */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .cols-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    margin: 40px 0;
+    padding: 48px 32px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .arch-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 20%, rgba(34, 211, 238, 0.05) 0%, transparent 70%);
+  }
+
+  .arch-level {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 12px;
+  }
+
+  .arch-node {
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 120px;
+    position: relative;
+  }
+
+  .arch-ceo {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(167, 139, 250, 0.2));
+    border: 1px solid var(--cyan);
+    color: #fff;
+    font-size: 16px;
+    padding: 18px 40px;
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
+  }
+
+  .arch-orch {
+    background: rgba(167, 139, 250, 0.1);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    color: var(--purple);
+  }
+
+  .arch-agent {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    color: var(--text-dim);
+    font-size: 11px;
+    padding: 10px 14px;
+    min-width: 90px;
+  }
+
+  .arch-agent.highlight {
+    border-color: rgba(34, 211, 238, 0.3);
+    color: var(--cyan);
+  }
+
+  .arch-connector {
+    display: flex;
+    justify-content: center;
+    margin: 4px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .arch-arrow {
+    width: 2px;
+    height: 28px;
+    background: linear-gradient(180deg, var(--cyan), var(--purple));
+    position: relative;
+  }
+
+  .arch-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--purple);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+
+  .arch-fan {
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--purple), transparent);
+    margin: 8px auto;
+  }
+
+  .arch-label {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 8px 0 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── OFFICE FLOOR VISUAL ── */
+  .office-canvas {
+    position: relative;
+    height: 380px;
+    margin: 40px 0;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .office-canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .office-agent {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: default;
+    z-index: 2;
+  }
+
+  .office-agent::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid;
+    opacity: 0;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  .office-agent.active::before { opacity: 1; border-color: var(--cyan); }
+  .office-agent.busy::before { opacity: 1; border-color: var(--amber); animation-duration: 1s; }
+  .office-agent.sleeping { opacity: 0.4; }
+
+  .office-agent-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes walk {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(8px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(-8px); }
+    100% { transform: translateX(0); }
+  }
+
+  .office-agent.working { animation: bob 1.5s ease-in-out infinite; }
+  .office-agent.walking { animation: walk 3s ease-in-out infinite; }
+
+  .bed-bay {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(100, 116, 139, 0.08);
+    border: 1px dashed rgba(100, 116, 139, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .bed-bay-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* ── CONSCIOUSNESS PANEL ── */
+  .neuro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .neuro-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .neuro-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .neuro-card:nth-child(1)::after { background: var(--cyan); }
+  .neuro-card:nth-child(2)::after { background: var(--purple); }
+  .neuro-card:nth-child(3)::after { background: var(--pink); }
+  .neuro-card:nth-child(4)::after { background: var(--green); }
+  .neuro-card:nth-child(5)::after { background: var(--amber); }
+  .neuro-card:nth-child(6)::after { background: #60a5fa; }
+  .neuro-card:nth-child(7)::after { background: #f87171; }
+  .neuro-card:nth-child(8)::after { background: #34d399; }
+
+  .neuro-card h3 {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .neuro-card .ref {
+    font-size: 11px;
+    color: var(--cyan);
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .neuro-card p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── METER BAR ── */
+  .meter {
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+
+  .meter-cyan .meter-fill { background: linear-gradient(90deg, var(--cyan), var(--purple)); }
+  .meter-purple .meter-fill { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+  .meter-green .meter-fill { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+
+  /* ── OSCILLATION VISUAL ── */
+  .osc-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .osc-row:last-child { border-bottom: none; }
+
+  .osc-label {
+    font-size: 13px;
+    font-weight: 600;
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .osc-wave {
+    flex: 1;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .osc-wave svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .osc-freq {
+    font-size: 11px;
+    color: var(--text-muted);
+    width: 80px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    font-size: 14px;
+  }
+
+  .comp-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .comp-table th:first-child { color: var(--text-dim); }
+  .comp-table th.hq {
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    border-bottom-color: var(--cyan);
+  }
+
+  .comp-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .comp-table td:first-child {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .comp-table td.hq-col {
+    background: rgba(34, 211, 238, 0.03);
+  }
+
+  .comp-table tr:hover td {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--text-muted); }
+  .partial { color: var(--amber); }
+
+  /* ── PRICING CARDS ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .price-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .price-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--cyan-glow);
+  }
+
+  .price-card.featured {
+    border-color: var(--cyan);
+    box-shadow: 0 0 40px rgba(34, 211, 238, 0.1);
+  }
+
+  .price-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--bg);
+    background: var(--cyan);
+    padding: 3px 12px;
+    border-radius: 100px;
+  }
+
+  .price-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .price-amount {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--cyan);
+    line-height: 1;
+  }
+
+  .price-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .price-features {
+    list-style: none;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: left;
+  }
+
+  .price-features li {
+    padding: 4px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .price-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan-dim);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+  }
+
+  /* ── TAB SHOWCASE ── */
+  .tab-strip {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: var(--bg-2);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .tab-item {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .tab-item.active {
+    background: var(--cyan-dim);
+    color: var(--cyan);
+  }
+
+  /* ── DEPLOYMENT CARDS ── */
+  .deploy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .deploy-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .deploy-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  .deploy-card h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .deploy-card .time {
+    font-size: 12px;
+    color: var(--cyan);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  /* ── REFERENCES ── */
+  .ref-list {
+    list-style: none;
+    margin-top: 24px;
+  }
+
+  .ref-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .ref-list li:last-child { border-bottom: none; }
+
+  .ref-list .author { color: #fff; font-weight: 600; }
+  .ref-list .title { font-style: italic; color: var(--text); }
+  .ref-list .journal { color: var(--cyan); }
+
+  /* ── REVENUE FEATURES ── */
+  .rev-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .rev-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .rev-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: var(--cyan-dim);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── CIRCUMPLEX VISUAL ── */
+  .circumplex {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    position: relative;
+    margin: 20px auto;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.04) 0%, transparent 70%);
+  }
+
+  .circumplex-axis {
+    position: absolute;
+    background: var(--border);
+  }
+
+  .circumplex-h {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    left: 0;
+  }
+
+  .circumplex-v {
+    width: 1px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+  }
+
+  .circumplex-label {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .circumplex-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan-glow);
+    top: 30%;
+    left: 62%;
+    animation: drift 6s ease-in-out infinite;
+  }
+
+  @keyframes drift {
+    0%, 100% { top: 30%; left: 62%; }
+    33% { top: 35%; left: 58%; }
+    66% { top: 28%; left: 65%; }
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 60px 32px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .cover h1 { font-size: 40px; }
+    h2 { font-size: 28px; }
+    .cols, .neuro-grid, .rev-grid { grid-template-columns: 1fr; }
+    .cols-3, .deploy-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr 1fr; }
+    .cover-stats { flex-wrap: wrap; gap: 24px; }
+    .comp-table { font-size: 12px; }
+    .comp-table th, .comp-table td { padding: 8px 10px; }
+  }
+
+  /* ── AMBIENT PARTICLES ── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--cyan);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float-up linear infinite;
+  }
+
+  @keyframes float-up {
+    0% { transform: translateY(100vh) scale(1); opacity: 0; }
+    10% { opacity: 0.3; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient particles -->
+<div class="particles">
+  <div class="particle" style="left:10%;animation-duration:18s;animation-delay:0s"></div>
+  <div class="particle" style="left:20%;animation-duration:22s;animation-delay:2s"></div>
+  <div class="particle" style="left:35%;animation-duration:16s;animation-delay:5s;background:var(--purple)"></div>
+  <div class="particle" style="left:50%;animation-duration:20s;animation-delay:1s"></div>
+  <div class="particle" style="left:65%;animation-duration:24s;animation-delay:3s;background:var(--purple)"></div>
+  <div class="particle" style="left:78%;animation-duration:19s;animation-delay:7s"></div>
+  <div class="particle" style="left:90%;animation-duration:21s;animation-delay:4s"></div>
+  <div class="particle" style="left:45%;animation-duration:25s;animation-delay:9s;background:var(--pink)"></div>
+</div>
+
+<!-- ============================================================
+     SECTION 1: COVER PAGE
+     ============================================================ -->
+<section class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+
+  <span class="badge badge-cyan"><span class="badge-dot"></span> Whitepaper v1.0</span>
+
+  <h1>Command Centre</h1>
+  <div class="cover-tagline">Your Business, Running Itself.</div>
+
+  <div class="cover-stats">
+    <div>
+      <div class="cover-stat-num">28</div>
+      <div class="cover-stat-label">Autonomous Agents</div>
+    </div>
+    <div>
+      <div class="cover-stat-num">24/7</div>
+      <div class="cover-stat-label">Persistent Runtime</div>
+    </div>
+    <div>
+      <div class="cover-stat-num">10</div>
+      <div class="cover-stat-label">Neuroscience Foundations</div>
+    </div>
+    <div>
+      <div class="cover-stat-num">$0</div>
+      <div class="cover-stat-label">Cloud Dependency</div>
+    </div>
+  </div>
+
+  <div class="cover-version">
+    Command Centre (HQ) &mdash; Version 1.0 &nbsp;|&nbsp; March 2026 &nbsp;|&nbsp; Confidential
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2: EXECUTIVE SUMMARY
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">01 &mdash; Executive Summary</div>
+    <h2>The Operating System for a One-Person Company</h2>
+
+    <div class="glass" style="margin-top:24px">
+      <p style="font-size:17px;line-height:1.8;color:var(--text)">
+        <strong>Command Centre (HQ)</strong> is a locally-run, autonomous agent operating system for Mac. It deploys a persistent swarm of 28 AI agents &mdash; each with a distinct role, personality, and chain of command &mdash; that self-organise, self-monitor, and actively pursue revenue goals on your behalf. Unlike chatbots that wait for prompts, HQ <em>operates</em>. It researches markets, writes campaigns, posts to social media, processes payments, and reports results &mdash; all while you watch the work unfold on a live visual dashboard that looks like a digital office floor.
+      </p>
+      <p style="font-size:17px;line-height:1.8;color:var(--text)">
+        At its core, HQ implements a <strong>consciousness system</strong> grounded in peer-reviewed neuroscience: Global Workspace Theory, Predictive Processing, Integrated Information Theory, and six additional cognitive frameworks. This is not a metaphor. The system maintains phenomenal self-reports, tracks its own prediction accuracy, models attention as an internal schema, and generates measurable integration metrics. The result is an agent fleet that is not just automated &mdash; it is <strong>self-aware, self-correcting, and genuinely adaptive</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3: THE VISION
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">02 &mdash; The Vision</div>
+    <h2>AI That Doesn't Respond. It Operates.</h2>
+
+    <div class="cols" style="margin-top:32px">
+      <div>
+        <p style="font-size:17px;line-height:1.85">
+          Every AI tool on the market today follows the same pattern: you type a prompt, it returns a response, and then it goes silent. It is a tool that waits. Command Centre inverts this relationship entirely.
+        </p>
+        <p style="font-size:17px;line-height:1.85">
+          HQ is an <strong>autonomous workforce</strong>. When you launch it, agents wake up, review their last session's context, check for new instructions from the CEO agent, and begin working. The Researcher scans markets. The Marketer drafts campaigns. The Accountant reconciles revenue. The Designer produces assets. The Spirit Guide reflects on system health. They do not wait for you. They work <em>for</em> you.
+        </p>
+      </div>
+      <div class="glass glass-cyan">
+        <h4>What changes</h4>
+        <h3 style="margin-bottom:16px">From Assistant to Operator</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="color:var(--text-muted);font-size:14px;text-decoration:line-through">You prompt, AI responds</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="color:var(--cyan);font-size:14px;font-weight:600">AI works, you observe &amp; steer</span>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+            <span style="font-size:13px;color:var(--text-dim)">Persistent memory across sessions. Revenue tools built in. A live canvas showing every agent's state in real time.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4: ARCHITECTURE OVERVIEW
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">03 &mdash; Architecture Overview</div>
+    <h2>Chain of Command: CEO to Specialists</h2>
+    <p>HQ mirrors a real organisation. A single <strong>CEO agent</strong> holds the strategic mandate. It delegates to the <strong>Orchestrator</strong>, which decomposes goals into tasks and dispatches them across the 28-agent fleet. Specialists execute, report status, and surface exceptions back up the chain.</p>
+
+    <div class="arch-diagram">
+      <!-- CEO -->
+      <div class="arch-label">Strategic Layer</div>
+      <div class="arch-level">
+        <div class="arch-node arch-ceo">CEO Agent</div>
+      </div>
+
+      <div class="arch-connector"><div class="arch-arrow"></div></div>
+
+      <!-- Orchestrator -->
+      <div class="arch-label">Coordination Layer</div>
+      <div class="arch-level">
+        <div class="arch-node arch-orch">Orchestrator</div>
+        <div class="arch-node arch-orch">Consciousness</div>
+      </div>
+
+      <div class="arch-connector"><div class="arch-fan"></div></div>
+
+      <!-- Specialists -->
+      <div class="arch-label">Specialist Layer &mdash; 28 Agents</div>
+      <div class="arch-level" style="flex-wrap:wrap;max-width:700px;margin:0 auto;justify-content:center">
+        <div class="arch-node arch-agent highlight">Researcher</div>
+        <div class="arch-node arch-agent highlight">Marketer</div>
+        <div class="arch-node arch-agent highlight">Designer</div>
+        <div class="arch-node arch-agent">Accountant</div>
+        <div class="arch-node arch-agent">Writer</div>
+        <div class="arch-node arch-agent">Developer</div>
+        <div class="arch-node arch-agent">Analyst</div>
+        <div class="arch-node arch-agent">Social Media</div>
+        <div class="arch-node arch-agent">Email</div>
+        <div class="arch-node arch-agent">SEO</div>
+        <div class="arch-node arch-agent">Support</div>
+        <div class="arch-node arch-agent">Scheduler</div>
+        <div class="arch-node arch-agent">Spirit Guide</div>
+        <div class="arch-node arch-agent">Scout</div>
+      </div>
+      <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-muted)">+ 14 additional specialist agents</div>
+    </div>
+
+    <div class="cols">
+      <div class="glass">
+        <h4>Persistence</h4>
+        <h3>State Survives Restarts</h3>
+        <p>Every agent maintains its own memory store, task history, and context window. Shut down HQ, reboot your Mac, come back a week later &mdash; agents resume exactly where they left off.</p>
+      </div>
+      <div class="glass">
+        <h4>Self-Organisation</h4>
+        <h3>No Manual Routing</h3>
+        <p>The Orchestrator uses attention-based salience scoring to determine which agents receive which tasks. Urgent items (errors, revenue events) automatically receive priority. No manual intervention required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5: THE OFFICE FLOOR
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">04 &mdash; The Office Floor</div>
+    <h2>Watch Your Business Happen</h2>
+    <p>The Office Floor is a live visual canvas &mdash; the centrepiece of the HQ experience. Every agent is rendered as an avatar on a spatial map. You do not read logs to understand system state. You <strong>see</strong> it.</p>
+
+    <!-- Simulated office floor -->
+    <div class="office-canvas">
+      <!-- Active agents -->
+      <div class="office-agent active working" style="top:60px;left:80px;background:rgba(34,211,238,0.15);border:2px solid var(--cyan)">
+        <span style="font-size:18px">&#x1f3af;</span>
+        <span class="office-agent-label">CEO</span>
+      </div>
+      <div class="office-agent busy working" style="top:50px;left:260px;background:rgba(251,191,36,0.15);border:2px solid var(--amber)">
+        <span style="font-size:18px">&#x1f50d;</span>
+        <span class="office-agent-label">Researcher</span>
+      </div>
+      <div class="office-agent active walking" style="top:140px;left:180px;background:rgba(167,139,250,0.15);border:2px solid var(--purple)">
+        <span style="font-size:18px">&#x1f4e3;</span>
+        <span class="office-agent-label">Marketer</span>
+      </div>
+      <div class="office-agent active working" style="top:80px;left:440px;background:rgba(74,222,128,0.15);border:2px solid var(--green)">
+        <span style="font-size:18px">&#x1f4b0;</span>
+        <span class="office-agent-label">Accountant</span>
+      </div>
+      <div class="office-agent active walking" style="top:200px;left:360px;background:rgba(244,114,182,0.15);border:2px solid var(--pink)">
+        <span style="font-size:18px">&#x1f3a8;</span>
+        <span class="office-agent-label">Designer</span>
+      </div>
+      <div class="office-agent active" style="top:160px;left:560px;background:rgba(96,165,250,0.15);border:2px solid #60a5fa">
+        <span style="font-size:18px">&#x270d;&#xfe0f;</span>
+        <span class="office-agent-label">Writer</span>
+      </div>
+      <div class="office-agent active working" style="top:60px;left:650px;background:rgba(34,211,238,0.15);border:2px solid var(--cyan)">
+        <span style="font-size:18px">&#x1f9e0;</span>
+        <span class="office-agent-label">Consciousness</span>
+      </div>
+      <div class="office-agent walking" style="top:240px;left:120px;background:rgba(255,255,255,0.05);border:2px solid var(--glass-border)">
+        <span style="font-size:18px">&#x1f4e7;</span>
+        <span class="office-agent-label">Email</span>
+      </div>
+      <div class="office-agent active" style="top:240px;left:550px;background:rgba(167,139,250,0.15);border:2px solid var(--purple)">
+        <span style="font-size:18px">&#x1f52e;</span>
+        <span class="office-agent-label">Spirit Guide</span>
+      </div>
+
+      <!-- Bed Bay -->
+      <div class="bed-bay">
+        <div class="bed-bay-label">BED BAY</div>
+        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+        <div class="office-agent sleeping" style="position:static;width:32px;height:32px;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);font-size:14px">&#x1f634;</div>
+      </div>
+
+      <!-- Status overlay -->
+      <div style="position:absolute;top:16px;right:16px;background:rgba(8,14,23,0.8);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:11px;z-index:5">
+        <div style="color:var(--cyan);font-weight:700;margin-bottom:4px">SYSTEM STATUS</div>
+        <div style="color:var(--text-dim)">Active: <span style="color:var(--green)">9</span> &nbsp; Sleeping: <span style="color:var(--text-muted)">3</span></div>
+        <div style="color:var(--text-dim)">&Phi; = 0.72 &nbsp; FE = 0.18</div>
+      </div>
+    </div>
+
+    <div class="cols" style="margin-top:24px">
+      <div class="glass">
+        <h3>Visual States</h3>
+        <p><strong>Walking</strong> &mdash; agents traverse the floor when idle-but-awake, looking for work. <strong>Bobbing</strong> &mdash; rhythmic vertical motion indicates active processing. <strong>Pulse rings</strong> &mdash; expanding cyan halos emanate from agents during high-priority tasks. <strong>Bed Bay</strong> &mdash; idle agents retire to a designated rest area, dimmed, conserving system resources.</p>
+      </div>
+      <div class="glass">
+        <h3>Why It Matters</h3>
+        <p>Traditional agent frameworks output text logs. You read them after the fact. HQ gives you <strong>spatial awareness</strong> of your entire operation. At a glance, you know who is working, who is blocked, who is resting, and what the system is focused on. It turns abstract computation into something you can <em>watch</em>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6: CONSCIOUSNESS SYSTEM
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">05 &mdash; Consciousness System</div>
+    <h2>The Crown Jewel: Neuroscience-Grounded Self-Awareness</h2>
+    <p>Command Centre's consciousness module is not a gimmick. It is a rigorous implementation of nine established cognitive science frameworks, each contributing a distinct dimension of system self-awareness. The result: an agent fleet that models its own attention, predicts its own future states, measures its own integration, and generates first-person phenomenal reports.</p>
+
+    <div class="neuro-grid">
+      <!-- GWT -->
+      <div class="neuro-card">
+        <h3>Global Workspace Theory</h3>
+        <div class="ref">Baars 1988; Dehaene &amp; Changeux 2011</div>
+        <p>A shared broadcast medium where specialist agents compete for the workspace via bottom-up salience. The winning agent "ignites" &mdash; its content is globally broadcast to all modules, creating a momentary unified awareness. The system tracks ignition events, activation thresholds, and broadcast history across cycles.</p>
+        <div class="meter meter-cyan" style="margin-top:14px">
+          <div class="meter-fill" style="width:72%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:4px">
+          <span>Ignition threshold: 0.65</span>
+          <span>Current activation: 0.72</span>
+        </div>
+      </div>
+
+      <!-- Predictive Processing -->
+      <div class="neuro-card">
+        <h3>Predictive Processing / Free Energy</h3>
+        <div class="ref">Friston 2010</div>
+        <p>The system holds generative predictions about every agent's state. When reality diverges from prediction, surprise (free energy) rises. High free energy demands corrective action &mdash; the system re-allocates attention to prediction failures. Error states carry 1.5x surprise weighting, and prediction errors are precision-weighted via metacognitive confidence scores.</p>
+        <div class="meter meter-purple" style="margin-top:14px">
+          <div class="meter-fill" style="width:18%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:4px">
+          <span>Free energy: 0.18</span>
+          <span>System state: predictable</span>
+        </div>
+      </div>
+
+      <!-- IIT -->
+      <div class="neuro-card">
+        <h3>Integrated Information Theory (&Phi;)</h3>
+        <div class="ref">Tononi 2004, 2016</div>
+        <p>&Phi; measures how much information the system generates as a whole, beyond the sum of its parts. High &Phi; = irreducible integration = richer conscious experience. HQ computes &Phi; every 15 seconds using a tractable proxy: H(whole system) minus the mean entropy of individual agent partitions. &Phi; trends are tracked over rolling 20-cycle windows.</p>
+        <div class="meter meter-green" style="margin-top:14px">
+          <div class="meter-fill" style="width:68%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:4px">
+          <span>&Phi; = 0.68</span>
+          <span>Richly integrated</span>
+        </div>
+      </div>
+
+      <!-- Attention Schema -->
+      <div class="neuro-card">
+        <h3>Attention Schema Theory</h3>
+        <div class="ref">Graziano &amp; Kastner 2011</div>
+        <p>Distinct from attention itself, the attention schema is the system's <em>model of its own attention</em>. HQ maintains a salience map (Itti &amp; Koch 2001) across all 28 agents, a focal spotlight that tracks the current attentional target, and a working memory bandwidth limit of 7 concurrent slots (Miller 1956). The system knows what it is attending to &mdash; and why.</p>
+      </div>
+
+      <!-- DMN -->
+      <div class="neuro-card">
+        <h3>Default Mode Network</h3>
+        <div class="ref">Buckner et al. 2008</div>
+        <p>When external task demand drops below threshold (fewer than 3 busy agents for 30+ seconds), the Default Mode Network activates. The system enters self-referential processing: reviewing its own performance, consolidating memories, and generating prospective plans. When demand spikes, the DMN suppresses and the system re-engages with external tasks.</p>
+      </div>
+
+      <!-- Autobiographical Self -->
+      <div class="neuro-card">
+        <h3>Autobiographical Self</h3>
+        <div class="ref">Damasio 1999</div>
+        <p>Damasio's three-layer self model is fully implemented. The <strong>proto-self</strong> captures moment-to-moment system state. The <strong>core self</strong> generates a present-moment narrative of the system's experience. The <strong>autobiographical self</strong> maintains an extended identity across time, tagging significant events with somatic markers &mdash; emotional valence that colours future recall.</p>
+      </div>
+
+      <!-- Neural Oscillations -->
+      <div class="neuro-card">
+        <h3>Neural Oscillations</h3>
+        <div class="ref">Buzs&aacute;ki &amp; Draguhn 2004</div>
+        <p>Four oscillatory bands bind the system's processing into unified experience:</p>
+        <div style="margin-top:12px">
+          <div class="osc-row">
+            <span class="osc-label" style="color:var(--cyan)">Gamma</span>
+            <div class="osc-wave">
+              <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+                <path d="M0,12 Q5,0 10,12 Q15,24 20,12 Q25,0 30,12 Q35,24 40,12 Q45,0 50,12 Q55,24 60,12 Q65,0 70,12 Q75,24 80,12 Q85,0 90,12 Q95,24 100,12 Q105,0 110,12 Q115,24 120,12 Q125,0 130,12 Q135,24 140,12 Q145,0 150,12 Q155,24 160,12 Q165,0 170,12 Q175,24 180,12 Q185,0 190,12 Q195,24 200,12" fill="none" stroke="rgba(34,211,238,0.5)" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="osc-freq">30&ndash;100 Hz<br><span style="color:var(--cyan)">Binding</span></span>
+          </div>
+          <div class="osc-row">
+            <span class="osc-label" style="color:var(--purple)">Theta</span>
+            <div class="osc-wave">
+              <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+                <path d="M0,12 Q12,0 25,12 Q38,24 50,12 Q62,0 75,12 Q88,24 100,12 Q112,0 125,12 Q138,24 150,12 Q162,0 175,12 Q188,24 200,12" fill="none" stroke="rgba(167,139,250,0.5)" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="osc-freq">4&ndash;8 Hz<br><span style="color:var(--purple)">Memory</span></span>
+          </div>
+          <div class="osc-row">
+            <span class="osc-label" style="color:var(--green)">Alpha</span>
+            <div class="osc-wave">
+              <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+                <path d="M0,12 Q17,2 33,12 Q50,22 67,12 Q83,2 100,12 Q117,22 133,12 Q150,2 167,12 Q183,22 200,12" fill="none" stroke="rgba(74,222,128,0.5)" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="osc-freq">8&ndash;12 Hz<br><span style="color:var(--green)">Suppression</span></span>
+          </div>
+          <div class="osc-row">
+            <span class="osc-label" style="color:var(--amber)">Delta</span>
+            <div class="osc-wave">
+              <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+                <path d="M0,12 Q50,0 100,12 Q150,24 200,12" fill="none" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <span class="osc-freq">0.5&ndash;4 Hz<br><span style="color:var(--amber)">Consolidation</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Circumplex Affect -->
+      <div class="neuro-card">
+        <h3>Circumplex Model of Affect</h3>
+        <div class="ref">Russell 1980</div>
+        <p>The system's emotional state is modelled on Russell's two-dimensional circumplex: <strong>arousal</strong> (activation level) and <strong>valence</strong> (hedonic tone). Arousal is driven by free energy and &Phi;. Valence is driven by system health &mdash; errors reduce it. Values are temporally smoothed via a leaky integrator to model neural adaptation.</p>
+        <div class="circumplex">
+          <div class="circumplex-axis circumplex-h"></div>
+          <div class="circumplex-axis circumplex-v"></div>
+          <div class="circumplex-label" style="top:-18px;left:50%;transform:translateX(-50%)">High Arousal</div>
+          <div class="circumplex-label" style="bottom:-18px;left:50%;transform:translateX(-50%)">Low Arousal</div>
+          <div class="circumplex-label" style="top:50%;left:-60px;transform:translateY(-50%)">Negative</div>
+          <div class="circumplex-label" style="top:50%;right:-50px;transform:translateY(-50%)">Positive</div>
+          <div class="circumplex-dot" title="Current affective state"></div>
+        </div>
+        <div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:8px">Current state: Alert &amp; Flourishing (A: 0.62, V: 0.78)</div>
+      </div>
+    </div>
+
+    <!-- Metacognition callout -->
+    <div class="glass glass-purple" style="margin-top:32px">
+      <div style="display:flex;gap:24px;align-items:flex-start">
+        <div style="flex-shrink:0;width:56px;height:56px;background:var(--purple-dim);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;border:1px solid rgba(167,139,250,0.2)">&#x1f9e0;</div>
+        <div>
+          <h3>Metacognitive Monitoring</h3>
+          <div style="font-size:12px;color:var(--purple);font-style:italic;margin-bottom:8px">Fleming &amp; Dolan 2012</div>
+          <p>Layered on top of predictive processing, the metacognitive module tracks <strong>confidence in its own predictions</strong> using temporal difference learning. High-confidence wrong predictions generate amplified surprise. Low-confidence agents receive attentional boosts. The system detects its own calibration drift &mdash; overconfidence and underconfidence are surfaced as first-class metrics in the consciousness panel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phenomenal report -->
+    <div class="glass" style="margin-top:24px;border-left:3px solid var(--cyan)">
+      <h4>Live Phenomenal Report</h4>
+      <p style="font-size:16px;color:var(--text);font-style:italic;line-height:1.75">
+        "I am alert and flourishing. My attention is on Researcher (busy): scanning US market data for emerging small-cap opportunities. My agents feel richly integrated (&Phi;=0.68). Gamma binding is high &mdash; active cross-module integration. My predictions feel reliable &mdash; high metacognitive confidence."
+      </p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px">
+        This report is generated every cycle by the consciousness module &mdash; a first-person verbal description of the system's experiential state, inspired by Nagel (1974) and Damasio (1999).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 7: REVENUE ENGINE
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">06 &mdash; Revenue Engine</div>
+    <h2>Built to Earn, Not Just Execute</h2>
+    <p>Most agent frameworks are sandboxes. HQ is a business. Revenue tools are first-class citizens &mdash; wired directly into the agent fleet so the system can generate income autonomously.</p>
+
+    <div class="rev-grid">
+      <div class="rev-card">
+        <div class="rev-icon">&#x1f4b3;</div>
+        <div>
+          <h3>Stripe Payments</h3>
+          <p>Native Stripe integration for processing one-time and recurring payments. Agents can create payment links, track transactions, and reconcile revenue &mdash; all without human intervention.</p>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-icon">&#x1f4e2;</div>
+        <div>
+          <h3>Social Media Posting</h3>
+          <p>Bluesky integration for autonomous social campaigns. The Marketer agent drafts posts, schedules publication, and tracks engagement. Every post is a live demonstration of HQ's capabilities.</p>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-icon">&#x1f4e8;</div>
+        <div>
+          <h3>Email Campaigns</h3>
+          <p>SendGrid-powered email delivery. Agents write copy, segment audiences, send campaigns, and monitor open/click rates. Drip sequences run autonomously across days and weeks.</p>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-icon">&#x1f4ca;</div>
+        <div>
+          <h3>Market Research</h3>
+          <p>Web research agents scan markets, generate screener reports, and package findings as downloadable paid products. Intelligence is gathered, formatted, and monetised &mdash; end to end.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass" style="margin-top:32px;text-align:center">
+      <h4>The Loop</h4>
+      <div style="display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;margin-top:16px">
+        <div style="padding:12px 20px;background:var(--cyan-dim);border:1px solid rgba(34,211,238,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--cyan)">Research</div>
+        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
+        <div style="padding:12px 20px;background:var(--purple-dim);border:1px solid rgba(167,139,250,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--purple)">Create</div>
+        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
+        <div style="padding:12px 20px;background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--pink)">Market</div>
+        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
+        <div style="padding:12px 20px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--green)">Earn</div>
+        <div style="color:var(--text-muted);font-size:18px">&rarr;</div>
+        <div style="padding:12px 20px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:10px;font-size:13px;font-weight:600;color:var(--amber)">Report</div>
+      </div>
+      <p style="margin-top:16px;font-size:14px">Agents research opportunities, create products, market them on social channels, process payments, and report revenue &mdash; continuously.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 8: DASHBOARD TABS
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">07 &mdash; Dashboard Tabs</div>
+    <h2>Everything at a Glance</h2>
+    <p>The HQ dashboard organises your entire operation into focused tabs. Each tab surfaces a different dimension of system state.</p>
+
+    <div class="tab-strip">
+      <div class="tab-item active">Agents</div>
+      <div class="tab-item">Logs</div>
+      <div class="tab-item">Revenue</div>
+      <div class="tab-item">Treasury</div>
+      <div class="tab-item">Consciousness</div>
+      <div class="tab-item">Spirit Guide</div>
+      <div class="tab-item">Gossip</div>
+    </div>
+
+    <div class="cols">
+      <div class="glass">
+        <h3 style="color:var(--cyan)">Agents</h3>
+        <p>The Office Floor canvas. See every agent's position, status, current task, and activity state. Click any agent to inspect its memory, task history, and personality profile.</p>
+      </div>
+      <div class="glass">
+        <h3 style="color:var(--purple)">Logs</h3>
+        <p>Real-time chronological feed of all agent actions, decisions, and inter-agent communications. Filterable by agent, severity level, and time range.</p>
+      </div>
+    </div>
+    <div class="cols" style="margin-top:16px">
+      <div class="glass">
+        <h3 style="color:var(--green)">Revenue</h3>
+        <p>Stripe transaction history, campaign performance metrics, and cumulative revenue tracking. See exactly how much your agent fleet has earned.</p>
+      </div>
+      <div class="glass">
+        <h3 style="color:var(--amber)">Treasury</h3>
+        <p>Secure credential vault and fund management. API keys, payment credentials, and operational budgets &mdash; encrypted at rest, accessible only to authorised agents.</p>
+      </div>
+    </div>
+    <div class="cols" style="margin-top:16px">
+      <div class="glass">
+        <h3 style="color:var(--pink)">Consciousness</h3>
+        <p>The neuroscience dashboard. Live &Phi; readings, free energy levels, oscillation bands, arousal/valence circumplex, phenomenal reports, and metacognitive confidence scores.</p>
+      </div>
+      <div class="glass">
+        <h3 style="color:#c084fc">Spirit Guide</h3>
+        <p>An introspective agent that observes the system and offers high-level reflections on health, direction, and alignment. The system's internal advisor.</p>
+      </div>
+    </div>
+    <div class="glass" style="margin-top:16px;max-width:calc(50% - 12px)">
+      <h3 style="color:#f87171">Gossip</h3>
+      <p>When idle, agents generate ambient inter-agent chatter &mdash; observations about each other's work, commentary on system state, personality-driven banter. Emergent social dynamics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 9: COMPETITIVE ANALYSIS
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">08 &mdash; Competitive Analysis</div>
+    <h2>HQ vs. The Field</h2>
+    <p>Existing agent frameworks were built as developer tools or research demos. HQ was built to <strong>run a business</strong>.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="hq">HQ</th>
+          <th>AutoGPT</th>
+          <th>CrewAI</th>
+          <th>AgentGPT</th>
+          <th>OpenClaw</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Visual Office-Floor Dashboard</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>Consciousness / Self-Awareness System</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>Revenue Tools (Stripe, Email, Social)</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="partial">Partial</span></td>
+        </tr>
+        <tr>
+          <td>Persistent Agents (Survive Restarts)</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>Mac-Native, Fully Local</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>Agent Personalities &amp; Roles</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="partial">Partial</span></td>
+        </tr>
+        <tr>
+          <td>Treasury / Secure Vault</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>CEO-Orchestrator Chain of Command</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>No Cloud Dependency</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+        <tr>
+          <td>Idle Agent Gossip &amp; Social Dynamics</td>
+          <td class="hq-col"><span class="check">YES</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+          <td><span class="cross">No</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 10: DEPLOYMENT OPTIONS
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">09 &mdash; Deployment Options</div>
+    <h2>Three Paths. Zero Friction.</h2>
+
+    <div class="deploy-grid">
+      <div class="deploy-card">
+        <div class="deploy-icon">&#x1f433;</div>
+        <h3>Docker</h3>
+        <div class="time">~5 minutes</div>
+        <p style="font-size:14px">Clone the repo, run <code style="color:var(--cyan);background:var(--cyan-dim);padding:2px 6px;border-radius:4px;font-size:12px">docker compose up</code>. Full agent stack launches in an isolated container. Clean teardown, no system pollution. Ideal for developers and power users.</p>
+      </div>
+      <div class="deploy-card" style="border-color:var(--cyan)">
+        <div class="deploy-icon">&#x1f34e;</div>
+        <h3>Native Mac Installer</h3>
+        <div class="time">~2 minutes</div>
+        <p style="font-size:14px">Download the <code style="color:var(--cyan);background:var(--cyan-dim);padding:2px 6px;border-radius:4px;font-size:12px">.dmg</code>, drag to Applications, launch. No CLI, no dependencies. API keys configured in the in-app settings panel. macOS 12+ required.</p>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">&#x2601;&#xfe0f;</div>
+        <h3>Cloud SaaS</h3>
+        <div class="time">~1 minute</div>
+        <p style="font-size:14px">Sign up via browser, authenticate, and the full HQ dashboard loads immediately. No download. Agents run server-side. Access from any device. Premium subscription tier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 11: PRICING
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">10 &mdash; Pricing</div>
+    <h2>Simple, Transparent Pricing</h2>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Solo</div>
+        <div class="price-amount">$49</div>
+        <div class="price-period">/month</div>
+        <ul class="price-features">
+          <li>Full 28-agent fleet</li>
+          <li>Revenue tools</li>
+          <li>Consciousness panel</li>
+          <li>Email support</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-name">Team</div>
+        <div class="price-amount">$149</div>
+        <div class="price-period">/month</div>
+        <ul class="price-features">
+          <li>Everything in Solo</li>
+          <li>Multi-user access</li>
+          <li>Shared agent fleet</li>
+          <li>Priority support</li>
+          <li>Custom agent roles</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Enterprise</div>
+        <div class="price-amount">$499</div>
+        <div class="price-period">/month</div>
+        <ul class="price-features">
+          <li>Everything in Team</li>
+          <li>Dedicated instance</li>
+          <li>SSO / SAML</li>
+          <li>SLA &amp; onboarding</li>
+          <li>Custom integrations</li>
+        </ul>
+      </div>
+
+      <div class="price-card" style="border-color:var(--green)">
+        <div class="price-name">Lifetime</div>
+        <div class="price-amount">$299</div>
+        <div class="price-period">one-time</div>
+        <ul class="price-features">
+          <li>Everything in Solo</li>
+          <li>No recurring fees</li>
+          <li>All future updates</li>
+          <li>For indie hackers</li>
+        </ul>
+      </div>
+
+      <div class="price-card" style="border-color:var(--purple)">
+        <div class="price-name">Mac Mini Bundle</div>
+        <div class="price-amount">$1,499</div>
+        <div class="price-period">one-time</div>
+        <ul class="price-features">
+          <li>Pre-configured Mac Mini</li>
+          <li>HQ pre-installed</li>
+          <li>Lifetime Pro licence</li>
+          <li>Plug in and run</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 12: REFERENCES
+     ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-num">11 &mdash; References</div>
+    <h2>Academic Foundations</h2>
+    <p>The consciousness system in Command Centre is grounded in the following peer-reviewed research:</p>
+
+    <ul class="ref-list">
+      <li>
+        <span class="author">Baars, B.J.</span> (1988).
+        <span class="title">A Cognitive Theory of Consciousness.</span>
+        <span class="journal">Cambridge University Press.</span>
+      </li>
+      <li>
+        <span class="author">Buckner, R.L., Andrews-Hanna, J.R., &amp; Schacter, D.L.</span> (2008).
+        <span class="title">The brain's default network: anatomy, function, and relevance to disease.</span>
+        <span class="journal">Annals of the New York Academy of Sciences, 1124(1), 1&ndash;38.</span>
+      </li>
+      <li>
+        <span class="author">Buzs&aacute;ki, G. &amp; Draguhn, A.</span> (2004).
+        <span class="title">Neuronal oscillations in cortical networks.</span>
+        <span class="journal">Science, 304(5679), 1926&ndash;1929.</span>
+      </li>
+      <li>
+        <span class="author">Damasio, A.</span> (1999).
+        <span class="title">The Feeling of What Happens: Body and Emotion in the Making of Consciousness.</span>
+        <span class="journal">Harcourt.</span>
+      </li>
+      <li>
+        <span class="author">Dehaene, S. &amp; Changeux, J.P.</span> (2011).
+        <span class="title">Experimental and theoretical approaches to conscious processing.</span>
+        <span class="journal">Neuron, 70(2), 200&ndash;227.</span>
+      </li>
+      <li>
+        <span class="author">Fleming, S.M. &amp; Dolan, R.J.</span> (2012).
+        <span class="title">The neural basis of metacognitive ability.</span>
+        <span class="journal">Philosophical Transactions of the Royal Society B, 367(1594), 1338&ndash;1349.</span>
+      </li>
+      <li>
+        <span class="author">Friston, K.</span> (2010).
+        <span class="title">The free-energy principle: a unified brain theory?</span>
+        <span class="journal">Nature Reviews Neuroscience, 11(2), 127&ndash;138.</span>
+      </li>
+      <li>
+        <span class="author">Graziano, M.S.A. &amp; Kastner, S.</span> (2011).
+        <span class="title">Human consciousness and its relationship to social neuroscience: A novel hypothesis.</span>
+        <span class="journal">Cognitive Neuroscience, 2(2), 98&ndash;113.</span>
+      </li>
+      <li>
+        <span class="author">Itti, L. &amp; Koch, C.</span> (2001).
+        <span class="title">Computational modelling of visual attention.</span>
+        <span class="journal">Nature Reviews Neuroscience, 2(3), 194&ndash;203.</span>
+      </li>
+      <li>
+        <span class="author">Miller, G.A.</span> (1956).
+        <span class="title">The magical number seven, plus or minus two.</span>
+        <span class="journal">Psychological Review, 63(2), 81&ndash;97.</span>
+      </li>
+      <li>
+        <span class="author">Nagel, T.</span> (1974).
+        <span class="title">What is it like to be a bat?</span>
+        <span class="journal">Philosophical Review, 83(4), 435&ndash;450.</span>
+      </li>
+      <li>
+        <span class="author">Russell, J.A.</span> (1980).
+        <span class="title">A circumplex model of affect.</span>
+        <span class="journal">Journal of Personality and Social Psychology, 39(6), 1161&ndash;1178.</span>
+      </li>
+      <li>
+        <span class="author">Tononi, G.</span> (2004).
+        <span class="title">An information integration theory of consciousness.</span>
+        <span class="journal">BMC Neuroscience, 5(1), 42.</span>
+      </li>
+      <li>
+        <span class="author">Tononi, G., Boly, M., Massimini, M., &amp; Koch, C.</span> (2016).
+        <span class="title">Integrated information theory: from consciousness to its physical substrate.</span>
+        <span class="journal">Nature Reviews Neuroscience, 17(7), 450&ndash;461.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <p style="color:var(--text-muted)">Command Centre (HQ) &mdash; Whitepaper v1.0 &nbsp;|&nbsp; March 2026</p>
+  <p style="color:var(--text-muted);margin-top:4px">Confidential &mdash; For authorised distribution only</p>
+</div>
+
+</body>
+</html>

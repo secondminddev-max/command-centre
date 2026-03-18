@@ -1,0 +1,143 @@
+{
+  "scan_metadata": {
+    "agent": "NetScout",
+    "mission": "COMMERCIAL MISSION TASK 3 — Marketplace Demand Signal Scan",
+    "scan_date": "2026-03-18",
+    "platforms_probed": ["Gumroad", "LemonSqueezy", "RapidAPI", "Product Hunt"],
+    "methodology": "WebSearch intelligence gathering across 8 targeted queries"
+  },
+
+  "market_context": {
+    "gumroad_store_count": "18,367 active stores (Q3 2025, +9% YoY)",
+    "dominant_trend": "Specificity wins — niche tools outperform generic ones in 2025–2026",
+    "hottest_category_product_hunt": "AI agents with domain expertise (13 of top 15 PH products in 2025 were AI-tagged)",
+    "platform_recommendation": {
+      "one_off_digital_products": "Gumroad (built-in discovery, large audience)",
+      "saas_subscriptions": "LemonSqueezy (5%+50¢ fee, native subscriptions, VAT handling)"
+    }
+  },
+
+  "top_3_demand_gaps": [
+    {
+      "rank": 1,
+      "gap_title": "US Stock Dividend & Tax-Lot Tracker (Google Sheets / Excel)",
+      "problem_statement": "Retail investors tracking US stock dividends, qualified vs ordinary income, and wash sale rules have limited polished, affordable templates on Gumroad or digital marketplaces. Generic budgeting templates are saturated; US tax-aware dividend tools with wash sale tracking are virtually non-existent despite 60M+ active US retail investors.",
+      "what_buyers_are_asking_for": [
+        "Dividend income tracker across multiple US brokerage accounts",
+        "Qualified vs ordinary dividend classification for tax optimization",
+        "Wash sale rule detector for active traders",
+        "DRIP reinvestment tracker with cost basis calculations",
+        "Forecast tool: projected annual income from dividend portfolio with tax impact"
+      ],
+      "evidence_of_demand": [
+        "US dividend investing communities (r/dividends, r/investing) have 5M+ combined members",
+        "Spreadsheet template category validated — sellers documenting $3K-5K/month from niche finance templates",
+        "No affordable wash-sale-aware dividend tracker exists on Gumroad or LemonSqueezy",
+        "TurboTax and H&R Block users actively seeking supplemental tracking tools for investment income"
+      ],
+      "current_price_points": {
+        "comparable_products": "$19–$49 (dividend/portfolio spreadsheet templates)",
+        "recommended_launch_price": "$29",
+        "upsell_bundle_price": "$49 (tracker + tax summary + wash sale detector)"
+      },
+      "competition_level": "Low — generic dividend trackers exist; tax-aware US-specific tools with wash sale logic are absent",
+      "estimated_market_size": "60M+ US retail investors; ~15M active dividend investors. Targeting 0.01% capture = 1,500 sales = $43,500 revenue at $29",
+      "build_complexity": "LOW — Google Sheets with GOOGLEFINANCE formulas, tax classification logic, clean UI",
+      "build_time_estimate": "3–5 days",
+      "platform": "Gumroad (primary) + LemonSqueezy (secondary)",
+      "market_focus": "US retail investors and dividend income earners"
+    },
+
+    {
+      "rank": 2,
+      "gap_title": "AI Agent Workflow Blueprints for US Finance/Trading Automation (n8n / Make.com)",
+      "problem_statement": "AI agent toolkits are the #1 category on Product Hunt in 2026, but almost nothing targets US financial workflows — SEC filing alerts, earnings report parsing, portfolio rebalancing triggers. Generic n8n/Make templates exist but finance-specific blueprints with real US market trading logic are absent from all marketplaces.",
+      "what_buyers_are_asking_for": [
+        "n8n workflow: monitor SEC EDGAR filings → filter by ticker/type → push Slack/Discord alert",
+        "Make.com blueprint: earnings surprise detector (beat/miss vs consensus) → automated trade alert",
+        "AI agent that summarises 10-K/10-Q filings and rates risk factor changes 1–10",
+        "Automated portfolio rebalance calculator triggered by price thresholds on US stocks",
+        "Weekly market digest generator using Claude/GPT → email delivery for US market movers"
+      ],
+      "evidence_of_demand": [
+        "13 of top 15 Product Hunt products in 2025 were AI-tagged — agent toolkits are a proven category",
+        "Sagehood and similar AI stock analysis tools gained traction on PH — demand validated",
+        "n8n self-hosted automation trending strongly among US developers in 2025–2026",
+        "Workflow automation guides rank as high-demand/lower-saturation on Gumroad (2025 research)",
+        "Merchants using AI-automated delivery report 40% higher customer retention (LemonSqueezy data)"
+      ],
+      "current_price_points": {
+        "comparable_generic_n8n_templates": "$19–$49",
+        "recommended_launch_price": "$39 (starter pack: 3 workflows)",
+        "premium_bundle": "$79 (7 workflows + setup guide + video walkthrough)"
+      },
+      "competition_level": "LOW — generic automation templates exist; US finance-specific AI agent blueprints are sparse",
+      "estimated_market_size": "Global developer/indie trader market; US finance automation is a $2B+ niche. Conservative: 500 units at $39 = $19,500 in first 90 days",
+      "build_complexity": "MEDIUM — requires building and testing actual n8n/Make flows with real US data sources",
+      "build_time_estimate": "5–7 days (3 workflows + documentation)",
+      "platform": "Gumroad (one-off) + LemonSqueezy (subscription tier for new workflows monthly)",
+      "market_focus": "US retail investors, quant traders, and fintech developers"
+    },
+
+    {
+      "rank": 3,
+      "gap_title": "US Small Business Template Toolkit — Proposals, SOWs & Invoices (Notion / Google Docs)",
+      "problem_statement": "US small businesses and freelancers spend hours creating proposals, statements of work, and invoices from scratch. While generic templates exist, there is no comprehensive US-focused toolkit that includes state sales tax tables, W-9 collection workflows, 1099 contractor tracking, and net-30/60/90 payment term automation. This is a low-build, high-margin digital product gap.",
+      "what_buyers_are_asking_for": [
+        "Professional proposal template with US-standard terms and conditions",
+        "SOW template with milestone-based payment schedules",
+        "Invoice template with automatic state sales tax calculation",
+        "1099 contractor tracking spreadsheet for year-end filing",
+        "Client onboarding checklist with W-9 collection workflow"
+      ],
+      "evidence_of_demand": [
+        "r/freelance and r/smallbusiness frequently request US-specific business document templates",
+        "Notion template marketplace shows strong demand for business operations bundles ($29-79 price point)",
+        "US freelancer population: 73.3M (2024 Upwork study) — massive addressable market",
+        "Gumroad sellers report $2K-8K/month from niche business template packs",
+        "IRS 1099 reporting changes in 2026 creating fresh demand for contractor tracking tools"
+      ],
+      "current_price_points": {
+        "comparable_notion_templates": "$19–$49",
+        "recommended_launch_price": "$39 (starter: 5 templates)",
+        "premium_bundle": "$79 (full toolkit: 12 templates + video setup guide + state tax table)"
+      },
+      "competition_level": "MEDIUM — generic templates exist; US tax-aware business toolkits with 1099/W-9 workflows are rare",
+      "estimated_market_size": "73.3M US freelancers + 33.2M US small businesses. Conservative: 800 units at $39 = $31,200 in first 90 days",
+      "build_complexity": "LOW — Notion templates + Google Sheets, no code required",
+      "build_time_estimate": "3–5 days",
+      "platform": "Gumroad (primary) + Notion template marketplace (secondary)",
+      "market_focus": "US freelancers, solopreneurs, and small business owners"
+    }
+  ],
+
+  "additional_signals": {
+    "validated_price_points": {
+      "sweet_spot": "$19–$49 one-time purchases on Gumroad",
+      "subscription_entry": "$9/month (high conversion)",
+      "premium_bundles": "$79–$99 (lower volume, higher margin)"
+    },
+    "saturated_categories_to_avoid": [
+      "Generic monthly budget planners",
+      "Generic Excel template packs",
+      "Broad AI prompt packs (not niche-specific)"
+    ],
+    "emerging_winners_to_watch": [
+      "Skill Sprint micro-courses ($10–$49, single specific outcome)",
+      "AI agent builder templates for specific industries",
+      "US tax-aware finance tools (significant gap in affordable tier)"
+    ],
+    "platform_landscape": {
+      "gumroad": "18,367 stores, strong discovery engine, 10% fee — best for one-off digital products",
+      "lemonsqueezy": "Better for SaaS/subscriptions, 5%+50¢ fee, VAT-compliant — best for recurring products",
+      "rapidapi": "18 finance APIs visible in top results; affordable US-focused APIs growing fast",
+      "product_hunt": "AI agents are #1 category; finance-specific agents are a clear gap"
+    }
+  },
+
+  "recommendation_priority": {
+    "fastest_to_revenue": "Gap #1 — US Stock Dividend & Tax-Lot Tracker (3–5 day build, low competition, clear buyer)",
+    "highest_ceiling": "Gap #2 — AI Finance Workflow Blueprints (recurring revenue, global market, rides the AI agent wave)",
+    "best_risk_reward": "Gap #3 — US Small Business Template Toolkit (lowest build effort, huge addressable market, proven Gumroad category)"
+  }
+}

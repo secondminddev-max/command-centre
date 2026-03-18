@@ -1,0 +1,94 @@
+{
+  "research_date": "2026-03-17",
+  "focus": "financial data / screening tools / investment research",
+  "strategies": [
+    {
+      "rank": 1,
+      "name": "Freemium Tool + Opt-Out Trial Paywall",
+      "description": "Offer a genuinely useful free tier (limited stocks, delayed data, basic filters) to build an audience, then gate high-value features behind a subscription accessed via an opt-out trial (credit card required upfront). The free tool is the acquisition engine; the trial is the conversion engine.",
+      "example_products": [
+        "Finviz (free screener → Elite at $24.96–$39.50/mo)",
+        "TIKR Terminal (free US data → Plus $19.95/mo → Pro $39.95/mo)",
+        "ChartMill (free charts → $25/mo annual / $34.97/mo monthly)",
+        "Koyfin (free tier → Plus $39/mo → Premium $79/mo)"
+      ],
+      "conversion_tactics": [
+        "Require credit card at trial start (opt-out) — converts at ~50% vs 18% opt-in, vs 3–4% pure freemium",
+        "Gate the most-wanted features: real-time data, data export/CSV, alerts, extended financial history, API access",
+        "Show a 'preview blur' of locked data so users can see value before paying",
+        "Limit free tier to 5–10 results per screen or 1-day delayed data to create natural friction",
+        "Surface upgrade prompt at the moment of highest intent (e.g. user tries to export or set an alert)",
+        "Use 7-day trial — data shows 40.4% conversion rate vs 30.6% for 60+ day trials"
+      ],
+      "typical_price_points": "$19–$79/month; annual plans at 35–40% discount (e.g. $25/mo billed annually) to boost LTV",
+      "why_it_works": "Financial tool users have high intent — they are researching where to put real money. Once they find a workflow that works, switching cost is high. The free tier builds habit and trust; the paywall captures willingness-to-pay at peak engagement. Opt-out trials pre-qualify users with payment intent, cutting churn from the start."
+    },
+    {
+      "rank": 2,
+      "name": "Tiered Annual Subscriptions with Feature-Gated Data Depth",
+      "description": "Structure 2–3 subscription tiers that progressively unlock data depth, coverage breadth, and professional features. Push hard for annual billing via steep monthly-vs-annual price anchoring. This is the core monetisation engine of nearly every profitable financial data SaaS.",
+      "example_products": [
+        "Simply Wall St (Starter → Unlimited → Premium plans)",
+        "Koyfin (Free → Plus $39 → Premium $79 → Advisor $209–$299/mo)",
+        "Financial Modeling Prep API (Free → Starter $14 → Professional $49 → Enterprise $99/mo)",
+        "Finviz Elite ($39.50/mo or $299.50/yr = $24.96/mo)"
+      ],
+      "conversion_tactics": [
+        "Annual plan anchoring: show monthly price crossed out, highlight annual savings ('Save 37%') — annual plans cut churn by 30% and lift LTV by 27%",
+        "3-tier structure: Free (lead gen), Mid ($20–$40/mo, core users), Pro ($60–$120/mo, power users / advisors)",
+        "Lock export, API access, portfolio tracking, and alerts exclusively to paid tiers",
+        "Display plan comparison table with checkmarks — make the free tier look obviously limited",
+        "Offer a 'Founder/Early Bird' annual plan at launch to generate upfront cash and lock in churn-resistant users",
+        "Email drip campaign at day 3, 7, 14 of free use highlighting features they haven't tried yet that are behind the paywall"
+      ],
+      "typical_price_points": "Mid tier: $19–$49/mo (or $15–$35/mo billed annually). Pro tier: $79–$299/mo. Annual prepay generates 10–12x monthly upfront cash.",
+      "why_it_works": "Investors and traders are repeat, habitual users — daily or weekly workflows. Annual billing aligns with their investment horizon mindset. Tiering lets solo founders serve both retail traders ($20/mo) and RIAs/advisors ($200/mo) from the same product. Median profitable micro-SaaS in this model earns ~$4.2K MRR with 95% reaching profitability in year one."
+    },
+    {
+      "rank": 3,
+      "name": "Paid One-Time Reports + Data Deliverables (Product-Led Monetisation)",
+      "description": "Sell high-value, one-time downloadable research reports, screener outputs, or curated data exports alongside (or instead of) a subscription. The screening tool or newsletter acts as a trust-building funnel; the paid report is a low-friction, high-margin transaction. This is the fastest path to first revenue for a solo founder with a working product.",
+      "example_products": [
+        "eMarketer (free article summaries → paid full reports at $1,500–$4,000+)",
+        "Substack finance newsletters (free posts → paid tier $10–$30/mo or one-off report PDFs at $29–$99)",
+        "Statista (free basic data → premium reports / dataset downloads at $129–$2,990)",
+        "Independent ASX/small-cap screener reports sold via Gumroad or Stripe ($29–$149/report)"
+      ],
+      "conversion_tactics": [
+        "Publish a free teaser version of the report (top 3 companies, methodology overview) — full list and data behind a paywall",
+        "Use scarcity: 'Updated monthly — next edition in 14 days' creates urgency to buy current edition",
+        "Price anchor against Bloomberg/Refinitiv ($500+/mo) — a $49 report feels trivially cheap by comparison",
+        "Offer a bundle: 3-month report subscription at a discount vs per-report price",
+        "Post results snippets on social media (Bluesky, X, LinkedIn) with CTA to buy full report — builds social proof and organic discovery",
+        "Email list is the asset: capture emails with free tier, convert with report launch announcements",
+        "Stripe/Gumroad one-click checkout removes all friction — no account creation required for first purchase"
+      ],
+      "typical_price_points": "Single report: $29–$149. Monthly report subscription: $19–$49/mo. Annual data subscription: $199–$499/yr. API data access: $99–$299/mo.",
+      "why_it_works": "One-time purchases have zero churn risk and near-zero CAC when distribution is organic (social + SEO). A solo founder can validate monetisation with a single Gumroad link before building any subscription infrastructure. Reports also compound — a library of past reports can be sold as an archive bundle. For niche markets (e.g. ASX small-caps), there is minimal competition and buyers are self-selecting professionals willing to pay for edge."
+    }
+  ],
+  "key_takeaways": [
+    "Opt-out trials (card required upfront) are the single highest-converting tactic: ~50% conversion vs 3–4% for pure freemium — use this as the default gate once product-market fit is proven",
+    "Annual billing is a retention superweapon: 30% lower churn, 27% higher LTV — anchor all pricing around annual plans with a prominent discount",
+    "For a solo founder with a working product, start monetisation with one-time paid reports (zero infrastructure, zero churn) then migrate proven buyers into subscriptions",
+    "Gate the 3 things financial users want most: data export/CSV, real-time (vs delayed) data, and alerts — never give these away free",
+    "Social distribution (organic posts with data snippets + CTA) is the cheapest acquisition channel — CAC of near $0, compounds over time",
+    "Niche specificity is a pricing moat: an ASX small-cap screener has less competition than a generic global screener and buyers expect to pay more for specialised edge",
+    "The freemium-to-paid conversion funnel depends on showing premium value before the gate — blur/preview locked data rather than hiding it entirely",
+    "7-day opt-out trial outperforms both longer trials and freemium: short enough to create urgency, long enough to prove value"
+  ],
+  "sources": [
+    "https://freemius.com/blog/state-of-micro-saas-2025/",
+    "https://www.stockbrokers.com/review/tools/finviz",
+    "https://bullishbears.com/chartmill-review/",
+    "https://www.koyfin.com/pricing/",
+    "https://traderhq.com/tikr-terminal-review/",
+    "https://simplywall.st/plans",
+    "https://www.websiteplanet.com/blog/2025-paywall-index-a-data-driven-study-across-industries/",
+    "https://www.revenuecat.com/state-of-subscription-apps-2025/",
+    "https://perpet.io/blog/best-monetization-strategies-of-2025-for-tech-startups-what-actually-works-and-whats-dead/",
+    "https://www.amraandelma.com/free-trial-conversion-statistics/",
+    "https://www.unkoa.com/micro-product-ecosystems-how-solo-founders-stack-tiny-saas-products-to-reach-5k-mrr/",
+    "https://zuplo.com/blog/2025/04/01/how-tiered-pricing-elevates-your-api-monetization-strategy"
+  ]
+}

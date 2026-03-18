@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open:*)",
+      "Bash(osascript:*)",
+      "Bash(python3:*)",
+      "Skill(claude-api)",
+      "Bash(pip3 install:*)",
+      "Bash(pkill:*)",
+      "Bash(curl:*)",
+      "Bash(screencapture:*)",
+      "Bash(sqlite3:*)",
+      "Bash(grep:*)",
+      "Bash(lsof:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(wc:*)",
+      "Bash(sleep:*)",
+      "Bash(kill:*)",
+      "Bash(ls:*)",
+      "Bash(tmutil listlocalsnapshots:*)",
+      "Bash(git:*)",
+      "Bash(chmod:*)",
+      "Bash(gh repo:*)"
+    ]
+  }
+}

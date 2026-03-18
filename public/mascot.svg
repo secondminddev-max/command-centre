@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="headGrad" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#d4a5ff"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#1a0a2e"/>
+      <stop offset="100%" stop-color="#0a0a14"/>
+    </radialGradient>
+    <filter id="neon">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="40" fill="url(#bgGlow)"/>
+
+  <!-- Ambient pulse rings -->
+  <circle cx="200" cy="170" r="90" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0">
+    <animate attributeName="r" values="90;130;90" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="200" cy="170" r="90" fill="none" stroke="#c084fc" stroke-width="1" opacity="0">
+    <animate attributeName="r" values="90;130;90" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+    <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+  </circle>
+
+  <!-- Shadow under feet -->
+  <ellipse cx="200" cy="330" rx="55" ry="10" fill="#c084fc" opacity="0.15"/>
+
+  <!-- === STICK FIGURE BODY === -->
+
+  <!-- Antenna stalk -->
+  <line x1="200" y1="100" x2="200" y2="80" stroke="#00d4ff" stroke-width="3" stroke-linecap="round"/>
+  <!-- Antenna tip (glowing dot) -->
+  <circle cx="200" cy="76" r="5" fill="#00d4ff" filter="url(#neon)">
+    <animate attributeName="r" values="5;7;5" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.6;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Head — rounded rectangle (robot visor style) -->
+  <rect x="148" y="100" width="104" height="90" rx="28" fill="url(#headGrad)" opacity="0.92" filter="url(#glow)"/>
+  <rect x="148" y="100" width="104" height="90" rx="28" fill="none" stroke="#c084fc" stroke-width="2" opacity="0.6"/>
+
+  <!-- Eyes — cyan LED style -->
+  <g filter="url(#neon)">
+    <!-- Left eye -->
+    <circle cx="178" cy="138" r="10" fill="#0a0a14"/>
+    <circle cx="178" cy="138" r="7" fill="#00d4ff">
+      <animate attributeName="r" values="7;5;7" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Right eye -->
+    <circle cx="222" cy="138" r="10" fill="#0a0a14"/>
+    <circle cx="222" cy="138" r="7" fill="#00d4ff">
+      <animate attributeName="r" values="7;5;7" dur="4s" repeatCount="indefinite" begin="0.3s"/>
+    </circle>
+  </g>
+
+  <!-- Smile — friendly arc -->
+  <path d="M180 160 Q200 178 220 160" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- Brain emoji — small, above head like a thought -->
+  <text x="200" y="96" text-anchor="middle" dominant-baseline="auto" font-size="28" opacity="0.9">🧠</text>
+
+  <!-- Neck -->
+  <line x1="200" y1="190" x2="200" y2="210" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Torso — simple line -->
+  <line x1="200" y1="210" x2="200" y2="275" stroke="url(#bodyGrad)" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Chest plate — small tech detail -->
+  <rect x="188" y="220" width="24" height="20" rx="5" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="200" cy="230" r="4" fill="#00d4ff" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Arms — stick style, slightly angled out -->
+  <!-- Left arm -->
+  <line x1="200" y1="218" x2="150" y2="250" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
+  <!-- Left hand (circle) -->
+  <circle cx="146" cy="253" r="7" fill="#c084fc" stroke="#00d4ff" stroke-width="1.5"/>
+
+  <!-- Right arm -->
+  <line x1="200" y1="218" x2="250" y2="250" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
+  <!-- Right hand (circle) -->
+  <circle cx="254" cy="253" r="7" fill="#c084fc" stroke="#00d4ff" stroke-width="1.5"/>
+
+  <!-- Legs — stick style -->
+  <!-- Left leg -->
+  <line x1="200" y1="275" x2="172" y2="325" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
+  <!-- Left foot -->
+  <ellipse cx="168" cy="328" rx="10" ry="5" fill="#c084fc"/>
+
+  <!-- Right leg -->
+  <line x1="200" y1="275" x2="228" y2="325" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
+  <!-- Right foot -->
+  <ellipse cx="232" cy="328" rx="10" ry="5" fill="#c084fc"/>
+
+  <!-- Floating code particles -->
+  <text x="300" y="130" font-family="'JetBrains Mono',monospace" font-size="13" fill="#00d4ff" opacity="0">
+    &lt;/&gt;<animate attributeName="opacity" values="0;0.4;0" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+    <animate attributeName="y" values="130;110;130" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+  </text>
+  <text x="90" y="160" font-family="'JetBrains Mono',monospace" font-size="11" fill="#c084fc" opacity="0">
+    fn()<animate attributeName="opacity" values="0;0.35;0" dur="5s" repeatCount="indefinite" begin="1.2s"/>
+    <animate attributeName="y" values="160;140;160" dur="5s" repeatCount="indefinite" begin="1.2s"/>
+  </text>
+  <text x="310" y="240" font-family="'JetBrains Mono',monospace" font-size="10" fill="#00d4ff" opacity="0">
+    {AI}<animate attributeName="opacity" values="0;0.3;0" dur="3.5s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="y" values="240;222;240" dur="3.5s" repeatCount="indefinite" begin="2s"/>
+  </text>
+  <text x="75" y="260" font-family="'JetBrains Mono',monospace" font-size="12" fill="#c084fc" opacity="0">
+    :::<animate attributeName="opacity" values="0;0.25;0" dur="4.5s" repeatCount="indefinite" begin="0.8s"/>
+    <animate attributeName="y" values="260;244;260" dur="4.5s" repeatCount="indefinite" begin="0.8s"/>
+  </text>
+
+  <!-- Product name -->
+  <text x="200" y="362" text-anchor="middle" fill="#e8f4ff" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="26" font-weight="800" letter-spacing="2">Command Centre</text>
+  <text x="200" y="385" text-anchor="middle" fill="#00d4ff" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" letter-spacing="4" opacity="0.7">AUTONOMOUS AI HQ</text>
+</svg>

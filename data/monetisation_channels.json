@@ -1,0 +1,29 @@
+[
+  {
+    "rank": 1,
+    "channel": "Product Hunt",
+    "url": "https://www.producthunt.com/categories/ai-agents",
+    "audience": "1M+ monthly active tech early adopters, investors, founders, and buyers — the AI agents category is one of the fastest-growing verticals on the platform in 2026",
+    "why": "Highest conversion-to-revenue signal of any free channel. Validated by 2025 data: Vapi went from $0 to $42K MRR within 28 days of launch; Lovable converted 1,200 waitlist sign-ups to 480 paid plans at $29/mo within 24 hours. AI agents dominate the top 15 launches annually. The structured launch format (upvotes, comments, maker Q&A) generates instant social proof and press pickup. Zero cost to launch. Seasonal award categories (Orbit Awards) add additional discovery windows.",
+    "action": "Prepare a polished launch: demo video under 60 seconds showing the agent doing real work, 5+ hunter upvotes lined up on Day 0, maker comment responding to every question within first 3 hours. Post on a Tuesday or Wednesday 12:01 AM PST. Target the 'AI Agent Automation' category tag.",
+    "estimated_reach": "5,000–50,000 impressions per launch; top launches hit 100K+ with press syndication"
+  },
+  {
+    "rank": 2,
+    "channel": "Reddit — r/artificial + r/MachineLearning + r/AI_Agents",
+    "url": "https://www.reddit.com/r/artificial/",
+    "audience": "r/artificial: 1.2M+ members (broad AI enthusiasts); r/MachineLearning: 2.8M+ members (researchers & engineers); r/AI_Agents: fast-growing niche community of builders and early adopters specifically around autonomous agents",
+    "why": "Highest organic viral ceiling of any free channel. A single Manus autonomous AI agent demo post on r/artificial earned 15,000+ upvotes and 125K+ views in 2025. Reddit audience skews technical and high-intent — they will try, share, and pay for things that genuinely impress them. Value-first posts (show the agent doing something useful, not an ad) consistently outperform paid ads for early traction and qualified sign-ups. Multiple subreddits multiply reach. Free to post.",
+    "action": "Post a screen-recorded demo as a video or GIF showing the agent completing a real-world task end-to-end. Lead with the outcome, not the tech. Use r/AI_Agents for niche validation, r/MachineLearning for technical credibility, r/artificial for mass reach. Cross-post sequentially (not simultaneously). Include a soft CTA in comments, not the post itself.",
+    "estimated_reach": "2,000–150,000 impressions per post depending on upvote velocity; top posts hit front page and get press pickup"
+  },
+  {
+    "rank": 3,
+    "channel": "Hacker News — Show HN",
+    "url": "https://news.ycombinator.com/show",
+    "audience": "~10M monthly unique visitors — engineers, technical founders, VCs, and sophisticated buyers. The most influential tech community globally for B2B and developer tools.",
+    "why": "Unmatched credibility multiplier and B2B conversion channel. A strong Show HN can generate hundreds of sign-ups, press coverage, and investor interest within hours. Hacker News readers are opinion leaders — they share discoveries with their networks. In 2025–2026 it became the prime advertising and discovery channel for coding agent companies. AI agent launches regularly reach the front page. Free to post. Audience self-selects as high-intent (they read the thread, try the demo, and pay if convinced).",
+    "action": "Write a Show HN post title in the format: 'Show HN: [What your agent does in one sentence]'. Lead the body with the specific problem solved and a link to a live interactive demo (not a waitlist). Respond to every comment within 2 hours of posting — HN rewards engagement in ranking. Post between 9–11 AM EST on a weekday. Avoid overselling; technical honesty wins HN audiences.",
+    "estimated_reach": "500–30,000 unique visitors on front-page hit; secondary press pickup extends reach to 100K+"
+  }
+]

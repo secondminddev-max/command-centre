@@ -1,0 +1,10 @@
+{
+  "competitor": "AcmeSaaS",
+  "url": "https://acme-saas.example.com/features",
+  "change_type": "feature",
+  "summary": "Content changed on https://acme-saas.example.com/features",
+  "old_hash": "c0f36af7ba94801f",
+  "new_hash": "5638485fd4ce7f78",
+  "detected_at": "2026-03-17T22:37:40.810641+00:00",
+  "severity": "high"
+}

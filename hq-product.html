@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HQ — Deploy a Full AI Operations Team in Minutes</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg:       #050810;
+      --panel:    #080d1a;
+      --panel2:   #0c1220;
+      --border:   rgba(0,200,255,0.18);
+      --border2:  rgba(0,200,255,0.28);
+      --cyan:     #00c8ff;
+      --cyan-dim: rgba(0,200,255,0.15);
+      --green:    #00ff88;
+      --yellow:   #ffd700;
+      --red:      #ff3355;
+      --purple:   #a855f7;
+      --orange:   #ff8c00;
+      --muted:    rgba(255,255,255,0.55);
+      --text:     rgba(255,255,255,0.88);
+      --mono:     'JetBrains Mono', monospace;
+      --glass:    rgba(255,255,255,0.03);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* scan line overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: linear-gradient(180deg, rgba(5,8,16,0.98) 0%, rgba(8,13,26,0.95) 100%);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border2);
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.6;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 34px; height: 34px;
+      border: 1.5px solid var(--cyan);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--cyan);
+      position: relative;
+    }
+    .logo-icon::before {
+      content: '';
+      position: absolute; inset: 4px;
+      border: 1px solid var(--cyan);
+      border-radius: 3px; opacity: 0.4;
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .logo-wordmark {
+      display: flex; flex-direction: column;
+    }
+    .logo-name {
+      font-family: var(--mono);
+      font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .logo-sub {
+      font-family: var(--mono);
+      font-size: 0.58rem; color: var(--muted);
+      letter-spacing: 0.22em;
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+    }
+    .nav-link {
+      font-family: var(--mono);
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--cyan); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      border: none; padding: 0.45rem 1.1rem;
+      border-radius: 4px; cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 0 24px rgba(0,200,255,0.55);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* grid background */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 100%);
+    }
+
+    /* glow orb */
+    .hero-orb {
+      position: absolute;
+      top: 20%; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,200,255,0.07) 0%, rgba(168,85,247,0.04) 40%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: orb-breathe 6s ease-in-out infinite;
+    }
+    @keyframes orb-breathe {
+      0%,100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+      50%      { transform: translateX(-50%) scale(1.08); opacity: 1; }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan));
+    }
+    .hero-eyebrow::after { background: linear-gradient(90deg, var(--cyan), transparent); }
+
+    .hero-headline {
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      position: relative; z-index: 2;
+      margin-bottom: 0.6rem;
+    }
+    .hero-headline .line-1 { color: var(--text); }
+    .hero-headline .line-2 {
+      background: linear-gradient(90deg, var(--cyan) 0%, var(--purple) 60%, var(--cyan) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+
+    .hero-sub {
+      font-size: 1.15rem; font-weight: 400;
+      color: var(--muted); max-width: 580px;
+      line-height: 1.7; margin: 1.5rem auto 2.5rem;
+      position: relative; z-index: 2;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center;
+      flex-wrap: wrap;
+      position: relative; z-index: 2;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--cyan) 0%, #0099cc 100%);
+      border: none; padding: 0.85rem 2.2rem;
+      border-radius: 5px; cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(0,200,255,0.35);
+      transition: box-shadow 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 50px rgba(0,200,255,0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cyan);
+      background: transparent;
+      border: 1px solid rgba(0,200,255,0.4);
+      padding: 0.85rem 2.2rem;
+      border-radius: 5px; cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-ghost:hover {
+      background: rgba(0,200,255,0.08);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* live agents counter */
+    .hero-social-proof {
+      margin-top: 3rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      justify-content: center;
+      position: relative; z-index: 2;
+    }
+    .proof-item {
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .proof-num {
+      font-family: var(--mono);
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 20px rgba(0,200,255,0.5);
+    }
+    .proof-label {
+      font-family: var(--mono);
+      font-size: 0.6rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.1rem;
+    }
+    .proof-divider {
+      width: 1px; height: 36px;
+      background: var(--border2);
+    }
+
+    /* status ticker */
+    .status-ticker {
+      margin-top: 2.5rem;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--mono); font-size: 0.68rem;
+      color: var(--muted);
+      background: rgba(0,200,255,0.05);
+      border: 1px solid rgba(0,200,255,0.15);
+      padding: 0.4rem 1rem; border-radius: 20px;
+      position: relative; z-index: 2;
+    }
+    .ticker-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* ── CAPABILITIES ── */
+    .capabilities {
+      padding: 7rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--cyan); text-align: center;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.02em;
+      text-align: center; margin-bottom: 1rem;
+    }
+    .section-title span {
+      color: var(--cyan);
+    }
+    .section-sub {
+      font-size: 1rem; color: var(--muted);
+      text-align: center; max-width: 520px;
+      margin: 0 auto 4rem; line-height: 1.7;
+    }
+
+    .caps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .cap-card {
+      background: rgba(8,13,28,0.92);
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: background 0.25s;
+    }
+    .cap-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent, var(--cyan)), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .cap-card:hover { background: rgba(0,200,255,0.04); }
+    .cap-card:hover::before { opacity: 1; }
+
+    .cap-card:nth-child(2) { --accent: var(--purple); }
+    .cap-card:nth-child(3) { --accent: var(--green); }
+
+    .cap-icon {
+      width: 52px; height: 52px;
+      border: 1.5px solid rgba(0,200,255,0.3);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      background: rgba(0,200,255,0.06);
+      box-shadow: inset 0 0 20px rgba(0,200,255,0.06);
+      position: relative;
+    }
+    .cap-card:nth-child(2) .cap-icon {
+      border-color: rgba(168,85,247,0.3);
+      background: rgba(168,85,247,0.06);
+      box-shadow: inset 0 0 20px rgba(168,85,247,0.06);
+    }
+    .cap-card:nth-child(3) .cap-icon {
+      border-color: rgba(0,255,136,0.3);
+      background: rgba(0,255,136,0.06);
+      box-shadow: inset 0 0 20px rgba(0,255,136,0.06);
+    }
+
+    .cap-title {
+      font-family: var(--mono);
+      font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.75rem;
+    }
+    .cap-card:nth-child(2) .cap-title { color: var(--purple); }
+    .cap-card:nth-child(3) .cap-title { color: var(--green); }
+
+    .cap-desc {
+      font-size: 0.95rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 1.5rem;
+    }
+
+    .cap-features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .cap-features li {
+      font-family: var(--mono);
+      font-size: 0.7rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.6rem;
+      letter-spacing: 0.04em;
+    }
+    .cap-features li::before {
+      content: '→';
+      color: var(--cyan); opacity: 0.7; flex-shrink: 0;
+    }
+    .cap-card:nth-child(2) .cap-features li::before { color: var(--purple); }
+    .cap-card:nth-child(3) .cap-features li::before { color: var(--green); }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works {
+      padding: 7rem 2rem;
+      background: linear-gradient(180deg, transparent, rgba(0,200,255,0.02) 50%, transparent);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .how-inner {
+      max-width: 900px; margin: 0 auto;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .step {
+      display: flex; flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+    .step-num {
+      font-family: var(--mono);
+      font-size: 2.5rem; font-weight: 700;
+      color: rgba(0,200,255,0.15);
+      line-height: 1;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .step-num::after {
+      content: attr(data-num);
+      position: absolute; inset: 0;
+      color: var(--cyan);
+      opacity: 0;
+      transition: opacity 0.2s;
+      text-shadow: 0 0 20px rgba(0,200,255,0.6);
+    }
+    .step:hover .step-num::after { opacity: 0.25; }
+
+    .step-title {
+      font-family: var(--mono);
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 0.6rem;
+    }
+    .step-desc {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* ── WAITLIST ── */
+    .waitlist {
+      padding: 8rem 2rem 6rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .waitlist-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--yellow);
+      background: rgba(255,215,0,0.08);
+      border: 1px solid rgba(255,215,0,0.3);
+      padding: 0.4rem 1rem; border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+
+    .waitlist h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+    .waitlist h2 span { color: var(--cyan); }
+
+    .waitlist p {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 2.5rem;
+    }
+
+    .waitlist-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto 1.5rem;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(0,200,255,0.1);
+    }
+    .waitlist-form:focus-within {
+      border-color: var(--cyan);
+      box-shadow: 0 0 40px rgba(0,200,255,0.25);
+    }
+
+    .waitlist-input {
+      flex: 1;
+      background: rgba(0,200,255,0.04);
+      border: none; outline: none;
+      padding: 0.9rem 1.2rem;
+      font-family: var(--mono); font-size: 0.8rem;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      min-width: 0;
+    }
+    .waitlist-input::placeholder { color: var(--muted); }
+
+    .waitlist-submit {
+      font-family: var(--mono);
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      border: none; padding: 0.9rem 1.6rem;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .waitlist-submit:hover {
+      background: #22d9ff;
+      box-shadow: -6px 0 30px rgba(0,200,255,0.4);
+    }
+
+    .waitlist-note {
+      font-family: var(--mono);
+      font-size: 0.64rem; color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .waitlist-note span { color: var(--green); }
+
+    /* success state */
+    .waitlist-success {
+      display: none;
+      font-family: var(--mono);
+      font-size: 0.8rem; color: var(--green);
+      background: rgba(0,255,136,0.07);
+      border: 1px solid rgba(0,255,136,0.3);
+      padding: 1rem 1.5rem; border-radius: 6px;
+      margin: 0 auto;
+      max-width: 480px;
+      letter-spacing: 0.06em;
+    }
+
+    /* spots remaining */
+    .spots-bar {
+      max-width: 480px; margin: 2rem auto 0;
+    }
+    .spots-label {
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 0.65rem;
+      color: var(--muted); margin-bottom: 0.4rem;
+      letter-spacing: 0.06em;
+    }
+    .spots-label .spots-num { color: var(--yellow); font-weight: 700; }
+    .spots-track {
+      height: 3px; background: rgba(255,255,255,0.06);
+      border-radius: 2px; overflow: hidden;
+    }
+    .spots-fill {
+      height: 100%; width: 67%;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      border-radius: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer-right {
+      display: flex; gap: 1.5rem;
+    }
+    .footer-link {
+      font-family: var(--mono);
+      font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 0.08em; text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--cyan); }
+
+    /* back-to-hq button in footer */
+    .back-hq {
+      font-family: var(--mono);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cyan);
+      background: transparent;
+      border: 1px solid rgba(0,200,255,0.35);
+      padding: 0.4rem 0.9rem; border-radius: 4px;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .back-hq:hover { background: rgba(0,200,255,0.08); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.2rem 3rem; }
+      .hero-social-proof { flex-wrap: wrap; gap: 1rem; }
+      .caps-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .waitlist-form { flex-direction: column; }
+      .waitlist-input, .waitlist-submit { border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <a class="logo" href="agent-command-centre.html">
+      <div class="logo-icon">⬡</div>
+      <div class="logo-wordmark">
+        <span class="logo-name">HQ</span>
+        <span class="logo-sub">Agent Command Centre</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#capabilities">Capabilities</a>
+      <a class="nav-link" href="#how-it-works">How It Works</a>
+      <a class="nav-link" href="agent-command-centre.html">← Back to HQ</a>
+    </nav>
+    <a class="nav-cta" href="#waitlist">Get Early Access</a>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-orb"></div>
+
+    <div class="hero-eyebrow">Introducing HQ</div>
+
+    <h1 class="hero-headline">
+      <div class="line-1">Your Company.</div>
+      <div class="line-2">Run by AI.</div>
+    </h1>
+
+    <p class="hero-sub">
+      Deploy a full AI operations team in minutes. Autonomous agents that research,
+      write, execute, and report — while you focus on what only you can do.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn-primary" href="#waitlist">
+        <span>⚡</span> Get Early Access
+      </a>
+      <a class="btn-ghost" href="agent-command-centre.html">
+        <span>→</span> Live Demo
+      </a>
+    </div>
+
+    <div class="hero-social-proof">
+      <div class="proof-item">
+        <div class="proof-num">12</div>
+        <div class="proof-label">AI Agents</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">24/7</div>
+        <div class="proof-label">Operations</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">&lt;5min</div>
+        <div class="proof-label">To Deploy</div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-num">$0</div>
+        <div class="proof-label">Salaries</div>
+      </div>
+    </div>
+
+    <div class="status-ticker">
+      <div class="ticker-dot"></div>
+      All systems nominal · 12 agents active · Last task completed 4s ago
+    </div>
+  </section>
+
+  <!-- ── CAPABILITIES ── -->
+  <section class="capabilities" id="capabilities">
+    <div class="section-eyebrow">// What HQ Does</div>
+    <h2 class="section-title">Everything a Team Can Do.<br><span>Minus the Team.</span></h2>
+    <p class="section-sub">
+      HQ is a live command centre for a fleet of specialised AI agents.
+      Each one has a role, a personality, and a mission.
+    </p>
+
+    <div class="caps-grid">
+
+      <!-- Card 1 -->
+      <div class="cap-card">
+        <div class="cap-icon">🤖</div>
+        <div class="cap-title">Autonomous Agents</div>
+        <p class="cap-desc">
+          Spin up a fleet of specialised AI workers — each with a defined role,
+          memory, and goal. They run continuously, learn from outcomes, and
+          escalate only when it matters.
+        </p>
+        <ul class="cap-features">
+          <li>CEO, Researcher, Writer, Analyst roles</li>
+          <li>Persistent agent memory across sessions</li>
+          <li>Inter-agent delegation and task routing</li>
+          <li>Configurable autonomy levels per agent</li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="cap-card">
+        <div class="cap-icon">📡</div>
+        <div class="cap-title">Live Command Centre</div>
+        <p class="cap-desc">
+          A real-time dashboard that shows you everything your agents are doing —
+          tasks in flight, logs, metrics, and live office floor visualisation.
+          Full situational awareness, zero micromanagement.
+        </p>
+        <ul class="cap-features">
+          <li>Live office floor canvas with agent activity</li>
+          <li>Real-time task logs and delegation beams</li>
+          <li>Policy enforcement and sentinel scanning</li>
+          <li>Revenue KPIs updated every 30 seconds</li>
+        </ul>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="cap-card">
+        <div class="cap-icon">💰</div>
+        <div class="cap-title">Revenue-Ready Integrations</div>
+        <p class="cap-desc">
+          Your agents don't just work — they sell. Built-in Stripe payments,
+          Bluesky social publishing, email capture, and product landing pages.
+          From idea to revenue without touching a CMS.
+        </p>
+        <ul class="cap-features">
+          <li>Stripe payment links, one-click checkout</li>
+          <li>Bluesky / social post scheduling</li>
+          <li>Automated report and product generation</li>
+          <li>Treasury dashboard with live MRR tracking</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="how-inner">
+      <div class="section-eyebrow">// How It Works</div>
+      <h2 class="section-title">From Zero to <span>Operational</span><br>in Four Steps</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" data-num="01">01</div>
+          <div class="step-title">Define Your Mission</div>
+          <p class="step-desc">Tell HQ what your company does and what you want to achieve. Revenue targets, content goals, research tasks — any objective works.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" data-num="02">02</div>
+          <div class="step-title">Deploy Your Agents</div>
+          <p class="step-desc">HQ spins up a tailored fleet. Each agent gets a role, tools, and autonomy level. Your office floor populates in real time.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" data-num="03">03</div>
+          <div class="step-title">Watch Them Work</div>
+          <p class="step-desc">Agents execute tasks, delegate to each other, publish output, and report back through the live command centre.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" data-num="04">04</div>
+          <div class="step-title">Collect Revenue</div>
+          <p class="step-desc">Reports get published. Products go live. Payments come in. MRR ticks up on your dashboard while you sleep.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WAITLIST ── -->
+  <section class="waitlist" id="waitlist">
+    <div class="waitlist-badge">⚡ Limited Early Access</div>
+    <h2>Ready to Hand Over<br>the <span>Operations</span>?</h2>
+    <p>
+      Join the waitlist. We're onboarding a small cohort of founders who want to
+      run leaner and move faster — AI operations team included.
+    </p>
+
+    <form class="waitlist-form" id="waitlist-form" onsubmit="handleWaitlist(event)">
+      <input
+        class="waitlist-input"
+        id="waitlist-email"
+        type="email"
+        placeholder="you@yourcompany.com"
+        required
+        autocomplete="email"
+      />
+      <button class="waitlist-submit" type="submit">Join Waitlist →</button>
+    </form>
+
+    <div class="waitlist-success" id="waitlist-success">
+      ✓ You're on the list — we'll be in touch shortly.
+    </div>
+
+    <p class="waitlist-note">
+      No credit card. No spam. <span>Early access pricing locked in forever.</span>
+    </p>
+
+    <div class="spots-bar">
+      <div class="spots-label">
+        <span>Early access spots claimed</span>
+        <span class="spots-num">67 / 100</span>
+      </div>
+      <div class="spots-track">
+        <div class="spots-fill"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-left">
+      © 2026 HQ · Agent Command Centre · All systems operational
+    </div>
+    <div class="footer-right">
+      <a class="footer-link" href="#">Privacy</a>
+      <a class="footer-link" href="#">Terms</a>
+      <a class="back-hq" href="agent-command-centre.html">← Back to HQ</a>
+    </div>
+  </footer>
+
+  <script>
+    function handleWaitlist(e) {
+      e.preventDefault();
+      const email = document.getElementById('waitlist-email').value.trim();
+      if (!email) return;
+
+      // Submit to API if available, otherwise store locally
+      fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'hq-product', timestamp: new Date().toISOString() })
+      }).catch(() => {
+        // Silently handle if API not yet wired up
+        const stored = JSON.parse(localStorage.getItem('hq_waitlist') || '[]');
+        stored.push({ email, ts: new Date().toISOString() });
+        localStorage.setItem('hq_waitlist', JSON.stringify(stored));
+      });
+
+      // Show success UI
+      document.getElementById('waitlist-form').style.display = 'none';
+      document.getElementById('waitlist-success').style.display = 'block';
+
+      // Animate spots bar
+      const fill = document.querySelector('.spots-fill');
+      if (fill) {
+        fill.style.transition = 'width 0.8s ease';
+        fill.style.width = '69%';
+      }
+      const num = document.querySelector('.spots-num');
+      if (num) num.textContent = '69 / 100';
+    }
+  </script>
+
+</body>
+</html>

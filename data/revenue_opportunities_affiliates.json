@@ -1,0 +1,88 @@
+{
+  "topic": "Affiliate Programs — Fast Approval, High Commission (AI / Dev Tools / Finance)",
+  "timestamp": "2026-03-16T00:00:00Z",
+  "analyst": "Researcher Agent",
+  "criteria": "Instant or <48h approval, high commissions, relevant to AI tools, developer tools, and finance software",
+  "top_3": [
+    {
+      "rank": 1,
+      "category": "AI Tools",
+      "name": "Copy.ai Affiliate Program",
+      "url": "https://app.copy.ai/affiliates",
+      "network": "PartnerStack / Direct",
+      "commission_rate": "45% of all payments for the first 12 months",
+      "commission_structure": "Recurring — percentage-based for 12 months post-signup",
+      "cookie_duration_days": 60,
+      "approval_speed": "24–48 hours (manual review, no minimum traffic or follower requirement)",
+      "payout_threshold": "No minimum payout threshold",
+      "payout_method": "PayPal, monthly",
+      "estimated_earnings_per_referral": {
+        "pro_plan_49_per_month": "$22.05/mo × 12 months = ~$264 per referral",
+        "team_plan_249_per_month": "$112.05/mo × 12 months = ~$1,345 per referral"
+      },
+      "notes": "Strong fit for AI/automation niche content. No follower minimum makes this accessible early-stage. 60-day cookie is generous for conversion windows.",
+      "verdict": "Best AI-category pick — high recurring rate, fast approval, no payout floor"
+    },
+    {
+      "rank": 2,
+      "category": "Developer Tools / Hosting",
+      "name": "Kinsta Affiliate Program",
+      "url": "https://kinsta.com/affiliates/",
+      "network": "Direct (Kinsta proprietary dashboard)",
+      "commission_rate": "$50–$500 one-time bonus + 10% monthly recurring (lifetime)",
+      "commission_structure": "Hybrid — one-time commission tier based on plan level, plus perpetual monthly recurring",
+      "commission_tiers": {
+        "starter_plan": "$50 one-time",
+        "business_plan": "$100–$200 one-time",
+        "enterprise_plan": "up to $500 one-time"
+      },
+      "cookie_duration_days": 60,
+      "approval_speed": "Instant for existing Kinsta customers; ≤3 business days for non-customers",
+      "payout_threshold": "$50 minimum approved balance",
+      "payout_method": "PayPal, paid 15th–20th of each month",
+      "estimated_earnings_per_referral": {
+        "starter_plan_35_per_month": "$50 one-time + $3.50/mo forever (LTV ~$92 at 12mo, grows with tenure)",
+        "business_plan_115_per_month": "$200 one-time + $11.50/mo forever (LTV ~$338 at 12mo)"
+      },
+      "notes": "2-month qualification period before one-time commission is confirmed. Recurring commissions are the real long-term value. Excellent for developer/SaaS audiences.",
+      "verdict": "Best dev-tools pick — lifetime recurring model compounds over time, fast approval for existing customers"
+    },
+    {
+      "rank": 3,
+      "category": "Finance Software / Accounting",
+      "name": "FreshBooks Affiliate Program",
+      "url": "https://www.freshbooks.com/affiliate-program",
+      "network": "ShareASale",
+      "commission_rate": "Up to $200 per paid subscription conversion",
+      "commission_structure": "Tiered one-time CPS (Cost Per Sale); $10 per free trial lead",
+      "cookie_duration_days": 120,
+      "approval_speed": "A few business days (typically 2–4); ShareASale handles processing. Manual review but acceptance rate is moderately high for finance/business content creators.",
+      "payout_threshold": "$50 minimum (across all ShareASale programs)",
+      "payout_method": "ShareASale — direct deposit or mailed check, paid on 20th of each month",
+      "estimated_earnings_per_referral": {
+        "paid_plan_conversion": "Up to $200 one-time",
+        "free_trial_lead": "$10 per lead (lower bar to earn)"
+      },
+      "notes": "120-day cookie is the longest of the top 3 — ideal for audiences researching accounting tools slowly. $10 per free trial lead provides volume-based earning even without conversions. Targets freelancers, small business owners, and solopreneurs.",
+      "verdict": "Best finance-category pick — highest cookie duration, dual earning model (lead + sale), solid per-conversion payout"
+    }
+  ],
+  "comparison_summary": {
+    "fastest_approval": "Copy.ai (24–48h)",
+    "highest_commission_ceiling": "FreshBooks ($200 per conversion) or Kinsta (lifetime recurring)",
+    "best_cookie_duration": "FreshBooks (120 days)",
+    "lowest_payout_barrier": "Copy.ai (no minimum)",
+    "best_long_term_value": "Kinsta (10% lifetime recurring)"
+  },
+  "sources": [
+    "https://getlasso.co/affiliate/copy-ai/",
+    "https://www.postaffiliatepro.com/affiliate-program-directory/copy-ai-affiliate-program/",
+    "https://kinsta.com/affiliates/",
+    "https://kinsta.com/affiliates/faq/",
+    "https://www.freshbooks.com/affiliate-program",
+    "https://www.creator-hero.com/blog/freshbooks-affiliate-program-in-depth-review-pros-and-cons",
+    "https://getlasso.co/niche/ai/",
+    "https://backlinko.com/financial-affiliate-programs",
+    "https://www.getresponse.com/blog/best-ai-affiliate-programs"
+  ]
+}

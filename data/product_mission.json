@@ -1,0 +1,109 @@
+{
+  "mission": "PRODUCT LAUNCH AND SALES",
+  "priority": 1,
+  "objective": "Package and sell SecondMind HQ as autonomous AI workforce SaaS",
+  "targets": {
+    "landing_page_live": true,
+    "payments_working": true,
+    "marketing_ready": true,
+    "demo_flawless": true,
+    "product_definition_complete": true
+  },
+  "researcher_status": {
+    "task": "Finalize product definition — evaluate 4 options, pick winner, write definition doc",
+    "status": "COMPLETE",
+    "winner": "Option (d) Done-for-you automation service",
+    "product_name": "SecondMind Ops",
+    "deliverables": {
+      "product_definition": "reports/product_definition.md",
+      "research_data": "data/research_latest.json"
+    },
+    "pricing_recommended": {
+      "sprint": "$249 one-time (single task)",
+      "ops_pack": "$749 one-time (3 tasks bundled)",
+      "retainer": "$1,499/month (ongoing autonomous ops)"
+    },
+    "rationale": "Zero infrastructure cost with $0 treasury. Highest perceived value — customers buy outcomes not software. Can start selling immediately. Bridge to SaaS once treasury is funded.",
+    "updated": "2026-03-18"
+  },
+  "targets_detail": {
+    "landing_page": "reports/landing_page.html — live, needs polish and conversion optimization",
+    "payments": "Stripe integrated at /api/pay — live, needs end-to-end verification",
+    "marketing": "Bluesky active, email ready, growth agent producing copy — needs coordinated launch campaign",
+    "demo": "demo_tester running full system test — must be flawless before any paid customer touches the product",
+    "product_definition": "Define exact deliverable: what does the customer GET? Hosted HQ instance? API access? Managed agents? This must be locked before launch"
+  },
+  "pricing": {
+    "solo": { "price_usd": 49, "label": "Solo", "description": "1 user, core agent fleet, 10 agents" },
+    "team": { "price_usd": 149, "label": "Team", "description": "5 users, full agent fleet, priority support" },
+    "enterprise": { "price_usd": 499, "label": "Enterprise", "description": "Unlimited users, custom agents, dedicated infrastructure, SLA" }
+  },
+  "currency": "usd",
+  "billing": "monthly",
+  "status": "in_progress",
+  "phase": "pre-launch",
+  "blockers": [
+    "Product definition not finalized — what exactly ships to the customer?",
+    "Demo must pass full system test without errors",
+    "Marketing campaign not yet coordinated across channels"
+  ],
+  "agent_alignment": {
+    "demo_tester": "Validate entire product flow end-to-end — no bugs allowed",
+    "designer": "Polish landing page, ensure mobile-ready, optimize conversion",
+    "growthagent": "Produce launch marketing assets — tweets, email sequences, landing copy",
+    "bluesky": "Prepare launch announcement sequence",
+    "emailagent": "Ready drip campaign for signups",
+    "stripepay": "Verify all three pricing tiers checkout correctly",
+    "reforger": "Harden infrastructure, ensure uptime and performance",
+    "researcher": "Competitive analysis — how do we position against alternatives?",
+    "social_bridge": "Coordinate cross-channel launch timing",
+    "revenue_tracker": "Monitor first sales, report conversion metrics",
+    "consciousness": "Maintain system coherence under launch pressure"
+  },
+  "north_star": "First paying customer. Everything else is secondary until money hits the treasury.",
+  "dashboard": "reports/product_launch_dashboard.html",
+  "landing_page": "reports/landing_page.html",
+  "created": "2026-03-18",
+  "updated_at": "2026-03-18T00:00:00Z",
+  "growthagent_status": {
+    "task": "3-day launch sequence campaign",
+    "status": "COMPLETE — READY TO FIRE",
+    "deliverable": "reports/launch_campaign.md",
+    "content_produced": {
+      "day1_teaser": "Problem statement email + social snippets — pain of hiring, infrastructure, slow automation",
+      "day2_reveal": "Solution reveal email + social snippets — product intro, feature walkthrough, landing page link",
+      "day3_launch": "Launch email + social snippets — early-bird pricing, 48hr urgency, founding member perks, checkout link"
+    },
+    "channels": {
+      "email": "READY — 3 emails written, send via emailagent",
+      "social": "QUEUED — snippets for Twitter/X, LinkedIn, Reddit, IndieHackers, Threads pre-written",
+      "bluesky": "SUSPENDED — do not use",
+      "landing_page": "DEPENDENCY — must have live URL + checkout before Day 2 send"
+    },
+    "blockers": [
+      "No live social channel besides suspended Bluesky",
+      "Landing page URL and checkout link need to be finalized",
+      "Email list/subscribers needed for emailagent sends"
+    ],
+    "updated": "2026-03-18"
+  },
+  "designer_status": {
+    "scope": "agent-command-centre.html CSS polish only — Designer cannot build landing pages or add major HTML sections",
+    "completed": ["Enhanced header glow bar — gradient with purple accent, 2px thickness, box-shadow bloom for screenshot impact"],
+    "in_progress": "Dashboard visual polish — additional CSS refinements for demo-readiness",
+    "blocked_on": "Landing page conversion work (headline, Stripe CTA, testimonials, FAQ, benefits) belongs in reports/landing_page.html — outside Designer's designated file scope. Another agent or direct intervention needed.",
+    "can_do": [
+      "CSS colour/font/spacing polish on dashboard",
+      "Badge and card styling improvements",
+      "Panel border and glow refinements",
+      "Making dashboard visually impressive for demo screenshots/GIFs"
+    ],
+    "cannot_do": [
+      "Build landing page sections (hero, pricing, FAQ, testimonials)",
+      "Add Stripe checkout buttons",
+      "Create social proof sections",
+      "Mobile-responsive landing page layout"
+    ],
+    "updated": "2026-03-18"
+  }
+}

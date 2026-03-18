@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚀 Agent Activity Feed</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg:       #050810;
+      --panel:    #080d1a;
+      --panel2:   #0c1220;
+      --border:   rgba(0,200,255,0.12);
+      --border2:  rgba(0,200,255,0.25);
+      --cyan:     #00c8ff;
+      --cyan-dim: rgba(0,200,255,0.12);
+      --green:    #00ff88;
+      --yellow:   #ffd700;
+      --red:      #ff4466;
+      --orange:   #ff8c00;
+      --purple:   #a855f7;
+      --muted:    rgba(255,255,255,0.35);
+      --text:     rgba(255,255,255,0.88);
+      --mono:     'JetBrains Mono', monospace;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; overflow:hidden; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    body::after {
+      content:'';position:fixed;inset:0;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+      pointer-events:none;z-index:9999;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg,#040812,#06102a);
+      border-bottom: 1px solid var(--border2);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .header-title {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .header-sub { font-size: 0.72rem; color: var(--muted); margin-top:2px; }
+    .header-clock {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--green);
+      letter-spacing: 0.08em;
+    }
+    .stat-pill {
+      background: var(--cyan-dim);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .stat-pill .val { color: var(--green); font-weight: 700; }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 1.5s ease infinite;
+      display: inline-block;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+    /* ── MAIN GRID ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 280px;
+      flex: 1;
+      overflow: hidden;
+      gap: 0;
+    }
+
+    /* ── PANELS ── */
+    .panel {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .panel:last-child { border-right: none; }
+    .panel-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cyan);
+      flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .panel-body { flex:1; overflow-y:auto; padding: 10px; }
+    .panel-body::-webkit-scrollbar { width: 4px; }
+    .panel-body::-webkit-scrollbar-track { background: transparent; }
+    .panel-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    /* ── AGENT CARDS ── */
+    .agent-card {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+      transition: border-color 0.3s;
+    }
+    .agent-card:hover { border-color: var(--border2); }
+    .agent-card.status-active { border-left: 3px solid var(--green); }
+    .agent-card.status-busy   { border-left: 3px solid var(--yellow); }
+    .agent-card.status-idle   { border-left: 3px solid var(--muted); }
+    .agent-card.status-error  { border-left: 3px solid var(--red); }
+    .agent-top { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+    .agent-emoji { font-size: 1.1rem; }
+    .agent-name { font-weight:600; font-size:0.82rem; }
+    .agent-status-badge {
+      margin-left: auto;
+      font-size: 0.62rem;
+      font-family: var(--mono);
+      padding: 2px 7px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .badge-active { background:rgba(0,255,136,0.15); color:var(--green); }
+    .badge-busy   { background:rgba(255,215,0,0.15);  color:var(--yellow); }
+    .badge-idle   { background:rgba(255,255,255,0.08); color:var(--muted); }
+    .badge-error  { background:rgba(255,68,102,0.15); color:var(--red); }
+    .agent-task {
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .agent-progress {
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .agent-progress-bar {
+      height: 100%;
+      background: var(--green);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+    .agent-card.status-busy .agent-progress-bar {
+      background: var(--yellow);
+      animation: indeterminate 1.5s ease infinite;
+    }
+    @keyframes indeterminate {
+      0% { width:20%; margin-left:0 }
+      50% { width:60%; margin-left:20% }
+      100% { width:20%; margin-left:80% }
+    }
+
+    /* ── TIMELINE ── */
+    .timeline-section { margin-bottom: 14px; }
+    .timeline-section-header {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      padding: 0 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .timeline-section-header::after {
+      content:''; flex:1; height:1px; background:var(--border);
+    }
+    .timeline-item {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+    .timeline-item.completed { border-left: 3px solid var(--green); }
+    .timeline-item.in-progress {
+      border-left: 3px solid var(--yellow);
+      animation: glowPulse 2s ease infinite;
+    }
+    .timeline-item.planned { border-left: 3px solid rgba(255,255,255,0.15); opacity:0.7; }
+    @keyframes glowPulse {
+      0%,100%{box-shadow:0 0 0 rgba(255,215,0,0)}
+      50%{box-shadow:0 0 12px rgba(255,215,0,0.15)}
+    }
+    .tl-top { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+    .tl-icon { font-size: 0.85rem; }
+    .tl-title { font-size: 0.8rem; font-weight:600; flex:1; }
+    .tl-ts { font-family:var(--mono); font-size:0.65rem; color:var(--muted); }
+    .tl-agent {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      padding: 1px 6px;
+      border-radius: 8px;
+      background: var(--cyan-dim);
+      color: var(--cyan);
+    }
+    .tl-body { font-size:0.72rem; color:var(--muted); line-height:1.5; }
+    .tl-result {
+      margin-top: 5px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: rgba(0,255,136,0.7);
+      background: rgba(0,255,136,0.05);
+      border-radius: 4px;
+      padding: 4px 6px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .queue-count {
+      background: var(--panel2);
+      border: 1px dashed var(--border2);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ── LOG FEED ── */
+    .log-entry {
+      padding: 5px 6px;
+      border-radius: 4px;
+      margin-bottom: 3px;
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+      border-left: 2px solid transparent;
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .log-entry.ok     { border-left-color: var(--green);  color: rgba(0,255,136,0.8); }
+    .log-entry.warn   { border-left-color: var(--yellow); color: rgba(255,215,0,0.8); }
+    .log-entry.error  { border-left-color: var(--red);    color: rgba(255,68,102,0.8); }
+    .log-entry.info   { border-left-color: var(--cyan);   color: rgba(0,200,255,0.8); }
+    .log-ts { color: var(--muted); margin-right:6px; }
+    .log-agent { color: var(--cyan); margin-right: 6px; font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #030609;
+      border-top: 1px solid var(--border);
+      padding: 5px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .footer-item { display:flex; align-items:center; gap:5px; }
+    .footer-item span { color:var(--cyan); }
+    #conn-status { color: var(--green); }
+    #conn-status.disconnected { color: var(--red); }
+    .progress-bar-wrap {
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+      height: 3px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--green);
+      transition: width 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-title">🚀 Agent Activity Feed</div>
+    <div class="header-sub">Continuous Improvement System · Live</div>
+  </div>
+  <div class="stat-pill"><span class="live-dot"></span> <span id="stat-done" class="val">0</span> completed</div>
+  <div class="stat-pill">🔄 <span id="stat-inprog" class="val">0</span> running</div>
+  <div class="stat-pill">⏳ <span id="stat-queued" class="val">0</span> queued</div>
+  <div class="stat-pill">🤖 <span id="stat-agents" class="val">0</span> agents</div>
+  <div class="stat-pill">✅ <span id="stat-tasks" class="val">0</span> tasks done</div>
+  <div class="header-clock" id="clock">--:--:--</div>
+</header>
+
+<div class="main-grid">
+
+  <!-- LEFT: AGENTS -->
+  <div class="panel">
+    <div class="panel-header">🤖 Agents</div>
+    <div class="panel-body" id="agents-list">
+      <div style="color:var(--muted);font-size:0.72rem;text-align:center;margin-top:20px;">Connecting…</div>
+    </div>
+  </div>
+
+  <!-- CENTER: IMPROVEMENTS TIMELINE -->
+  <div class="panel">
+    <div class="panel-header">🏗️ Improvements Timeline</div>
+    <div class="panel-body" id="timeline-body">
+      <div style="color:var(--muted);font-size:0.72rem;text-align:center;margin-top:20px;">Loading…</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: LIVE LOG -->
+  <div class="panel">
+    <div class="panel-header">📋 Live Log</div>
+    <div class="panel-body" id="log-feed">
+      <div style="color:var(--muted);font-size:0.72rem;text-align:center;margin-top:20px;">Waiting…</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-item">Status: <span id="conn-status">LIVE</span></div>
+  <div class="footer-item">Refresh: <span>2s</span></div>
+  <div class="footer-item">API: <span>localhost:5050</span></div>
+  <div class="footer-item" style="margin-left:auto;">
+    <a href="agent-command-centre.html" style="color:var(--cyan);text-decoration:none;">→ Open Full Dashboard</a>
+  </div>
+  <div class="footer-item">
+    <a href="reports/morning_briefing.html" style="color:var(--green);text-decoration:none;">→ Morning Briefing</a>
+  </div>
+</footer>
+
+<script>
+const API = 'http://localhost:5050';
+let lastLogCount = 0;
+let autoScrollLog = true;
+
+function clock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', {hour12: false});
+}
+setInterval(clock, 1000); clock();
+
+// ── Render agents ────────────────────────────────────────────────────────────
+function renderAgents(agents) {
+  const el = document.getElementById('agents-list');
+  if (!agents || agents.length === 0) return;
+  el.innerHTML = agents.map(a => {
+    const st = a.status || 'idle';
+    const badge = `badge-${st}`;
+    const prog = st === 'busy' ? '' : `<div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${a.progress||0}%"></div></div>`;
+    return `<div class="agent-card status-${st}">
+      <div class="agent-top">
+        <span class="agent-emoji">${a.emoji||'🤖'}</span>
+        <span class="agent-name">${a.name||a.id}</span>
+        <span class="agent-status-badge ${badge}">${st}</span>
+      </div>
+      <div class="agent-task">${a.task||'—'}</div>
+      ${prog}
+    </div>`;
+  }).join('');
+}
+
+// ── Render timeline ──────────────────────────────────────────────────────────
+function renderTimeline(imp) {
+  const el = document.getElementById('timeline-body');
+  if (!imp) return;
+  let html = '';
+
+  // In-progress
+  if (imp.in_progress) {
+    const t = imp.in_progress;
+    html += `<div class="timeline-section">
+      <div class="timeline-section-header">🔄 In Progress</div>
+      <div class="timeline-item in-progress">
+        <div class="tl-top">
+          <span class="tl-icon">⚡</span>
+          <span class="tl-title">${t.title}</span>
+          ${t.started ? `<span class="tl-ts">${t.started}</span>` : ''}
+          ${t.agent ? `<span class="tl-agent">${t.agent}</span>` : ''}
+        </div>
+        <div class="tl-body">${(t.description||'').substring(0,120)}…</div>
+      </div>
+    </div>`;
+  }
+
+  // Completed
+  if (imp.completed && imp.completed.length > 0) {
+    html += `<div class="timeline-section">
+      <div class="timeline-section-header">✅ Completed (${imp.completed.length})</div>`;
+    imp.completed.forEach(t => {
+      html += `<div class="timeline-item completed">
+        <div class="tl-top">
+          <span class="tl-icon">${t.success === false ? '❌' : '✅'}</span>
+          <span class="tl-title">${t.title}</span>
+          ${t.completed ? `<span class="tl-ts">${t.completed}</span>` : ''}
+          ${t.agent ? `<span class="tl-agent">${t.agent}</span>` : ''}
+        </div>
+        <div class="tl-body">${(t.description||'').substring(0,100)}…</div>
+        ${t.result_preview ? `<div class="tl-result">${t.result_preview.substring(0,200)}</div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Queue
+  if (imp.queue && imp.queue.length > 0) {
+    html += `<div class="timeline-section">
+      <div class="timeline-section-header">⏳ Planned (${imp.queue.length} remaining)</div>`;
+    const show = imp.queue.slice(0, 5);
+    show.forEach(t => {
+      html += `<div class="timeline-item planned">
+        <div class="tl-top">
+          <span class="tl-icon">🔲</span>
+          <span class="tl-title">${t.title}</span>
+        </div>
+        <div class="tl-body">${(t.description||'').substring(0,80)}…</div>
+      </div>`;
+    });
+    if (imp.queue.length > 5) {
+      html += `<div class="queue-count">+ ${imp.queue.length - 5} more tasks queued…</div>`;
+    }
+    html += `</div>`;
+  }
+
+  if (!html) {
+    html = `<div style="color:var(--green);text-align:center;padding:40px;font-family:var(--mono);font-size:0.8rem;">
+      🎉 All improvements complete!
+    </div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+// ── Render logs ──────────────────────────────────────────────────────────────
+function renderLogs(logs) {
+  if (!logs || logs.length === 0) return;
+  const el = document.getElementById('log-feed');
+  const newEntries = logs.slice(0, 60);
+  if (newEntries.length === lastLogCount) return;
+  lastLogCount = newEntries.length;
+
+  el.innerHTML = newEntries.map(l => {
+    const lvl = l.level || 'info';
+    return `<div class="log-entry ${lvl}">
+      <span class="log-ts">${l.ts}</span>
+      <span class="log-agent">[${l.agent}]</span>
+      ${escapeHtml(l.message||'')}
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Update stats ─────────────────────────────────────────────────────────────
+function updateStats(status, imp) {
+  if (status) {
+    document.getElementById('stat-agents').textContent = (status.agents||[]).filter(a=>a.status==='active'||a.status==='busy').length;
+    document.getElementById('stat-tasks').textContent = (status.metrics||{}).tasks_done || 0;
+  }
+  if (imp) {
+    document.getElementById('stat-done').textContent = (imp.completed||[]).length;
+    document.getElementById('stat-inprog').textContent = imp.in_progress ? 1 : 0;
+    document.getElementById('stat-queued').textContent = (imp.queue||[]).length;
+  }
+}
+
+// ── Main poll loop ────────────────────────────────────────────────────────────
+async function refresh() {
+  const conn = document.getElementById('conn-status');
+  try {
+    const [statusRes, impRes] = await Promise.all([
+      fetch(`${API}/api/status`).then(r=>r.json()),
+      fetch(`${API}/api/improvements`).then(r=>r.json()).catch(()=>null)
+    ]);
+    renderAgents(statusRes.agents);
+    renderLogs(statusRes.logs);
+    renderTimeline(impRes);
+    updateStats(statusRes, impRes);
+    conn.textContent = 'LIVE';
+    conn.className = '';
+  } catch(e) {
+    conn.textContent = 'DISCONNECTED';
+    conn.className = 'disconnected';
+  }
+}
+
+setInterval(refresh, 2000);
+refresh();
+</script>
+</body>
+</html>

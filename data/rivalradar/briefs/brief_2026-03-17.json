@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-03-17T22:37:40.811791+00:00",
+  "period": "weekly",
+  "changes": [
+    {
+      "competitor": "AcmeSaaS",
+      "url": "https://acme-saas.example.com/pricing",
+      "change_type": "pricing",
+      "summary": "Content changed on https://acme-saas.example.com/pricing",
+      "old_hash": "52efe40e1a28492d",
+      "new_hash": "39ee28dc9daf8e01",
+      "detected_at": "2026-03-17T22:37:40.810014+00:00",
+      "severity": "critical"
+    },
+    {
+      "competitor": "AcmeSaaS",
+      "url": "https://acme-saas.example.com/features",
+      "change_type": "feature",
+      "summary": "Content changed on https://acme-saas.example.com/features",
+      "old_hash": "c0f36af7ba94801f",
+      "new_hash": "5638485fd4ce7f78",
+      "detected_at": "2026-03-17T22:37:40.810641+00:00",
+      "severity": "high"
+    },
+    {
+      "competitor": "AcmeSaaS",
+      "url": "https://acme-saas.example.com/blog",
+      "change_type": "copy",
+      "summary": "Content changed on https://acme-saas.example.com/blog",
+      "old_hash": "d12bb6e28863f975",
+      "new_hash": "dd473a45e0986ad6",
+      "detected_at": "2026-03-17T22:37:40.811075+00:00",
+      "severity": "medium"
+    },
+    {
+      "competitor": "BetaTools",
+      "url": "https://beta-tools.example.com/pricing",
+      "change_type": "pricing",
+      "summary": "Content changed on https://beta-tools.example.com/pricing",
+      "old_hash": "e873cdf358a5cd0c",
+      "new_hash": "ff774536a2ed88c1",
+      "detected_at": "2026-03-17T22:37:40.811433+00:00",
+      "severity": "critical"
+    }
+  ],
+  "synthesis": "Pricing changes detected at: AcmeSaaS, BetaTools. Review immediately for competitive positioning impact. Feature/product updates at: AcmeSaaS. Evaluate for feature parity gaps. 1 additional content/copy changes detected across monitored competitors.",
+  "recommendations": [
+    "Review pricing changes and assess whether your pricing remains competitive.",
+    "Check feature updates for potential gaps in your product roadmap.",
+    "Update competitive battlecards with latest intelligence."
+  ]
+}

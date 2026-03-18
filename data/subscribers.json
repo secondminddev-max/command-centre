@@ -1,0 +1,80 @@
+[
+  {
+    "email": "investor@asx.com",
+    "name": "Jane Smith",
+    "subscribed_at": "2026-03-17T21:20:51.152193",
+    "source": "landing_page"
+  },
+  {
+    "email": "qatest@example.com",
+    "name": "",
+    "subscribed_at": "2026-03-18T17:36:44.473260",
+    "source": "landing_page"
+  },
+  {
+    "email": "verify@test.com",
+    "tier": "trader",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T18:17:18.199166",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "final@verify.com",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T18:18:30.138422",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test_reforger@check.com",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T18:19:04.568757",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "reforger_verify@test.com",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T18:21:49.976729",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@example.com",
+    "name": "",
+    "subscribed_at": "2026-03-18T19:26:54.936472",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.test",
+    "name": "",
+    "subscribed_at": "2026-03-18T19:37:33.478601",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.test",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T19:37:33.492426",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@demotester.local",
+    "name": "",
+    "subscribed_at": "2026-03-18T19:50:58.003596",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demotester.local",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T19:50:58.011662",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  }
+]

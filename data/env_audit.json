@@ -1,0 +1,20 @@
+{
+  "set": [
+    "STRIPE_SECRET_KEY",
+    "BSKY_HANDLE",
+    "BSKY_PASSWORD",
+    "SENDGRID_API_KEY",
+    "EMAIL_FROM",
+    "TEST_KEY",
+    "STRIPE_PUBLISHABLE_KEY",
+    "BLUESKY_APP_PASSWORD",
+    "BLUESKY_HANDLE",
+    "TELEGRAM_BOT_TOKEN",
+    "TELEGRAM_CHAT_ID",
+    "NGROK_AUTH_TOKEN",
+    "NGROK_DOMAIN"
+  ],
+  "empty": [
+    "STRIPE_WEBHOOK_SECRET"
+  ]
+}

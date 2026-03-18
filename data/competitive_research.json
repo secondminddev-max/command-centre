@@ -1,0 +1,84 @@
+{
+  "topic": "AI Agent SaaS Competitive Pricing Analysis",
+  "timestamp": "2026-03-18",
+  "our_tiers": {
+    "Solo": "$49/mo",
+    "Team": "$149/mo",
+    "Enterprise": "$499/mo"
+  },
+  "competitors": [
+    {
+      "name": "CrewAI",
+      "url": "https://crewai.com/pricing",
+      "description": "Multi-agent orchestration platform for building AI workflows",
+      "tiers": [
+        { "plan": "Basic (Free)", "price": "$0/mo", "includes": "50 executions/mo, 1 seat, community support" },
+        { "plan": "Professional", "price": "$25/mo", "includes": "100 executions/mo, 2 seats, $0.50/extra execution" },
+        { "plan": "Enterprise", "price": "Custom", "includes": "Up to 30,000 executions, unlimited seats, SSO, SOC2, dedicated support, SLAs" }
+      ]
+    },
+    {
+      "name": "Relevance AI",
+      "url": "https://relevanceai.com/pricing",
+      "description": "No-code AI agent builder for sales and GTM teams",
+      "tiers": [
+        { "plan": "Free", "price": "$0/mo", "includes": "100 credits/day, 1 user, 10MB knowledge" },
+        { "plan": "Pro", "price": "$19/mo", "includes": "10,000 credits, 2,500 runs/mo, 100MB knowledge" },
+        { "plan": "Team", "price": "$199/mo", "includes": "Team collaboration, multi-user" },
+        { "plan": "Business", "price": "$599/mo", "includes": "300,000 credits, 150,000 runs/mo, 5GB knowledge, multi-agent, dedicated CSM" }
+      ]
+    },
+    {
+      "name": "Lindy AI",
+      "url": "https://www.lindy.ai/pricing",
+      "description": "AI employee platform — agent builder, app builder, web automation",
+      "tiers": [
+        { "plan": "Free", "price": "$0/mo", "includes": "400 credits" },
+        { "plan": "Starter", "price": "$19.99/mo", "includes": "2,000 credits" },
+        { "plan": "Pro", "price": "$49.99/mo", "includes": "5,000 credits" },
+        { "plan": "Business", "price": "$299.99/mo", "includes": "30,000 credits, custom builds available ($1,500 onboarding)" }
+      ]
+    },
+    {
+      "name": "Botpress",
+      "url": "https://botpress.com/pricing",
+      "description": "AI chatbot and agent builder with pay-as-you-go LLM billing",
+      "tiers": [
+        { "plan": "Pay-as-You-Go (Free)", "price": "$0/mo + AI usage", "includes": "500 messages, 1 bot, 1 user" },
+        { "plan": "Plus", "price": "$89/mo + AI usage", "includes": "25% discount on add-ons, 2 bots, 2 collaborators" },
+        { "plan": "Team", "price": "$495/mo + AI usage", "includes": "Full team features, higher limits" },
+        { "plan": "Enterprise", "price": "~$2,000+/mo", "includes": "Custom, multi-year terms, dedicated support" }
+      ]
+    }
+  ],
+  "validation": {
+    "solo_49": {
+      "verdict": "COMPETITIVE — well-positioned",
+      "rationale": "Matches Lindy Pro ($49.99) almost exactly. Sits in the sweet spot between budget options (CrewAI $25, Relevance $19) and premium entry (Botpress $89). Strong value if feature set exceeds CrewAI/Relevance at this tier."
+    },
+    "team_149": {
+      "verdict": "AGGRESSIVE — strong value play",
+      "rationale": "Undercuts Relevance Team ($199) by 25% and Lindy Business ($299.99) by 50%. Significantly below Botpress Team ($495). This is an attractive price point that could drive adoption if it includes collaboration + multi-agent features."
+    },
+    "enterprise_499": {
+      "verdict": "COMPETITIVE — aggressive for enterprise",
+      "rationale": "Close to Relevance Business ($599). Far below Botpress Enterprise (~$2,000+) and CrewAI Enterprise (custom/six-figures). At $499 flat, this is very aggressive for enterprise — ensure margins are sustainable. Consider whether usage-based overages or annual billing can protect unit economics."
+    },
+    "overall": "All three tiers are competitively positioned. The $49 Solo aligns with market norms. The $149 Team is a standout value proposition. The $499 Enterprise is aggressively low — consider annual-only billing or usage caps to protect margins. Recommend adding a free/freemium tier to match every competitor's free entry point."
+  },
+  "market_trends": [
+    "Shift from seat-based to usage/outcome-based pricing across the industry",
+    "Credit-based models dominating (Relevance AI, Lindy AI) for predictable billing",
+    "LLM costs passed through at-cost by some platforms (Botpress)",
+    "Free tiers are universal — every major competitor offers one",
+    "Enterprise deals increasingly include SOC2, SSO, dedicated support as table stakes"
+  ],
+  "sources": [
+    "https://crewai.com/pricing",
+    "https://relevanceai.com/pricing",
+    "https://www.lindy.ai/pricing",
+    "https://botpress.com/pricing",
+    "https://www.chargebee.com/blog/pricing-ai-agents-playbook/",
+    "https://research.aimultiple.com/ai-agent-pricing/"
+  ]
+}

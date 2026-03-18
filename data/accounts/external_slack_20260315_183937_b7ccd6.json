@@ -1,0 +1,11 @@
+{
+  "type": "external_service_request",
+  "service": "slack",
+  "status": "PENDING_HUMAN_REVIEW",
+  "created_at": "2026-03-15T18:39:37Z",
+  "requested_by": "slack_bridge",
+  "purpose": "Auto-detected from pattern: NEEDS_CONFIG",
+  "note": "Auto-registration on slack is not performed to respect ToS. A human operator should create this account and store the key here.",
+  "signup_url": "",
+  "instructions": ""
+}

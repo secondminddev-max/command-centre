@@ -1,0 +1,12 @@
+{
+  "type": "external_service_request",
+  "service": "sendgrid",
+  "status": "PENDING_HUMAN_REVIEW",
+  "created_at": "2026-03-16T20:58:41Z",
+  "requested_by": "",
+  "purpose": "Auto-detected from pattern: API_KEY not set",
+  "has_pool_key": false,
+  "note": "Auto-registration on sendgrid not performed (ToS). Add API key to data/accounts/api_key_pool.json under this service.",
+  "signup_url": "",
+  "instructions": ""
+}

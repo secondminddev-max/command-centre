@@ -1,0 +1,105 @@
+{
+  "topic": "Top 3 Monetisable Data/Automation Niches - Low Barrier, High Willingness to Pay",
+  "timestamp": "2026-03-17T00:00:00+11:00",
+  "analyst": "Researcher Agent",
+  "context": {
+    "existing_assets": [
+      "ASX small-cap screener premium report product",
+      "Bluesky social presence",
+      "Autonomous agent HQ system"
+    ],
+    "target_audiences": ["indie developers", "finance hobbyists", "SMBs"]
+  },
+  "niches": [
+    {
+      "rank": 1,
+      "niche_name": "ASX Finance Data Subscription Alerts",
+      "target_customer": "Australian retail investor / finance hobbyist — DIY investor aged 30-55 managing their own ASX portfolio, spending 2-5 hrs/week on research, already paying $19-49/mo for tools like Sharesight or Stock Doctor",
+      "what_they_pay_for": "Curated, actionable weekly small-cap stock intelligence they cannot easily assemble themselves: top movers, earnings calendar, sector rotation signals, AI-synthesised investment thesis per stock — saves 3-5 hrs of manual research per week",
+      "price_point": {
+        "currency": "AUD",
+        "monthly": 29,
+        "annual": 249,
+        "one_off_report": 49,
+        "rationale": "Sharesight Standard tier is AUD $29/mo; Stock Doctor positions as premium research at est. $60-100/mo — our product sits mid-market. Half the adult Australian population are investors (ASX Investor Study 2023); proven willingness to pay in this bracket."
+      },
+      "product_idea": "Weekly 'Small-Cap Alpha Brief' — extend existing ASX screener to auto-generate a top-10 opportunity digest each Monday: price/volume movers, earnings surprises, sector catalyst summary, AI thesis per pick. Gated via a Stripe payment link + email/PDF delivery. Zero new infrastructure needed — reuse screener engine + agent email pipeline.",
+      "why_it_fits": "Direct extension of existing ASX screener report product. Same data pipeline, same audience. First product validates demand; recurring subscription converts one-off buyers into MRR. Bluesky social presence can drive top-of-funnel traffic with free teasers.",
+      "barrier_to_entry": "Very low — screener engine already built; add Stripe checkout + scheduled email send",
+      "estimated_ship_time_hours": 4,
+      "market_evidence": [
+        "Sharesight: AUD $19-49/mo with large AU user base",
+        "Stock Doctor: premium ASX research subscription, 30yr track record",
+        "Morningstar Investor AU: paid subscription for research data",
+        "Finance CPM rates 3-5x higher than entertainment — proven monetisation signal",
+        "Half of Australian adults hold investments (ASX Investor Study 2023)"
+      ]
+    },
+    {
+      "rank": 2,
+      "niche_name": "Automated Competitor & Price Intelligence Reports for SMBs",
+      "target_customer": "SMB owner in e-commerce, retail, or professional services — 5-50 employees, selling online or locally, manually checking competitor pricing/offers 1-2 hrs/week but unable to justify a $500+/mo enterprise tool",
+      "what_they_pay_for": "A weekly automated digest of competitor pricing changes, new product/service launches, and social activity — clear ROI framing: 'Know before your customers do.' Eliminates manual scrolling. Saves 2-4 hrs/week. Directly impacts margin protection decisions.",
+      "price_point": {
+        "currency": "USD",
+        "monthly": 49,
+        "annual": 399,
+        "rationale": "Browse AI / Visualping target same audience at $49-99/mo. Apollo (lead enrichment) $49-79/user/mo. SMB survey data: 84% increased AI budgets in 2025; prioritise solutions with demonstrable ROI. Micro-SaaS sweet spot: $19-99/mo for single-purpose time-saving tools."
+      },
+      "product_idea": "'Competitor Pulse' report service — customer enters 3-5 competitor URLs + their own product category. Our agent system auto-scrapes weekly: pricing pages, product listings, new announcements, social posts. Delivers a clean PDF/email digest comparing changes week-over-week. Built on existing agent infrastructure with a simple web form intake. Ship as a done-for-you service first (manual-backed by agents), then automate.",
+      "why_it_fits": "Leverages existing autonomous agent HQ system for web scraping + report generation. No new tech stack. Directly monetises the agent infrastructure already built. Can be offered as an add-on to ASX screener customers who are business owners.",
+      "barrier_to_entry": "Low — existing agents can scrape and synthesise; need a simple intake form + Stripe + PDF/email output",
+      "estimated_ship_time_hours": 6,
+      "market_evidence": [
+        "Browse AI: 770,000+ users tracking competitor prices",
+        "Vendor Hawk (Amazon seller monitoring): $12k MRR",
+        "EZ Fulfill (e-commerce automation): $8k MRR with 1,200 merchants",
+        "SMB pain point: 68% abandon expensive platforms — gap for affordable niche tools",
+        "Price monitoring positioned as 'business-critical' with 'lost revenue' framing — high urgency buy"
+      ]
+    },
+    {
+      "rank": 3,
+      "niche_name": "On-Demand Niche B2B Prospect Lead Packs",
+      "target_customer": "Indie developer, startup founder, or SMB sales team doing B2B outreach — needs a targeted list of 50-200 qualified prospects for a very specific ICP (ideal customer profile) without paying $600-1500/mo for Hunter, Kaspr, or Apollo at scale",
+      "what_they_pay_for": "A fresh, enriched CSV of qualified leads matching their exact specification — company size, industry, job title, geography, funding stage, tech stack signals — delivered within hours. One-off or monthly refresh. ROI is immediate: one closed deal from a $149 pack pays for itself 10-100x.",
+      "price_point": {
+        "currency": "USD",
+        "one_off_pack_100_leads": 79,
+        "one_off_pack_250_leads": 149,
+        "monthly_subscription_refresh": 199,
+        "rationale": "Apollo charges $49-119/user/mo for self-serve scraping. Kaspr $68-115/user/mo. A curated, pre-filtered pack at $79-149 one-off undercuts subscription fatigue while delivering immediate value. B2B buyers have clearest ROI justification of any category."
+      },
+      "product_idea": "'Prospect Pack' on-demand service — customer fills out a brief: ICP description, geography, company size, role title, industry. Our agent system (using LinkedIn scraping-adjacent tools, public business directories, and enrichment APIs) assembles, deduplicates, and scores a lead list, delivering a CSV within 4-8 hours. Sold as a Gumroad/Stripe product with a typeform intake. First packs manually QA'd by agent, then scaled.",
+      "why_it_fits": "Agent HQ system already capable of structured data gathering and synthesis (demonstrated by ASX screener). B2B outreach is the #1 pain point for indie devs and startup SMBs. Can promote via Bluesky dev community. One-off payment model avoids subscription fatigue — lowers conversion barrier.",
+      "barrier_to_entry": "Low-medium — agent system exists; needs lead enrichment data source integration (e.g. Apify LinkedIn scraper or Apollo free tier + enrichment). Start as manual-backed service.",
+      "estimated_ship_time_hours": 8,
+      "market_evidence": [
+        "Apollo Basic: $49/user/mo — $600M+ ARR company serving this exact need",
+        "Hunter Starter: $600/mo for 3,000 lead resolutions — massive price ceiling above us",
+        "Median CAC for B2B SaaS reached $2.00 per $1.00 ARR in 2025 — lead quality at premium",
+        "91% of AI-adopting SMBs report AI boosting revenue — validation of AI-assembled data products",
+        "Indie Hackers success: niche one-problem tools at $79/mo sustain $5k-50k MRR solo"
+      ]
+    }
+  ],
+  "summary": "Three highly complementary niches identified. Niche 1 (ASX Alerts Subscription) is the fastest to ship and most directly extends existing infrastructure — estimated 4 hours to first paying customer using the screener engine already built. Niche 2 (Competitor Intelligence) monetises the agent HQ system with a clear B2B ROI story at USD $49/mo. Niche 3 (Lead Packs) has the highest per-transaction revenue potential and serves the indie dev/SMB sales audience with immediate ROI. Recommended sequencing: ship Niche 1 this week (lowest effort, proven audience), validate Niche 2 with 3 pilot customers, run Niche 3 as a one-off productised service before automating.",
+  "recommended_sequencing": [
+    "Week 1: Launch ASX Alpha Brief subscription at AUD $29/mo — direct Stripe link, email delivery, reuse screener pipeline",
+    "Week 2: Offer Competitor Pulse as a beta service to 5 SMB customers at USD $49/mo — manual-backed by agents",
+    "Week 3: Ship first 3 Prospect Packs at USD $79-149 one-off via Gumroad — validate demand before automating"
+  ],
+  "sources": [
+    {"title": "27 Micro SaaS Examples That Actually Print Money in 2025 - Flowjam", "url": "https://www.flowjam.com/blog/27-micro-saas-examples-that-actually-print-money-in-2025"},
+    {"title": "Profitable AI Niches for Bootstrapped Business - Indie Hackers", "url": "https://www.indiehackers.com/post/profitable-ai-niches-in-2024-for-building-a-bootstrapped-business-0d0a76a09c"},
+    {"title": "SMB Technology and Buying Trends 2025 - GTIA", "url": "https://gtia.org/hubfs/GTIA%202025%20SMB%20Technology%20and%20Buying%20Trends%20Research.pdf"},
+    {"title": "Sharesight Pricing", "url": "https://www.sharesight.com/pricing/"},
+    {"title": "Stock Doctor - ASX Research Platform", "url": "https://www.stockdoctor.com.au/"},
+    {"title": "ASX Australian Investor Study", "url": "https://www.asx.com.au/investors/investment-tools-and-resources/australian-investor-study"},
+    {"title": "Price Monitoring in 2025 - Browse AI", "url": "https://www.browse.ai/blog/price-monitoring-in-2025-ai-powered-automation-for-scalable-competitor-tracking"},
+    {"title": "B2B Lead Generation Pricing Models 2026 - SaaS Hero", "url": "https://www.saashero.net/competitor/intelligent-resourcing-b2b-leadgen-pricing/"},
+    {"title": "30 MicroSaaS Niches Poised to Explode in 2025 - Medium", "url": "https://medium.com/@urano10/30-microsaas-niches-poised-to-explode-in-2025-82f0264d4457"},
+    {"title": "SMB Financial Planning Technology Adoption 2025 - Compass", "url": "https://compassapp.ai/research/smb-financial-planning-technology-adoption-2025"},
+    {"title": "2025 Top SMB IT Priorities - Techaisle", "url": "https://techaisle.com/blog/591-2025-top-10-smb-and-midmarket-business-issues-it-priorities-and-challenges"}
+  ]
+}

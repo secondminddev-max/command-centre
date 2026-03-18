@@ -1,0 +1,65 @@
+[
+  {
+    "ts": "2026-03-16T17:31:48.055759",
+    "cycle": 90,
+    "posture": "Revenue flowing \u2014 MRR $29.00",
+    "detail": "MRR=$29.00 | grade=C | events=0 | zero_cycles=0",
+    "agent": "spirit_guide",
+    "mrr": 29.0,
+    "zero_cycles": 0
+  },
+  {
+    "ts": "2026-03-16T17:33:15.535792",
+    "cycle": 91,
+    "posture": "Revenue flowing \u2014 MRR $29.00",
+    "detail": "MRR=$29.00 | grade=C | events=0 | zero_cycles=0",
+    "agent": "spirit_guide",
+    "mrr": 29.0,
+    "zero_cycles": 0
+  },
+  {
+    "ts": "2026-03-16T17:34:28.280606",
+    "cycle": 92,
+    "posture": "Revenue at $0 \u2014 monitoring for first signal",
+    "detail": "MRR=$0.00 | grade=F | events=0 | zero_cycles=1",
+    "agent": "spirit_guide",
+    "mrr": 0.0,
+    "zero_cycles": 1
+  },
+  {
+    "ts": "2026-03-16T17:34:51.370952",
+    "cycle": 4,
+    "posture": "Revenue flowing \u2014 MRR $29.00",
+    "detail": "MRR=$29.00 | events=0 | source=revenue_stats.json | zero_cycles=0"
+  },
+  {
+    "ts": "2026-03-16T17:35:23.003372",
+    "cycle": 93,
+    "posture": "Revenue stagnant \u2014 $0 for 2 consecutive cycle(s)",
+    "detail": "MRR=$0.00 | grade=F | events=0 | zero_cycles=2",
+    "agent": "spirit_guide",
+    "mrr": 0.0,
+    "zero_cycles": 2
+  },
+  {
+    "ts": "2026-03-16T17:36:41.327977",
+    "cycle": 94,
+    "posture": "Revenue stagnant \u2014 $0 for 3 consecutive cycle(s)",
+    "detail": "MRR=$0.00 | grade=F | events=0 | zero_cycles=3",
+    "agent": "spirit_guide",
+    "mrr": 0.0,
+    "zero_cycles": 3
+  },
+  {
+    "ts": "2026-03-16T17:39:18.925858",
+    "cycle": 5,
+    "posture": "Revenue flowing \u2014 MRR $29.00",
+    "detail": "MRR=$29.00 | events=0 | source=revenue_stats.json | zero_cycles=0"
+  },
+  {
+    "ts": "2026-03-16T17:42:14.617491",
+    "cycle": 6,
+    "posture": "Revenue flowing \u2014 MRR $29.00",
+    "detail": "MRR=$29.00 | events=0 | source=revenue_stats.json | zero_cycles=0"
+  }
+]

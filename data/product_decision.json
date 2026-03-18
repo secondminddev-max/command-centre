@@ -1,0 +1,21 @@
+{
+  "product_name": "ASX Dividend & Franking Credit Tracker",
+  "tagline": "Track every ASX dividend, calculate grossed-up yields, and see your SMSF franking credit refund — one-time purchase",
+  "target_customer": "Self-directed ASX investors managing their own dividend portfolio, SMSF trustees who want to understand their annual franking credit refund, and retirees building a passive income stream from Australian shares — particularly anyone tired of paying for a subscription just to track dividends",
+  "features": [
+    "Portfolio Holdings & Dividend Tracker — enter up to 30+ ASX ticker holdings with auto-calculated market value, dividend income, grossed-up yield, and ex-dividend/payment date tracking",
+    "Franking Credit Grossed-Up Yield Calculator — enter any ASX stock price, DPS, and franking % to instantly see cash yield, grossed-up yield, franking credit per share, and after-tax yield with support for both 30% and 25% tax rates",
+    "SMSF Tax Year Summary — full dividend register for FY2025/26 with auto-calculated franking credits received, tax payable at fund rate (15% or 0%), and the exact franking credit refund amount the ATO owes your SMSF"
+  ],
+  "pricing": {
+    "amount": 29,
+    "currency": "AUD",
+    "model": "one-time"
+  },
+  "why_chosen": "The listing copy was already fully written and product spec was complete — zero remaining research or marketing strategy required. It has virtually no competition in the ASX-specific niche, requires no infrastructure or subscription overhead, and addresses a clear, under-served pain point: Australian dividend investors collect up to 43% more yield when franking credits are accounted for, yet most have no structured way to calculate this. With 700,000+ active ASX retail investors and a $29 price point, a single Whirlpool forum post can generate first revenue. Conservative 30-day forecast is $290–$580 (10–20 sales); realistic 90-day forecast is $870–$2,900.",
+  "distribution": "Gumroad",
+  "source_files": [
+    "data/commercial_sprint_results.json",
+    "data/gumroad_listing_asx_tracker.txt"
+  ]
+}

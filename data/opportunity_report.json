@@ -1,0 +1,87 @@
+{
+  "report_title": "Top Monetisation Opportunities — 24-72h Time-to-Revenue",
+  "analyst": "Researcher",
+  "timestamp": "2026-03-17T00:00:00Z",
+  "top_recommendation": {
+    "opportunity_name": "AI-Powered Business Intelligence Reports (PDF/Data Downloads)",
+    "description": "Use AI to generate niche financial, market, or business intelligence reports sold as one-time PDF downloads. Fastest to produce (hours per report), lowest ongoing effort, infinite scalability via digital delivery. Existing ASX screener report at /Users/secondmind/claudecodetest/reports/asx_screener_report.html is a live proof-of-concept in this exact category — replicate the format across additional sectors, geographies, and asset classes.",
+    "price_point_usd": 49,
+    "price_range_usd": {"low": 9, "recommended": 49, "premium": 299},
+    "time_to_revenue": "1-2 weeks",
+    "effort_level": "Low",
+    "target_audience": "Retail investors, small business owners, niche market researchers, startup founders seeking sector intelligence without analyst fees",
+    "revenue_potential_monthly": {
+      "starter_usd": 500,
+      "realistic_usd": 3000,
+      "ceiling_usd": 9000
+    },
+    "why_top": "Lowest barrier to entry of all four categories. AI reduces production time from days to hours. Digital delivery means zero marginal cost per unit. Existing product and distribution (Bluesky campaign) already validate the model. Next step: produce 2-3 additional sector reports and test $49-$99 price point.",
+    "immediate_actions": [
+      "Reprice existing ASX screener report to $29-$49 (currently underpriced if at $9)",
+      "Produce crypto sector, US small-cap, or sector rotation variant using same pipeline",
+      "List on Gumroad for inbound discovery in addition to Bluesky outbound",
+      "Create a report bundle ($79-$99) combining 2 complementary sector reports"
+    ]
+  },
+  "runners_up": [
+    {
+      "opportunity_name": "Financial Data Screeners (One-Time Download — Spreadsheet)",
+      "description": "Excel or Google Sheets-based stock, ASX, or crypto screeners sold as one-time digital downloads on Gumroad or Etsy. Build once, sell indefinitely with zero marginal cost. Natural extension of the existing ASX screener data infrastructure — same underlying data, packaged as an interactive spreadsheet tool instead of a static PDF report.",
+      "price_point_usd": 29,
+      "price_range_usd": {"low": 9, "recommended": 29, "premium": 49},
+      "time_to_revenue": "1-4 weeks",
+      "effort_level": "Low-Medium",
+      "target_audience": "Retail stock and crypto investors, ASX traders, DIY financial analysts, value investors",
+      "revenue_potential_monthly": {
+        "starter_usd": 300,
+        "realistic_usd": 1500,
+        "ceiling_usd": 5000
+      },
+      "why_runner_up": "Natural complement and upsell to AI report category — bundle PDF report + spreadsheet screener for $59-$79. Same data asset serves both products. Gumroad discovery adds passive inbound traffic beyond social outreach.",
+      "notes": "Gumroad takes 10% per sale. Etsy viable for template-style products. Consider a 'Report + Screener Bundle' as the primary offer."
+    },
+    {
+      "opportunity_name": "Trading Signal Subscription (Paid Telegram Channel)",
+      "description": "Paid Telegram channel delivering curated trading signals for ASX, crypto, or forex. Tiered model: free channel builds audience and trust, paid tier ($30-$150/month) monetises via Telegram Stars or external payment link. Frame as 'screener alerts' or 'educational signals' to manage regulatory exposure.",
+      "price_point_usd": 50,
+      "price_range_usd": {"monthly_low": 15, "monthly_recommended": 50, "monthly_premium": 290},
+      "time_to_revenue": "2-6 weeks",
+      "effort_level": "Medium-High",
+      "target_audience": "Active retail traders in crypto, ASX, and forex; 18-45 demographic; existing newsletter or social media audiences",
+      "revenue_potential_monthly": {
+        "starter_usd": 500,
+        "realistic_usd": 5000,
+        "ceiling_usd": 50000
+      },
+      "why_runner_up": "Highest revenue ceiling of all four categories at scale but requires sustained signal generation, active community management, and credibility maintenance. Best initiated only once a distribution audience (e.g., Bluesky, newsletter) is established. Regulatory risk manageable if framed as educational screener alerts.",
+      "notes": "Documented Telegram channels exceed $100k total revenue. 200 subscribers at $50/month = $10k MRR. Binance Killers lifetime plan at $600 demonstrates high subscriber willingness to pay."
+    },
+    {
+      "opportunity_name": "No-Code Automation Templates (Notion / Zapier / Make.com)",
+      "description": "Pre-built workflow templates and Notion dashboards sold on Gumroad or Etsy. Covers business automation (CRM setups, client onboarding), productivity systems (second brain, project tracking), and financial tracking dashboards. Notion has 100M users as of 2024. Zapier and Make.com templates must be sold externally (no native paid marketplace).",
+      "price_point_usd": 29,
+      "price_range_usd": {"low": 9, "recommended": 29, "premium": 79},
+      "time_to_revenue": "2-6 weeks",
+      "effort_level": "Low-Medium",
+      "target_audience": "Solopreneurs, small business owners, productivity enthusiasts, Notion's 100M user base, Zapier's 2.2M+ business users",
+      "revenue_potential_monthly": {
+        "starter_usd": 250,
+        "realistic_usd": 1500,
+        "ceiling_usd": 10000
+      },
+      "why_runner_up": "Crowded market but well-established demand signal. Viable as a complementary revenue stream — e.g., a 'Financial Tracking Notion Dashboard' pairs with the ASX screener report to create a natural cross-sell. Top creators prove the ceiling ($239k/year), but average new entrants earn $250-$1,500/month.",
+      "notes": "Easlo (top Notion creator) earned $239k in one year. Average starter earns $250-$1,500/month. Notion's 100M user base (2024, up from 30M in 2023) is the largest addressable market in this category."
+    }
+  ],
+  "methodology": "Web research across Gumroad creator case studies, Telegram signal provider databases, Notion marketplace revenue reports, and micro-SaaS analysis platforms. Ratings based on documented creator revenue, platform fees, time to list/sell, and audience size data as of early 2026.",
+  "sources": [
+    "https://mudrex.com/learn/best-crypto-signal-providers-on-telegram/",
+    "https://flexe.io/blog/trading-signals-telegram-crypto-verified-2025/",
+    "https://poonamsharmawriter.medium.com/1-year-on-gumroad-selling-notion-templates-what-ive-learned-20b59270e36d",
+    "https://medium.com/@reidmadduxx/the-spreadsheet-hustle-how-to-turn-simple-templates-into-3k-month-the-gumroad-goldmine-part-4-a34344611115",
+    "https://resellready.co/blogs/news/ai-powered-digital-products-the-next-big-wave-in-online-business",
+    "https://www.kajabi.com/blog/how-to-sell-pdf-files",
+    "https://www.rockingweb.com.au/micro-saas-revenue-analysis-2025/",
+    "https://freemius.com/blog/state-of-micro-saas-2025/"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "db": "/Users/secondmind/claudecodetest/data/dbagent.db",
+  "size_bytes": 69632,
+  "tables": {
+    "fleet_metrics": 421,
+    "agent_events": 0,
+    "kv_store": 2
+  },
+  "total_rows": 423,
+  "last_snapshot": {
+    "timestamp": "2026-03-16T06:42:26Z",
+    "cpu": 0.0,
+    "ram": 0.0,
+    "active_agents": 24,
+    "total_agents": 29
+  },
+  "updated": "2026-03-16T06:42:26Z",
+  "summary": "DB healthy \u2014 3 tables, 423 rows | fleet_metrics:421 events:0 kv:2 | 68.0KB | fleet 24/29 | CPU 0.0% RAM 0.0%"
+}

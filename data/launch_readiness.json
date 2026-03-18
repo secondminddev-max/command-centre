@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-03-17T23:20:03.876424+00:00",
+  "test_suite": "Launch Readiness \u2014 Full System Demo",
+  "server": "http://localhost:5050",
+  "overall_readiness_score": "100%",
+  "total_endpoints": 5,
+  "passed": 5,
+  "failed": 0,
+  "endpoints": [
+    {
+      "endpoint": "GET /api/status",
+      "status_code": 200,
+      "response_time_ms": 5.6,
+      "pass": true,
+      "response_preview": "{'agents': [{'id': 'sysmon', 'name': 'SysMonitor', 'role': 'Real-time CPU, RAM & disk health monitor', 'emoji': '\ud83d\udce1', 'color': '#a855f7', 'status': 'active', 'progress': 99, 'task': 'CPU Temp: 28.7\u00b0C | CPU 10.3% | RAM 59.1% | Disk 2.7%'}, {'id': 'ceo', 'name': 'CEO', 'role': 'Chief Executive \u2014 routes",
+      "error": null
+    },
+    {
+      "endpoint": "GET /api/agents",
+      "status_code": 200,
+      "response_time_ms": 0.8,
+      "pass": true,
+      "response_preview": "[{'id': 'sysmon', 'name': 'SysMonitor', 'role': 'Real-time CPU, RAM & disk health monitor', 'emoji': '\ud83d\udce1', 'color': '#a855f7', 'status': 'active', 'progress': 99, 'task': 'CPU Temp: 28.7\u00b0C | CPU 10.3% | RAM 59.1% | Disk 2.7%'}, {'id': 'ceo', 'name': 'CEO', 'role': 'Chief Executive \u2014 routes all work, ",
+      "error": null
+    },
+    {
+      "endpoint": "POST /api/pay",
+      "status_code": 400,
+      "response_time_ms": 0.8,
+      "pass": true,
+      "pass_note": "endpoint responding (Stripe config needed)",
+      "response_preview": "{\"ok\": false, \"error\": \"Missing required field: tier, product, or amount_cents\"}",
+      "error": "HTTP Error 400: Bad Request"
+    },
+    {
+      "endpoint": "GET /api/products",
+      "status_code": 200,
+      "response_time_ms": 0.6,
+      "pass": true,
+      "response_preview": "{'ok': True, 'products': [{'id': 'asx_screener_report', 'name': 'ASX Small-Cap Screener Report', 'description': 'AI-curated list of under-the-radar ASX small-cap stocks with momentum signals, filtered from 2,000+ listed companies.', 'price_aud': 29.0, 'amount_cents': 2900, 'currency': 'aud', 'type':",
+      "error": null
+    },
+    {
+      "endpoint": "GET /api/revenue",
+      "status_code": 200,
+      "response_time_ms": 0.8,
+      "pass": true,
+      "response_preview": "{'ok': True, 'revenue': {'total': 79, 'monthly': 79, 'mrr': 29, 'arr': 348, 'currency': 'USD', 'goal': 1000, 'goal_pct': 7.9, 'daily': [{'date': '2026-03-16', 'amount': 79.0}], 'weekly': 79.0, 'updated': '2026-03-17T00:00:00'}}",
+      "error": null
+    }
+  ]
+}

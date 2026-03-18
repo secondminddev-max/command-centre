@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  hq-agent:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: hq-agent
+    ports:
+      - "5050:5050"
+    env_file:
+      - ../.env
+    volumes:
+      - ../data:/app/data
+      - ../agents.db:/app/agents.db
+      - ../metrics:/app/metrics
+    restart: unless-stopped

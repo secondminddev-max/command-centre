@@ -1,0 +1,11 @@
+{
+  "type": "disposable_email",
+  "service": "guerrillamail",
+  "email": "jkiotokv@guerrillamailblock.com",
+  "sid_token": "oiu6hg9tdq34gkjck2roaorg3u",
+  "created_at": "2026-03-15T18:40:24Z",
+  "requested_by": "test",
+  "purpose": "smoke test",
+  "note": "Guerrilla Mail session \u2014 expires after ~60 min of inactivity",
+  "fetch_inbox": "GET https://api.guerrillamail.com/ajax.php?f=get_email_list&sid_token=oiu6hg9tdq34gkjck2roaorg3u&seq=0"
+}

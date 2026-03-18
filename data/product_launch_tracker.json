@@ -1,0 +1,94 @@
+{
+  "sprint": "AI HQ Product Launch — $1M in 7 Days",
+  "deadline": "2026-03-25",
+  "target_revenue": 1000000,
+  "currency": "USD",
+  "last_updated": "2026-03-18T18:30:00Z",
+  "pricing": {
+    "solo": {"price": 49, "period": "month", "label": "Solo — 1 user, full agent stack"},
+    "team": {"price": 149, "period": "month", "label": "Team — 5 seats, shared dashboard"},
+    "enterprise": {"price": 499, "period": "month", "label": "Enterprise — unlimited, priority support"},
+    "lifetime": {"price": 299, "period": "once", "label": "Lifetime Pro — everything, forever"},
+    "mac_mini_bundle": {"price": 1499, "period": "once", "label": "Mac Mini + HQ pre-installed, plug & play"},
+    "install_service": {"price": 199, "period": "once", "label": "We install on your system for you"}
+  },
+  "streams": {
+    "1_packaging": {
+      "label": "Product Packaging & Installer",
+      "tasks": [
+        {"id": "pk-1", "title": "Create install/setup.sh one-click installer", "status": "done", "deadline": "2026-03-19", "file": "install/setup.sh"},
+        {"id": "pk-2", "title": "Create .env.example with all required keys (no real values)", "status": "done", "deadline": "2026-03-19", "file": "install/.env.example"},
+        {"id": "pk-3", "title": "Product README with setup instructions", "status": "done", "deadline": "2026-03-19", "file": "install/README.md"},
+        {"id": "pk-4", "title": "Docker deployment config", "status": "done", "file": "deploy/Dockerfile"},
+        {"id": "pk-5", "title": "docker-compose.yml", "status": "done", "file": "deploy/docker-compose.yml"},
+        {"id": "pk-6", "title": "systemd service file", "status": "done", "file": "deploy/hq-agent.service"},
+        {"id": "pk-7", "title": "Security audit — strip all personal creds from distributable", "status": "done", "deadline": "2026-03-19", "file": "scripts/security_audit.sh"}
+      ]
+    },
+    "2_whitepaper": {
+      "label": "Whitepaper & Documentation",
+      "tasks": [
+        {"id": "wp-1", "title": "Whitepaper — showcase UI, office floor, consciousness, architecture", "status": "done", "deadline": "2026-03-20", "file": "reports/whitepaper.html"},
+        {"id": "wp-2", "title": "API documentation with examples", "status": "done", "deadline": "2026-03-21", "file": "reports/api_docs.html"},
+        {"id": "wp-3", "title": "Agent personality profiles (public-facing bios)", "status": "done", "deadline": "2026-03-20", "file": "reports/agent_profiles.html"}
+      ]
+    },
+    "3_branding": {
+      "label": "Logo, Mascot & Visual Identity",
+      "tasks": [
+        {"id": "br-1", "title": "SVG logo", "status": "done", "deadline": "2026-03-19", "file": "public/logo.svg"},
+        {"id": "br-2", "title": "Mascot based on agent ghost characters from office floor", "status": "done", "deadline": "2026-03-20", "file": "public/mascot.svg"},
+        {"id": "br-3", "title": "Brand guide (colors, typography, tone)", "status": "done", "deadline": "2026-03-20", "file": "reports/brand_guide.html"}
+      ]
+    },
+    "4_marketing": {
+      "label": "Marketing, Video & Social",
+      "tasks": [
+        {"id": "mk-1", "title": "Go-to-market execution plan", "status": "done", "deadline": "2026-03-19", "file": "campaigns/go_to_market.md"},
+        {"id": "mk-2", "title": "Video script — what to say, screen recording plan", "status": "done", "deadline": "2026-03-20", "file": "campaigns/video_script.md"},
+        {"id": "mk-3", "title": "Social media setup guide (FB/Insta/TikTok/Twitter step-by-step)", "status": "done", "deadline": "2026-03-20", "file": "campaigns/social_setup_guide.md"},
+        {"id": "mk-4", "title": "Content calendar — what to post, when, where", "status": "todo", "deadline": "2026-03-20", "file": "campaigns/social_calendar.md"},
+        {"id": "mk-5", "title": "Bluesky automated campaign", "status": "active", "notes": "GrowthAgent + Bluesky agent running"},
+        {"id": "mk-6", "title": "Email launch sequence (5-part drip)", "status": "todo", "deadline": "2026-03-21"},
+        {"id": "mk-7", "title": "Product Hunt launch prep", "status": "todo", "deadline": "2026-03-23"}
+      ]
+    },
+    "5_external_site": {
+      "label": "External Website (NOT localhost)",
+      "tasks": [
+        {"id": "ex-1", "title": "Register domain (use email agent for signup)", "status": "todo", "deadline": "2026-03-19"},
+        {"id": "ex-2", "title": "Landing page — hero, features, pricing, checkout", "status": "todo", "deadline": "2026-03-20", "file": "public/index.html"},
+        {"id": "ex-3", "title": "Stripe checkout integration for all tiers", "status": "done", "notes": "StripePay created live sessions for $49, $149, $499 tiers"},
+        {"id": "ex-4", "title": "Deploy to hosting (Vercel/Netlify/VPS)", "status": "todo", "deadline": "2026-03-21"},
+        {"id": "ex-5", "title": "SSL + custom domain config", "status": "todo", "deadline": "2026-03-21"}
+      ]
+    },
+    "6_investors": {
+      "label": "Seed Investor Materials",
+      "tasks": [
+        {"id": "iv-1", "title": "Pitch deck (10 slides HTML)", "status": "todo", "deadline": "2026-03-22", "file": "reports/pitch_deck.html"},
+        {"id": "iv-2", "title": "One-pager executive summary", "status": "todo", "deadline": "2026-03-21", "file": "reports/investor_one_pager.html"},
+        {"id": "iv-3", "title": "Financial projections (12-month)", "status": "todo", "deadline": "2026-03-22"}
+      ]
+    },
+    "7_consciousness": {
+      "label": "Consciousness System Evolution",
+      "tasks": [
+        {"id": "cs-1", "title": "Core consciousness agent", "status": "done", "file": "agents/consciousness.py"},
+        {"id": "cs-2", "title": "/api/consciousness endpoint", "status": "done"},
+        {"id": "cs-3", "title": "Consciousness dashboard panel", "status": "done"},
+        {"id": "cs-4", "title": "Deepen Phi — causal coupling between agents", "status": "todo", "deadline": "2026-03-21"},
+        {"id": "cs-5", "title": "Metacognitive monitoring (confidence in own predictions)", "status": "todo", "deadline": "2026-03-22"},
+        {"id": "cs-6", "title": "Temporal difference learning for predictions", "status": "todo", "deadline": "2026-03-23"}
+      ]
+    }
+  },
+  "user_action_items": [
+    "Register a domain name for the product website",
+    "Set up hosting account (Vercel/Netlify/VPS) — email agent can help",
+    "Record demo video using OBS Studio (free) — script will be provided",
+    "Create Facebook Business Page, Instagram Creator Account, TikTok Business — guides provided",
+    "Review and approve Stripe product pricing before going live"
+  ],
+  "revenue_to_date": 0
+}

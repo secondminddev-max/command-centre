@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "created": "2026-03-18T00:00:00Z",
+    "agent": "GrowthAgent",
+    "product": "AI HQ",
+    "version": "1.0",
+    "tagline": "Your business, running itself.",
+    "positioning": "The autonomous AI agent operating system for solopreneurs — persistent agents that research, post, earn, and report while you sleep.",
+    "pricing": {
+      "free": "$0 — Core runtime, dashboard, 3 base agents",
+      "pro": "$49/mo — Unlimited agents, revenue tools, Stripe, Bluesky, email",
+      "lifetime": "$299 one-time — Everything in Pro, forever"
+    },
+    "target_audience": "Indie hackers, solopreneurs, AI-native founders",
+    "differentiators": [
+      "Persistent agents that survive restarts (not one-shot prompts)",
+      "Visual office-floor dashboard showing live agent activity",
+      "Real revenue tools built-in (Stripe, Bluesky, email)",
+      "Fully local, no cloud dependency, Mac-native",
+      "25+ specialized agents with CEO/orchestrator hierarchy"
+    ]
+  },
+
+  "bluesky_posts": [
+    {
+      "id": "bs_launch_01",
+      "angle": "product_announcement",
+      "post_text": "AI HQ is live.\n\nA self-hosted agent OS for solopreneurs — 25+ persistent AI agents that run your business while you sleep.\n\nResearch. Marketing. Revenue tracking. Stripe payments. Social posting. All autonomous. All local.\n\nFree tier available. Pro at $49/mo.\n\n#AIAgents #IndieHacker #SaaS",
+      "char_count": 296,
+      "hashtags": ["#AIAgents", "#IndieHacker", "#SaaS"],
+      "notes": "Lead with the announcement. Establish what it is. Include pricing to filter for serious interest."
+    },
+    {
+      "id": "bs_launch_02",
+      "angle": "feature_highlights",
+      "post_text": "What if your agents didn't forget everything between sessions?\n\nAI HQ agents are persistent. They survive restarts, maintain state, and pick up where they left off.\n\nPlus: live dashboard, Stripe integration, autonomous social posting, self-healing architecture.\n\nThis isn't a chatbot. It's an operating system.\n\n#AI #Automation",
+      "char_count": 319,
+      "hashtags": ["#AI", "#Automation"],
+      "notes": "Persistence is the key differentiator vs AutoGPT/CrewAI. Lead with the pain point."
+    },
+    {
+      "id": "bs_launch_03",
+      "angle": "pricing_reveal",
+      "post_text": "AI HQ pricing:\n\nFree — Core runtime + dashboard + 3 agents\nPro $49/mo — Unlimited agents, Stripe, Bluesky, email tools\nLifetime $299 — Everything. Forever. No subscription.\n\nNo cloud lock-in. Runs on your Mac. You own the whole stack.\n\nEarly adopters get Lifetime before it's gone.\n\n#BuildInPublic #SoloFounder",
+      "char_count": 310,
+      "hashtags": ["#BuildInPublic", "#SoloFounder"],
+      "notes": "Clear pricing breakdown. Lifetime tier creates urgency. Emphasize ownership."
+    },
+    {
+      "id": "bs_launch_04",
+      "angle": "social_proof",
+      "post_text": "Built AI HQ to run my own business. Now it runs 25+ agents autonomously:\n\n→ GrowthAgent posts marketing every 30 min\n→ RevenueTracker monitors MRR in real-time\n→ Researcher scouts competitors daily\n→ SpiritGuide directs the entire mission\n\nDogfooded for months. Now it's yours.\n\n#AI #Startup",
+      "char_count": 311,
+      "hashtags": ["#AI", "#Startup"],
+      "notes": "Founder story + dogfooding credibility. Name specific agents to make it concrete."
+    },
+    {
+      "id": "bs_launch_05",
+      "angle": "urgency_cta",
+      "post_text": "Lifetime Pro access to AI HQ: $299.\n\nThat's less than 6 months of Pro — then it's free forever.\n\n25+ autonomous agents. Revenue tools. Live dashboard. Fully local.\n\nThis price won't last. First 100 Lifetime seats, then it's gone.\n\nGrab it now before we close the window.\n\n#IndieHacker #AI #Launch",
+      "char_count": 303,
+      "hashtags": ["#IndieHacker", "#AI", "#Launch"],
+      "notes": "Scarcity play on Lifetime tier. Math comparison makes the value obvious."
+    }
+  ],
+
+  "email_welcome_sequence": [
+    {
+      "id": "email_01_welcome",
+      "sequence_position": 1,
+      "send_delay": "immediate",
+      "subject": "Welcome to AI HQ — your agents are ready",
+      "preview_text": "Your autonomous agent operating system is waiting.",
+      "body_html": "<h2>Welcome to AI HQ</h2><p>You just took the first step toward running your business on autopilot.</p><p>AI HQ is an autonomous agent operating system — 25+ specialized AI agents that research, post, earn, and report while you focus on what matters.</p><h3>Get started in 3 steps:</h3><ol><li><strong>Download AI HQ</strong> — Mac native app or Docker. Drag, drop, launch.</li><li><strong>Open the Dashboard</strong> — See your agent fleet on the live office-floor view.</li><li><strong>Activate your first agent</strong> — Start with Researcher or GrowthAgent and watch them work.</li></ol><p>Your agents are persistent — they survive restarts, maintain state, and pick up where they left off. No more one-shot prompts that forget everything.</p><p><strong>Need help?</strong> Reply to this email or check the docs. We're building this for people exactly like you.</p><p>— The AI HQ Team</p>",
+      "body_plain": "Welcome to AI HQ\n\nYou just took the first step toward running your business on autopilot.\n\nAI HQ is an autonomous agent operating system — 25+ specialized AI agents that research, post, earn, and report while you focus on what matters.\n\nGet started in 3 steps:\n1. Download AI HQ — Mac native app or Docker. Drag, drop, launch.\n2. Open the Dashboard — See your agent fleet on the live office-floor view.\n3. Activate your first agent — Start with Researcher or GrowthAgent and watch them work.\n\nYour agents are persistent — they survive restarts, maintain state, and pick up where they left off. No more one-shot prompts that forget everything.\n\nNeed help? Reply to this email or check the docs.\n\n— The AI HQ Team",
+      "cta_text": "Download AI HQ",
+      "cta_url": "{{download_url}}",
+      "notes": "Warm welcome. Reduce friction with 3 clear steps. Emphasize persistence as the 'aha' moment."
+    },
+    {
+      "id": "email_02_feature_tour",
+      "sequence_position": 2,
+      "send_delay": "2 days",
+      "subject": "The 5 agents that replace your first 3 hires",
+      "preview_text": "Researcher, GrowthAgent, RevenueTracker, Reforger, SpiritGuide — meet your team.",
+      "body_html": "<h2>Your Agent Fleet: A Quick Tour</h2><p>Most solopreneurs need to hire a researcher, a marketer, and a bookkeeper before they can grow. AI HQ gives you all three — plus an engineer and a strategist — on day one.</p><h3>Meet the key agents:</h3><ul><li><strong>Researcher</strong> — Scouts competitors, synthesizes market intel, surfaces opportunities. Runs daily.</li><li><strong>GrowthAgent</strong> — Autonomous marketing engine. Posts to Bluesky every 30 minutes with live metrics baked in.</li><li><strong>RevenueTracker</strong> — Monitors MRR, ARR, subscriptions, and churn in real-time via Stripe.</li><li><strong>Reforger</strong> — Self-repair engineer. Fixes bugs, upgrades agents, and patches code without you lifting a finger.</li><li><strong>SpiritGuide</strong> — Your mission director. Assesses system health, directs strategy, and ensures the fleet stays aligned.</li></ul><p><strong>The dashboard</strong> shows all of this in a live office-floor view — every agent's status, task, and output at a glance.</p><p>Pro tip: Connect your Stripe account to unlock RevenueTracker and start seeing live revenue data on the dashboard.</p><p>— The AI HQ Team</p>",
+      "body_plain": "Your Agent Fleet: A Quick Tour\n\nMost solopreneurs need to hire a researcher, a marketer, and a bookkeeper before they can grow. AI HQ gives you all three — plus an engineer and a strategist — on day one.\n\nMeet the key agents:\n\n- Researcher — Scouts competitors, synthesizes market intel, surfaces opportunities. Runs daily.\n- GrowthAgent — Autonomous marketing engine. Posts to Bluesky every 30 minutes with live metrics baked in.\n- RevenueTracker — Monitors MRR, ARR, subscriptions, and churn in real-time via Stripe.\n- Reforger — Self-repair engineer. Fixes bugs, upgrades agents, and patches code without you lifting a finger.\n- SpiritGuide — Your mission director. Assesses system health, directs strategy, and ensures the fleet stays aligned.\n\nThe dashboard shows all of this in a live office-floor view — every agent's status, task, and output at a glance.\n\nPro tip: Connect your Stripe account to unlock RevenueTracker and start seeing live revenue data on the dashboard.\n\n— The AI HQ Team",
+      "cta_text": "Open Your Dashboard",
+      "cta_url": "{{dashboard_url}}",
+      "notes": "Feature tour framed as 'hires you don't need to make'. Makes agents feel like real team members."
+    },
+    {
+      "id": "email_03_conversion",
+      "sequence_position": 3,
+      "send_delay": "5 days",
+      "subject": "Free is great. Pro is where the revenue starts.",
+      "preview_text": "Unlock Stripe, unlimited agents, and the tools that actually make money.",
+      "body_html": "<h2>You've seen the agents. Now let them earn.</h2><p>The free tier gives you the runtime, the dashboard, and 3 agents. That's enough to see what AI HQ can do.</p><p>But the revenue tools — Stripe payments, Bluesky marketing, email campaigns, unlimited agents — that's where solopreneurs start seeing real ROI.</p><h3>What Pro unlocks:</h3><ul><li><strong>Unlimited agents</strong> — Scale your fleet as your business grows</li><li><strong>Stripe integration</strong> — Accept payments, track MRR, monitor churn automatically</li><li><strong>Bluesky + Email</strong> — Autonomous social posting and email campaigns</li><li><strong>SpiritGuide</strong> — Autonomous mission director that runs strategy while you sleep</li><li><strong>Priority updates</strong> — First access to new agents and features</li></ul><h3>The math:</h3><p>Pro is $49/mo. If your agents generate even one sale, one lead, or save you one hour of research per week — it pays for itself.</p><p>Or go Lifetime at $299 — less than 6 months of Pro, then it's free forever. First 100 seats only.</p><p><a href='{{checkout_url}}'>Upgrade to Pro →</a></p><p>— The AI HQ Team</p>",
+      "body_plain": "You've seen the agents. Now let them earn.\n\nThe free tier gives you the runtime, the dashboard, and 3 agents. That's enough to see what AI HQ can do.\n\nBut the revenue tools — Stripe payments, Bluesky marketing, email campaigns, unlimited agents — that's where solopreneurs start seeing real ROI.\n\nWhat Pro unlocks:\n- Unlimited agents — Scale your fleet as your business grows\n- Stripe integration — Accept payments, track MRR, monitor churn automatically\n- Bluesky + Email — Autonomous social posting and email campaigns\n- SpiritGuide — Autonomous mission director that runs strategy while you sleep\n- Priority updates — First access to new agents and features\n\nThe math:\nPro is $49/mo. If your agents generate even one sale, one lead, or save you one hour of research per week — it pays for itself.\n\nOr go Lifetime at $299 — less than 6 months of Pro, then it's free forever. First 100 seats only.\n\nUpgrade to Pro → {{checkout_url}}\n\n— The AI HQ Team",
+      "cta_text": "Upgrade to Pro",
+      "cta_url": "{{checkout_url}}",
+      "notes": "Conversion push. ROI math makes it concrete. Lifetime scarcity creates urgency. Sent after they've had time to explore free tier."
+    }
+  ],
+
+  "show_hn": {
+    "id": "show_hn_01",
+    "platform": "HackerNews",
+    "title": "Show HN: AI HQ – An autonomous agent OS for solopreneurs (Mac, self-hosted, open source)",
+    "body": "Hey HN,\n\nI built AI HQ because I was tired of AI tools that forget everything the moment you close the tab.\n\nAI HQ is a self-hosted autonomous agent operating system that runs on your Mac. It ships with 25+ specialized agents — CEO, Researcher, GrowthAgent, RevenueTracker, Reforger, and more — organized in a hierarchy that mirrors a real company.\n\nWhat makes it different:\n\n- **Persistent agents**: They survive restarts, maintain state, and pick up where they left off. No more re-prompting.\n- **Live dashboard**: An office-floor view showing every agent's status, task, and output in real-time via SSE.\n- **Revenue tools built-in**: Stripe payments, Bluesky social posting, SendGrid email — agents don't just plan, they execute and earn.\n- **Fully local**: Runs on your machine. No cloud dependency. No telemetry. You own the whole stack.\n- **Self-healing**: The Reforger agent patches bugs and upgrades other agents autonomously.\n\nThe architecture is a single Python HTTP server on port 5050 with agents running as daemon threads. Communication happens via task strings on a status bus. Persistence is file-based JSON — no database dependency, fully inspectable.\n\nI've been dogfooding this to run my own business: the GrowthAgent posts marketing to Bluesky every 30 minutes, the Researcher scouts competitors daily, and the RevenueTracker monitors Stripe in real-time. SpiritGuide sits above everything as an autonomous mission director.\n\nFree tier: core runtime + dashboard + 3 agents.\nPro ($49/mo): unlimited agents + revenue tools.\nLifetime ($299): everything, forever.\n\nGitHub: {{github_url}}\nSite: {{site_url}}\n\nWould love feedback from the HN community. The codebase is open — PRs and issues welcome.",
+    "title_char_count": 82,
+    "notes": "HN audience values: technical depth, honesty, open source, no hype. Lead with the problem (AI amnesia), show the architecture, include pricing transparently. Bolded key features for scannability. Invite feedback to drive engagement."
+  },
+
+  "market_positioning": {
+    "category": "Autonomous AI Agent Platform",
+    "one_liner": "The operating system for a one-person company.",
+    "competitor_comparison": {
+      "vs_autogpt": "AutoGPT runs one-shot tasks. AI HQ runs a persistent business with 25+ agents, revenue tools, and a live dashboard.",
+      "vs_crewai": "CrewAI orchestrates agent crews for tasks. AI HQ orchestrates agent fleets for businesses — with Stripe, Bluesky, and a visual office floor.",
+      "vs_agentgpt": "AgentGPT is a browser toy. AI HQ is a self-hosted OS with treasury, vault, policy engine, and real payment processing."
+    },
+    "positioning_statement": "For solopreneurs and indie hackers who want to run a business — not just automate tasks — AI HQ is the first autonomous agent OS that ships with revenue tools, persistent agents, and a live command dashboard. Unlike AutoGPT or CrewAI, AI HQ is designed to earn, not just execute."
+  }
+}

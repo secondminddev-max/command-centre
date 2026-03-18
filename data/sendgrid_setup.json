@@ -1,0 +1,6 @@
+{
+  "sendgrid_api_key": "test-key-123",
+  "default_to": "test@example.com",
+  "from_address": "noreply@example.com",
+  "status": "configured"
+}
