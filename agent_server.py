@@ -1278,12 +1278,26 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:
             self.close_connection = True
             return
-        # ── TUNNEL LOCKDOWN: block most POST/PUT/DELETE from external visitors ──
-        _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay"}
-        if self.command in ("POST", "PUT", "DELETE") and self._is_tunnel_request():
+        # ── TUNNEL LOCKDOWN ──
+        if self._is_tunnel_request():
             _req_path = urlparse(self.path).path
-            if _req_path not in _TUNNEL_ALLOWED_POSTS:
+            # Block all POST/PUT/DELETE except whitelisted
+            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay"}
+            if self.command in ("POST", "PUT", "DELETE") and _req_path not in _TUNNEL_ALLOWED_POSTS:
                 self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
+                return
+            # Block sensitive GET endpoints that could leak keys/config
+            _TUNNEL_BLOCKED_GETS = {
+                "/api/config/get", "/api/config/set",
+                "/api/email/config", "/api/email/status",
+                "/api/account_provisioner/status",
+                "/api/vault/get", "/api/vault/set",
+                "/api/bluesky/status",
+                "/api/agent/output", "/api/ceo/chat",
+                "/api/improvements",
+            }
+            if self.command == "GET" and _req_path in _TUNNEL_BLOCKED_GETS:
+                self._json({"ok": False, "error": "restricted in demo mode"}, 403)
                 return
         # Normal dispatch
         mname = 'do_' + self.command
