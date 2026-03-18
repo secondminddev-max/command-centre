@@ -266,7 +266,7 @@ _MIRROR_FILE = os.path.join(CWD, "data", "mirror_snapshot.json")
 def save_mirror_snapshot():
     """Save full agent state for Render mirror. Called periodically on local system."""
     if _IS_RENDER:
-        return  # Render reads, never writes
+        return
     try:
         with lock:
             snapshot_agents = []
@@ -298,6 +298,10 @@ def _mirror_loop():
         if not _build_mode:
             save_mirror_snapshot()
         time.sleep(30)
+
+
+# ─── Render Proxy Mode — tunnel to local instance ────────────────────────────
+_LOCAL_HQ_URL = os.environ.get("LOCAL_HQ_URL", "")  # e.g. https://your-tunnel.ngrok.io
 
 # ─── State Persistence ────────────────────────────────────────────────────────
 STATE_FILE = os.path.join(CWD, "system_state.json")
@@ -2474,6 +2478,20 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
 
         if path == "/api/status":
+            # ── Render proxy: forward to local HQ if tunnel URL is configured ──
+            if _IS_RENDER and _LOCAL_HQ_URL:
+                try:
+                    import urllib.request as _ureq
+                    _proxy_resp = _ureq.urlopen(f"{_LOCAL_HQ_URL}/api/status", timeout=5)
+                    _proxy_data = _proxy_resp.read()
+                    self.send_response(200); self._cors()
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(_proxy_data)))
+                    self.end_headers(); self.wfile.write(_proxy_data)
+                    return
+                except Exception:
+                    pass  # fall through to local data if tunnel is down
+
             with lock:
                 _enriched_agents = []
                 for _a in agents.values():
