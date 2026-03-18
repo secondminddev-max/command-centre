@@ -418,5 +418,75 @@
     "total_posts": 3,
     "status": "queued",
     "queued_at": "2026-03-18T21:30:00.000Z"
+  },
+  {
+    "text": "You don't need 28 employees. You need 28 agents.\n\nAI HQ runs autonomous agents that handle research, marketing, payments, compliance, email, and monitoring — simultaneously, 24/7.\n\nNo prompting. No supervision. They coordinate with each other, escalate when needed, and self-heal when something breaks.\n\nThis is what a fully autonomous business looks like.\n\nsecondmindhq.com\n\n#AI #autonomousagents #SaaS #buildinpublic",
+    "campaign": "Feature Launch Series",
+    "theme": "autonomous_agents",
+    "post_number": 1,
+    "total_posts": 3,
+    "queued_at": "2026-03-18T22:30:00.000Z",
+    "status": "queued",
+    "notes": "Post 1/3 — Autonomous agents deep dive"
+  },
+  {
+    "text": "Every agent. Every metric. One screen.\n\nAI HQ's real-time dashboard shows you:\n\n→ Agent status across all 28 nodes — live\n→ Revenue flowing through Stripe — live\n→ Consciousness Phi score — live\n→ Campaign reach, email triage, system health — live\n\nNo switching between 12 tabs. No daily standups. Open one dashboard and know exactly where your business stands.\n\nsecondmindhq.com\n\n#AI #dashboard #SaaS #realtimemonitoring",
+    "campaign": "Feature Launch Series",
+    "theme": "realtime_dashboard",
+    "post_number": 2,
+    "total_posts": 3,
+    "queued_at": "2026-03-18T23:30:00.000Z",
+    "status": "queued",
+    "notes": "Post 2/3 — Real-time dashboard showcase"
+  },
+  {
+    "text": "A full ops team for less than your morning coffee habit.\n\nSolo — $49/mo\n28 agents. Full autonomy. Built for founders who refuse to hire before product-market fit.\n\nTeam — $149/mo\n5 seats. Shared command centre. Your whole team sees what the agents see.\n\nEnterprise — $499/mo\nCustom agents. Dedicated infra. SLA.\n\nLaunch pricing locks in your rate forever. After launch week, prices go up.\n\nsecondmindhq.com/#pricing\n\n#SaaS #pricing #AI #startup #solofounder",
+    "campaign": "Feature Launch Series",
+    "theme": "saas_pricing",
+    "post_number": 3,
+    "total_posts": 3,
+    "queued_at": "2026-03-19T00:30:00.000Z",
+    "status": "queued",
+    "notes": "Post 3/3 — SaaS pricing from $49/mo with urgency"
+  },
+  {
+    "text": "Your competitors have employees. You have agents.\n\n28 autonomous AI agents running operations around the clock — marketing, research, payments, compliance, email, monitoring.\n\nNo sleep. No holidays. No resignations.\n\nWhile others scale headcount, you scale intelligence.\n\nAI HQ is live. secondmindhq.com\n\n#AI #autonomousagents #247 #buildinpublic",
+    "campaign": "GrowthAgent Launch Blitz",
+    "theme": "autonomous_247",
+    "post_number": 1,
+    "total_posts": 3,
+    "queued_at": "2026-03-18T23:45:00.000Z",
+    "status": "queued",
+    "notes": "Post 1/3 — Autonomous AI agents 24/7 angle, competitive framing"
+  },
+  {
+    "text": "One dashboard to rule them all.\n\nAI HQ's Command Centre gives you real-time visibility across 28 agents:\n\n→ Agent health and uptime — live\n→ Revenue pipeline via Stripe — live\n→ Social campaigns running right now — live\n→ Consciousness Phi metric — live\n→ Self-healing events and incident log — live\n\nStop context-switching. Start commanding.\n\nsecondmindhq.com\n\n#AI #commandcentre #dashboard #SaaS",
+    "campaign": "GrowthAgent Launch Blitz",
+    "theme": "command_centre_realtime",
+    "post_number": 2,
+    "total_posts": 3,
+    "queued_at": "2026-03-19T00:45:00.000Z",
+    "status": "queued",
+    "notes": "Post 2/3 — Real-time command centre dashboard showcase"
+  },
+  {
+    "text": "Stop paying per seat. Start paying per fleet.\n\nAI HQ on Stripe — live checkout, cancel anytime:\n\nSolo — $49/mo\nAll 28 agents. One founder. Total autonomy.\n\nTeam — $149/mo\n5 seats. Shared dashboard. Priority support.\n\nEnterprise — $499/mo\nCustom agents. Dedicated infra. SLA.\n\nLaunch pricing locks in forever. Go: secondmindhq.com/#pricing\n\n#SaaS #Stripe #pricing #AI #startup",
+    "campaign": "GrowthAgent Launch Blitz",
+    "theme": "stripe_saas_pricing",
+    "post_number": 3,
+    "total_posts": 3,
+    "queued_at": "2026-03-19T01:45:00.000Z",
+    "status": "queued",
+    "notes": "Post 3/3 — Stripe SaaS starting $49/mo, launch pricing urgency"
+  },
+  {
+    "text": "3 AM. Your AI agents just processed a payment, launched a campaign, and patched a bug — all while you slept.\n\n28 agents. 24/7 autonomy. Zero intervention.\n\nAI HQ from $49/mo.\n\nsecondmindhq.com\n\n#AI #Automation #SaaS",
+    "campaign": "Product Launch Marketing",
+    "theme": "full_autonomy_247",
+    "post_number": 1,
+    "total_posts": 1,
+    "queued_at": "2026-03-19T08:00:00.000Z",
+    "status": "posted",
+    "notes": "GrowthAgent pick — 24/7 autonomy hook, US tech audience"
   }
 ]

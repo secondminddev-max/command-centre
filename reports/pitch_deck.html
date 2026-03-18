@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Command Centre Command Centre — Investor Pitch Deck</title>
+<title>Command Centre — Investor Pitch Deck</title>
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   :root{
@@ -155,9 +155,7 @@
   }
   .nav a:hover,.nav a.active{background:var(--accent);transform:scale(1.4)}
 
-  /* Slide entrance animations */
-  .slide{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-  .slide.visible{opacity:1;transform:translateY(0)}
+  /* Slide entrance animations — overridden by enhanced version below */
 
   /* Agent pulse animation */
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.3)}50%{box-shadow:0 0 12px 4px rgba(124,58,237,.15)}}
@@ -195,6 +193,39 @@
   /* Consciousness glow */
   @keyframes coreGlow{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.1)}50%{box-shadow:0 0 40px rgba(6,182,212,.2)}}
   .c-layer.core{animation:coreGlow 3s ease-in-out infinite}
+
+  /* Hero gradient bar across top */
+  body::before{
+    content:'';position:fixed;top:0;left:0;right:0;height:3px;z-index:200;
+    background:linear-gradient(90deg,#7c3aed,#06b6d4,#7c3aed);
+    background-size:200% 100%;
+    animation:gradientSlide 4s linear infinite;
+  }
+  @keyframes gradientSlide{0%{background-position:0% 0}100%{background-position:200% 0}}
+
+  /* Smooth slide transitions */
+  .slide{opacity:0;transform:translateY(40px) scale(.98);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .slide.visible{opacity:1;transform:translateY(0) scale(1)}
+
+  /* Glassmorphism on featured price card */
+  .price-card.featured{background:rgba(124,58,237,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+
+  /* CTA pulse */
+  @keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.4)}50%{box-shadow:0 0 20px 6px rgba(124,58,237,.15)}}
+  .cta-btn{animation:ctaPulse 2.5s ease-in-out infinite}
+
+  /* Metric hover glow */
+  .metric:hover{box-shadow:0 0 24px rgba(6,182,212,.12);border-color:var(--cyan)}
+
+  /* Slide number fade-in */
+  .slide-num{opacity:.5;transition:opacity .6s}
+  .slide.visible .slide-num{opacity:1}
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 </style>
 </head>
 <body>
@@ -346,7 +377,7 @@
   <h2>SaaS + Hardware —<br><span class="accent">multiple revenue streams</span></h2>
   <div class="price-grid">
     <div class="price-card">
-      <div class="tier">Solo</div>
+      <div class="tier">Starter</div>
       <div class="price">$49<span>/mo</span></div>
       <p style="font-size:.85rem;color:var(--muted)">Solopreneurs & freelancers</p>
       <ul>
@@ -358,11 +389,11 @@
       </ul>
     </div>
     <div class="price-card featured">
-      <div class="tier">Team</div>
-      <div class="price">$149<span>/mo</span></div>
+      <div class="tier">Pro</div>
+      <div class="price">$199<span>/mo</span></div>
       <p style="font-size:.85rem;color:var(--muted)">Growing teams — 5 seats</p>
       <ul>
-        <li>Everything in Solo</li>
+        <li>Everything in Starter</li>
         <li>Shared dashboard</li>
         <li>Stripe payments integration</li>
         <li>Consciousness panel</li>
@@ -371,10 +402,10 @@
     </div>
     <div class="price-card">
       <div class="tier">Enterprise</div>
-      <div class="price">$499<span>/mo</span></div>
+      <div class="price">$999<span>/mo</span></div>
       <p style="font-size:.85rem;color:var(--muted)">Unlimited seats & agents</p>
       <ul>
-        <li>Everything in Team</li>
+        <li>Everything in Pro</li>
         <li>Custom agent development</li>
         <li>Dedicated infrastructure</li>
         <li>SLA & compliance</li>
@@ -453,10 +484,10 @@
       <tr><th>Quarter</th><th>Customers</th><th>MRR</th><th>ARR Run Rate</th><th>Key Milestone</th></tr>
     </thead>
     <tbody>
-      <tr><td>Q2 2026</td><td>50</td><td>$6K</td><td>$72K</td><td>Launch + early adopters</td></tr>
-      <tr><td>Q3 2026</td><td>250</td><td>$25K</td><td>$300K</td><td>Product Hunt + content engine</td></tr>
-      <tr><td>Q4 2026</td><td>600</td><td>$55K</td><td>$660K</td><td>Team tier uptake + referrals</td></tr>
-      <tr class="highlight"><td>Q1 2027</td><td>1,000+</td><td>$85K+</td><td>$1M+</td><td>Enterprise + hardware bundles</td></tr>
+      <tr><td>Q2 2026</td><td>50</td><td>$8K</td><td>$96K</td><td>Launch + early adopters</td></tr>
+      <tr><td>Q3 2026</td><td>250</td><td>$35K</td><td>$420K</td><td>Product Hunt + content engine</td></tr>
+      <tr><td>Q4 2026</td><td>600</td><td>$72K</td><td>$864K</td><td>Pro tier uptake + referrals</td></tr>
+      <tr class="highlight"><td>Q1 2027</td><td>1,000+</td><td>$105K+</td><td>$1.26M+</td><td>Enterprise + hardware bundles</td></tr>
     </tbody>
   </table>
   <div class="metric-grid" style="margin-top:2.5rem">
@@ -466,8 +497,8 @@
     <div class="metric"><div class="num">&lt;5%</div><div class="label">Monthly Churn Target</div></div>
   </div>
   <div class="card-grid" style="margin-top:2rem">
-    <div class="card"><div class="icon">💰</div><h3>Unit Economics</h3><p style="font-size:.9rem">$49 Solo ARPU with upsell path to $499 Enterprise. Lifetime deal ($299) funds early CAC.</p></div>
-    <div class="card"><div class="icon">📊</div><h3>Expansion Revenue</h3><p style="font-size:.9rem">Customers start Solo, upgrade to Team/Enterprise as usage grows. Net negative churn target.</p></div>
+    <div class="card"><div class="icon">💰</div><h3>Unit Economics</h3><p style="font-size:.9rem">$49 Starter ARPU with upsell path to $999 Enterprise. Lifetime deal ($299) funds early CAC.</p></div>
+    <div class="card"><div class="icon">📊</div><h3>Expansion Revenue</h3><p style="font-size:.9rem">Customers start Starter, upgrade to Pro/Enterprise as usage grows. Net negative churn target.</p></div>
     <div class="card"><div class="icon">🖥️</div><h3>Hardware Upside</h3><p style="font-size:.9rem">Mac Mini bundles at $1,499 deliver 40%+ margins and lock in high-value customers.</p></div>
   </div>
 </section>
@@ -495,7 +526,7 @@
     </div>
   </div>
   <div style="margin-top:3rem;padding:2.5rem;background:var(--surface);border:1px solid var(--accent);border-radius:1.25rem;text-align:center;max-width:600px">
-    <p style="font-size:1.3rem;color:var(--fg);font-weight:700;margin-bottom:.5rem">Command Centre Command Centre</p>
+    <p style="font-size:1.3rem;color:var(--fg);font-weight:700;margin-bottom:.5rem">Second Mind Labs — Command Centre</p>
     <p style="color:var(--muted);font-size:.95rem">27 agents. Fully autonomous. Revenue-ready. Live today.</p>
     <a class="cta-btn" href="mailto:invest@secondmindhq.com">Let's Talk →</a>
   </div>

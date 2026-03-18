@@ -2100,6 +2100,14 @@ class Handler(BaseHTTPRequestHandler):
         self._json({"ok": True})
 
     def do_GET(self):
+        # ── Force HTTPS on Render (behind proxy) ──
+        if os.environ.get("RENDER") and self.headers.get("X-Forwarded-Proto") == "http":
+            host = self.headers.get("Host", "secondmindhq.com")
+            self.send_response(301)
+            self.send_header("Location", f"https://{host}{self.path}")
+            self.end_headers()
+            return
+
         path = urlparse(self.path).path
 
         if path == "/api/status":
@@ -2706,20 +2714,37 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_response(404); self._cors(); self.end_headers()
 
         elif path in ("/", ""):
-            # Public visitors see the landing/sales page; dashboard is at /hq
-            _landing = os.path.join(CWD, "public", "index.html")
-            if os.path.exists(_landing):
-                with open(_landing, "rb") as f:
-                    content = f.read()
-                self.send_response(200); self._cors()
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(content)))
-                self.end_headers(); self.wfile.write(content)
+            # Route based on domain:
+            #   secondmindlabs.com  → company landing page (public/index.html)
+            #   secondmindhq.com    → HQ dashboard
+            #   localhost / other   → landing page (default)
+            _host = self.headers.get("Host", "").lower().split(":")[0]
+            _is_hq_domain = "secondmindhq" in _host
+            if _is_hq_domain:
+                # HQ domain → serve dashboard directly
+                try:
+                    with open(os.path.join(CWD, "agent-command-centre.html"), "rb") as f:
+                        content = f.read()
+                    self.send_response(200); self._cors()
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(content)))
+                    self.end_headers(); self.wfile.write(content)
+                except FileNotFoundError:
+                    self.send_response(404); self._cors(); self.end_headers()
             else:
-                # Fallback to dashboard if no landing page
-                self.send_response(302); self._cors()
-                self.send_header("Location", "/hq")
-                self.end_headers()
+                # Labs domain / default → company landing page
+                _landing = os.path.join(CWD, "public", "index.html")
+                if os.path.exists(_landing):
+                    with open(_landing, "rb") as f:
+                        content = f.read()
+                    self.send_response(200); self._cors()
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(content)))
+                    self.end_headers(); self.wfile.write(content)
+                else:
+                    self.send_response(302); self._cors()
+                    self.send_header("Location", "/hq")
+                    self.end_headers()
 
         elif path in ("/agent-command-centre.html", "/hq", "/dashboard"):
             try:
@@ -3531,8 +3556,13 @@ async function subscribe() {
             _ext = os.path.splitext(path)[1].lower()
             _served = False
             if _ext in _static_map:
+                _cwd_real = os.path.realpath(CWD) + os.sep
                 for _sdir in ("public", "reports"):
-                    _spath = os.path.join(CWD, _sdir, path.lstrip("/").replace(_sdir + "/", "", 1) if path.startswith("/" + _sdir) else path.lstrip("/"))
+                    _spath = os.path.realpath(os.path.join(CWD, _sdir, path.lstrip("/").replace(_sdir + "/", "", 1) if path.startswith("/" + _sdir) else path.lstrip("/")))
+                    if not _spath.startswith(_cwd_real):
+                        self.send_response(403); self._cors(); self.end_headers()
+                        self.wfile.write(b'{"error":"forbidden: path traversal blocked"}')
+                        _served = True; break
                     if os.path.isfile(_spath):
                         with open(_spath, "rb") as _sf:
                             _sb = _sf.read()

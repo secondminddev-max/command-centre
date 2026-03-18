@@ -51,6 +51,16 @@
   .btn{display:inline-block;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;border:none;transition:all .25s;text-align:center;font-family:inherit}
   .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 24px rgba(99,102,241,0.3)}
   .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(99,102,241,0.45)}
+  .btn-buy{display:block;width:100%;padding:18px 32px;border-radius:14px;font-size:1.15rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;border:none;transition:all .25s;text-align:center;font-family:inherit;position:relative;overflow:hidden}
+  .btn-buy::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent 60%);opacity:0;transition:opacity .3s}
+  .btn-buy:hover::after{opacity:1}
+  .btn-buy.buy-solo{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 20px rgba(99,102,241,0.35)}
+  .btn-buy.buy-solo:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(99,102,241,0.5)}
+  .btn-buy.buy-team{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 4px 20px rgba(34,197,94,0.35);animation:buy-pulse 2.5s ease-in-out infinite}
+  .btn-buy.buy-team:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(34,197,94,0.5)}
+  .btn-buy.buy-enterprise{background:linear-gradient(135deg,var(--cyan),#0891b2);color:#fff;box-shadow:0 4px 20px rgba(6,182,212,0.35)}
+  .btn-buy.buy-enterprise:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(6,182,212,0.5)}
+  @keyframes buy-pulse{0%,100%{box-shadow:0 4px 20px rgba(34,197,94,0.35)}50%{box-shadow:0 4px 32px rgba(34,197,94,0.55)}}
   .btn-outline{background:var(--glass);border:1px solid var(--border);color:var(--text);backdrop-filter:blur(12px)}
   .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(99,102,241,0.06)}
   .btn-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-weight:700}
@@ -158,14 +168,14 @@
   .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
   .price-card{padding:44px 32px;text-align:center;position:relative;transition:all .3s}
   .price-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-  .price-card.featured{border-color:rgba(99,102,241,0.3);box-shadow:0 0 80px rgba(99,102,241,0.1),0 0 160px rgba(99,102,241,0.04);transform:scale(1.04);z-index:2}
-  .price-card.featured:hover{transform:scale(1.04) translateY(-6px)}
-  .price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:6px 22px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.08em}
-  .price-card.featured .glow{position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(135deg,rgba(99,102,241,0.4),transparent 40%,transparent 60%,rgba(139,92,246,0.4));z-index:-1;animation:border-shimmer 4s ease-in-out infinite}
+  .price-card.featured{border-color:rgba(34,197,94,0.3);box-shadow:0 0 80px rgba(34,197,94,0.12),0 0 160px rgba(34,197,94,0.05);transform:scale(1.06);z-index:2}
+  .price-card.featured:hover{transform:scale(1.06) translateY(-6px)}
+  .price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:6px 22px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.08em;box-shadow:0 2px 12px rgba(34,197,94,0.4)}
+  .price-card.featured .glow{position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(135deg,rgba(34,197,94,0.4),transparent 40%,transparent 60%,rgba(34,197,94,0.4));z-index:-1;animation:border-shimmer 4s ease-in-out infinite}
   @keyframes border-shimmer{0%,100%{opacity:.4}50%{opacity:1}}
-  .price-card h3{font-size:1.4rem;margin-bottom:4px;font-weight:800}
+  .price-card h3{font-size:1.5rem;margin-bottom:4px;font-weight:800}
   .price-card .desc{color:var(--muted);font-size:.85rem;margin-bottom:24px}
-  .price-card .price{font-size:3.5rem;font-weight:900;margin:0 0 4px;letter-spacing:-0.03em}
+  .price-card .price{font-size:4rem;font-weight:900;margin:0 0 4px;letter-spacing:-0.03em;line-height:1.1}
   .price-card .price span{font-size:1rem;font-weight:400;color:var(--muted)}
   .price-card .period{color:var(--muted);font-size:.85rem;margin-bottom:28px}
   .price-card ul{list-style:none;text-align:left;margin-bottom:32px}
@@ -211,6 +221,35 @@
   .faq-item.open .faq-a{max-height:300px}
   .faq-a p{color:var(--muted);font-size:.95rem;line-height:1.75;padding-bottom:24px}
 
+  .how-it-works{background:var(--bg2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)}
+  .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:900px;margin:0 auto;position:relative}
+  .steps-row::before{content:'';position:absolute;top:44px;left:16%;right:16%;height:2px;background:linear-gradient(90deg,transparent,rgba(99,102,241,0.3),rgba(139,92,246,0.3),transparent);z-index:0}
+  .step{text-align:center;position:relative;z-index:1}
+  .step-num{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 20px;background:var(--glass);border:2px solid var(--border);backdrop-filter:blur(12px);transition:all .3s}
+  .step:hover .step-num{border-color:var(--accent);box-shadow:0 0 40px rgba(99,102,241,0.2)}
+  .step h3{font-size:1.15rem;font-weight:700;margin-bottom:8px}
+  .step p{color:var(--muted);font-size:.9rem;line-height:1.65;max-width:260px;margin:0 auto}
+
+  .billing-toggle{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:32px}
+  .billing-toggle span{font-size:.95rem;font-weight:500;color:var(--muted);cursor:pointer;transition:color .2s}
+  .billing-toggle span.active{color:var(--text);font-weight:700}
+  .billing-toggle .toggle{width:52px;height:28px;background:var(--glass);border:1px solid var(--border);border-radius:100px;position:relative;cursor:pointer;transition:all .3s}
+  .billing-toggle .toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--accent);transition:transform .3s}
+  .billing-toggle .toggle.annual::after{transform:translateX(24px)}
+  .billing-toggle .toggle.annual{border-color:var(--accent);background:rgba(99,102,241,0.1)}
+  .billing-toggle .save-badge{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2);padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.04em}
+
+  .roi-bar{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:32px;position:relative}
+  .roi-item{text-align:center;padding:20px 28px;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;backdrop-filter:blur(12px);min-width:160px}
+  .roi-item .roi-val{font-size:1.6rem;font-weight:900;margin-bottom:4px}
+  .roi-item .roi-val.green{color:var(--green)}
+  .roi-item .roi-val.red{color:#ef4444;text-decoration:line-through;opacity:.6}
+  .roi-item .roi-label{font-size:.78rem;color:var(--muted)}
+
+  .scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:12px;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px);color:var(--text);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:all .3s;z-index:90}
+  .scroll-top.show{opacity:1;pointer-events:all}
+  .scroll-top:hover{border-color:var(--accent);background:rgba(99,102,241,0.1)}
+
   .cta-banner{text-align:center;padding:120px 20px;position:relative;overflow:hidden}
   .cta-banner::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(99,102,241,0.08),transparent 60%);pointer-events:none}
   .cta-banner h2{font-size:3rem;font-weight:800;margin-bottom:18px;letter-spacing:-0.03em;position:relative}
@@ -240,6 +279,7 @@
     .section-title{font-size:2.2rem}
     .price-card.featured{transform:scale(1)}
     .price-card.featured:hover{transform:translateY(-6px)}
+    .btn-buy{font-size:1.05rem;padding:16px 24px}
   }
   @media(max-width:640px){
     nav{padding:12px 16px}
@@ -347,6 +387,32 @@
         <div class="feature-icon pink">&#x1F512;</div>
         <h3>Policy &amp; Compliance</h3>
         <p>Built-in chain-of-command enforcement, audit trails, and automated policy management. Every action is accountable and logged.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it Works ─────────────────────────────────────────────────── -->
+<section id="how-it-works" class="how-it-works">
+  <div class="container">
+    <div class="section-label">Getting Started</div>
+    <h2 class="section-title">Up and Running in 3 Steps</h2>
+    <p class="section-sub">No infrastructure setup, no config headaches. Deploy once and your autonomous HQ handles the rest.</p>
+    <div class="steps-row">
+      <div class="step reveal">
+        <div class="step-num">&#x1F680;</div>
+        <h3>1. Deploy</h3>
+        <p>One-click install on Mac, Linux, or cloud. Or order a pre-configured Mac Mini &mdash; plug in and go.</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">&#x2699;&#xFE0F;</div>
+        <h3>2. Configure</h3>
+        <p>Connect Stripe, Telegram, email, and social accounts. The setup wizard walks you through in 5 minutes.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">&#x1F916;</div>
+        <h3>3. Automate</h3>
+        <p>28 agents take over &mdash; monitoring, marketing, payments, compliance. You focus on strategy, they handle everything else.</p>
       </div>
     </div>
   </div>
@@ -497,9 +563,16 @@
     <div class="section-label">Pricing</div>
     <h2 class="section-title">Simple, Transparent Pricing</h2>
     <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees. Cancel anytime.</p>
-    <div style="text-align:center;margin-bottom:24px;padding:12px 20px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);border-radius:12px;display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--gold);font-weight:600;margin-left:auto;margin-right:auto">
-      <span style="font-size:1.1em">&#x1F525;</span>
-      <span><strong id="spots-count">7</strong> early-access spots remaining at launch pricing</span>
+    <div style="text-align:center;margin-bottom:28px;padding:14px 28px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(239,68,68,0.08));border:1px solid rgba(245,158,11,0.25);border-radius:14px;display:inline-flex;align-items:center;gap:12px;font-size:.95rem;color:var(--gold);font-weight:600;margin-left:auto;margin-right:auto;animation:urgency-glow 3s ease-in-out infinite">
+      <span style="font-size:1.3em">&#x1F525;</span>
+      <span>Only <strong id="spots-count" style="font-size:1.3em;color:#ef4444">7</strong> early-access spots remaining at launch pricing</span>
+    </div>
+    <style>@keyframes urgency-glow{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 20px rgba(245,158,11,0.1)}}</style>
+    <div class="billing-toggle">
+      <span class="active" id="billing-monthly">Monthly</span>
+      <div class="toggle" id="billing-switch" onclick="toggleBilling()"></div>
+      <span id="billing-annual">Annual</span>
+      <span class="save-badge">SAVE 20%</span>
     </div>
     <div class="pricing-grid">
       <div class="price-card glass reveal">
@@ -515,11 +588,11 @@
           <li>Telegram &amp; email integration</li>
           <li>Community support</li>
         </ul>
-        <button onclick="checkout('solo','Second Mind Labs — Solo',4900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
+        <a href="/api/pay?plan=solo" onclick="event.preventDefault();checkout('solo','Second Mind Labs — Solo',4900,'subscription')" class="btn btn-buy buy-solo">BUY NOW &mdash; $49/mo</a>
       </div>
       <div class="price-card glass featured reveal reveal-delay-1">
         <div class="glow"></div>
-        <div style="position:absolute;top:12px;right:12px;background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">MOST POPULAR</div>
+        <div style="position:absolute;top:12px;right:12px;background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3);padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px">BEST VALUE</div>
         <h3>Team</h3>
         <p class="desc">Growing teams &amp; small businesses</p>
         <div class="price">$149<span>/mo</span></div>
@@ -532,7 +605,7 @@
           <li>Consciousness engine</li>
           <li>Priority support</li>
         </ul>
-        <button onclick="checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-primary" style="width:100%">Get Started</button>
+        <a href="/api/pay?plan=team" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-buy buy-team">BUY NOW &mdash; $149/mo</a>
       </div>
       <div class="price-card glass reveal reveal-delay-2">
         <div style="position:absolute;top:12px;right:12px;background:rgba(6,182,212,0.12);color:var(--cyan);border:1px solid rgba(6,182,212,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">LAUNCH PRICING</div>
@@ -548,7 +621,7 @@
           <li>24/7 priority support</li>
           <li>SLA guarantee</li>
         </ul>
-        <button onclick="checkout('enterprise','Second Mind Labs — Enterprise',49900,'subscription')" class="btn btn-outline" style="width:100%">Get Started</button>
+        <a href="/api/pay?plan=enterprise" onclick="event.preventDefault();checkout('enterprise','Second Mind Labs — Enterprise',49900,'subscription')" class="btn btn-buy buy-enterprise">BUY NOW &mdash; $499/mo</a>
       </div>
     </div>
     <div class="specials-row">
@@ -647,6 +720,11 @@
 
 <section class="cta-banner">
   <h2>Ready to Go Autonomous?</h2>
+  <div class="roi-bar" style="margin-bottom:40px">
+    <div class="roi-item reveal"><div class="roi-val red">$12,000/mo</div><div class="roi-label">Hiring 3 contractors</div></div>
+    <div class="roi-item reveal reveal-delay-1"><div class="roi-val red">$3,500/mo</div><div class="roi-label">5+ SaaS subscriptions</div></div>
+    <div class="roi-item reveal reveal-delay-2"><div class="roi-val green">$49/mo</div><div class="roi-label">Command Centre</div></div>
+  </div>
   <p>Join early access today &mdash; limited spots at launch pricing. Lock in your rate before it doubles.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative">
     <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
@@ -804,6 +882,36 @@ document.querySelectorAll('.nav-links a').forEach(a=>{
     document.querySelector('.hamburger').classList.remove('open');
   });
 });
+
+/* Billing toggle (monthly/annual) */
+let isAnnual=false;
+const prices={solo:{m:49,a:39},team:{m:149,a:119},enterprise:{m:499,a:399}};
+function toggleBilling(){
+  isAnnual=!isAnnual;
+  const sw=document.getElementById('billing-switch');
+  const mEl=document.getElementById('billing-monthly');
+  const aEl=document.getElementById('billing-annual');
+  sw.classList.toggle('annual',isAnnual);
+  mEl.classList.toggle('active',!isAnnual);
+  aEl.classList.toggle('active',isAnnual);
+  const cards=document.querySelectorAll('.pricing-grid .price-card');
+  const tiers=['solo','team','enterprise'];
+  cards.forEach((c,i)=>{
+    const t=tiers[i];if(!t||!prices[t])return;
+    const p=isAnnual?prices[t].a:prices[t].m;
+    const priceEl=c.querySelector('.price');
+    if(priceEl)priceEl.innerHTML='$'+p+'<span>/mo</span>';
+    const periodEl=c.querySelector('.period');
+    if(periodEl)periodEl.textContent=isAnnual?'Billed annually ($'+(p*12)+'/yr)':'Billed monthly';
+    const btn=c.querySelector('button');
+    if(btn){
+      const cents=p*100;
+      const mode='subscription';
+      const label='Second Mind Labs — '+t.charAt(0).toUpperCase()+t.slice(1);
+      btn.setAttribute('onclick',"checkout('"+t+"','"+label+"',"+cents+"00,'"+mode+"')");
+    }
+  });
+}
 
 /* Launch pricing countdown — ends 2026-03-25 00:00 UTC */
 (function(){
