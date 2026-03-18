@@ -51,7 +51,7 @@
     {
       "id": "solo",
       "name": "Solo",
-      "price_usd": 49,
+      "price_usd": 79,
       "billing": "monthly",
       "agents": 10,
       "seats": 1,
@@ -69,7 +69,7 @@
     {
       "id": "team",
       "name": "Team",
-      "price_usd": 149,
+      "price_usd": 199,
       "billing": "monthly",
       "agents": "full_fleet",
       "seats": 5,
@@ -89,7 +89,7 @@
     {
       "id": "enterprise",
       "name": "Enterprise",
-      "price_usd": 499,
+      "price_usd": 699,
       "billing": "monthly",
       "agents": "unlimited_custom",
       "seats": "unlimited",

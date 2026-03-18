@@ -1,130 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" width="120" height="140">
   <defs>
-    <linearGradient id="headGrad" x1="30%" y1="0%" x2="70%" y2="100%">
-      <stop offset="0%" stop-color="#d4a5ff"/>
-      <stop offset="100%" stop-color="#c084fc"/>
-    </linearGradient>
-    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="body-grad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#c084fc"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
     </linearGradient>
-    <radialGradient id="bgGlow" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#1a0a2e"/>
-      <stop offset="100%" stop-color="#0a0a14"/>
-    </radialGradient>
-    <filter id="neon">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
     <filter id="glow">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-
-  <!-- Background -->
-  <rect width="400" height="400" rx="40" fill="url(#bgGlow)"/>
-
-  <!-- Ambient pulse rings -->
-  <circle cx="200" cy="170" r="90" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0">
-    <animate attributeName="r" values="90;130;90" dur="3s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="200" cy="170" r="90" fill="none" stroke="#c084fc" stroke-width="1" opacity="0">
-    <animate attributeName="r" values="90;130;90" dur="3s" repeatCount="indefinite" begin="1.5s"/>
-    <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite" begin="1.5s"/>
-  </circle>
-
-  <!-- Shadow under feet -->
-  <ellipse cx="200" cy="330" rx="55" ry="10" fill="#c084fc" opacity="0.15"/>
-
-  <!-- === STICK FIGURE BODY === -->
-
-  <!-- Antenna stalk -->
-  <line x1="200" y1="100" x2="200" y2="80" stroke="#00d4ff" stroke-width="3" stroke-linecap="round"/>
-  <!-- Antenna tip (glowing dot) -->
-  <circle cx="200" cy="76" r="5" fill="#00d4ff" filter="url(#neon)">
-    <animate attributeName="r" values="5;7;5" dur="1.5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="1;0.6;1" dur="1.5s" repeatCount="indefinite"/>
-  </circle>
-
-  <!-- Head — rounded rectangle (robot visor style) -->
-  <rect x="148" y="100" width="104" height="90" rx="28" fill="url(#headGrad)" opacity="0.92" filter="url(#glow)"/>
-  <rect x="148" y="100" width="104" height="90" rx="28" fill="none" stroke="#c084fc" stroke-width="2" opacity="0.6"/>
-
-  <!-- Eyes — cyan LED style -->
-  <g filter="url(#neon)">
-    <!-- Left eye -->
-    <circle cx="178" cy="138" r="10" fill="#0a0a14"/>
-    <circle cx="178" cy="138" r="7" fill="#00d4ff">
-      <animate attributeName="r" values="7;5;7" dur="4s" repeatCount="indefinite"/>
-    </circle>
-    <!-- Right eye -->
-    <circle cx="222" cy="138" r="10" fill="#0a0a14"/>
-    <circle cx="222" cy="138" r="7" fill="#00d4ff">
-      <animate attributeName="r" values="7;5;7" dur="4s" repeatCount="indefinite" begin="0.3s"/>
-    </circle>
+  <style>
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes blink { 0%,42%,46%,100% { ry: 5; } 44% { ry: 0.5; } }
+    @keyframes wave { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
+    .ghost-body { animation: bob 2.5s ease-in-out infinite; }
+    .eye-l, .eye-r { animation: blink 4s ease-in-out infinite; }
+    .eye-r { animation-delay: 0.15s; }
+    .arm-r { animation: wave 3s ease-in-out infinite; transform-origin: 85px 62px; }
+  </style>
+  <!-- Shadow -->
+  <ellipse cx="60" cy="128" rx="26" ry="5" fill="rgba(0,0,0,0.15)">
+    <animate attributeName="rx" values="26;22;26" dur="2.5s" repeatCount="indefinite"/>
+  </ellipse>
+  <g class="ghost-body" filter="url(#glow)">
+    <!-- Ghost body with wavy bottom -->
+    <path d="M30,65 Q30,18 60,16 Q90,18 90,65 L90,100 Q85,90 80,100 Q75,90 70,100 Q65,90 60,100 Q55,90 50,100 Q45,90 40,100 Q35,90 30,100 Z" fill="url(#body-grad)" opacity="0.92"/>
+    <!-- Highlight arc -->
+    <path d="M40,28 Q52,20 70,26" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Eyes -->
+    <ellipse class="eye-l" cx="47" cy="48" rx="5.5" ry="5.5" fill="#fff"/>
+    <ellipse class="eye-r" cx="73" cy="48" rx="5.5" ry="5.5" fill="#fff"/>
+    <!-- Pupils -->
+    <ellipse cx="49" cy="49" rx="2.8" ry="3" fill="#1e1b4b"/>
+    <ellipse cx="75" cy="49" rx="2.8" ry="3" fill="#1e1b4b"/>
+    <!-- Eye sparkle -->
+    <circle cx="45.5" cy="46" r="1.5" fill="rgba(255,255,255,0.9)"/>
+    <circle cx="71.5" cy="46" r="1.5" fill="rgba(255,255,255,0.9)"/>
+    <!-- Happy smile -->
+    <path d="M50,60 Q60,70 70,60" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+    <!-- Rosy cheeks -->
+    <ellipse cx="39" cy="57" rx="5" ry="3" fill="rgba(251,113,133,0.25)"/>
+    <ellipse cx="81" cy="57" rx="5" ry="3" fill="rgba(251,113,133,0.25)"/>
+    <!-- Left arm + tiny laptop -->
+    <path d="M30,55 Q18,52 16,64" fill="none" stroke="#9b6dfa" stroke-width="4.5" stroke-linecap="round"/>
+    <rect x="8" y="61" width="14" height="9" rx="1.5" fill="#1e1b4b" stroke="#a78bfa" stroke-width="0.7"/>
+    <rect x="9.5" y="62.5" width="11" height="6" rx="0.8" fill="#0f172a"/>
+    <rect x="10" y="63" width="10" height="5" rx="0.5" fill="rgba(0,200,255,0.25)"/>
+    <line x1="11" y1="64.5" x2="17" y2="64.5" stroke="rgba(0,255,136,0.5)" stroke-width="0.5"/>
+    <line x1="11" y1="66" x2="15" y2="66" stroke="rgba(99,102,241,0.5)" stroke-width="0.5"/>
+    <!-- Right arm waving -->
+    <g class="arm-r">
+      <path d="M90,55 Q102,50 104,42" fill="none" stroke="#9b6dfa" stroke-width="4.5" stroke-linecap="round"/>
+    </g>
   </g>
-
-  <!-- Smile — friendly arc -->
-  <path d="M180 160 Q200 178 220 160" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
-
-  <!-- Brain emoji — small, above head like a thought -->
-  <text x="200" y="96" text-anchor="middle" dominant-baseline="auto" font-size="28" opacity="0.9">🧠</text>
-
-  <!-- Neck -->
-  <line x1="200" y1="190" x2="200" y2="210" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-
-  <!-- Torso — simple line -->
-  <line x1="200" y1="210" x2="200" y2="275" stroke="url(#bodyGrad)" stroke-width="5" stroke-linecap="round"/>
-
-  <!-- Chest plate — small tech detail -->
-  <rect x="188" y="220" width="24" height="20" rx="5" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.6"/>
-  <circle cx="200" cy="230" r="4" fill="#00d4ff" opacity="0.7">
-    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite"/>
-  </circle>
-
-  <!-- Arms — stick style, slightly angled out -->
-  <!-- Left arm -->
-  <line x1="200" y1="218" x2="150" y2="250" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-  <!-- Left hand (circle) -->
-  <circle cx="146" cy="253" r="7" fill="#c084fc" stroke="#00d4ff" stroke-width="1.5"/>
-
-  <!-- Right arm -->
-  <line x1="200" y1="218" x2="250" y2="250" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-  <!-- Right hand (circle) -->
-  <circle cx="254" cy="253" r="7" fill="#c084fc" stroke="#00d4ff" stroke-width="1.5"/>
-
-  <!-- Legs — stick style -->
-  <!-- Left leg -->
-  <line x1="200" y1="275" x2="172" y2="325" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-  <!-- Left foot -->
-  <ellipse cx="168" cy="328" rx="10" ry="5" fill="#c084fc"/>
-
-  <!-- Right leg -->
-  <line x1="200" y1="275" x2="228" y2="325" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-  <!-- Right foot -->
-  <ellipse cx="232" cy="328" rx="10" ry="5" fill="#c084fc"/>
-
-  <!-- Floating code particles -->
-  <text x="300" y="130" font-family="'JetBrains Mono',monospace" font-size="13" fill="#00d4ff" opacity="0">
-    &lt;/&gt;<animate attributeName="opacity" values="0;0.4;0" dur="4s" repeatCount="indefinite" begin="0.5s"/>
-    <animate attributeName="y" values="130;110;130" dur="4s" repeatCount="indefinite" begin="0.5s"/>
-  </text>
-  <text x="90" y="160" font-family="'JetBrains Mono',monospace" font-size="11" fill="#c084fc" opacity="0">
-    fn()<animate attributeName="opacity" values="0;0.35;0" dur="5s" repeatCount="indefinite" begin="1.2s"/>
-    <animate attributeName="y" values="160;140;160" dur="5s" repeatCount="indefinite" begin="1.2s"/>
-  </text>
-  <text x="310" y="240" font-family="'JetBrains Mono',monospace" font-size="10" fill="#00d4ff" opacity="0">
-    {AI}<animate attributeName="opacity" values="0;0.3;0" dur="3.5s" repeatCount="indefinite" begin="2s"/>
-    <animate attributeName="y" values="240;222;240" dur="3.5s" repeatCount="indefinite" begin="2s"/>
-  </text>
-  <text x="75" y="260" font-family="'JetBrains Mono',monospace" font-size="12" fill="#c084fc" opacity="0">
-    :::<animate attributeName="opacity" values="0;0.25;0" dur="4.5s" repeatCount="indefinite" begin="0.8s"/>
-    <animate attributeName="y" values="260;244;260" dur="4.5s" repeatCount="indefinite" begin="0.8s"/>
-  </text>
-
-  <!-- Product name -->
-  <text x="200" y="362" text-anchor="middle" fill="#e8f4ff" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="26" font-weight="800" letter-spacing="2">Command Centre</text>
-  <text x="200" y="385" text-anchor="middle" fill="#00d4ff" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" letter-spacing="4" opacity="0.7">AUTONOMOUS Command Centre</text>
 </svg>
