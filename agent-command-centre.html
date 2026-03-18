@@ -284,6 +284,7 @@
     .agent-card.status-busy    { background: linear-gradient(100deg, rgba(0,200,255,0.06) 0%, var(--panel2) 55%); }
     .agent-card.status-error   { background: linear-gradient(100deg, rgba(255,51,85,0.08)  0%, var(--panel2) 55%); }
     .agent-card.status-waiting { background: linear-gradient(100deg, rgba(255,215,0,0.06) 0%, var(--panel2) 55%); }
+    .agent-card.status-idle    { background: linear-gradient(100deg, rgba(255,255,255,0.02) 0%, var(--panel2) 55%); }
     .agent-card.status-active.selected  { background: linear-gradient(100deg, rgba(0,255,136,0.08) 0%, rgba(0,200,255,0.05) 100%); }
     .agent-card.status-busy.selected    { background: linear-gradient(100deg, rgba(0,200,255,0.08) 0%, rgba(0,200,255,0.05) 100%); }
     .agent-card.status-error.selected   { background: linear-gradient(100deg, rgba(255,51,85,0.10)  0%, rgba(0,200,255,0.05) 100%); }
@@ -374,7 +375,7 @@
 
     .ac-info { flex: 1; min-width: 0; }
     .ac-name { font-size: 0.94rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em; color: rgba(230,245,255,0.95); text-shadow: 0 0 14px rgba(180,225,255,0.75), 0 1px 2px rgba(0,0,0,0.4); }
-    .ac-role { font-size: 0.72rem; color: rgba(160,230,255,0.92); font-family: var(--mono); letter-spacing: 0.05em; text-shadow: 0 0 12px rgba(0,200,255,0.50); background: rgba(0,200,255,0.10); padding: 0.12rem 0.6rem; border-radius: 999px; display: inline-block; border: 1px solid rgba(0,200,255,0.28); box-shadow: 0 0 10px rgba(0,200,255,0.10), inset 0 0 8px rgba(0,200,255,0.06); }
+    .ac-role { font-size: 0.72rem; color: rgba(160,230,255,0.92); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; text-shadow: 0 0 12px rgba(0,200,255,0.50); background: rgba(0,200,255,0.10); padding: 0.12rem 0.6rem; border-radius: 999px; display: inline-block; border: 1px solid rgba(0,200,255,0.28); box-shadow: 0 0 10px rgba(0,200,255,0.10), inset 0 0 8px rgba(0,200,255,0.06); }
 
     .ac-status-dot {
       width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
@@ -449,7 +450,7 @@
     .agent-card.status-stopped::before { background: #555; box-shadow: none; }
     .status-active  .ac-status-dot  { background: var(--green); box-shadow: 0 0 6px var(--green); animation: blink 1.5s infinite; }
     .status-busy    .ac-status-dot  { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan); animation: blink 2s infinite; }
-    .status-idle    .ac-status-dot  { background: #8ea8c8; box-shadow: 0 0 8px rgba(142,168,200,0.55), 0 0 18px rgba(142,168,200,0.22), 0 0 3px rgba(142,168,200,0.35); animation: idle-breathe 3s ease-in-out infinite; }
+    .status-idle    .ac-status-dot  { background: #7eb4d4; box-shadow: 0 0 8px rgba(126,180,212,0.55), 0 0 18px rgba(126,180,212,0.22), 0 0 3px rgba(126,180,212,0.35); animation: idle-breathe 3s ease-in-out infinite; }
     .status-error   .ac-status-dot  { background: var(--red);   box-shadow: 0 0 6px var(--red); animation: blink 0.7s infinite; }
     .status-waiting .ac-status-dot  { background: var(--yellow);box-shadow: 0 0 6px var(--yellow); animation: blink 2.5s infinite; }
 
@@ -3038,7 +3039,7 @@
     }
     .mtp-status-pill {
       font-family: var(--mono); font-size: 0.7rem; font-weight: 700;
-      padding: 0.3rem 0.95rem; border-radius: 999px; border: 1px solid;
+      padding: 0.35rem 1.05rem; border-radius: 999px; border: 1px solid;
       letter-spacing: 0.08em; text-transform: uppercase;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       transition: box-shadow 0.3s ease, transform 0.2s ease;
@@ -3419,10 +3420,12 @@
   </div>
   <div class="hdr-right">
     <div class="sys-ctrl">
+      <button class="sys-btn" id="build-mode-btn" onclick="toggleBuildMode()" title="BUILD MODE — kills all Claude CLI calls, stops all agents, zero token burn" style="border-color:rgba(255,60,60,0.6);color:#ff4444;background:rgba(255,40,40,0.12);font-weight:900;letter-spacing:0.08em;animation:none;">🔧 BUILD MODE</button>
       <button class="sys-btn sys-btn-stop"  id="sys-stop-btn"  onclick="systemStop()">⏹ STOP ALL</button>
       <button class="sys-btn sys-btn-start" id="sys-start-btn" onclick="systemStart()" style="display:none">▶ RESUME ALL</button>
       <button class="sys-btn" id="policypro-btn" onclick="togglePolicyPro()" title="Toggle PolicyPro sentinel scanning" style="margin-left:0.4rem;border-color:rgba(255,215,0,0.4);color:#ffd700;background:rgba(255,215,0,0.08)">🔭 SENTINEL ON</button>
       <button class="sys-btn" id="policy-btn" onclick="openPolicyWindow()" title="Open Policy Window — view violations and edit policy rules" style="margin-left:0.4rem;border-color:rgba(168,85,247,0.4);color:#a855f7;background:rgba(168,85,247,0.08)">🔭 POLICY<span id="policy-enforce-count" style="display:none;margin-left:0.4rem;background:rgba(255,51,85,0.18);border:1px solid rgba(255,51,85,0.45);color:#ff3355;border-radius:8px;padding:0.05rem 0.38rem;font-size:0.62rem;font-weight:700;font-family:'JetBrains Mono',monospace;vertical-align:middle;"></span></button>
+      <button class="sys-btn" id="boardroom-btn" onclick="openBoardroomModal()" title="Boardroom — propose and vote on policy changes" style="margin-left:0.4rem;border-color:rgba(167,139,250,0.5);color:#a78bfa;background:rgba(167,139,250,0.10)">🏛 BOARDROOM</button>
       <button class="auto-btn off" id="auto-btn" onclick="toggleAutonomy()" title="Click to let the system improve itself autonomously overnight">
         <div class="auto-dot"></div>
         <span id="auto-btn-label">AUTO-IMPROVE</span>
@@ -3595,7 +3598,7 @@
     <style>@keyframes sg-pulse{0%,100%{opacity:0.7}50%{opacity:1;filter:drop-shadow(0 0 8px rgba(155,89,182,0.9));}}</style>
 
     <!-- ── OFFICE FLOOR canvas (center, large) ── -->
-    <div id="center-office-container" style="position:relative;flex:1;overflow:hidden;min-height:0;"></div>
+    <div id="center-office-container" style="position:relative;flex:1;overflow:hidden;min-height:550px;"></div>
 
     <!-- Agent grid container + Clerk Station -->
     <div class="agent-grid-container" id="center-grid-container" style="display:none;">
@@ -4830,6 +4833,44 @@
 
 <script>
 // ─────────────────────────────────────────────
+//  DEMO MODE — read-only for public visitors
+// ─────────────────────────────────────────────
+const _urlParams = new URLSearchParams(window.location.search);
+const _isAdmin = _urlParams.get('admin') === (localStorage.getItem('hq_admin_key') || '') && !!_urlParams.get('admin');
+const _isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const DEMO_MODE = !_isLocalhost && !_isAdmin;
+
+// Persist admin key if provided
+if (_urlParams.get('admin')) localStorage.setItem('hq_admin_key', _urlParams.get('admin'));
+// Also unlock if key is in localStorage and matches cookie-style auth
+if (localStorage.getItem('hq_admin_key') && !_isLocalhost) {
+  // Re-check: admin unlocked via stored key
+  // (DEMO_MODE is const so we use a separate flag)
+}
+const IS_READONLY = DEMO_MODE;
+
+// Apply demo mode on load
+document.addEventListener('DOMContentLoaded', () => {
+  if (!IS_READONLY) return;
+  // Hide CEO chat input area
+  const chatInput = document.querySelector('.chat-input-area');
+  if (chatInput) chatInput.style.display = 'none';
+  // Hide system control buttons (stop/start/build mode/autonomy)
+  ['sys-stop-btn','sys-start-btn','build-mode-btn','auto-btn','clear-queue-btn',
+   'policypro-btn','ceo-cancel-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  // Show demo banner
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,rgba(99,102,241,0.95),rgba(139,92,246,0.95));padding:10px 20px;text-align:center;font-family:"JetBrains Mono",monospace;font-size:0.78rem;color:#fff;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;gap:12px;';
+  banner.innerHTML = '<span style="font-size:1.1em">👁</span> <span>LIVE DEMO — You\'re watching a real AI command centre with 27 agents</span> <a href="https://secondmindlabs.com/#pricing" style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 14px;border-radius:6px;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,0.3);">Get Your Own HQ →</a>';
+  document.body.appendChild(banner);
+  // Add bottom padding so banner doesn't cover content
+  document.body.style.paddingBottom = '44px';
+});
+
+// ─────────────────────────────────────────────
 //  DATA
 // ─────────────────────────────────────────────
 const AGENTS = [];
@@ -4997,6 +5038,7 @@ function _updatePolicyProBtn(enabled) {
 }
 
 async function systemStop() {
+  if (IS_READONLY) return;
   systemPaused = true;
   document.getElementById('sys-stop-btn').style.display  = 'none';
   document.getElementById('sys-start-btn').style.display = '';
@@ -5004,12 +5046,76 @@ async function systemStop() {
   await fetch('http://localhost:5050/api/system/stop', {method:'POST'}).catch(()=>{});
 }
 async function systemStart() {
+  if (IS_READONLY) return;
   systemPaused = false;
   stoppedAgents.clear();
   document.getElementById('sys-stop-btn').style.display  = '';
   document.getElementById('sys-start-btn').style.display = 'none';
   renderAgents();
   await fetch('http://localhost:5050/api/system/start', {method:'POST'}).catch(()=>{});
+}
+
+// ─── Build Mode ────────────────────────────────────────────────────────────
+let _buildModeActive = false;
+
+async function toggleBuildMode() {
+  if (IS_READONLY) return;
+  _buildModeActive = !_buildModeActive;
+  const btn = document.getElementById('build-mode-btn');
+  if (_buildModeActive) {
+    btn.textContent = '🔧 BUILD MODE ON';
+    btn.style.borderColor = 'rgba(255,60,60,0.9)';
+    btn.style.background = 'rgba(255,40,40,0.25)';
+    btn.style.color = '#ff3333';
+    btn.style.boxShadow = '0 0 12px rgba(255,40,40,0.3)';
+    document.getElementById('sys-stop-btn').style.display = 'none';
+    document.getElementById('sys-start-btn').style.display = 'none';
+    systemPaused = true;
+    renderAgents();
+    await fetch('/api/system/buildmode', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({enabled: true}),
+    }).catch(()=>{});
+  } else {
+    btn.textContent = '🔧 BUILD MODE';
+    btn.style.borderColor = 'rgba(255,60,60,0.6)';
+    btn.style.background = 'rgba(255,40,40,0.12)';
+    btn.style.color = '#ff4444';
+    btn.style.boxShadow = 'none';
+    document.getElementById('sys-stop-btn').style.display = '';
+    document.getElementById('sys-start-btn').style.display = 'none';
+    systemPaused = false;
+    stoppedAgents.clear();
+    renderAgents();
+    await fetch('/api/system/buildmode', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({enabled: false}),
+    }).catch(()=>{});
+  }
+}
+
+// Sync build mode state from server on poll
+function _syncBuildMode(data) {
+  if (data && data.build_mode !== undefined) {
+    _buildModeActive = data.build_mode;
+    const btn = document.getElementById('build-mode-btn');
+    if (!btn) return;
+    if (_buildModeActive) {
+      btn.textContent = '🔧 BUILD MODE ON';
+      btn.style.borderColor = 'rgba(255,60,60,0.9)';
+      btn.style.background = 'rgba(255,40,40,0.25)';
+      btn.style.color = '#ff3333';
+      btn.style.boxShadow = '0 0 12px rgba(255,40,40,0.3)';
+    } else {
+      btn.textContent = '🔧 BUILD MODE';
+      btn.style.borderColor = 'rgba(255,60,60,0.6)';
+      btn.style.background = 'rgba(255,40,40,0.12)';
+      btn.style.color = '#ff4444';
+      btn.style.boxShadow = 'none';
+    }
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -5582,6 +5688,8 @@ function updateAgentsFromServer(serverAgents, data) {
       status:   a.status,
       progress: a.progress || 0,
       task:     a.task || '',
+      branch:   a.branch || null,
+      is_branch_head: a.is_branch_head || false,
     });
   });
   renderAgents();
@@ -5668,6 +5776,9 @@ async function poll() {
 
     // agents
     if (data.agents && data.agents.length) updateAgentsFromServer(data.agents, data);
+
+    // build mode sync
+    _syncBuildMode(data);
 
     // tasks
     if (data.tasks) renderTaskFeed(data.tasks);
@@ -5890,6 +6001,7 @@ function renderFullChat(msgs, stream) {
 }
 
 async function sendCeoMessage() {
+  if (IS_READONLY) return;
   const input = document.getElementById('ceo-chat-input');
   const text  = input.value.trim();
   if (!text || ceoWorking) return;
@@ -6167,6 +6279,11 @@ function renderOfficeFloor() {
       if (mx >= tvX && mx <= tvX + tvW && my >= tvY && my <= tvY + tvH) {
         openTreasuryModal(); return;
       }
+      // Boardroom region (between governance & monitor bay)
+      const brX = W * 0.62, brY = H * 0.02, brW = W * 0.24, brH = H * 0.16;
+      if (mx >= brX && mx <= brX + brW && my >= brY && my <= brY + brH) {
+        openBoardroomModal(); return;
+      }
       // File Cabinet region (bottom-right prop)
       const fcx = W - 38, fcy = H - 58;
       if (mx >= fcx - 14 && mx <= fcx + 14 && my >= fcy - 26 && my <= fcy + 22) {
@@ -6333,8 +6450,9 @@ function renderOfficeFloor() {
       const isPassive = /monitor|watch|scout|observe|track|log|sensor/i.test(ag.role + ' ' + ag.id);
       const isCeo = /ceo|command.*control|commander/i.test(ag.id + ' ' + (ag.role||''));
       const _isOrchestrator = /orchestrat/i.test(ag.id + ' ' + (ag.role||''));
-      _drawDesk(ctx, desk.x, desk.y, ag.color, st, frame, isPassive, ag.task || '', isCeo);
-      _drawChar(ctx, s.x, s.y, ag.color, st, frame, ag.emoji, ag.name.slice(0, 9), s, isPassive, isCeo, _isReforger, _isOrchestrator);
+      const _isBranchHead = ag.is_branch_head === true;
+      _drawDesk(ctx, desk.x, desk.y, ag.color, st, frame, isPassive, ag.task || '', isCeo || _isBranchHead);
+      _drawChar(ctx, s.x, s.y, ag.color, st, frame, ag.emoji, ag.name.slice(0, 9), s, isPassive, isCeo, _isReforger, _isOrchestrator, _isBranchHead);
 
       // Reforger: floating task label at target agent's desk when working on them
       if (_isReforger && st !== 'stopped' && st !== 'idle' && ag.task) {
@@ -6530,7 +6648,7 @@ function _drawFloor(ctx, W, H, frame) {
     }
   }
 
-  // ── Ambient breathing light — slow radial pulse overhead ──
+  // ── Ambient breathing light ──
   const _ambPulse = 0.5 + 0.5 * Math.sin(frame * 0.008);
   const _ambGrad = ctx.createRadialGradient(W * 0.5, H * 0.42, 0, W * 0.5, H * 0.42, Math.max(W, H) * 0.58);
   _ambGrad.addColorStop(0,   `rgba(0,200,255,${(0.025 + _ambPulse * 0.018).toFixed(4)})`);
@@ -6540,109 +6658,114 @@ function _drawFloor(ctx, W, H, frame) {
   ctx.fillRect(0, 0, W, H);
 
   // Walls
-  ctx.strokeStyle = 'rgba(0,200,255,0.28)';
-  ctx.lineWidth = 2.5;
+  ctx.strokeStyle = 'rgba(0,200,255,0.28)'; ctx.lineWidth = 2.5;
   ctx.strokeRect(2, 2, W-4, H-4);
-  ctx.strokeStyle = 'rgba(0,200,255,0.07)';
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(0,200,255,0.07)'; ctx.lineWidth = 1;
   ctx.strokeRect(7, 7, W-14, H-14);
 
-  // ── COMMAND CHAIN zone (2×2 grid: CEO+ORC top row, Designer+Reforger bottom row) ──
-  const _ccLeft  = W * 0.22 - 70;
-  const _ccRight = W * 0.42 + 70;
-  const _ccTop   = H * 0.06;
-  const _ccBot   = H * 0.56;
-  const _ccW     = _ccRight - _ccLeft;
-  const _ccH     = _ccBot - _ccTop;
+  // ── 7 BRANCH ZONE ROOMS ──
+  // Layout grid (matches the plan diagram):
+  // Row 0: BED BAY | EXECUTIVE          | GOVERNANCE    | MONITOR BAY
+  // Row 1:         | ENGINEERING | INTEL |               |
+  //        ========================================
+  // Row 2:         | REVENUE     | COMMS | OPERATIONS    |
+  const _ZONE_LAYOUT = {
+    bed:            { x: 0,     y: 0,    w: 0.10, h: 1.0,  color: [120,80,255],  label: '💤 BED BAY' },
+    executive:      { x: 0.10,  y: 0,    w: 0.30, h: 0.36, color: [255,200,0],   label: '👔 EXECUTIVE' },
+    governance:     { x: 0.40,  y: 0,    w: 0.22, h: 0.50, color: [167,139,250], label: '⚖️ GOVERNANCE' },
+    monitor:        { x: 0.87,  y: 0,    w: 0.13, h: 1.0,  color: [80,255,160],  label: '📡 MONITOR BAY' },
+    engineering:    { x: 0.10,  y: 0.36, w: 0.17, h: 0.28, color: [255,140,0],   label: '🔧 ENGINEERING' },
+    intelligence:   { x: 0.27,  y: 0.36, w: 0.13, h: 0.28, color: [0,200,255],   label: '🔬 INTELLIGENCE' },
+    revenue:        { x: 0.10,  y: 0.64, w: 0.20, h: 0.36, color: [16,185,129],  label: '💰 REVENUE' },
+    communications: { x: 0.30,  y: 0.64, w: 0.18, h: 0.36, color: [245,200,66],  label: '📨 COMMS' },
+    operations:     { x: 0.48,  y: 0.50, w: 0.39, h: 0.50, color: [0,180,255],   label: '⚙️ OPERATIONS' },
+  };
 
-  // Zone fill
-  const ezGrad = ctx.createLinearGradient(_ccLeft, _ccTop, _ccRight, _ccBot);
-  ezGrad.addColorStop(0, 'rgba(255,200,0,0.025)');
-  ezGrad.addColorStop(0.5, 'rgba(255,200,0,0.045)');
-  ezGrad.addColorStop(1, 'rgba(0,200,255,0.025)');
-  ctx.fillStyle = ezGrad;
-  _rr(ctx, _ccLeft, _ccTop, _ccW, _ccH, 8); ctx.fill();
-  ctx.strokeStyle = 'rgba(255,200,0,0.10)'; ctx.lineWidth = 0.8;
-  ctx.setLineDash([7, 5]);
-  _rr(ctx, _ccLeft, _ccTop, _ccW, _ccH, 8); ctx.stroke();
-  ctx.setLineDash([]);
+  for (const [zName, z] of Object.entries(_ZONE_LAYOUT)) {
+    const zx = W * z.x + 4, zy = H * z.y + 4;
+    const zw = W * z.w - 8, zh = H * z.h - 8;
+    const [cr,cg,cb] = z.color;
+    // Zone fill
+    ctx.fillStyle = `rgba(${cr},${cg},${cb},0.03)`;
+    _rr(ctx, zx, zy, zw, zh, 6); ctx.fill();
+    // Zone border
+    ctx.strokeStyle = `rgba(${cr},${cg},${cb},0.12)`; ctx.lineWidth = 0.8;
+    ctx.setLineDash([5, 4]);
+    _rr(ctx, zx, zy, zw, zh, 6); ctx.stroke();
+    ctx.setLineDash([]);
+    // Zone label
+    ctx.fillStyle = `rgba(${cr},${cg},${cb},0.35)`;
+    ctx.font = '700 7px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+    ctx.fillText(z.label, zx + 6, zy + 12);
+  }
 
-  // Zone label
-  ctx.fillStyle = 'rgba(255,200,0,0.22)';
-  ctx.font = '700 7px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-  ctx.fillText('// COMMAND CHAIN', _ccLeft + 8, _ccTop + 11);
+  // Treasury Vault — bottom-right corner, clickable
+  const _tvX = W * 0.87, _tvY = H * 0.78, _tvW = W * 0.11, _tvH = H * 0.18;
+  const _tvPulse = 0.5 + Math.sin(frame / 30) * 0.5;
+  ctx.fillStyle = `rgba(255,200,0,${0.03 + _tvPulse * 0.02})`;
+  _rr(ctx, _tvX, _tvY, _tvW, _tvH, 6); ctx.fill();
+  ctx.strokeStyle = `rgba(255,200,0,${0.15 + _tvPulse * 0.1})`; ctx.lineWidth = 1;
+  _rr(ctx, _tvX, _tvY, _tvW, _tvH, 6); ctx.stroke();
+  const _vdCx = _tvX + _tvW/2, _vdCy = _tvY + _tvH * 0.42;
+  ctx.strokeStyle = `rgba(255,200,0,0.35)`; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(_vdCx, _vdCy, 10, 0, Math.PI*2); ctx.stroke();
+  ctx.strokeStyle = `rgba(255,200,0,0.2)`; ctx.lineWidth = 0.8;
+  ctx.beginPath(); ctx.arc(_vdCx, _vdCy, 6, 0, Math.PI*2); ctx.stroke();
+  for (let _vs = 0; _vs < 4; _vs++) {
+    const _va = (_vs / 4) * Math.PI*2 + frame * 0.002;
+    ctx.beginPath(); ctx.moveTo(_vdCx, _vdCy);
+    ctx.lineTo(_vdCx + Math.cos(_va)*10, _vdCy + Math.sin(_va)*10); ctx.stroke();
+  }
+  ctx.fillStyle = `rgba(255,200,0,0.55)`;
+  ctx.font = '7px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
+  ctx.fillText('💰 VAULT', _vdCx, _tvY + _tvH - 6);
 
-  // Sub-labels for each role slot
-  ctx.font = '500 5.5px "JetBrains Mono", monospace';
-  ctx.fillStyle = 'rgba(255,200,0,0.14)';
-  ctx.textAlign = 'center';
-  ctx.fillText('CEO', W * 0.22, _ccTop + H * 0.06);
-  ctx.fillStyle = 'rgba(0,200,255,0.18)';
-  ctx.fillText('ORCHESTRATOR', W * 0.42, _ccTop + H * 0.06);
-  ctx.fillStyle = 'rgba(255,120,255,0.18)';
-  ctx.fillText('DESIGNER', W * 0.22, _ccTop + H * 0.30);
-  ctx.fillStyle = 'rgba(255,140,0,0.18)';
-  ctx.fillText('REFORGER', W * 0.42, _ccTop + H * 0.30);
+  // ── Boardroom — clickable policy voting room (between governance & monitor bay) ──
+  const _brX = W * 0.62, _brY = H * 0.02, _brW = W * 0.24, _brH = H * 0.16;
+  const _brPulse = 0.5 + Math.sin(frame / 25) * 0.5;
+  // Room background
+  ctx.fillStyle = `rgba(167,139,250,${0.05 + _brPulse * 0.025})`;
+  _rr(ctx, _brX, _brY, _brW, _brH, 8); ctx.fill();
+  // Animated border
+  ctx.strokeStyle = `rgba(167,139,250,${0.30 + _brPulse * 0.20})`; ctx.lineWidth = 1.5;
+  _rr(ctx, _brX, _brY, _brW, _brH, 8); ctx.stroke();
+  // Boardroom table (oval)
+  const _btCx = _brX + _brW/2, _btCy = _brY + _brH * 0.55;
+  const _tblRx = Math.min(_brW * 0.32, 55), _tblRy = Math.min(_brH * 0.25, 16);
+  ctx.fillStyle = 'rgba(167,139,250,0.10)';
+  ctx.beginPath(); ctx.ellipse(_btCx, _btCy, _tblRx, _tblRy, 0, 0, Math.PI*2); ctx.fill();
+  ctx.strokeStyle = 'rgba(167,139,250,0.30)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(_btCx, _btCy, _tblRx, _tblRy, 0, 0, Math.PI*2); ctx.stroke();
+  // Chair dots around table (8 voters)
+  for (let _ch = 0; _ch < 8; _ch++) {
+    const _ca = (_ch / 8) * Math.PI * 2 - Math.PI/2;
+    const _chx = _btCx + Math.cos(_ca) * (_tblRx + 10);
+    const _chy = _btCy + Math.sin(_ca) * (_tblRy + 8);
+    ctx.fillStyle = `rgba(167,139,250,${0.30 + _brPulse * 0.20})`;
+    ctx.beginPath(); ctx.arc(_chx, _chy, 3.5, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = 'rgba(167,139,250,0.15)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(_btCx + Math.cos(_ca) * _tblRx, _btCy + Math.sin(_ca) * _tblRy);
+    ctx.lineTo(_chx, _chy); ctx.stroke();
+  }
+  // Gavel on table
+  ctx.font = '12px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.globalAlpha = 0.7 + _brPulse * 0.2;
+  ctx.fillText('⚖️', _btCx, _btCy);
+  ctx.globalAlpha = 1; ctx.textBaseline = 'alphabetic';
+  // Title
+  ctx.fillStyle = `rgba(167,139,250,${0.7 + _brPulse * 0.2})`;
+  ctx.font = 'bold 8px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
+  ctx.fillText('🏛 BOARDROOM', _btCx, _brY + 11);
+  // Subtitle
+  ctx.fillStyle = `rgba(167,139,250,${0.4 + _brPulse * 0.15})`;
+  ctx.font = '5.5px "JetBrains Mono",monospace';
+  ctx.fillText('click to vote on policy', _btCx, _brY + _brH - 4);
 
-  // Permanent mandate arrow: CEO → Orchestrator (faint dashed, always present)
-  const _ceoMX = W * 0.22, _orcMX = W * 0.42, _chainY = H * 0.18;
-  ctx.save();
-  ctx.strokeStyle = 'rgba(255,200,0,0.14)'; ctx.lineWidth = 1.2;
-  ctx.setLineDash([6, 5]); ctx.lineDashOffset = -(frame * 0.4);
-  ctx.beginPath(); ctx.moveTo(_ceoMX + 44, _chainY); ctx.lineTo(_orcMX - 44, _chainY); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.strokeStyle = 'rgba(255,200,0,0.22)'; ctx.lineWidth = 1;
-  _drawArrowHead(ctx, _ceoMX + 44, _chainY, _orcMX - 48, _chainY, 7);
-  ctx.fillStyle = 'rgba(255,200,0,0.20)';
-  ctx.font = '500 5.5px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
-  ctx.fillText('ALWAYS DELEGATE', (_ceoMX + _orcMX) / 2, _chainY - 7);
-  ctx.restore();
-
-  // Vertical connector line: ORC → Reforger (mandate support)
-  ctx.save();
-  ctx.strokeStyle = 'rgba(255,140,0,0.10)'; ctx.lineWidth = 1;
-  ctx.setLineDash([4, 5]);
-  ctx.beginPath(); ctx.moveTo(W * 0.42, H * 0.28); ctx.lineTo(W * 0.42, H * 0.38); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.restore();
-
-  ctx.textAlign = 'center';
-
-  // Monitoring bay (right side) — proportional
-  const _bayW = W * 0.15, _bayX = W - _bayW - 8;
-  ctx.fillStyle = 'rgba(80,255,160,0.025)';
-  ctx.fillRect(_bayX, H * 0.06, _bayW, H * 0.88);
-  ctx.strokeStyle = 'rgba(80,255,160,0.07)'; ctx.lineWidth = 0.6;
-  ctx.setLineDash([4, 5]);
-  ctx.strokeRect(_bayX, H * 0.06, _bayW, H * 0.88);
-  ctx.setLineDash([]);
-  ctx.save();
-  ctx.translate(W - 14, H / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillStyle = 'rgba(80,255,160,0.22)';
-  ctx.font = '600 7px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-  ctx.fillText('MONITORING BAY', 0, 0);
-  ctx.restore();
-
-  // Bed Bay — left side, idle/waiting agents rest here
-  const _bbX = 2, _bbY = H * 0.06, _bbW = W * 0.13, _bbH = H * 0.88;
-  ctx.fillStyle = 'rgba(80,60,160,0.06)';
-  ctx.fillRect(_bbX, _bbY, _bbW, _bbH);
-  ctx.strokeStyle = 'rgba(120,80,255,0.18)'; ctx.lineWidth = 0.8;
-  ctx.setLineDash([3, 5]);
-  ctx.strokeRect(_bbX, _bbY, _bbW, _bbH);
-  ctx.setLineDash([]);
-  ctx.save();
-  ctx.translate(_bbX + 9, H / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillStyle = 'rgba(140,100,255,0.35)';
-  ctx.font = '600 7px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-  ctx.fillText('💤 BED BAY', 0, 0);
-  ctx.restore();
-  // Draw cots dynamically — one per idle/waiting agent slot
+  // Bed Bay cots
   const _bedAgents = AGENTS.filter(a => a.status === 'idle' || a.status === 'stopped' || a.status === 'waiting');
   const _cotCount  = Math.max(_bedAgents.length, 1);
-  const _cotStartY = H * 0.20, _cotEndY = H * 0.80;
+  const _bbX = 4, _bbW = W * 0.10 - 8;
+  const _cotStartY = H * 0.15, _cotEndY = H * 0.85;
   const _cotStep   = _cotCount > 1 ? (_cotEndY - _cotStartY) / (_cotCount - 1) : 0;
   for (let _ci = 0; _ci < _cotCount; _ci++) {
     const _cx = _bbX + _bbW / 2;
@@ -6652,60 +6775,13 @@ function _drawFloor(ctx, W, H, frame) {
     ctx.strokeStyle = 'rgba(120,80,255,0.28)'; ctx.lineWidth = 0.5;
     ctx.strokeRect(_cx - 11, _cy - 5, 22, 11);
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
-    ctx.fillRect(_cx - 9, _cy - 4, 9, 9); // pillow
+    ctx.fillRect(_cx - 9, _cy - 4, 9, 9);
   }
-
-  // Treasury Vault — bottom-right corner, clickable
-  const _tvX = W * 0.82, _tvY = H * 0.72, _tvW = W * 0.12, _tvH = H * 0.22;
-  const _tvPulse = 0.5 + Math.sin(frame / 30) * 0.5;
-  ctx.fillStyle = `rgba(255,200,0,${0.03 + _tvPulse * 0.02})`;
-  _rr(ctx, _tvX, _tvY, _tvW, _tvH, 6); ctx.fill();
-  ctx.strokeStyle = `rgba(255,200,0,${0.15 + _tvPulse * 0.1})`; ctx.lineWidth = 1;
-  _rr(ctx, _tvX, _tvY, _tvW, _tvH, 6); ctx.stroke();
-  // Vault door
-  const _vdCx = _tvX + _tvW/2, _vdCy = _tvY + _tvH * 0.42;
-  ctx.strokeStyle = `rgba(255,200,0,0.35)`; ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.arc(_vdCx, _vdCy, 12, 0, Math.PI*2); ctx.stroke();
-  ctx.strokeStyle = `rgba(255,200,0,0.2)`; ctx.lineWidth = 0.8;
-  ctx.beginPath(); ctx.arc(_vdCx, _vdCy, 7, 0, Math.PI*2); ctx.stroke();
-  // Vault spokes
-  for (let _vs = 0; _vs < 4; _vs++) {
-    const _va = (_vs / 4) * Math.PI*2 + frame * 0.002;
-    ctx.beginPath(); ctx.moveTo(_vdCx, _vdCy);
-    ctx.lineTo(_vdCx + Math.cos(_va)*12, _vdCy + Math.sin(_va)*12); ctx.stroke();
-  }
-  ctx.fillStyle = `rgba(255,200,0,0.55)`;
-  ctx.font = '7px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
-  ctx.fillText('💰 VAULT', _vdCx, _tvY + _tvH - 8);
-
-  // Comms Hub zone (upper-right, agents like Telegram route here)
-  const _chX = W * 0.63, _chY = H * 0.08, _chW = W * 0.10, _chH = H * 0.38;
-  ctx.fillStyle = 'rgba(0,200,100,0.018)';
-  _rr(ctx, _chX, _chY, _chW, _chH, 6); ctx.fill();
-  ctx.strokeStyle = 'rgba(0,200,100,0.08)'; ctx.lineWidth = 0.7;
-  ctx.setLineDash([4, 6]);
-  _rr(ctx, _chX, _chY, _chW, _chH, 6); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = 'rgba(0,200,100,0.28)';
-  ctx.font = '600 6px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-  ctx.fillText('📡 COMMS HUB', _chX + _chW / 2, _chY + 11);
-
-  // Ops / Worker floor (lower area) — proportional
-  ctx.fillStyle = 'rgba(0,180,255,0.014)';
-  ctx.fillRect(W * 0.06, H * 0.52, W * 0.77, H * 0.42);
-  ctx.strokeStyle = 'rgba(0,180,255,0.06)'; ctx.lineWidth = 0.5;
-  ctx.setLineDash([4, 6]);
-  ctx.strokeRect(W * 0.06, H * 0.52, W * 0.77, H * 0.42);
-  ctx.setLineDash([]);
-  ctx.fillStyle = 'rgba(0,180,255,0.18)';
-  ctx.font = '500 6px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-  ctx.fillText('// OPS FLOOR', W * 0.07, H * 0.52 + 13);
 
   // Watermark
   ctx.fillStyle = 'rgba(0,200,255,0.05)';
-  ctx.font = '700 10px "JetBrains Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('// AGENT WORKSPACE //', W/2, 16);
+  ctx.font = '700 10px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
+  ctx.fillText('// AGENT HQ — 7 BRANCHES //', W/2, 16);
 
   // Corner plants
   _drawPlant(ctx, 22, 22, frame);
@@ -6719,20 +6795,15 @@ function _drawFloor(ctx, W, H, frame) {
     const lx = W / (numLights + 1) * (i + 1);
     const ly = 30;
     const flicker = 1 + Math.sin(frame/120 + i)*0.02;
-    // fixture ring
     ctx.fillStyle = 'rgba(200,220,255,0.15)';
     ctx.beginPath(); ctx.arc(lx, ly, 5, 0, Math.PI*2); ctx.fill();
     ctx.strokeStyle = 'rgba(200,220,255,0.25)'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.arc(lx, ly, 5, 0, Math.PI*2); ctx.stroke();
-    // cone
     const grad = ctx.createRadialGradient(lx, ly, 0, lx, ly+70, 80*flicker);
     grad.addColorStop(0, 'rgba(180,210,255,0.07)');
     grad.addColorStop(1, 'rgba(180,210,255,0)');
     ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.moveTo(lx-5, ly);
-    ctx.lineTo(lx-70, ly+80);
-    ctx.lineTo(lx+70, ly+80);
+    ctx.beginPath(); ctx.moveTo(lx-5, ly); ctx.lineTo(lx-70, ly+80); ctx.lineTo(lx+70, ly+80);
     ctx.closePath(); ctx.fill();
   }
 }
@@ -6866,75 +6937,82 @@ function _computeDesks(W, H, agents) {
   if (!agents || !agents.length) return [];
   const results = new Array(agents.length).fill(null);
 
-  const ceoIdx        = agents.findIndex(a => /ceo|command.*control|commander/i.test((a.id||'') + ' ' + (a.role||'')));
-  const orcIdx        = agents.findIndex(a => /orchestrat/i.test((a.id||'') + ' ' + (a.role||'')));
-  const reforgerIdx   = agents.findIndex(a => /reforger/i.test((a.id||'') + ' ' + (a.role||'')));
-  const designerIdx   = agents.findIndex(a => /designer/i.test((a.id||'') + ' ' + (a.role||'')));
-  // filewatch gets its own fixed spot next to the file cabinet (bottom-right)
-  const filewatchIdx  = agents.findIndex(a => /filewatch|file.*watch|file.*sentinel/i.test((a.id||'') + ' ' + (a.role||'')));
-  const specialIdxs   = new Set([ceoIdx, orcIdx, reforgerIdx, designerIdx, filewatchIdx].filter(i => i >= 0));
-  // Spirit Guide — floats top-centre
-  const spiritIdx     = agents.findIndex(a => /spiritguide|spirit.*guide/i.test((a.id||'') + (a.role||'')));
-  const spiritSet     = spiritIdx >= 0 ? new Set([spiritIdx]) : new Set();
-  // Comms Hub agents — Telegram etc.
-  const commsIdxs     = agents.map((a, i) => i).filter(i => !specialIdxs.has(i) && !spiritSet.has(i) && /telegram|discord|slack|comms|gateway|relay|whatsapp/i.test((agents[i].role||'') + ' ' + (agents[i].id||'')));
-  const commsSet      = new Set(commsIdxs);
-  // Bed bay — idle/stopped/waiting agents (not special, comms, or spirit)
-  const bedIdxs       = agents.map((a, i) => i).filter(i =>
-    !specialIdxs.has(i) && !commsSet.has(i) && !spiritSet.has(i) &&
+  // ── Branch membership map (matches backend BRANCHES) ──
+  const _BRANCH_MAP = {
+    executive:      { head: null,          members: ['ceo','orchestrator','secretary','spiritguide'] },
+    engineering:    { head: 'reforger',    members: ['reforger','designer','apipatcher','demo_tester'] },
+    intelligence:   { head: 'researcher',  members: ['researcher','netscout','consciousness'] },
+    revenue:        { head: 'growthagent', members: ['growthagent','stripepay','bluesky','social_bridge'] },
+    operations:     { head: 'sysmon',      members: ['sysmon','filewatch','metricslog','alertwatch','janitor'] },
+    communications: { head: 'clerk',       members: ['clerk','telegram','emailagent','scheduler'] },
+    governance:     { head: 'policypro',   members: ['policypro','policywriter','accountprovisioner'] },
+  };
+  const _BRANCH_HEADS = new Set(Object.values(_BRANCH_MAP).map(b => b.head).filter(Boolean));
+
+  // Zone positions (matching _drawFloor _ZONE_LAYOUT) — center + bounds for placing agents
+  const _ZONE_POS = {
+    executive:      { cx: 0.25, cy: 0.18, w: 0.30, h: 0.36 },
+    engineering:    { cx: 0.185, cy: 0.50, w: 0.17, h: 0.28 },
+    intelligence:   { cx: 0.335, cy: 0.50, w: 0.13, h: 0.28 },
+    revenue:        { cx: 0.20, cy: 0.82, w: 0.20, h: 0.36 },
+    communications: { cx: 0.39, cy: 0.82, w: 0.18, h: 0.36 },
+    operations:     { cx: 0.67, cy: 0.75, w: 0.39, h: 0.50 },
+    governance:     { cx: 0.51, cy: 0.25, w: 0.22, h: 0.50 },
+  };
+
+  // Build agent->branch lookup
+  const _agentBranch = {};
+  for (const [br, info] of Object.entries(_BRANCH_MAP)) {
+    for (const m of info.members) _agentBranch[m] = br;
+  }
+
+  // Bed Bay — idle/stopped/waiting agents
+  const bedIdxs = agents.map((a, i) => i).filter(i =>
     (agents[i].status === 'idle' || agents[i].status === 'stopped' || agents[i].status === 'waiting')
   );
-  const bedSet        = new Set(bedIdxs);
-  const passiveIdxs   = agents.map((a, i) => i).filter(i => !specialIdxs.has(i) && !commsSet.has(i) && !spiritSet.has(i) && !bedSet.has(i) && /monitor|watch|scout|observe|track|log|sensor/i.test((agents[i].role||'') + ' ' + (agents[i].id||'')));
-  const activeIdxs    = agents.map((a, i) => i).filter(i => !specialIdxs.has(i) && !commsSet.has(i) && !spiritSet.has(i) && !bedSet.has(i) && !passiveIdxs.includes(i));
-
-  // ── COMMAND CHAIN: 2×2 grid ──
-  const chainCX = W * 0.22, chainOX = W * 0.42;
-  const chainY1 = H * 0.18, chainY2 = H * 0.42;
-  if (ceoIdx >= 0)       results[ceoIdx]       = { x: chainCX, y: chainY1, zone: 'exec' };
-  if (orcIdx >= 0)       results[orcIdx]       = { x: chainOX, y: chainY1, zone: 'exec' };
-  if (designerIdx >= 0)  results[designerIdx]  = { x: chainCX, y: chainY2, zone: 'exec' };
-  if (reforgerIdx >= 0)  results[reforgerIdx]  = { x: chainOX, y: chainY2, zone: 'exec' };
-  if (filewatchIdx >= 0) results[filewatchIdx] = { x: W - 90, y: H - 70, zone: 'filing' };
-
-  // Spirit Guide — hovers top-centre, ethereal
-  if (spiritIdx >= 0) results[spiritIdx] = { x: W * 0.65, y: H * 0.14, zone: 'spirit' };
-
-  // Comms Hub — upper-right zone
-  const commsZoneX = W * 0.675;
-  const czStartY = H * 0.18, czEndY = H * 0.44;
-  const czSpacing = commsIdxs.length > 1 ? (czEndY - czStartY) / (commsIdxs.length - 1) : 0;
-  commsIdxs.forEach((idx, n) => {
-    results[idx] = { x: commsZoneX, y: commsIdxs.length === 1 ? (czStartY + czEndY)/2 : czStartY + n * czSpacing, zone: 'comms' };
-  });
-
-  // Bed Bay — idle/waiting agents, bottom-left quadrant
-  const bbCX = W * 0.075;
-  const bbStartY = H * 0.20, bbEndY = H * 0.80;
+  const bedSet = new Set(bedIdxs);
+  const bbCX = W * 0.05;
+  const bbStartY = H * 0.15, bbEndY = H * 0.85;
   const bbStep = bedIdxs.length > 1 ? (bbEndY - bbStartY) / (bedIdxs.length - 1) : 0;
   bedIdxs.forEach((idx, n) => {
     results[idx] = { x: bbCX, y: bedIdxs.length === 1 ? (bbStartY + bbEndY)/2 : bbStartY + n * bbStep, zone: 'bed' };
   });
 
-  // Passive → right monitoring bay column
-  const hasBay    = passiveIdxs.length > 0;
-  const bayX      = W - W * 0.10;
-  const bayStartY = H * 0.12, bayEndY = H - H * 0.10;
-  const baySpacing = passiveIdxs.length > 1 ? (bayEndY - bayStartY) / (passiveIdxs.length - 1) : 0;
-  passiveIdxs.forEach((idx, n) => {
-    results[idx] = { x: bayX, y: passiveIdxs.length === 1 ? (bayStartY + bayEndY)/2 : bayStartY + n * baySpacing, zone: 'monitoring' };
-  });
+  // Place agents into their branch zones
+  for (const [branchName, info] of Object.entries(_BRANCH_MAP)) {
+    const zp = _ZONE_POS[branchName];
+    if (!zp) continue;
+    const memberIdxs = info.members
+      .map(mid => agents.findIndex(a => a.id === mid))
+      .filter(i => i >= 0 && !bedSet.has(i));
+    if (memberIdxs.length === 0) continue;
 
-  // Active workers → lower main floor grid
-  const mPadX = W * 0.12, mPadY = H * 0.54;
-  const mW    = W * 0.72 - (hasBay ? W * 0.15 : 0);
-  const mH    = H - mPadY - H * 0.06;
-  const cols  = Math.max(1, Math.min(Math.floor(mW / (W * 0.14)), 5));
-  const sX    = mW / Math.max(cols, 1);
-  const sY    = mH / Math.max(Math.ceil(activeIdxs.length / cols), 1);
-  activeIdxs.forEach((idx, n) => {
-    results[idx] = { x: mPadX + sX * (n % cols) + sX/2, y: mPadY + sY * Math.floor(n / cols) + sY/2, zone: 'ops' };
-  });
+    // Head gets center position, others spread around
+    const headIdx = info.head ? agents.findIndex(a => a.id === info.head) : -1;
+    const zoneLeft = W * (zp.cx - zp.w * 0.35);
+    const zoneTop  = H * (zp.cy - zp.h * 0.25);
+    const zoneW    = W * zp.w * 0.7;
+    const zoneH    = H * zp.h * 0.5;
+
+    if (headIdx >= 0 && !bedSet.has(headIdx)) {
+      results[headIdx] = { x: W * zp.cx, y: H * zp.cy - zoneH * 0.2, zone: branchName };
+    }
+    const nonHead = memberIdxs.filter(i => i !== headIdx);
+    const cols = Math.min(nonHead.length, 3);
+    const rows = Math.ceil(nonHead.length / Math.max(cols, 1));
+    const spacingX = cols > 1 ? zoneW / (cols - 1) : 0;
+    const spacingY = rows > 1 ? zoneH / (rows - 1) : 0;
+    nonHead.forEach((idx, n) => {
+      const col = n % cols;
+      const row = Math.floor(n / cols);
+      const ax = cols === 1 ? W * zp.cx : zoneLeft + col * spacingX;
+      const ay = rows === 1 ? H * zp.cy + zoneH * 0.2 : zoneTop + zoneH * 0.4 + row * spacingY;
+      results[idx] = { x: ax, y: ay, zone: branchName };
+    });
+  }
+
+  // Monitor Bay — agents in operations that are passive monitors
+  // (kept in operations zone by branch, no separate bay needed)
 
   // Fallback for unassigned
   agents.forEach((_, i) => { if (!results[i]) results[i] = { x: W/2, y: H/2, zone: 'ops' }; });
@@ -7079,7 +7157,7 @@ function _drawDesk(ctx, x, y, color, status, frame, passive, taskText, isCeo) {
   _rr(ctx, x-15, y+DH/2-4, 30, 5, 1); ctx.fill(); ctx.stroke();
 }
 
-function _drawChar(ctx, x, y, color, status, frame, emoji, name, state, passive, isCeo, isReforger, isOrchestrator) {
+function _drawChar(ctx, x, y, color, status, frame, emoji, name, state, passive, isCeo, isReforger, isOrchestrator, isBranchHead) {
   const stopped = status === 'stopped' || status === 'idle';
   const error   = status === 'error';
   const busy    = status === 'busy';
@@ -7233,6 +7311,22 @@ function _drawChar(ctx, x, y, color, status, frame, emoji, name, state, passive,
       ctx.font = 'bold 6px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
       ctx.fillText('ORC', bx, by - 22);
     }
+  }
+
+  // Branch Head: double-ring glow + HEAD label (for non-CEO, non-ORC heads)
+  if (isBranchHead && !isCeo && !isOrchestrator && !stopped) {
+    const headPulse = 0.5 + Math.sin(frame / 18) * 0.5;
+    // Outer ring
+    ctx.strokeStyle = `rgba(255,255,255,${0.15 + headPulse * 0.12})`; ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.arc(bx, by, 20, 0, Math.PI*2); ctx.stroke();
+    // Inner ring
+    ctx.strokeStyle = color + (Math.round(80 + headPulse * 60)).toString(16).padStart(2,'0');
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(bx, by, 15, 0, Math.PI*2); ctx.stroke();
+    // HEAD label
+    ctx.fillStyle = `rgba(255,255,255,${0.55 + headPulse * 0.2})`;
+    ctx.font = 'bold 5.5px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
+    ctx.fillText('HEAD', bx, by - 22);
   }
 
   // Reforger: forging hammer tool (animated when working)
@@ -7645,6 +7739,53 @@ function _drawBeams(ctx, desks, agents, frame) {
           }
         }
       }
+    }
+  }
+
+  // ── 0c. Branch hierarchy beams: Orchestrator → branch heads (trunk), head → team (branch) ──
+  const _branchMap = {
+    engineering:    { head: 'reforger',    members: ['designer','apipatcher','demo_tester'] },
+    intelligence:   { head: 'researcher',  members: ['netscout','consciousness'] },
+    revenue:        { head: 'growthagent', members: ['stripepay','bluesky','social_bridge'] },
+    operations:     { head: 'sysmon',      members: ['filewatch','metricslog','alertwatch','janitor'] },
+    communications: { head: 'clerk',       members: ['telegram','emailagent','scheduler'] },
+    governance:     { head: 'policypro',   members: ['policywriter','accountprovisioner'] },
+  };
+  const _branchPulse = 0.5 + Math.sin(frame / 40) * 0.5;
+  // Trunk beams: ORC → each branch head (faint structural lines, always visible)
+  if (_orcBeamIdx >= 0 && desks[_orcBeamIdx]) {
+    const _orcD = desks[_orcBeamIdx];
+    for (const [brName, brInfo] of Object.entries(_branchMap)) {
+      const _hIdx = agents.findIndex(a => a.id === brInfo.head);
+      if (_hIdx < 0 || !desks[_hIdx]) continue;
+      const _hd = desks[_hIdx];
+      ctx.save();
+      ctx.strokeStyle = `rgba(0,200,255,${0.06 + _branchPulse * 0.04})`;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([6, 8]); ctx.lineDashOffset = -(frame * 0.5);
+      ctx.beginPath(); ctx.moveTo(_orcD.x, _orcD.y); ctx.lineTo(_hd.x, _hd.y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+  }
+  // Branch beams: head → each team member (faint structural)
+  for (const [brName, brInfo] of Object.entries(_branchMap)) {
+    const _hIdx = agents.findIndex(a => a.id === brInfo.head);
+    if (_hIdx < 0 || !desks[_hIdx]) continue;
+    const _hd = desks[_hIdx];
+    for (const mid of brInfo.members) {
+      const _mIdx = agents.findIndex(a => a.id === mid);
+      if (_mIdx < 0 || !desks[_mIdx]) continue;
+      const _md = desks[_mIdx];
+      ctx.save();
+      const _hAgent = agents[_hIdx];
+      const _hColor = _hAgent ? _hAgent.color : '#888';
+      ctx.strokeStyle = _hColor + '18';
+      ctx.lineWidth = 0.7;
+      ctx.setLineDash([3, 6]); ctx.lineDashOffset = -(frame * 0.3);
+      ctx.beginPath(); ctx.moveTo(_hd.x, _hd.y); ctx.lineTo(_md.x, _md.y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
     }
   }
 
@@ -8762,6 +8903,23 @@ function copyTokenCommand() {
   </div>
 </div>
 
+<!-- ── BOARDROOM MODAL (Policy Voting) ── -->
+<div id="boardroom-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.78);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:#0a0818;border:1px solid rgba(167,139,250,0.4);border-radius:12px;width:660px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 0 50px rgba(167,139,250,0.18);">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid rgba(167,139,250,0.2);background:rgba(0,0,0,0.3);border-radius:12px 12px 0 0;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;font-weight:700;letter-spacing:0.15em;color:#a78bfa;">🏛 BOARDROOM — Policy Voting</div>
+      <button onclick="closeBoardroomModal()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);border-radius:4px;padding:0.2rem 0.6rem;cursor:pointer;font-size:0.8rem;">✕ Close</button>
+    </div>
+    <div id="boardroom-body" style="flex:1;overflow-y:auto;padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:0.75rem;">
+      <div style="color:rgba(255,255,255,0.3);text-align:center;margin-top:2rem;">Loading boardroom…</div>
+    </div>
+    <div style="padding:0.75rem 1.25rem;border-top:1px solid rgba(167,139,250,0.12);display:flex;gap:0.5rem;justify-content:space-between;align-items:center;">
+      <button onclick="openProposeForm()" style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.35);color:#a78bfa;border-radius:6px;padding:0.4rem 1rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;">+ Propose Policy</button>
+      <button onclick="loadBoardroom()" style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.35);color:#a78bfa;border-radius:6px;padding:0.4rem 1rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;">↻ Refresh</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── FILE PANEL MODAL ── -->
 <div id="file-panel-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.78);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
   <div style="background:#080d1a;border:1px solid rgba(255,200,60,0.4);border-radius:12px;width:580px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(255,200,60,0.15);">
@@ -8983,6 +9141,220 @@ function loadFinanceTab() {
     const el = document.getElementById('fin-pnl-log');
     if (el) el.innerHTML = `<div style="padding:1.5rem;text-align:center;color:rgba(255,80,80,0.55);font-family:var(--mono);font-size:0.7rem;">[treasury unavailable: ${err.message}]</div>`;
   });
+}
+
+// ── Boardroom (Policy Voting) ─────────────────────────────────────────────────
+const _VOTERS = ['ceo','orchestrator','reforger','researcher','growthagent','sysmon','clerk','policypro'];
+let _boardroomRefreshTimer = null;
+
+function openBoardroomModal() {
+  document.getElementById('boardroom-modal').style.display = 'flex';
+  loadBoardroom();
+  // Auto-refresh every 5s while open (votes are time-limited)
+  _boardroomRefreshTimer = setInterval(loadBoardroom, 5000);
+}
+function closeBoardroomModal() {
+  document.getElementById('boardroom-modal').style.display = 'none';
+  if (_boardroomRefreshTimer) { clearInterval(_boardroomRefreshTimer); _boardroomRefreshTimer = null; }
+}
+document.getElementById('boardroom-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeBoardroomModal();
+});
+
+function loadBoardroom() {
+  const body = document.getElementById('boardroom-body');
+  const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  // Don't clobber if propose form is open
+  if (document.getElementById('propose-form')) return;
+
+  Promise.all([
+    fetch('/api/policy/vote/current').then(r => {
+      if (!r.ok) throw new Error('Server returned ' + r.status);
+      return r.json();
+    }),
+    fetch('/api/policy/vote/history').then(r => {
+      if (!r.ok) throw new Error('Server returned ' + r.status);
+      return r.json();
+    }),
+  ]).then(([cur, hist]) => {
+    const openVotes = cur.open_votes || {};
+    const history = (hist.history || []).slice(-20).reverse();
+    let html = '';
+
+    // ── Voter seat chart ──
+    html += `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;padding:0.6rem;background:rgba(167,139,250,0.04);border:1px solid rgba(167,139,250,0.1);border-radius:8px;">
+      <span style="color:rgba(167,139,250,0.5);font-size:0.6rem;width:100%;margin-bottom:0.2rem;">VOTING SEATS (${_VOTERS.length} authorized voters)</span>`;
+    _VOTERS.forEach(v => {
+      html += `<span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.62rem;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:rgba(167,139,250,0.7);">${esc(v)}</span>`;
+    });
+    html += '</div>';
+
+    // ── Open votes ──
+    const openKeys = Object.keys(openVotes);
+    html += `<div style="margin-bottom:1.2rem;">
+      <div style="color:#a78bfa;font-weight:700;font-size:0.78rem;margin-bottom:0.6rem;letter-spacing:0.1em;">OPEN VOTES (${openKeys.length})</div>`;
+    if (openKeys.length === 0) {
+      html += '<div style="color:rgba(255,255,255,0.25);padding:1rem;text-align:center;border:1px dashed rgba(167,139,250,0.15);border-radius:6px;">No open votes. Click <strong style="color:#a78bfa;">+ Propose Policy</strong> below to start one.</div>';
+    } else {
+      openKeys.forEach(vid => {
+        const v = openVotes[vid];
+        const votes = v.votes || {};
+        const approves = Object.values(votes).filter(x => x === 'approve').length;
+        const rejects = Object.values(votes).filter(x => x === 'reject').length;
+        const total = _VOTERS.length;
+        const majority = Math.floor(total / 2) + 1;
+        const approveBar = Math.round((approves / total) * 100);
+        const rejectBar = Math.round((rejects / total) * 100);
+
+        // Per-voter breakdown
+        const voterBreakdown = _VOTERS.map(voter => {
+          const cast = votes[voter];
+          const icon = cast === 'approve' ? '✓' : cast === 'reject' ? '✗' : '·';
+          const color = cast === 'approve' ? '#00ff88' : cast === 'reject' ? '#ff5566' : 'rgba(255,255,255,0.2)';
+          return `<span style="color:${color};font-size:0.62rem;margin-right:0.3rem;" title="${esc(voter)}: ${cast||'pending'}">${esc(voter)}${icon}</span>`;
+        }).join('');
+
+        // Voter dropdown for manual vote
+        const unvoted = _VOTERS.filter(voter => !votes[voter]);
+        let voteControls = '';
+        if (unvoted.length > 0) {
+          const optHtml = unvoted.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
+          voteControls = `
+            <div style="display:flex;gap:0.4rem;align-items:center;margin-top:0.5rem;flex-wrap:wrap;">
+              <select id="voter-${esc(vid)}" style="background:#0a0818;border:1px solid rgba(167,139,250,0.3);color:#e2e8f0;border-radius:4px;padding:0.2rem 0.4rem;font-family:'JetBrains Mono',monospace;font-size:0.65rem;">
+                ${optHtml}
+              </select>
+              <button onclick="castVote('${esc(vid)}','approve')" style="background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);color:#00ff88;border-radius:4px;padding:0.25rem 0.7rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:700;">✓ Approve</button>
+              <button onclick="castVote('${esc(vid)}','reject')" style="background:rgba(255,85,102,0.1);border:1px solid rgba(255,85,102,0.3);color:#ff5566;border-radius:4px;padding:0.25rem 0.7rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:700;">✗ Reject</button>
+            </div>`;
+        } else {
+          voteControls = '<div style="color:rgba(167,139,250,0.5);font-size:0.62rem;margin-top:0.4rem;">All voters have cast — awaiting finalization…</div>';
+        }
+
+        html += `<div style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);border-radius:8px;padding:0.8rem;margin-bottom:0.6rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+            <span style="color:#a78bfa;font-weight:700;font-size:0.75rem;">${esc(vid)}</span>
+            <span style="color:rgba(255,255,255,0.4);font-size:0.62rem;">by ${esc(v.proposer)} — ${esc((v.opened_at||'').slice(11,19))}</span>
+          </div>
+          <div style="color:rgba(255,255,255,0.8);margin-bottom:0.6rem;line-height:1.5;padding:0.4rem 0.5rem;background:rgba(0,0,0,0.2);border-radius:4px;">${esc(v.proposal)}</div>
+          <div style="margin-bottom:0.4rem;">${voterBreakdown}</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.3rem;">
+            <div style="flex:1;height:8px;background:rgba(0,0,0,0.3);border-radius:4px;overflow:hidden;display:flex;">
+              <div style="width:${approveBar}%;background:rgba(0,255,136,0.5);transition:width 0.3s;"></div>
+              <div style="width:${rejectBar}%;background:rgba(255,85,102,0.5);transition:width 0.3s;"></div>
+            </div>
+            <span style="color:rgba(255,255,255,0.4);font-size:0.6rem;white-space:nowrap;">
+              <span style="color:#00ff88;">${approves}</span>/<span style="color:#ff5566;">${rejects}</span>/<span style="color:rgba(255,255,255,0.3);">${total - approves - rejects}</span>
+              (need ${majority} for majority)
+            </span>
+          </div>
+          ${voteControls}
+        </div>`;
+      });
+    }
+    html += '</div>';
+
+    // ── History ──
+    html += `<div>
+      <div style="color:rgba(167,139,250,0.7);font-weight:700;font-size:0.78rem;margin-bottom:0.6rem;letter-spacing:0.1em;">VOTE HISTORY (${history.length})</div>`;
+    if (history.length === 0) {
+      html += '<div style="color:rgba(255,255,255,0.2);padding:0.8rem;text-align:center;">No completed votes yet.</div>';
+    } else {
+      history.forEach(v => {
+        const statusColor = v.status === 'approved' ? '#00ff88' : v.status === 'rejected' ? '#ff5566' : '#ffd700';
+        const statusIcon = v.status === 'approved' ? '✓ APPROVED' : v.status === 'rejected' ? '✗ REJECTED' : '⏱ EXPIRED';
+        const voteList = _VOTERS.map(voter => {
+          const cast = (v.votes || {})[voter];
+          const icon = cast === 'approve' ? '✓' : cast === 'reject' ? '✗' : '·';
+          const color = cast === 'approve' ? 'rgba(0,255,136,0.55)' : cast === 'reject' ? 'rgba(255,85,102,0.55)' : 'rgba(255,255,255,0.15)';
+          return `<span style="color:${color};font-size:0.58rem;" title="${esc(voter)}">${icon}</span>`;
+        }).join(' ');
+        html += `<div style="padding:0.5rem 0.4rem;border-bottom:1px solid rgba(167,139,250,0.06);display:flex;gap:0.6rem;align-items:flex-start;">
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:${statusColor};font-weight:700;font-size:0.68rem;">${statusIcon}</span>
+              <span style="color:rgba(255,255,255,0.25);font-size:0.58rem;">${esc((v.closed_at||'').slice(0,16))}</span>
+            </div>
+            <div style="color:rgba(255,255,255,0.5);font-size:0.65rem;margin:0.15rem 0;">${esc(v.proposal).slice(0,100)}${(v.proposal||'').length > 100 ? '…' : ''}</div>
+            <div style="font-family:monospace;">${voteList}</div>
+          </div>
+        </div>`;
+      });
+    }
+    html += '</div>';
+
+    body.innerHTML = html;
+  }).catch(err => {
+    body.innerHTML = `<div style="text-align:center;margin-top:2rem;">
+      <div style="color:rgba(255,80,80,0.6);margin-bottom:0.8rem;">[error loading boardroom: ${esc(err.message)}]</div>
+      <div style="color:rgba(255,255,255,0.3);font-size:0.65rem;">The server may need a restart to load the new voting endpoints.<br>
+      Stop the server and run: <code style="color:#a78bfa;">python3 agent_server.py</code></div>
+      <button onclick="loadBoardroom()" style="margin-top:0.8rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.35);color:#a78bfa;border-radius:6px;padding:0.4rem 1rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.72rem;">↻ Retry</button>
+    </div>`;
+  });
+}
+
+function openProposeForm() {
+  const body = document.getElementById('boardroom-body');
+  if (document.getElementById('propose-form')) return; // already open
+  const formHtml = `<div id="propose-form" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.3);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+    <div style="color:#a78bfa;font-weight:700;margin-bottom:0.4rem;">New Policy Proposal</div>
+    <div style="color:rgba(255,255,255,0.35);font-size:0.62rem;margin-bottom:0.5rem;">Branch heads will auto-vote within seconds. Vote closes after 60s or when majority reached.</div>
+    <textarea id="propose-text" placeholder="e.g. All agents must log their output to data/ before reporting task complete" style="width:100%;min-height:70px;background:rgba(0,0,0,0.3);border:1px solid rgba(167,139,250,0.2);border-radius:6px;color:#e2e8f0;padding:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;resize:vertical;box-sizing:border-box;"></textarea>
+    <div style="display:flex;gap:0.5rem;margin-top:0.5rem;align-items:center;">
+      <button onclick="submitProposal()" style="background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.4);color:#a78bfa;border-radius:6px;padding:0.4rem 1rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;">Submit to Vote</button>
+      <button onclick="loadBoardroom()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);border-radius:4px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.7rem;">Cancel</button>
+    </div>
+  </div>`;
+  body.insertAdjacentHTML('afterbegin', formHtml);
+  document.getElementById('propose-text').focus();
+}
+
+function submitProposal() {
+  if (IS_READONLY) return;
+  const el = document.getElementById('propose-text');
+  const text = el ? el.value.trim() : '';
+  if (!text) { if (el) el.style.borderColor = 'rgba(255,85,102,0.6)'; return; }
+  const btn = el.parentElement.querySelector('button');
+  if (btn) { btn.textContent = 'Submitting…'; btn.disabled = true; }
+  fetch('/api/policy/propose', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({proposal: text, proposer: 'ceo'}),
+  }).then(r => r.json()).then(d => {
+    if (d.ok) {
+      // Small delay to let auto-votes register
+      setTimeout(loadBoardroom, 800);
+    } else {
+      alert('Proposal failed: ' + (d.error || 'unknown'));
+      if (btn) { btn.textContent = 'Submit to Vote'; btn.disabled = false; }
+    }
+  }).catch(err => {
+    alert('Error: ' + err.message);
+    if (btn) { btn.textContent = 'Submit to Vote'; btn.disabled = false; }
+  });
+}
+
+function castVote(voteId, choice) {
+  if (IS_READONLY) return;
+  const sel = document.getElementById('voter-' + voteId);
+  if (!sel) return;
+  const voter = sel.value;
+  if (!voter) return;
+  // Disable controls while submitting
+  sel.disabled = true;
+  fetch('/api/policy/vote', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({vote_id: voteId, voter: voter, vote: choice}),
+  }).then(r => r.json()).then(d => {
+    if (d.ok) {
+      loadBoardroom();
+    } else {
+      alert('Vote failed: ' + (d.error || 'unknown'));
+      sel.disabled = false;
+    }
+  }).catch(err => { alert('Error: ' + err.message); sel.disabled = false; });
 }
 
 // ── File Cabinet Panel ────────────────────────────────────────────────────────

@@ -68,3 +68,9 @@ test
 ## Policy Update — 2026-03-18 19:51:30
 
 test suggestion from DemoTester
+
+
+## Policy Amendment — VOT-1773846338-87f556
+**Proposed by:** ceo  
+**Approved:** 2026-03-19T02:05:39.619262 (approved 6-0)  
+**Text:** All agents must log cycle output to data/ before reporting complete

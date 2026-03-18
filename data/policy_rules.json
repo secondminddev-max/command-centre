@@ -184,5 +184,23 @@
     "category": "security",
     "rule": "Secrets detected in staged commits must trigger an immediate block. No exceptions.",
     "priority": 1
+  },
+  {
+    "id": "GOV-001",
+    "category": "governance",
+    "rule": "All policy changes must go through the democratic voting system. PolicyWriter proposes via POST /api/policy/propose, branch heads + CEO + orchestrator vote. Majority wins within 60s timeout.",
+    "priority": 1
+  },
+  {
+    "id": "GOV-002",
+    "category": "governance",
+    "rule": "Policies are NEVER deleted. All amendments are append-only to policy.md. Rejected proposals are logged but not applied.",
+    "priority": 1
+  },
+  {
+    "id": "GOV-003",
+    "category": "governance",
+    "rule": "Branch heads are authorized to auto-vote on policy proposals using built-in heuristics. Manual votes from CEO or orchestrator override auto-votes.",
+    "priority": 1
   }
 ]

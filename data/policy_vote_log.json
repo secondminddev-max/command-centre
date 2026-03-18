@@ -1,0 +1,19 @@
+[
+  {
+    "vote_id": "VOT-1773846338-87f556",
+    "proposal": "All agents must log cycle output to data/ before reporting complete",
+    "proposer": "ceo",
+    "opened_at": "2026-03-19T02:05:38.484253",
+    "closed_at": "2026-03-19T02:05:39.619490",
+    "votes": {
+      "clerk": "approve",
+      "reforger": "approve",
+      "policypro": "approve",
+      "sysmon": "approve",
+      "researcher": "approve",
+      "growthagent": "approve"
+    },
+    "status": "approved",
+    "result": "approved 6-0"
+  }
+]

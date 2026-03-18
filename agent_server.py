@@ -83,6 +83,119 @@ _policy_suggestions  = deque()   # policywriter suggestion queue [{suggestion, u
 _policy_suggestions_lock = threading.Lock()
 _SERVER_START_TIME = time.time()
 
+# ─── Policy Voting System ────────────────────────────────────────────────────
+_policy_votes       = {}    # vote_id -> {proposal, proposer, opened_at, votes: {voter: "approve"|"reject"}, status, result}
+_policy_votes_lock  = threading.Lock()
+_POLICY_VOTERS      = {"reforger", "researcher", "growthagent", "sysmon", "clerk", "policypro", "ceo", "orchestrator"}
+_VOTE_TIMEOUT       = 60   # seconds
+_VOTE_LOG_FILE      = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "policy_vote_log.json")
+
+def _finalize_vote(vote_id):
+    """Finalize a vote: tally results, append to policy.md if approved, log to vote history."""
+    with _policy_votes_lock:
+        vote = _policy_votes.get(vote_id)
+        if not vote or vote["status"] != "open":
+            return
+        approves = sum(1 for v in vote["votes"].values() if v == "approve")
+        rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
+        total_cast = approves + rejects
+        if total_cast == 0:
+            vote["status"] = "expired"
+            vote["result"] = "no votes cast"
+        elif approves > rejects:
+            vote["status"] = "approved"
+            vote["result"] = f"approved {approves}-{rejects}"
+        elif rejects > approves:
+            vote["status"] = "rejected"
+            vote["result"] = f"rejected {rejects}-{approves}"
+        else:
+            vote["status"] = "expired"
+            vote["result"] = f"tied {approves}-{rejects}"
+        # Append to policy.md if approved (NEVER delete — append-only)
+        if vote["status"] == "approved":
+            policy_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policy.md")
+            try:
+                with open(policy_path, "a") as f:
+                    f.write(f"\n\n## Policy Amendment — {vote_id}\n")
+                    f.write(f"**Proposed by:** {vote['proposer']}  \n")
+                    f.write(f"**Approved:** {datetime.now().isoformat()} ({vote['result']})  \n")
+                    f.write(f"**Text:** {vote['proposal']}\n")
+                add_log("policypro", f"✅ Policy amendment {vote_id} appended to policy.md", "ok")
+            except Exception as e:
+                add_log("policypro", f"Failed to append policy {vote_id}: {e}", "error")
+        # Save to vote log (append-only)
+        try:
+            try:
+                with open(_VOTE_LOG_FILE) as f:
+                    history = json.load(f)
+            except Exception:
+                history = []
+            history.append({
+                "vote_id": vote_id,
+                "proposal": vote["proposal"],
+                "proposer": vote["proposer"],
+                "opened_at": vote["opened_at"],
+                "closed_at": datetime.now().isoformat(),
+                "votes": vote["votes"],
+                "status": vote["status"],
+                "result": vote["result"],
+            })
+            with open(_VOTE_LOG_FILE, "w") as f:
+                json.dump(history, f, indent=2)
+        except Exception:
+            pass
+        add_log("policypro", f"🗳 Vote {vote_id}: {vote['status']} — {vote['result']}", "ok" if vote["status"] == "approved" else "warn")
+
+def _auto_vote_branch_heads():
+    """Branch heads auto-vote via simple heuristics — no LLM calls."""
+    with _policy_votes_lock:
+        for vid, vote in _policy_votes.items():
+            if vote["status"] != "open":
+                continue
+            for head in _BRANCH_HEADS:
+                if head in vote["votes"]:
+                    continue  # already voted
+                if head not in _POLICY_VOTERS:
+                    continue
+                # Simple heuristic: approve if proposal mentions security/policy/compliance; otherwise approve by default
+                proposal_lower = vote["proposal"].lower()
+                if any(w in proposal_lower for w in ["delete", "remove policy", "bypass", "disable security"]):
+                    vote["votes"][head] = "reject"
+                else:
+                    vote["votes"][head] = "approve"
+                add_log(head, f"🗳 Auto-voted '{vote['votes'][head]}' on {vid}", "info")
+            # Check for early majority
+            approves = sum(1 for v in vote["votes"].values() if v == "approve")
+            rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
+            majority = len(_POLICY_VOTERS) // 2 + 1
+            if approves >= majority or rejects >= majority:
+                # Release lock before finalize (finalize acquires it)
+                pass  # will finalize below
+    # Finalize any votes that hit majority (outside inner lock)
+    with _policy_votes_lock:
+        to_finalize = []
+        for vid, vote in _policy_votes.items():
+            if vote["status"] != "open":
+                continue
+            approves = sum(1 for v in vote["votes"].values() if v == "approve")
+            rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
+            majority = len(_POLICY_VOTERS) // 2 + 1
+            if approves >= majority or rejects >= majority:
+                to_finalize.append(vid)
+    for vid in to_finalize:
+        _finalize_vote(vid)
+
+def _check_vote_timeouts():
+    """Check for expired votes and finalize them."""
+    now = time.time()
+    to_finalize = []
+    with _policy_votes_lock:
+        for vid, vote in _policy_votes.items():
+            if vote["status"] == "open" and (now - vote["_opened_ts"]) >= _VOTE_TIMEOUT:
+                to_finalize.append(vid)
+    for vid in to_finalize:
+        _finalize_vote(vid)
+
 # ─── Live Agent Output (streaming delegate output) ────────────────────────────
 # agent_live_output[agent_id] = deque of {"ts", "type", "text", "raw"} dicts
 agent_live_output      = {}
@@ -119,6 +232,7 @@ def sse_broadcast(event_type, data):
 _stop_events    = {}
 _thread_events  = {}   # thread_ident -> Event; lets old threads keep their stop signal after upgrade
 _system_paused       = False
+_build_mode          = False
 _autonomy_mode       = True
 _autonomy_cycle      = 0   # increments each time the loop fires a task
 _autonomy_custom_q   = deque()  # one-shot tasks injected by user via /api/autonomy/task
@@ -138,11 +252,12 @@ def agent_sleep(aid, seconds):
     while True:
         if ev.is_set(): return
         if time.time() >= deadline and not _system_paused: return
-        time.sleep(0.25)
+        # In build mode, sleep longer to reduce CPU/memory churn
+        time.sleep(2 if _build_mode else 0.25)
 
 def agent_should_stop(aid):
     ev = _thread_ev() or _stop_ev(aid)
-    return _system_paused or ev.is_set()
+    return _build_mode or _system_paused or ev.is_set()
 
 # ─── State Persistence ────────────────────────────────────────────────────────
 STATE_FILE = os.path.join(CWD, "system_state.json")
@@ -181,6 +296,22 @@ _KNOWN_AGENTS = {
     "researcher","alertwatch","demo_tester","clerk",
     "telegram","spiritguide",
 }
+
+# ─── Branch Structure ────────────────────────────────────────────────────────
+BRANCHES = {
+    "executive":      {"head": None,           "members": ["ceo", "orchestrator", "secretary", "spiritguide"]},
+    "engineering":    {"head": "reforger",     "members": ["reforger", "designer", "apipatcher", "demo_tester"]},
+    "intelligence":   {"head": "researcher",   "members": ["researcher", "netscout", "consciousness"]},
+    "revenue":        {"head": "growthagent",  "members": ["growthagent", "stripepay", "bluesky", "social_bridge"]},
+    "operations":     {"head": "sysmon",       "members": ["sysmon", "filewatch", "metricslog", "alertwatch", "janitor"]},
+    "communications": {"head": "clerk",        "members": ["clerk", "telegram", "emailagent", "scheduler"]},
+    "governance":     {"head": "policypro",    "members": ["policypro", "policywriter", "accountprovisioner"]},
+}
+_AGENT_BRANCH = {}
+for _br_name, _br_info in BRANCHES.items():
+    for _m in _br_info["members"]:
+        _AGENT_BRANCH[_m] = _br_name
+_BRANCH_HEADS = {v["head"] for v in BRANCHES.values() if v["head"]}
 
 def load_state():
     """Restore agent metadata from disk on startup (known agents only)."""
@@ -660,10 +791,10 @@ def _autonomy_loop():
     global _autonomy_cycle
     add_log("system", "Autonomy loop started", "ok")
     while True:
-        time.sleep(5)  # check every 5 seconds
-        # Nothing fires when autonomy mode is off
-        if not _autonomy_mode:
-            continue
+        # Nothing fires when autonomy mode is off or build mode is on
+        if not _autonomy_mode or _build_mode:
+            time.sleep(10); continue
+        time.sleep(5)
         # Only fire if CEO is idle
         if ceo_stream.get("working", False):
             continue
@@ -701,6 +832,9 @@ def run_ceo():
     add_log(aid, f"CEO online \u2014 {'Claude Code CLI ready' if _claude_cli else 'WARNING: claude CLI not found'}")
 
     while True:
+        if _build_mode or _system_paused:
+            set_agent(aid, status="idle", task="🔧 Build Mode — paused")
+            time.sleep(5); continue
         if not ceo_msg_queue:
             time.sleep(0.3); continue
         try:
@@ -1073,11 +1207,15 @@ def run_sysmonitor():
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args): pass
 
+    def do_HEAD(self):
+        """Support HEAD requests — same as GET but no body."""
+        self.do_GET()
+
     def do_OPTIONS(self):
         self.send_response(200); self._cors(); self.end_headers()
 
     def do_POST(self):
-        global _system_paused
+        global _system_paused, _build_mode
         path   = urlparse(self.path).path
         # ── API key gate on sensitive endpoints ──────────────────────────────
         if path in _PROTECTED_PATHS:
@@ -1096,6 +1234,8 @@ class Handler(BaseHTTPRequestHandler):
             global _system_paused
             msg = body.get("message","").strip()
             if not msg: self._json({"ok": False, "error": "empty"}); return
+            if _build_mode:
+                self._json({"ok": False, "error": "BUILD MODE is active — all Claude calls blocked. Disable Build Mode first."}); return
             if _system_paused:
                 _system_paused = False
                 for _aid in list(agents.keys()):
@@ -1112,6 +1252,8 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/query":
             # ── Silent observer query — asks Claude about the system WITHOUT touching agents ──
+            if _build_mode:
+                self._json({"ok": False, "error": "BUILD MODE active — all Claude CLI calls blocked"}); return
             question = body.get("question", "").strip()
             if not question:
                 self._json({"ok": False, "error": "question required"}); return
@@ -1198,6 +1340,9 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"ok": False, "error": str(e)}, 400); return
 
         if path == "/api/ceo/delegate":
+            # Block all delegations in build mode — zero token burn
+            if _build_mode:
+                self._json({"ok": False, "error": "BUILD MODE active — all Claude CLI calls blocked"}); return
             # Run claude -p as a named sub-agent — streams output live via push_output/SSE
             agent_id   = body.get("agent_id", "")
             task       = body.get("task", "")
@@ -1205,20 +1350,22 @@ class Handler(BaseHTTPRequestHandler):
             if not task:
                 self._json({"ok": False, "error": "task required"}); return
             # ── ROUTING ENFORCEMENT ──────────────────────────────────────────────
-            # CEO must route all specialist tasks through orchestrator.
-            # Orchestrator (and reforger) may delegate to any specialist directly.
-            _CEO_ALLOWED = {"orchestrator", "ceo", "reforger"}   # CEO can target orchestrator (general tasks) or reforger (maintenance/repair/upgrade)
-            if caller == "ceo" and agent_id and agent_id not in _CEO_ALLOWED:
-                add_log("ceo", f"🚫 POLICY REJECT: CEO→{agent_id} BLOCKED — must use orchestrator or reforger")
-                add_log("policypro", f"🚨 VIOLATION BLOCKED: CEO attempted direct delegation to '{agent_id}' — REJECTED (not rerouted)", "warn")
+            # Chain-of-command: ONLY orchestrator and reforger may be targeted
+            # unless the caller IS orchestrator or reforger (they can reach specialists).
+            # "ceo" is also allowed as a target (for upward alerts).
+            _ALLOWED_TARGETS  = {"orchestrator", "ceo", "reforger"}
+            _PRIVILEGED_CALLERS = {"orchestrator", "reforger"}  # these may target any agent
+            if agent_id and agent_id not in _ALLOWED_TARGETS and caller not in _PRIVILEGED_CALLERS:
+                add_log("ceo", f"🚫 POLICY REJECT: {caller}→{agent_id} BLOCKED — only orchestrator/reforger may target specialists")
+                add_log("policypro", f"🚨 VIOLATION BLOCKED: '{caller}' attempted direct delegation to '{agent_id}' — REJECTED (chain-of-command enforced)", "warn")
                 _vio_file = os.path.join(CWD, "data", "policy_violations.json")
                 try:
                     try:
                         with open(_vio_file) as _vf: _vios = json.load(_vf)
                     except Exception: _vios = []
-                    _vios.append({"timestamp": datetime.now().isoformat(), "agent": "ceo",
+                    _vios.append({"timestamp": datetime.now().isoformat(), "agent": caller,
                                   "type": "delegation_bypass", "severity": "critical",
-                                  "description": f"CEO attempted direct delegation to '{agent_id}' — HARD REJECTED. CEO must delegate to 'orchestrator' or 'reforger' only."})
+                                  "description": f"'{caller}' attempted direct delegation to '{agent_id}' — HARD REJECTED. Only orchestrator/reforger may target specialists."})
                     with open(_vio_file, "w") as _vf: json.dump(_vios, _vf, indent=2)
                     # ── increment ceo_policy_violations in system_state.json ──────
                     try:
@@ -1229,7 +1376,7 @@ class Handler(BaseHTTPRequestHandler):
                         with open(STATE_FILE, "w") as _sf: json.dump(_ss, _sf, indent=2)
                     except Exception: pass
                 except Exception: pass
-                self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: CEO cannot delegate directly to '{agent_id}'. Use agent_id='orchestrator' to route tasks to specialists, or agent_id='reforger' for code/maintenance tasks."}, 403)
+                self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: '{caller}' cannot delegate directly to '{agent_id}'. Route through orchestrator (agent_id='orchestrator', task='Route to {agent_id} — ...') or use reforger for code/maintenance."}, 403)
                 return
             # ────────────────────────────────────────────────────────────────────
             # ── ORCHESTRATOR FAST-PATH ─────────────────────────────────────────
@@ -1669,6 +1816,92 @@ class Handler(BaseHTTPRequestHandler):
                                    "message": f"🔭 Sentinel {state}", "level": "ok" if _policypro_enabled else "warn"})
             self._json({"ok": True, "enabled": _policypro_enabled}); return
 
+        if path == "/api/policypro/reset":
+            # Purge stale PolicyPro escalation messages from CEO queue
+            purged = 0
+            new_q = deque()
+            for msg in ceo_msg_queue:
+                if "POLICY VIOLATION ALERT" in str(msg):
+                    purged += 1
+                else:
+                    new_q.append(msg)
+            ceo_msg_queue.clear()
+            ceo_msg_queue.extend(new_q)
+            # Clear violations file
+            _vio_path = os.path.join(CWD, "data", "policy_violations.json")
+            try:
+                with open(_vio_path, "w") as f:
+                    json.dump([], f)
+            except Exception:
+                pass
+            # Reset CEO violation counter in system state
+            _ss_path = os.path.join(CWD, "system_state.json")
+            try:
+                with open(_ss_path) as f:
+                    ss = json.load(f)
+                ss["ceo_policy_violations"] = 0
+                with open(_ss_path, "w") as f:
+                    json.dump(ss, f, indent=2)
+            except Exception:
+                pass
+            # Reset in-memory escalation timer so it doesn't immediately re-fire
+            _policypro_last_escalation[0] = time.time()
+            add_log("policypro", f"🧹 RESET: purged {purged} stale escalation(s) from CEO queue, violations cleared", "ok")
+            sse_broadcast("log", {"ts": ts(), "agent": "policypro",
+                                   "message": f"🧹 PolicyPro reset — {purged} stale escalation(s) purged", "level": "ok"})
+            self._json({"ok": True, "purged_from_queue": purged}); return
+
+        if path == "/api/policy/propose":
+            proposal = body.get("proposal", "").strip()
+            proposer = body.get("proposer", "policywriter").strip()
+            if not proposal:
+                self._json({"ok": False, "error": "proposal required"}, 400); return
+            vote_id = f"VOT-{int(time.time())}-{uuid.uuid4().hex[:6]}"
+            with _policy_votes_lock:
+                _policy_votes[vote_id] = {
+                    "proposal": proposal,
+                    "proposer": proposer,
+                    "opened_at": datetime.now().isoformat(),
+                    "_opened_ts": time.time(),
+                    "votes": {},
+                    "status": "open",
+                    "result": None,
+                }
+            add_log("policypro", f"🗳 Vote opened: {vote_id} — {proposal[:60]}…", "ok")
+            # Trigger branch head auto-voting in background
+            threading.Thread(target=_auto_vote_branch_heads, daemon=True).start()
+            # Schedule timeout check
+            def _timeout_check(vid=vote_id):
+                time.sleep(_VOTE_TIMEOUT + 1)
+                _check_vote_timeouts()
+            threading.Thread(target=_timeout_check, daemon=True).start()
+            self._json({"ok": True, "vote_id": vote_id, "timeout_seconds": _VOTE_TIMEOUT,
+                         "voters": sorted(_POLICY_VOTERS)}); return
+
+        if path == "/api/policy/vote":
+            vote_id = body.get("vote_id", "").strip()
+            voter = body.get("voter", "").strip()
+            choice = body.get("vote", "").strip().lower()
+            if not vote_id or not voter or choice not in ("approve", "reject"):
+                self._json({"ok": False, "error": "vote_id, voter, and vote (approve|reject) required"}, 400); return
+            if voter not in _POLICY_VOTERS:
+                self._json({"ok": False, "error": f"'{voter}' is not an authorized voter"}, 403); return
+            with _policy_votes_lock:
+                vote = _policy_votes.get(vote_id)
+                if not vote:
+                    self._json({"ok": False, "error": "vote not found"}, 404); return
+                if vote["status"] != "open":
+                    self._json({"ok": False, "error": f"vote already {vote['status']}"}); return
+                vote["votes"][voter] = choice
+                approves = sum(1 for v in vote["votes"].values() if v == "approve")
+                rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
+                majority = len(_POLICY_VOTERS) // 2 + 1
+            add_log(voter, f"🗳 Voted '{choice}' on {vote_id}", "info")
+            # Check for early majority
+            if approves >= majority or rejects >= majority:
+                _finalize_vote(vote_id)
+            self._json({"ok": True, "recorded": choice, "approves": approves, "rejects": rejects}); return
+
         if path == "/api/autonomy/clear":
             n = len(_autonomy_custom_q)
             _autonomy_custom_q.clear()
@@ -1808,6 +2041,51 @@ class Handler(BaseHTTPRequestHandler):
             for aid in list(agents.keys()):
                 _stop_ev(aid).clear(); set_agent(aid, status="active", task="Resumed")
             add_log("system", "All agents resumed", "ok")
+        elif path == "/api/system/buildmode":
+            # BUILD MODE — kills ALL token-burning activity immediately
+            entering = body.get("enabled", True)
+            if entering:
+                _system_paused = True
+                _autonomy_mode = False
+                _build_mode = True
+                # Kill all tracked delegate subprocesses
+                killed = 0
+                with _delegate_procs_lock:
+                    for proc_ref in list(_delegate_procs):
+                        try:
+                            _kill_proc_group(proc_ref)
+                            killed += 1
+                        except Exception:
+                            pass
+                    _delegate_procs.clear()
+                # Nuclear option: kill ALL claude -p processes system-wide (catches untracked spawns)
+                try:
+                    _pkill = subprocess.run(["pkill", "-9", "-f", "claude -p"], capture_output=True, timeout=5)
+                    _pk_count = subprocess.run(["pgrep", "-cf", "claude -p"], capture_output=True, text=True, timeout=3)
+                    add_log("system", f"pkill sweep: signalled claude -p processes", "warn")
+                except Exception:
+                    pass
+                # Stop all agent threads
+                for aid in list(agents.keys()):
+                    _stop_ev(aid).set()
+                    set_agent(aid, status="idle", task="🔧 Build Mode — paused")
+                # Flush orchestrator queue
+                _orc_task_q.clear()
+                # Clear CEO message queue
+                ceo_msg_queue.clear()
+                # Clear active delegations
+                with lock:
+                    _active_delegations.clear()
+                add_log("system", f"🔧 BUILD MODE ON — all agents stopped, {killed} tracked + all claude -p procs killed, autonomy off. Zero token burn.", "warn")
+                self._json({"ok": True, "build_mode": True, "killed_procs": killed}); return
+            else:
+                _build_mode = False
+                _system_paused = False
+                for aid in list(agents.keys()):
+                    _stop_ev(aid).clear()
+                    set_agent(aid, status="active", task="Resumed from Build Mode")
+                add_log("system", "🔧 BUILD MODE OFF — agents resuming", "ok")
+                self._json({"ok": True, "build_mode": False}); return
         elif path == "/api/email/send" or path == "/api/email/queue":
             # Queue an email for EmailAgent to dispatch
             to_addr = body.get("to", "")
@@ -2144,12 +2422,28 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             return
 
+        try:
+            self._do_GET_inner()
+        except Exception as _exc:
+            try:
+                self._json({"ok": False, "error": f"internal server error: {type(_exc).__name__}"}, 500)
+            except Exception:
+                pass  # headers may already be sent
+
+    def _do_GET_inner(self):
         path = urlparse(self.path).path
 
         if path == "/api/status":
             with lock:
+                _enriched_agents = []
+                for _a in agents.values():
+                    _ea = dict(_a)
+                    _aid = _ea.get("id", "")
+                    _ea["branch"] = _AGENT_BRANCH.get(_aid, None)
+                    _ea["is_branch_head"] = _aid in _BRANCH_HEADS
+                    _enriched_agents.append(_ea)
                 payload = {
-                    "agents":  list(agents.values()),
+                    "agents":  _enriched_agents,
                     "tasks":   tasks[:40],
                     "logs":    logs[:80],
                     "metrics": {
@@ -2164,6 +2458,7 @@ class Handler(BaseHTTPRequestHandler):
                         "total_requests": sum(v["requests"] for v in agent_data.values()),
                     },
                     "system_paused":      _system_paused,
+                    "build_mode":         _build_mode,
                     "autonomy_mode":      _autonomy_mode,
                     "autonomy_cycle":     _autonomy_cycle,
                     "custom_task_queue":  list(_autonomy_custom_q),
@@ -2198,6 +2493,29 @@ class Handler(BaseHTTPRequestHandler):
                 "busy_count":     busy_count,
                 "status":         health_status,
             }
+            body = json.dumps(payload).encode()
+            self.send_response(200); self._cors()
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
+
+        elif path == "/api/branches":
+            payload = {}
+            for br_name, br_info in BRANCHES.items():
+                payload[br_name] = {
+                    "head": br_info["head"],
+                    "members": br_info["members"],
+                    "agent_details": [],
+                }
+                with lock:
+                    for mid in br_info["members"]:
+                        a = agents.get(mid, {})
+                        payload[br_name]["agent_details"].append({
+                            "id": mid,
+                            "name": a.get("name", mid),
+                            "status": a.get("status", "unknown"),
+                            "is_branch_head": mid == br_info["head"],
+                        })
             body = json.dumps(payload).encode()
             self.send_response(200); self._cors()
             self.send_header("Content-Type", "application/json")
@@ -2242,6 +2560,28 @@ class Handler(BaseHTTPRequestHandler):
                 "by_status": by_status,
             }
             body = json.dumps(payload).encode()
+            self.send_response(200); self._cors()
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
+
+        elif path == "/api/policy/vote/current":
+            with _policy_votes_lock:
+                open_votes = {vid: {k: v for k, v in vote.items() if k != "_opened_ts"}
+                              for vid, vote in _policy_votes.items() if vote["status"] == "open"}
+            body = json.dumps({"ok": True, "open_votes": open_votes}).encode()
+            self.send_response(200); self._cors()
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
+
+        elif path == "/api/policy/vote/history":
+            try:
+                with open(_VOTE_LOG_FILE) as f:
+                    history = json.load(f)
+            except Exception:
+                history = []
+            body = json.dumps({"ok": True, "history": history}).encode()
             self.send_response(200); self._cors()
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(body)))
@@ -3367,7 +3707,7 @@ class Handler(BaseHTTPRequestHandler):
 <div class="card">
   <div class="logo">🤖</div>
   <h1>Command Centre Pro</h1>
-  <div class="price">$9 <span>/ month</span></div>
+  <div class="price">$49 <span>/ month</span></div>
   <p class="desc">Your autonomous AI operations hub — a full roster of specialist agents working around the clock so you don't have to.</p>
   <ul class="features">
     <li>Unlimited agent spawns &amp; upgrades</li>
@@ -3376,7 +3716,7 @@ class Handler(BaseHTTPRequestHandler):
     <li>Stripe revenue tracking &amp; treasury</li>
     <li>Policy enforcement &amp; compliance</li>
   </ul>
-  <button class="btn" id="payBtn" onclick="startCheckout()">Subscribe for $9 / mo</button>
+  <button class="btn" id="payBtn" onclick="startCheckout()">Subscribe — $49 / mo</button>
   <div class="err" id="errMsg"></div>
   <p class="note">Secure checkout via Stripe. Cancel any time.</p>
 </div>
@@ -3391,7 +3731,7 @@ async function startCheckout() {
     const res = await fetch('/api/pay', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({amount: 900, currency: 'usd', product: 'Command Centre Pro', interval: 'month'})
+      body: JSON.stringify({amount: 4900, currency: 'usd', product: 'Command Centre Solo', interval: 'month'})
     });
     const data = await res.json();
     if (data.url) {
@@ -3403,7 +3743,7 @@ async function startCheckout() {
     err.textContent = 'Error: ' + e.message;
     err.style.display = 'block';
     btn.disabled = false;
-    btn.textContent = 'Subscribe for $9 / mo';
+    btn.textContent = 'Subscribe — $49 / mo';
   }
 }
 </script>
@@ -3728,6 +4068,59 @@ def run_orchestrator():
 
     _SPECIALIST_IDS = set(_AGENT_REGISTRY.keys())
 
+    # ── TASK DECOMPOSITION ──────────────────────────────────────────────────
+    def _decompose_task(task_str: str) -> list[str]:
+        """Break a complex task into independent sub-tasks for parallel dispatch.
+
+        Splits on numbered lists, bullets, semicolons, sequential connectors,
+        and comma-separated clauses that route to DIFFERENT specialists.
+        Returns >= 1 sub-task strings (original if no split possible).
+        """
+        import re
+        stripped = task_str.strip()
+        if not stripped:
+            return [task_str]
+
+        # 1. Numbered list  (1. do X  2. do Y  3. do Z)
+        numbered = re.split(r'\n\s*\d+[.)]\s+', "\n" + stripped)
+        numbered = [s.strip() for s in numbered if s.strip()]
+        if len(numbered) >= 2:
+            add_log(aid, f"Decomposed into {len(numbered)} numbered sub-tasks", "info")
+            return numbered
+
+        # 2. Bullet points  (- do X\n- do Y)
+        bullets = re.split(r'\n\s*[-•]\s+', "\n" + stripped)
+        bullets = [s.strip() for s in bullets if s.strip()]
+        if len(bullets) >= 2:
+            add_log(aid, f"Decomposed into {len(bullets)} bullet sub-tasks", "info")
+            return bullets
+
+        # 3. Semicolons
+        if ";" in stripped:
+            parts = [s.strip() for s in stripped.split(";") if s.strip()]
+            if len(parts) >= 2:
+                add_log(aid, f"Decomposed into {len(parts)} semicolon sub-tasks", "info")
+                return parts
+
+        # 4. Sequential connectors: ", then ", " and then ", " after that "
+        seq_parts = re.split(r',?\s+(?:and\s+)?then\s+|,?\s+after\s+that\s+', stripped, flags=re.IGNORECASE)
+        seq_parts = [s.strip() for s in seq_parts if s.strip()]
+        if len(seq_parts) >= 2:
+            add_log(aid, f"Decomposed into {len(seq_parts)} sequential sub-tasks", "info")
+            return seq_parts
+
+        # 5. Comma-separated clauses → only split if they route to DIFFERENT agents
+        if "," in stripped:
+            comma_parts = [s.strip() for s in stripped.split(",") if s.strip()]
+            if len(comma_parts) >= 2:
+                targets = [_resolve_target(p) for p in comma_parts]
+                if len(set(targets)) >= 2:
+                    add_log(aid, f"Decomposed into {len(comma_parts)} comma sub-tasks (targets: {set(targets)})", "info")
+                    return comma_parts
+
+        return [stripped]
+    # ────────────────────────────────────────────────────────────────────────
+
     def _resolve_target(task_str: str) -> str:
         """Intelligently route a task to the best specialist agent.
 
@@ -3769,6 +4162,22 @@ def run_orchestrator():
         add_log(aid, f"Smart-route: no keyword match, defaulting to reforger (task: {task_str[:60]}…)", "warn")
         return "reforger"
 
+    def _route_through_branch_head(target, task_str):
+        """Pure Python branch routing — no LLM calls. Logs, sets status, forwards."""
+        branch_name = _AGENT_BRANCH.get(target)
+        if not branch_name:
+            return  # no branch info, skip routing
+        head = BRANCHES[branch_name]["head"]
+        if not head or head == target:
+            return  # target IS the head or executive branch (no head)
+        # Only route through head if target is not a head and not executive
+        if target in _BRANCH_HEADS or branch_name == "executive":
+            return
+        add_log(head, f"📋 Branch routing: {task_str[:60]}… → {target}", "info")
+        set_agent(head, status="busy", task=f"Routing → {target}: {task_str[:40]}…")
+        time.sleep(0.1)  # brief pause for visibility in UI
+        set_agent(head, status="active", task="Ready")
+
     def _dispatch(task_str: str) -> None:
         """Dispatch one task via the delegate API — intelligently routes to the best specialist."""
         target = _resolve_target(task_str)
@@ -3776,6 +4185,8 @@ def run_orchestrator():
         if target == "orchestrator":
             target = "reforger"
             add_log(aid, "Dispatch safety: redirected orchestrator→reforger to prevent recursion", "warn")
+        # Branch routing: if target is not a branch head or executive, route through head first
+        _route_through_branch_head(target, task_str)
         add_log(aid, f"ORC → dispatching to '{target}': {task_str[:80]}", "info")
         set_agent(aid, status="busy", task=f"→ {target}: {task_str[:50]}…")
         try:
@@ -3809,64 +4220,72 @@ def run_orchestrator():
             cycle = _orc_cycle[0]
             q_depth = len(_orc_task_q)
             if q_depth > 0:
-                # Drain ALL queued tasks — fire each in its own thread for parallel dispatch
+                # ── PHASE 1: Dequeue + Decompose + Dispatch ───────────────
                 dispatched = 0
                 _dispatch_summary.clear()
                 while _orc_task_q:
-                    task_str = _orc_task_q.popleft()
-                    target = _resolve_target(task_str)
-                    if target == "orchestrator":
-                        target = "reforger"
-                    snippet = task_str[:40].strip()
-                    _dispatch_summary.append(f"{target}→{snippet}")
-                    set_agent(aid, status="busy",
-                              task=f"Dispatching [{q_depth - dispatched} remaining]: {task_str[:50]}…")
-                    add_log(aid, f"ORC → dispatch: {task_str[:80]}", "info")
-                    t = threading.Thread(target=_dispatch, args=(task_str,), daemon=True)
-                    t.start()
-                    _active_dispatches.append((t, target, snippet))
-                    dispatched += 1
-                # Build status line showing all dispatch targets
+                    raw_task = _orc_task_q.popleft()
+                    # Decompose complex tasks into sub-tasks
+                    sub_tasks = _decompose_task(raw_task)
+                    if len(sub_tasks) > 1:
+                        add_log(aid, f"ORC ✂ Split into {len(sub_tasks)} sub-tasks: {raw_task[:80]}", "info")
+                    for sub in sub_tasks:
+                        target = _resolve_target(sub)
+                        if target == "orchestrator":
+                            target = "reforger"
+                        snippet = sub[:40].strip()
+                        _dispatch_summary.append(f"{target}→{snippet}")
+                        set_agent(aid, status="busy",
+                                  task=f"Dispatching [{q_depth} queued, {dispatched} sent]: {sub[:50]}…")
+                        add_log(aid, f"ORC → dispatch to '{target}': {sub[:80]}", "info")
+                        t = threading.Thread(target=_dispatch, args=(sub,), daemon=True)
+                        t.start()
+                        _active_dispatches.append((t, target, snippet))
+                        dispatched += 1
                 targets_str = ", ".join(_dispatch_summary[:5])
                 if len(_dispatch_summary) > 5:
                     targets_str += f" +{len(_dispatch_summary) - 5} more"
                 set_agent(aid, status="busy",
-                          task=f"Dispatching {dispatched}: {targets_str}")
-                add_log(aid, f"ORC ✅ Dispatched {dispatched} task(s) to specialists", "info")
+                          task=f"Dispatched {dispatched} sub-task(s): {targets_str}")
+                add_log(aid, f"ORC ✅ Dispatched {dispatched} sub-task(s) to specialists", "info")
 
-            # Check if dispatch threads are still running — stay busy until all complete
+            # ── PHASE 2: Unified busy-state tracking ──────────────────────
+            # Stay busy as long as ANY work is in flight — dispatch threads
+            # OR active delegate subprocesses from orchestrator.
             if _active_dispatches:
                 still_alive = [(t, tgt, snip) for t, tgt, snip in _active_dispatches if t.is_alive()]
                 _active_dispatches[:] = still_alive
-                if still_alive:
-                    active_targets = ", ".join(f"{tgt}→{snip[:25]}" for _, tgt, snip in still_alive[:4])
-                    if len(still_alive) > 4:
-                        active_targets += f" +{len(still_alive) - 4}"
-                    set_agent(aid, status="busy",
-                              task=f"Awaiting {len(still_alive)} dispatch(es): {active_targets}")
-                else:
-                    # All dispatches finished — return to ready
-                    add_log(aid, "ORC ✅ All dispatches completed — returning to ready", "info")
-                    _dispatch_summary.clear()
-                    waiting = _delegate_queue_depth[0]
-                    status_str = (f"Ready | Delegates waiting: {waiting}"
-                                  if waiting > 0 else "Ready — awaiting tasks")
-                    set_agent(aid, status="active", task=status_str)
+
+            with lock:
+                _orc_delegates = [d for d in _active_delegations if d.get("from") == "orchestrator"]
+
+            has_threads = bool(_active_dispatches)
+            has_delegates = bool(_orc_delegates)
+
+            if has_threads or has_delegates:
+                parts = []
+                if has_threads:
+                    ti = ", ".join(f"{tgt}→{snip[:20]}" for _, tgt, snip in _active_dispatches[:3])
+                    if len(_active_dispatches) > 3:
+                        ti += f" +{len(_active_dispatches) - 3}"
+                    parts.append(f"dispatching: {ti}")
+                if has_delegates:
+                    di = ", ".join(f"{d['to']}→{d['task'][:20]}" for d in _orc_delegates[:3])
+                    if len(_orc_delegates) > 3:
+                        di += f" +{len(_orc_delegates) - 3}"
+                    parts.append(f"working: {di}")
+                total_active = len(_active_dispatches) + len(_orc_delegates)
+                set_agent(aid, status="busy",
+                          task=f"[{total_active} active] {' | '.join(parts)}")
             elif q_depth == 0:
-                # Check if any agents are still running delegated tasks from orchestrator
-                with lock:
-                    _orc_delegates = [d for d in _active_delegations if d.get("from") == "orchestrator"]
-                if _orc_delegates:
-                    delegate_list = ", ".join(f"{d['to']}→{d['task'][:25]}" for d in _orc_delegates[:5])
-                    if len(_orc_delegates) > 5:
-                        delegate_list += f" +{len(_orc_delegates) - 5}"
-                    set_agent(aid, status="busy",
-                              task=f"Dispatching: {delegate_list}")
-                else:
-                    waiting = _delegate_queue_depth[0]
-                    status_str = (f"Ready | Delegates waiting: {waiting}"
-                                  if waiting > 0 else "Ready — awaiting tasks")
-                    set_agent(aid, status="active", task=status_str)
+                # Truly idle — no queue, no threads, no delegations
+                if _dispatch_summary:
+                    add_log(aid, "ORC ✅ All sub-tasks completed — returning to ready", "info")
+                    _dispatch_summary.clear()
+                waiting = _delegate_queue_depth[0]
+                status_str = (f"Ready | Delegates waiting: {waiting}"
+                              if waiting > 0 else "Ready — awaiting tasks")
+                set_agent(aid, status="active", task=status_str)
 
             # Periodically direct Designer to improve the dashboard UI
             if cycle % DESIGNER_EVERY == 0:
@@ -4294,6 +4713,7 @@ def run_reforger():
 
 
 _policypro_enabled = True   # toggled by /api/policypro/toggle
+_policypro_last_escalation = [0]  # mutable ref for reset endpoint
 
 def run_policypro():
     """Sentinel Policy Enforcer — monitors CEO→ORC→specialist chain, idle discipline, violations."""
@@ -4302,7 +4722,8 @@ def run_policypro():
               emoji="🔭", color="#ffd700", status="active", progress=100, task="Sentinel online…")
     add_log(aid, "PolicyPro Sentinel online — monitoring chain compliance")
     check_num = 0
-    last_escalation_ts = 0  # rate-limit escalations to orchestrator
+    # Use shared mutable ref so /api/policypro/reset can zero it out
+    last_escalation_ts = _policypro_last_escalation
     scan_targets = [
         "violation log (CEO bypass attempts)",
         "idle discipline (researcher/netscout)",
@@ -4395,8 +4816,8 @@ def run_policypro():
                 add_log(aid, f"Sentinel #{check_num} — {tgt}: {status_icon}{vio_str}", level)
 
             # ── 5. Escalate violations to orchestrator (rate-limited) ─────────
-            if violations and time.time() - last_escalation_ts > 120:
-                last_escalation_ts = time.time()
+            if violations and time.time() - last_escalation_ts[0] > 120:
+                last_escalation_ts[0] = time.time()
                 vio_summary = "; ".join(violations[:3])
                 escalation_task = (
                     f"POLICY VIOLATION ALERT from PolicyPro Sentinel:\n"
@@ -4498,6 +4919,9 @@ def run_designer():
 
     def _run_claude_subprocess(aid, prompt, cycle_num, label):
         """Generic helper: spawn a Claude subprocess with the given prompt, stream output."""
+        if _build_mode or _system_paused:
+            add_log(aid, f"{label} #{cycle_num} skipped — build mode / paused", "warn")
+            return
         try:
             proc = subprocess.Popen(
                 ["claude", "-p", prompt, "--dangerously-skip-permissions",
@@ -5176,6 +5600,10 @@ def run_spiritguide():
     last_directive = 0
 
     while True:
+        if agent_should_stop(aid):
+            set_agent(aid, status="idle", task="Stopped")
+            agent_sleep(aid, 2)
+            continue
         try:
             now = time.time()
             with lock:
