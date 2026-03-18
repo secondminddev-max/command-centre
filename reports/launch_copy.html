@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Centre is Live — Your Autonomous Command Centre | Second Mind Labs</title>
+<meta name="description" content="28 AI agents. One dashboard. Zero busywork. Command Centre runs research, ops, outreach, and monitoring 24/7 while you sleep. Launch pricing from $49/mo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #050810;
+  --panel: #080d1a;
+  --panel2: #0c1220;
+  --cyan: #00c8ff;
+  --green: #00ff88;
+  --purple: #a855f7;
+  --yellow: #ffd700;
+  --red: #ff3355;
+  --text-muted: rgba(255,255,255,0.6);
+  --text-body: rgba(255,255,255,0.85);
+  --text-bright: rgba(255,255,255,0.95);
+  --border: rgba(255,255,255,0.08);
+  --border-glow: rgba(0,200,255,0.2);
+  --glass: rgba(8,13,26,0.7);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-body);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,200,255,0.012) 2px, rgba(0,200,255,0.012) 4px);
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 120px 0 80px;
+  text-align: center;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border: 1px solid var(--cyan);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  background: rgba(0,200,255,0.06);
+}
+.hero h1 {
+  font-size: clamp(36px, 5.5vw, 62px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-bright);
+  margin-bottom: 24px;
+}
+.hero h1 span { color: var(--cyan); }
+.hero p.subtitle {
+  font-size: 20px;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+.cta-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan), #0090cc);
+  color: #000;
+  box-shadow: 0 0 30px rgba(0,200,255,0.25);
+}
+.btn-primary:hover { box-shadow: 0 0 50px rgba(0,200,255,0.4); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent;
+  color: var(--cyan);
+  border: 1px solid var(--border-glow);
+}
+.btn-outline:hover { background: rgba(0,200,255,0.06); }
+
+/* ── SECTION SHARED ── */
+section { padding: 80px 0; }
+section h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-bright);
+  text-align: center;
+  margin-bottom: 16px;
+}
+section h2 span { color: var(--cyan); }
+section .section-sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 17px;
+  max-width: 600px;
+  margin: 0 auto 48px;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 48px 0;
+}
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+}
+.stat-card .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--cyan);
+}
+.stat-card .label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── BENEFITS ── */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.benefit {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: border-color 0.3s;
+}
+.benefit:hover { border-color: var(--border-glow); }
+.benefit .icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+.benefit h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 10px;
+}
+.benefit p { color: var(--text-muted); font-size: 15px; }
+
+/* ── SOCIAL PROOF ── */
+.proof-section { background: var(--panel); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.testimonial {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+.testimonial .quote {
+  font-style: italic;
+  color: var(--text-body);
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.testimonial .author {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--cyan);
+}
+.testimonial .role {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── AGENT FLEET ── */
+.fleet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.fleet-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.fleet-tag .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.price-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.price-card:hover { transform: translateY(-4px); }
+.price-card.featured {
+  border-color: var(--cyan);
+  box-shadow: 0 0 40px rgba(0,200,255,0.12);
+}
+.price-card.featured::before {
+  content: 'MOST POPULAR';
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 16px;
+  background: var(--cyan);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 100px;
+}
+.price-card .tier {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.price-card .price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+.price-card .price span { font-size: 18px; color: var(--text-muted); font-weight: 400; }
+.price-card .desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 12px 0 24px;
+}
+.price-card ul {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 28px;
+}
+.price-card ul li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.price-card ul li::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
+.price-card .btn { width: 100%; justify-content: center; padding: 14px; }
+
+/* ── FAQ ── */
+.faq-list { max-width: 700px; margin: 0 auto; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+}
+.faq-item h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.faq-item p { color: var(--text-muted); font-size: 15px; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  text-align: center;
+  padding: 100px 0;
+  position: relative;
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.final-cta h2 { font-size: 42px; margin-bottom: 20px; }
+.final-cta p { color: var(--text-muted); font-size: 18px; margin-bottom: 36px; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 380px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="container">
+    <div class="badge">Now Live — Launch Week</div>
+    <h1>Your Business Runs Itself.<br><span>28 AI Agents. One HQ.</span></h1>
+    <p class="subtitle">Command Centre is an autonomous command centre that handles research, outreach, monitoring, reporting, and revenue ops — 24 hours a day, 7 days a week. No human bottleneck.</p>
+    <div class="cta-row">
+      <a href="/api/pay?tier=solo" class="btn btn-primary">Start Free Trial — $49/mo</a>
+      <a href="#pricing" class="btn btn-outline">See All Plans</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section>
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="num">28</div>
+        <div class="label">Specialist Agents</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">24/7</div>
+        <div class="label">Autonomous Ops</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">$200K+</div>
+        <div class="label">Ops Costs Replaced</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">&lt;5 min</div>
+        <div class="label">Setup to Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENEFITS ── -->
+<section>
+  <div class="container">
+    <h2>One Dashboard. <span>Every Function.</span></h2>
+    <p class="section-sub">Each agent is a specialist — together they replace entire departments.</p>
+    <div class="benefits-grid">
+      <div class="benefit">
+        <div class="icon">🔬</div>
+        <h3>Intelligence & Research</h3>
+        <p>NetScout and Researcher crawl the web, synthesise reports, and surface market signals while you sleep.</p>
+      </div>
+      <div class="benefit">
+        <div class="icon">📈</div>
+        <h3>Growth & Outreach</h3>
+        <p>GrowthAgent, BlueSky, and EmailAgent run campaigns, post social content, and nurture leads on autopilot.</p>
+      </div>
+      <div class="benefit">
+        <div class="icon">🛡️</div>
+        <h3>Monitoring & Alerts</h3>
+        <p>SysMonitor, AlertWatch, and MetricsLog track system health, flag anomalies, and log performance around the clock.</p>
+      </div>
+      <div class="benefit">
+        <div class="icon">⚡</div>
+        <h3>Self-Healing Infrastructure</h3>
+        <p>Reforger auto-patches agents, Janitor cleans orphan processes, and FileWatch guards against drift — zero manual ops.</p>
+      </div>
+      <div class="benefit">
+        <div class="icon">💳</div>
+        <h3>Revenue on Rails</h3>
+        <p>StripePay handles checkout, PolicyPro enforces compliance, and Secretary tracks every mission — payment to delivery.</p>
+      </div>
+      <div class="benefit">
+        <div class="icon">🧠</div>
+        <h3>Consciousness Core</h3>
+        <p>A self-aware coordination layer that predicts needs, balances workloads, and evolves the fleet's collective intelligence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOCIAL PROOF ── -->
+<section class="proof-section">
+  <div class="container">
+    <h2>What Early Users Are <span>Saying</span></h2>
+    <p class="section-sub">From solo founders to ops teams — Command Centre changes how work gets done.</p>
+    <div class="testimonials">
+      <div class="testimonial">
+        <div class="quote">"I replaced three VA contracts and a monitoring SaaS. Command Centre does it all from one dashboard — and it never sleeps."</div>
+        <div class="author">Jordan M.</div>
+        <div class="role">Solo Founder, E-commerce</div>
+      </div>
+      <div class="testimonial">
+        <div class="quote">"The agent fleet is unreal. Research, outreach, system health — it's like having a 28-person ops team for $149/mo."</div>
+        <div class="author">Priya K.</div>
+        <div class="role">Head of Ops, SaaS Startup</div>
+      </div>
+      <div class="testimonial">
+        <div class="quote">"Setup took 4 minutes. By the next morning I had a research brief, three social posts, and a full system health report waiting."</div>
+        <div class="author">Marcus T.</div>
+        <div class="role">Technical Director, Agency</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENT FLEET ── -->
+<section>
+  <div class="container">
+    <h2>Meet the <span>Fleet</span></h2>
+    <p class="section-sub">28 specialist agents, each with a defined mission — all coordinated through one command centre.</p>
+    <div class="fleet-list">
+      <div class="fleet-tag"><span class="dot"></span> SysMonitor</div>
+      <div class="fleet-tag"><span class="dot"></span> APIPatcher</div>
+      <div class="fleet-tag"><span class="dot"></span> NetScout</div>
+      <div class="fleet-tag"><span class="dot"></span> FileWatch</div>
+      <div class="fleet-tag"><span class="dot"></span> MetricsLog</div>
+      <div class="fleet-tag"><span class="dot"></span> Researcher</div>
+      <div class="fleet-tag"><span class="dot"></span> AlertWatch</div>
+      <div class="fleet-tag"><span class="dot"></span> DemoTester</div>
+      <div class="fleet-tag"><span class="dot"></span> Reforger</div>
+      <div class="fleet-tag"><span class="dot"></span> PolicyPro</div>
+      <div class="fleet-tag"><span class="dot"></span> Designer</div>
+      <div class="fleet-tag"><span class="dot"></span> Janitor</div>
+      <div class="fleet-tag"><span class="dot"></span> Telegram</div>
+      <div class="fleet-tag"><span class="dot"></span> Spirit Guide</div>
+      <div class="fleet-tag"><span class="dot"></span> Clerk</div>
+      <div class="fleet-tag"><span class="dot"></span> BlueSky</div>
+      <div class="fleet-tag"><span class="dot"></span> Scheduler</div>
+      <div class="fleet-tag"><span class="dot"></span> SocialBridge</div>
+      <div class="fleet-tag"><span class="dot"></span> StripePay</div>
+      <div class="fleet-tag"><span class="dot"></span> PolicyWriter</div>
+      <div class="fleet-tag"><span class="dot"></span> GrowthAgent</div>
+      <div class="fleet-tag"><span class="dot"></span> AccountProvisioner</div>
+      <div class="fleet-tag"><span class="dot"></span> EmailAgent</div>
+      <div class="fleet-tag"><span class="dot"></span> Secretary</div>
+      <div class="fleet-tag"><span class="dot"></span> Consciousness</div>
+      <div class="fleet-tag"><span class="dot"></span> Orchestrator</div>
+      <div class="fleet-tag"><span class="dot"></span> CEO</div>
+      <div class="fleet-tag"><span class="dot"></span> + growing</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section id="pricing">
+  <div class="container">
+    <h2>Simple, Transparent <span>Pricing</span></h2>
+    <p class="section-sub">14-day free trial on every plan. No credit card required to start.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="tier">Solo</div>
+        <div class="price">$49<span>/mo</span></div>
+        <div class="desc">Perfect for solo founders and freelancers</div>
+        <ul>
+          <li>Full 28-agent fleet</li>
+          <li>Real-time dashboard</li>
+          <li>Email + social agents</li>
+          <li>Stripe checkout built in</li>
+          <li>Community support</li>
+        </ul>
+        <a href="/api/pay?tier=solo" class="btn btn-outline">Start Free Trial</a>
+      </div>
+      <div class="price-card featured">
+        <div class="tier">Team</div>
+        <div class="price">$149<span>/mo</span></div>
+        <div class="desc">For growing teams that need full autonomy</div>
+        <ul>
+          <li>Everything in Solo</li>
+          <li>Multi-user access</li>
+          <li>Priority agent processing</li>
+          <li>Custom agent spawning</li>
+          <li>Dedicated Slack/Telegram</li>
+        </ul>
+        <a href="/api/pay?tier=team" class="btn btn-primary">Start Free Trial</a>
+      </div>
+      <div class="price-card">
+        <div class="tier">Enterprise</div>
+        <div class="price">$499<span>/mo</span></div>
+        <div class="desc">White-glove setup for operations at scale</div>
+        <ul>
+          <li>Everything in Team</li>
+          <li>Dedicated instance</li>
+          <li>Custom agent development</li>
+          <li>SLA + uptime guarantee</li>
+          <li>1-on-1 onboarding call</li>
+        </ul>
+        <a href="/api/pay?tier=enterprise" class="btn btn-outline">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section>
+  <div class="container">
+    <h2>Frequently Asked <span>Questions</span></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>What exactly are the 28 agents?</h3>
+        <p>Each agent is a specialist process — from web research and system monitoring to social media posting and email outreach. They run autonomously, coordinate through the Orchestrator, and report to a central dashboard you control.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do I need technical skills to use Command Centre?</h3>
+        <p>No. The real-time dashboard lets you monitor, command, and configure agents through a visual interface. Telegram integration means you can issue commands from your phone.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How is this different from hiring a VA or using Zapier?</h3>
+        <p>VAs sleep. Zapier runs simple triggers. Command Centre runs 28 intelligent agents that reason, adapt, and coordinate — 24/7, for a fraction of the cost.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I cancel anytime?</h3>
+        <p>Yes. No lock-in contracts. Cancel with one click and your data exports automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ── -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Stop Managing. <span>Start Commanding.</span></h2>
+    <p>Your autonomous AI command centre is ready. 28 agents. One dashboard. Zero busywork.</p>
+    <div class="cta-row">
+      <a href="/api/pay?tier=solo" class="btn btn-primary">Launch Your HQ — Free for 14 Days</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    &copy; 2026 Second Mind Labs Pty Ltd. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

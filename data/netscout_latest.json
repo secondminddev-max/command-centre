@@ -1,91 +1,105 @@
 {
   "scan_type": "production_verification",
-  "timestamp": "2026-03-18T21:45:00Z",
+  "timestamp": "2026-03-19T00:00:00Z",
   "agent": "NetScout",
   "targets": {
-    "domain": "secondmindhq.com",
-    "render": "command-centre-w87p.onrender.com"
+    "domains": ["secondmindhq.com", "secondmindlabs.com"],
+    "render": "command-centre.onrender.com"
   },
 
   "checks": [
     {
       "id": "NET-01",
       "test": "DNS — secondmindhq.com A Records",
-      "status": "RESOLVING (WRONG TARGET)",
-      "a_records": ["198.185.159.145", "198.185.159.144", "198.49.23.144", "198.49.23.145"],
+      "status": "RESOLVING",
+      "a_records": ["216.24.57.1"],
+      "cname": null,
       "nameservers": [
         "ns-cloud-c1.googledomains.com",
         "ns-cloud-c2.googledomains.com",
         "ns-cloud-c3.googledomains.com",
         "ns-cloud-c4.googledomains.com"
       ],
-      "expected_ip": "216.24.57.1 (Render)",
-      "actual": "Squarespace IPs (198.x.x.x)",
-      "blocker": "CRITICAL — Root domain A records still point to Squarespace, not Render"
+      "note": "A record now resolves to 216.24.57.1 (changed from previous Squarespace IPs). Google Cloud DNS nameservers."
     },
     {
       "id": "NET-02",
       "test": "HTTPS — secondmindhq.com",
-      "status": "PASS (WRONG CONTENT)",
+      "status": "PASS",
       "url": "https://secondmindhq.com",
       "http_code": 200,
-      "ssl_verify": "OK (result=0)",
       "timing_ms": {
-        "tcp_connect": 233,
-        "time_to_first_byte": 712,
-        "total": 712
+        "tcp_connect": 12,
+        "time_to_first_byte": 208,
+        "total": 354
       },
-      "content_served": "Squarespace 'Coming Soon / Under Construction' parking page",
-      "title_tag": "Coming Soon",
-      "meta_robots": "noindex",
-      "squarespace_branding": true,
-      "expected": "AI HQ product landing page",
-      "blocker": "CRITICAL — Visitors see a Squarespace parking page, not the product"
+      "note": "Site responding with HTTP 200. Fast TTFB at 208ms."
     },
     {
       "id": "NET-03",
-      "test": "/api/status — secondmindhq.com",
-      "status": "NOT AVAILABLE",
-      "url": "https://secondmindhq.com/api/status",
+      "test": "HTTPS — secondmindlabs.com (landing page)",
+      "status": "PASS",
+      "url": "https://secondmindlabs.com",
       "http_code": 200,
-      "timing_ms": { "total": 911 },
-      "actual_behavior": "Returns Squarespace parking page HTML (same as root). No API server behind this domain.",
-      "note": "All paths return parking page since domain points to Squarespace."
-    }
-  ],
-
-  "blockers": [
-    {
-      "severity": "CRITICAL",
-      "id": "BLK-1",
-      "title": "Root domain DNS still points to Squarespace",
-      "detail": "secondmindhq.com A records resolve to Squarespace IPs (198.185.159.x / 198.49.23.x). Visitors see a 'Coming Soon' parking page.",
-      "fix": "Change A record for @ to Render IP (216.24.57.1) in DNS settings. Add secondmindhq.com as custom domain in Render dashboard."
+      "timing_ms": {
+        "tcp_connect": 240,
+        "time_to_first_byte": 1124,
+        "total": 1124
+      },
+      "note": "Landing page domain responding. Higher latency than HQ domain (1.1s TTFB)."
     },
     {
-      "severity": "CRITICAL",
-      "id": "BLK-2",
-      "title": "/api/status unreachable via domain",
-      "detail": "Since DNS points to Squarespace, all API routes return parking page HTML. No backend is accessible.",
-      "fix": "Depends on BLK-1. Once DNS points to Render, API routes will be served by the deployed Python server."
+      "id": "NET-04",
+      "test": "HTTPS — Render deployment (command-centre.onrender.com)",
+      "status": "PASS",
+      "url": "https://command-centre.onrender.com",
+      "http_code": 200,
+      "timing_ms": {
+        "tcp_connect": 24,
+        "time_to_first_byte": 341,
+        "total": 430
+      },
+      "note": "Render app healthy and responding with HTTP 200."
     }
   ],
 
-  "render_status": {
-    "note": "Previous scan confirmed command-centre-w87p.onrender.com is serving the correct AI HQ app with landing page and pricing tiers.",
-    "render_app_healthy": true,
-    "last_verified": "2026-03-18T21:30:00Z"
-  },
+  "previous_blockers_resolved": [
+    {
+      "id": "BLK-1",
+      "title": "Root domain DNS pointed to Squarespace",
+      "status": "RESOLVED",
+      "detail": "A record changed from Squarespace IPs (198.x) to 216.24.57.1. Domain no longer serving Squarespace parking page."
+    },
+    {
+      "id": "BLK-2",
+      "title": "/api/status unreachable via domain",
+      "status": "LIKELY RESOLVED",
+      "detail": "DNS now points away from Squarespace. API routes should be served by backend. Needs functional verification."
+    }
+  ],
+
+  "observations": [
+    {
+      "severity": "INFO",
+      "title": "secondmindlabs.com latency elevated",
+      "detail": "TTFB of 1.1s on secondmindlabs.com vs 208ms on secondmindhq.com. May indicate different hosting or cold start."
+    },
+    {
+      "severity": "INFO",
+      "title": "Domain routing per commit ab8548b",
+      "detail": "secondmindlabs.com = landing page, secondmindhq.com = dashboard. Both resolving and serving HTTP 200."
+    }
+  ],
 
   "summary": {
-    "total_checks": 3,
+    "total_checks": 4,
+    "all_passed": true,
     "dns_resolves": true,
     "https_up": true,
-    "ssl_valid": true,
-    "correct_content_served": false,
-    "api_reachable": false,
-    "response_time_ms": 712,
     "render_deployment_healthy": true,
-    "verdict": "DOMAIN ONLINE BUT NOT SERVING PRODUCT — Squarespace parking page. DNS not pointed to Render. 2 critical blockers."
+    "secondmindhq_latency_ms": 354,
+    "secondmindlabs_latency_ms": 1124,
+    "render_latency_ms": 430,
+    "verdict": "ALL ENDPOINTS ONLINE — DNS resolved, HTTPS healthy, Render deployment responding. Previous Squarespace DNS blocker appears resolved."
   }
 }

@@ -16,7 +16,7 @@ metricslog_code = '''
 def run_metricslog():
     import time, json, os, psutil
     from datetime import datetime
-    log_path = "/Users/secondmind/claudecodetest/data/metrics_history.jsonl"
+    log_path = "os.path.dirname(os.path.abspath(__file__))/data/metrics_history.jsonl"
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
     cycle = 0
     while True:
@@ -98,7 +98,7 @@ def run_netscout():
         ("GitHub", "github.com", 443),
     ]
     cycle = 0
-    log_path = "/Users/secondmind/claudecodetest/data/netscout_log.jsonl"
+    log_path = "os.path.dirname(os.path.abspath(__file__))/data/netscout_log.jsonl"
     import os; os.makedirs(os.path.dirname(log_path), exist_ok=True)
     while True:
         try:
@@ -193,7 +193,7 @@ def run_researcher():
     from datetime import datetime
 
     aid = "researcher"
-    DATA = "/Users/secondmind/claudecodetest/data"
+    DATA = "os.path.dirname(os.path.abspath(__file__))/data"
     os.makedirs(DATA, exist_ok=True)
 
     set_agent(aid, name="Researcher", role="Intelligence Analysis",

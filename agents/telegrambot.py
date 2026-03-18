@@ -250,7 +250,7 @@ def run_telegrambot():
 
         if not token:
             set_agent(aid, status="active", progress=20,
-                      task="NEEDS_TOKEN — set token at /Users/secondmind/claudecodetest/.telegram_token")
+                      task="NEEDS_TOKEN — set token at .telegram_token")
             add_log(aid,
                     "No bot token found. Create .telegram_token with your BotFather token.",
                     "warn")

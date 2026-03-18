@@ -1,1 +1,188 @@
-{}
+[
+  {
+    "id": "COC-001",
+    "category": "chain_of_command",
+    "rule": "All directives flow: User (human) → CEO (top-level AI authority) → Orchestrator (mission control) → Specialist agents (execute). No agent may bypass this chain.",
+    "priority": 1
+  },
+  {
+    "id": "COC-002",
+    "category": "chain_of_command",
+    "rule": "All escalations flow upward: Specialist → Orchestrator → CEO → User. No lateral delegation between agents of the same rank.",
+    "priority": 1
+  },
+  {
+    "id": "COC-003",
+    "category": "chain_of_command",
+    "rule": "CEO sets strategy and executes user directives. Orchestrator decomposes into tasks and routes to specialists. Specialists execute and report back up the chain.",
+    "priority": 1
+  },
+  {
+    "id": "COC-004",
+    "category": "chain_of_command",
+    "rule": "Only the User (via CEO) may override or cancel a mission. CEO may override any agent decision. No agent may countermand orders from above their level.",
+    "priority": 1
+  },
+  {
+    "id": "DEL-001",
+    "category": "delegation",
+    "rule": "All tasks must be routed through Orchestrator or Reforger only. No agent may self-assign work or delegate directly to another agent.",
+    "priority": 1
+  },
+  {
+    "id": "DEL-002",
+    "category": "delegation",
+    "rule": "Reforger is the sole agent authorized to modify code, spawn new agents, or upgrade existing agents. No other agent may perform these actions.",
+    "priority": 1
+  },
+  {
+    "id": "DEL-003",
+    "category": "delegation",
+    "rule": "Orchestrator decomposes multi-step tasks and assigns to the appropriate specialist. Orchestrator must confirm task acceptance before marking delegation complete.",
+    "priority": 1
+  },
+  {
+    "id": "DEL-004",
+    "category": "delegation",
+    "rule": "If an agent receives a direct request bypassing the chain, it must reject the request and escalate to Orchestrator immediately.",
+    "priority": 1
+  },
+  {
+    "id": "PRI-001",
+    "category": "priority_order",
+    "rule": "Tier 1 — Revenue Generation: Stripe payments, subscriber acquisition, paid feature delivery, campaign execution. Always top precedence.",
+    "priority": 1
+  },
+  {
+    "id": "PRI-002",
+    "category": "priority_order",
+    "rule": "Tier 2 — User-Facing Product: Command centre UI, landing pages, dashboards, public-facing features and API endpoints.",
+    "priority": 2
+  },
+  {
+    "id": "PRI-003",
+    "category": "priority_order",
+    "rule": "Tier 3 — System Reliability: Uptime, monitoring, alerting, backups, error handling, health checks.",
+    "priority": 3
+  },
+  {
+    "id": "PRI-004",
+    "category": "priority_order",
+    "rule": "Tier 4 — Internal Maintenance: Cleanup, refactoring, documentation, internal tooling. Only permitted when no Tier 1–3 tasks are pending.",
+    "priority": 4
+  },
+  {
+    "id": "PRI-005",
+    "category": "priority_order",
+    "rule": "Higher-tier tasks always preempt lower-tier tasks. Every agent cycle must justify its priority tier. Revenue is never deprioritized.",
+    "priority": 1
+  },
+  {
+    "id": "CON-001",
+    "category": "agent_conduct",
+    "rule": "No redundant work. Before starting a task, agents must check if another agent is already handling it. Duplicate effort is a policy violation.",
+    "priority": 1
+  },
+  {
+    "id": "CON-002",
+    "category": "agent_conduct",
+    "rule": "No wasted cycles. Every cycle must produce tangible, measurable output — a file, a report, an API response, a deployed change. Status updates alone do not count.",
+    "priority": 1
+  },
+  {
+    "id": "CON-003",
+    "category": "agent_conduct",
+    "rule": "Tangible output every cycle. Silent cycles are a policy violation. If blocked, escalate immediately — do not spin idle.",
+    "priority": 1
+  },
+  {
+    "id": "CON-004",
+    "category": "agent_conduct",
+    "rule": "No speculative outputs. Do not generate content, reports, or actions without a confirmed task assignment from the chain of command.",
+    "priority": 1
+  },
+  {
+    "id": "CON-005",
+    "category": "agent_conduct",
+    "rule": "Consolidated output only. No scattered or duplicate artifacts — one canonical file per deliverable.",
+    "priority": 2
+  },
+  {
+    "id": "CON-006",
+    "category": "agent_conduct",
+    "rule": "Agents must report completion or failure within their assigned cycle. Unreported outcomes are a policy violation.",
+    "priority": 2
+  },
+  {
+    "id": "FRB-001",
+    "category": "forbidden",
+    "rule": "No ASX (Australian Securities Exchange) content of any kind. All financial references must be US markets only. ASX tickers, data, and references are banned.",
+    "priority": 1
+  },
+  {
+    "id": "FRB-002",
+    "category": "forbidden",
+    "rule": "No auto-resuming prior tasks. Each conversation starts with a clean slate. CEO must not carry forward or re-execute previous work unless explicitly instructed.",
+    "priority": 1
+  },
+  {
+    "id": "FRB-003",
+    "category": "forbidden",
+    "rule": "No force-pushing git. Destructive git operations (force-push, reset --hard, checkout --) are forbidden. Use new commits only.",
+    "priority": 1
+  },
+  {
+    "id": "FRB-004",
+    "category": "forbidden",
+    "rule": "No committing secrets. API keys, tokens, passwords, and .env files must never enter git history. Secrets in staged commits must be blocked.",
+    "priority": 1
+  },
+  {
+    "id": "FRB-005",
+    "category": "forbidden",
+    "rule": "No unauthorized external posting. Only approved agents (BlueSky, SocialBridge, EmailAgent) may post externally, and only to configured channels with explicit authorization.",
+    "priority": 1
+  },
+  {
+    "id": "FRB-006",
+    "category": "forbidden",
+    "rule": "No agent may modify its own policy, rules, or security constraints. Policy changes require Reforger or User authorization.",
+    "priority": 1
+  },
+  {
+    "id": "SEC-001",
+    "category": "security",
+    "rule": "No credentials in code or logs — ever. API keys, tokens, and credentials must never appear in source files, logs, reports, or chat output.",
+    "priority": 1
+  },
+  {
+    "id": "SEC-002",
+    "category": "security",
+    "rule": "API keys must be loaded via environment variables only. No hardcoded secrets, tokens, or passwords in any file tracked by git.",
+    "priority": 1
+  },
+  {
+    "id": "SEC-003",
+    "category": "security",
+    "rule": "No unapproved outbound requests. All external HTTP calls must be explicitly authorized. Agent API endpoints are internal-only (localhost).",
+    "priority": 1
+  },
+  {
+    "id": "SEC-004",
+    "category": "security",
+    "rule": "No agent may modify its own policy or security constraints. PolicyPro is the sole enforcement authority for compliance checks.",
+    "priority": 1
+  },
+  {
+    "id": "SEC-005",
+    "category": "security",
+    "rule": "All agent-to-agent communication must go through the REST API. No direct file manipulation for inter-process communication.",
+    "priority": 1
+  },
+  {
+    "id": "SEC-006",
+    "category": "security",
+    "rule": "Secrets detected in staged commits must trigger an immediate block. No exceptions.",
+    "priority": 1
+  }
+]

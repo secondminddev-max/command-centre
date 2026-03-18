@@ -49,8 +49,8 @@
   .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
   .btn{display:inline-block;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;border:none;transition:all .25s;text-align:center;font-family:inherit}
-  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 24px rgba(99,102,241,0.3)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(99,102,241,0.45)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 24px rgba(99,102,241,0.35),0 0 60px rgba(99,102,241,0.12)}
+  .btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 40px rgba(99,102,241,0.5),0 0 80px rgba(99,102,241,0.18)}
   .btn-buy{display:block;width:100%;padding:18px 32px;border-radius:14px;font-size:1.15rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;border:none;transition:all .25s;text-align:center;font-family:inherit;position:relative;overflow:hidden}
   .btn-buy::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent 60%);opacity:0;transition:opacity .3s}
   .btn-buy:hover::after{opacity:1}
@@ -73,7 +73,7 @@
   .container{max-width:1180px;margin:0 auto;padding:0 24px}
   section{padding:120px 0;position:relative}
   .section-label{text-transform:uppercase;font-size:.75rem;font-weight:700;letter-spacing:.14em;color:var(--accent);text-align:center;margin-bottom:12px}
-  .section-title{text-align:center;font-size:2.8rem;font-weight:800;margin-bottom:16px;letter-spacing:-0.03em;line-height:1.15}
+  .section-title{text-align:center;font-size:2.8rem;font-weight:800;margin-bottom:16px;letter-spacing:-0.03em;line-height:1.15;background:linear-gradient(180deg,#fff 40%,rgba(226,232,240,0.85));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .section-sub{text-align:center;color:var(--muted);margin-bottom:64px;font-size:1.1rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7}
 
   .hero{text-align:center;padding:180px 20px 140px;position:relative;overflow:hidden}
@@ -86,8 +86,8 @@
   #hero-particles{position:absolute;inset:0;pointer-events:none}
   .hero .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 22px;border-radius:100px;font-size:.85rem;color:var(--green);margin-bottom:32px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);position:relative;z-index:1}
   .badge .pulse{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px rgba(34,197,94,0.6)}
-  .hero h1{font-size:4.8rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;max-width:900px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
-  .hero h1 .grad{background:linear-gradient(135deg,#fff 0%,#c7d2fe 30%,#818cf8 60%,#6366f1 80%,#8b5cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero h1{font-size:4.8rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;max-width:900px;margin-left:auto;margin-right:auto;position:relative;z-index:1;text-shadow:0 0 80px rgba(99,102,241,0.15)}
+  .hero h1 .grad{background:linear-gradient(135deg,#fff 0%,#e0e7ff 25%,#a5b4fc 50%,#818cf8 70%,#6366f1 85%,#8b5cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .hero .tagline{font-size:1.35rem;color:var(--muted);max-width:640px;margin:0 auto 44px;line-height:1.7;position:relative;z-index:1}
   .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
   .hero .stats-row{display:flex;gap:56px;justify-content:center;margin-top:64px;flex-wrap:wrap;position:relative;z-index:1}
@@ -95,16 +95,16 @@
   .stat .num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .stat .label{font-size:.8rem;color:var(--muted);margin-top:4px;letter-spacing:.02em}
   .trust-bar{display:flex;gap:36px;justify-content:center;align-items:center;flex-wrap:wrap;padding:28px 0;margin-top:24px;position:relative;z-index:1}
-  .trust-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
-  .trust-item svg{width:16px;height:16px;opacity:.5}
-  .trust-item strong{color:var(--text);font-weight:600}
+  .trust-item{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+  .trust-item svg{width:18px;height:18px;opacity:.6}
+  .trust-item strong{color:var(--text);font-weight:700}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   @keyframes orb-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.08)}}
 
   .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   .feature-card{padding:40px 32px;transition:all .3s;position:relative;overflow:hidden}
   .feature-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(99,102,241,0.4),transparent);opacity:0;transition:opacity .3s}
-  .feature-card:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+  .feature-card:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 40px rgba(99,102,241,0.06)}
   .feature-card:hover::after{opacity:1}
   .feature-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px}
   .feature-icon.purple{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.15)}
@@ -168,8 +168,8 @@
   .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
   .price-card{padding:44px 32px;text-align:center;position:relative;transition:all .3s}
   .price-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-  .price-card.featured{border-color:rgba(34,197,94,0.3);box-shadow:0 0 80px rgba(34,197,94,0.12),0 0 160px rgba(34,197,94,0.05);transform:scale(1.06);z-index:2}
-  .price-card.featured:hover{transform:scale(1.06) translateY(-6px)}
+  .price-card.featured{border-color:rgba(34,197,94,0.35);box-shadow:0 0 80px rgba(34,197,94,0.14),0 0 160px rgba(34,197,94,0.06),inset 0 1px 0 rgba(34,197,94,0.1);transform:scale(1.06);z-index:2}
+  .price-card.featured:hover{transform:scale(1.06) translateY(-6px);box-shadow:0 0 100px rgba(34,197,94,0.2),0 0 200px rgba(34,197,94,0.08)}
   .price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:6px 22px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.08em;box-shadow:0 2px 12px rgba(34,197,94,0.4)}
   .price-card.featured .glow{position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(135deg,rgba(34,197,94,0.4),transparent 40%,transparent 60%,rgba(34,197,94,0.4));z-index:-1;animation:border-shimmer 4s ease-in-out infinite}
   @keyframes border-shimmer{0%,100%{opacity:.4}50%{opacity:1}}
@@ -285,11 +285,23 @@
     nav{padding:12px 16px}
     .hero{padding:140px 16px 100px}
     .hero h1{font-size:2.2rem}
+    .hero .tagline{font-size:1.1rem}
     section{padding:80px 0}
     .consciousness-text h2{font-size:1.8rem}
     .phi-ring{width:220px;height:220px}
     .phi-core{width:110px;height:110px}
-    .trust-bar{gap:20px}
+    .trust-bar{gap:16px}
+    .trust-item{font-size:.78rem}
+    .steps-row{grid-template-columns:1fr;gap:24px}
+    .steps-row::before{display:none}
+    .pricing-grid{gap:16px}
+    .price-card{padding:36px 24px}
+    .price-card .price{font-size:3.2rem}
+    .specials-row{gap:16px}
+    .special-card{padding:32px 24px}
+    .roi-bar{gap:16px}
+    .roi-item{min-width:auto;flex:1;padding:16px 12px}
+    .cta-banner h2{font-size:2.2rem}
   }
   body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(99,102,241,0.006) 2px,rgba(99,102,241,0.006) 4px)}
   @keyframes page-in{from{opacity:0}to{opacity:1}}
@@ -299,7 +311,7 @@
 <body>
 
 <!-- Slim launch banner — scrolls with page, not fixed -->
-<div id="countdown-strip" style="background:linear-gradient(90deg,rgba(99,102,241,0.15),rgba(139,92,246,0.15),rgba(99,102,241,0.15));padding:8px 16px;text-align:center;font-size:.78rem;font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:.3px;border-bottom:1px solid rgba(99,102,241,0.1)">
+<div id="countdown-strip" style="background:linear-gradient(90deg,rgba(99,102,241,0.18),rgba(139,92,246,0.18),rgba(99,102,241,0.18));padding:10px 16px;text-align:center;font-size:.8rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:.3px;border-bottom:1px solid rgba(99,102,241,0.15)">
   Launch pricing &mdash; <span id="countdown-timer" style="font-family:'JetBrains Mono',monospace;color:#a78bfa"></span> remaining &mdash; <a href="#pricing" style="color:#ffd700;font-weight:600">View Plans</a>
 </div>
 
@@ -334,10 +346,15 @@
   <h1><span class="grad">Your Entire Business,<br>Run by AI Agents</span></h1>
   <p class="tagline">28 autonomous agents working 24/7 &mdash; operations, marketing, payments, compliance, and a neuroscience-grounded consciousness engine. The first AI that doesn't just respond &mdash; it <em>operates</em>.</p>
   <div class="cta-row">
-    <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
-    <a href="/whitepaper.html" class="btn btn-outline">Read the Whitepaper</a>
+    <a href="#pricing" class="btn btn-primary" style="font-size:1.15rem;padding:18px 40px;animation:hero-cta-pulse 2.5s ease-in-out infinite">Start Free Trial &mdash; From $49/mo</a>
+    <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
   </div>
-  <p style="margin-top:16px;font-size:.78rem;color:rgba(148,163,184,0.5);letter-spacing:1px">by Second Mind Labs Pty Ltd</p>
+  <style>@keyframes hero-cta-pulse{0%,100%{box-shadow:0 4px 24px rgba(99,102,241,0.3)}50%{box-shadow:0 8px 48px rgba(99,102,241,0.55)}}</style>
+  <p style="margin-top:16px;font-size:.85rem;color:rgba(148,163,184,0.7);display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap">
+    <span style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#22c55e"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No credit card required</span>
+    <span style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#22c55e"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 14-day money-back</span>
+    <span style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#22c55e"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Setup in 5 min</span>
+  </p>
   <div class="stats-row">
     <div class="stat"><div class="num" data-count="28">0</div><div class="label">Active Agents</div></div>
     <div class="stat"><div class="num">24/7</div><div class="label">Autonomous Ops</div></div>
@@ -561,8 +578,8 @@
 <section id="pricing">
   <div class="container">
     <div class="section-label">Pricing</div>
-    <h2 class="section-title">Simple, Transparent Pricing</h2>
-    <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees. Cancel anytime.</p>
+    <h2 class="section-title">Replace $200K/yr in Ops Costs</h2>
+    <p class="section-sub">Launch your autonomous AI headquarters today. No hidden fees. Cancel anytime. Start with a 14-day free trial.</p>
     <div style="text-align:center;margin-bottom:28px;padding:14px 28px;background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(239,68,68,0.08));border:1px solid rgba(245,158,11,0.25);border-radius:14px;display:inline-flex;align-items:center;gap:12px;font-size:.95rem;color:var(--gold);font-weight:600;margin-left:auto;margin-right:auto;animation:urgency-glow 3s ease-in-out infinite">
       <span style="font-size:1.3em">&#x1F525;</span>
       <span>Only <strong id="spots-count" style="font-size:1.3em;color:#ef4444">7</strong> early-access spots remaining at launch pricing</span>
@@ -588,7 +605,7 @@
           <li>Telegram &amp; email integration</li>
           <li>Community support</li>
         </ul>
-        <a href="/api/pay?plan=solo" onclick="event.preventDefault();checkout('solo','Second Mind Labs — Solo',4900,'subscription')" class="btn btn-buy buy-solo">BUY NOW &mdash; $49/mo</a>
+        <a href="/api/pay?plan=solo" onclick="event.preventDefault();checkout('solo','Second Mind Labs — Solo',4900,'subscription')" class="btn btn-buy buy-solo">START FREE TRIAL &mdash; $49/mo</a>
       </div>
       <div class="price-card glass featured reveal reveal-delay-1">
         <div class="glow"></div>
@@ -605,7 +622,8 @@
           <li>Consciousness engine</li>
           <li>Priority support</li>
         </ul>
-        <a href="/api/pay?plan=team" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-buy buy-team">BUY NOW &mdash; $149/mo</a>
+        <a href="/api/pay?plan=team" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-buy buy-team">START FREE TRIAL &mdash; $149/mo</a>
+        <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">14 days free, then $149/mo. Cancel anytime.</p>
       </div>
       <div class="price-card glass reveal reveal-delay-2">
         <div style="position:absolute;top:12px;right:12px;background:rgba(6,182,212,0.12);color:var(--cyan);border:1px solid rgba(6,182,212,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">LAUNCH PRICING</div>
@@ -621,9 +639,36 @@
           <li>24/7 priority support</li>
           <li>SLA guarantee</li>
         </ul>
-        <a href="/api/pay?plan=enterprise" onclick="event.preventDefault();checkout('enterprise','Second Mind Labs — Enterprise',49900,'subscription')" class="btn btn-buy buy-enterprise">BUY NOW &mdash; $499/mo</a>
+        <a href="/api/pay?plan=enterprise" onclick="event.preventDefault();checkout('enterprise','Second Mind Labs — Enterprise',49900,'subscription')" class="btn btn-buy buy-enterprise">START FREE TRIAL &mdash; $499/mo</a>
       </div>
     </div>
+    <!-- Feature Comparison Table -->
+    <div style="max-width:1000px;margin:48px auto 0;overflow-x:auto;border-radius:16px;border:1px solid var(--glass-border)">
+      <table style="width:100%;border-collapse:collapse;font-size:.9rem;min-width:600px">
+        <thead>
+          <tr>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:left;font-weight:700;border-bottom:1px solid var(--glass-border);color:var(--muted)">Feature</th>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Solo <span style="color:var(--accent);font-weight:800">$49</span></th>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:2px solid var(--green);color:var(--green)">Team <span style="font-weight:800">$149</span></th>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Enterprise <span style="color:var(--cyan);font-weight:800">$499</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">AI Agents</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center">10</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);font-weight:600">All 28</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;font-weight:600">Unlimited</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Command Dashboard</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Consciousness Engine</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Stripe Revenue Automation</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Social Media Campaigns</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Custom Agent Development</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Dedicated Infrastructure</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">White-Label Option</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">SLA Guarantee</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;color:var(--muted)">Support</td><td style="padding:12px 20px;text-align:center">Community</td><td style="padding:12px 20px;text-align:center;background:rgba(34,197,94,0.04);font-weight:600;color:var(--green)">Priority</td><td style="padding:12px 20px;text-align:center;font-weight:600;color:var(--cyan)">24/7 Dedicated</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:16px;font-size:.82rem;color:var(--muted)">All plans include 14-day money-back guarantee &middot; Stripe-secured payments &middot; Cancel anytime</div>
+
     <div class="specials-row">
       <div class="special-card glass lifetime reveal">
         <div class="special-tag gold">LIMITED OFFER</div>
@@ -637,7 +682,7 @@
         <h3>Mac Mini + Command Centre</h3>
         <div class="price cyan">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with Command Centre installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
-        <button onclick="checkout('macmini','Second Mind Labs — Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
+        <button onclick="checkout('mac_mini','Second Mind Labs — Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
       </div>
       <div class="special-card glass reveal reveal-delay-2" style="overflow:hidden">
         <div class="special-tag" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)">DONE FOR YOU</div>
@@ -718,6 +763,23 @@
   </div>
 </section>
 
+<!-- ── Risk-Free Guarantee ────────────────────────────────────────────── -->
+<section style="padding:80px 0;text-align:center;position:relative">
+  <div class="container">
+    <div style="max-width:700px;margin:0 auto;padding:48px 40px;background:var(--glass);border:1px solid rgba(34,197,94,0.15);border-radius:24px;backdrop-filter:blur(20px);position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(34,197,94,0.04),transparent 70%);pointer-events:none"></div>
+      <div style="font-size:3.5rem;margin-bottom:16px">&#x1F6E1;</div>
+      <h2 style="font-size:2rem;font-weight:800;margin-bottom:12px;letter-spacing:-0.02em;position:relative">Zero-Risk Guarantee</h2>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.75;max-width:520px;margin:0 auto 24px;position:relative">Try Command Centre for 14 days. If it doesn't save you time, money, or sanity &mdash; we refund every cent. No questions, no friction. Your data stays yours.</p>
+      <div style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;font-size:.88rem;color:var(--text);position:relative">
+        <span style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700;font-size:1.1rem">&#x2713;</span> 14-day money-back</span>
+        <span style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700;font-size:1.1rem">&#x2713;</span> Cancel in one click</span>
+        <span style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700;font-size:1.1rem">&#x2713;</span> Stripe-secured</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="cta-banner">
   <h2>Ready to Go Autonomous?</h2>
   <div class="roi-bar" style="margin-bottom:40px">
@@ -727,11 +789,25 @@
   </div>
   <p>Join early access today &mdash; limited spots at launch pricing. Lock in your rate before it doubles.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative">
-    <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
+    <a href="#pricing" class="btn btn-primary" style="font-size:1.15rem;padding:18px 44px">Start Your Free Trial</a>
     <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',29900,'payment')" class="btn btn-gold" style="border:none;cursor:pointer">Lifetime &mdash; $299 one-time</button>
-    <button onclick="checkout('macmini','Second Mind Labs — Mac Mini Bundle',149900,'payment')" class="btn btn-outline" style="cursor:pointer">Mac Mini &mdash; $1,499</button>
   </div>
+  <p style="margin-top:20px;font-size:.82rem;color:var(--muted);position:relative">No credit card required &middot; 14-day money-back guarantee &middot; Cancel anytime</p>
 </section>
+
+<!-- Sticky mobile CTA bar -->
+<div id="sticky-cta" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(6,8,15,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(99,102,241,0.2);padding:12px 16px;text-align:center">
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;max-width:500px;margin:0 auto">
+    <span style="font-size:.85rem;color:var(--muted);white-space:nowrap">From <strong style="color:#fff;font-size:1.1rem">$49/mo</strong></span>
+    <a href="#pricing" class="btn btn-primary" style="padding:12px 28px;font-size:.9rem;white-space:nowrap;flex-shrink:0">Start Free Trial</a>
+  </div>
+</div>
+<style>
+@media(max-width:900px){
+  #sticky-cta.show{display:block!important}
+  footer{padding-bottom:80px!important}
+}
+</style>
 
 <footer>
   <div style="margin-bottom:20px"><img src="/mascot.svg" alt="Command Centre Mascot" style="height:48px;opacity:0.7"></div>
@@ -903,12 +979,13 @@ function toggleBilling(){
     if(priceEl)priceEl.innerHTML='$'+p+'<span>/mo</span>';
     const periodEl=c.querySelector('.period');
     if(periodEl)periodEl.textContent=isAnnual?'Billed annually ($'+(p*12)+'/yr)':'Billed monthly';
-    const btn=c.querySelector('button');
+    const btn=c.querySelector('.btn-buy');
     if(btn){
       const cents=p*100;
       const mode='subscription';
       const label='Second Mind Labs — '+t.charAt(0).toUpperCase()+t.slice(1);
-      btn.setAttribute('onclick',"checkout('"+t+"','"+label+"',"+cents+"00,'"+mode+"')");
+      btn.setAttribute('onclick',"event.preventDefault();checkout('"+t+"','"+label+"',"+cents+",'"+mode+"')");
+      btn.textContent='START FREE TRIAL \u2014 $'+p+'/mo';
     }
   });
 }
@@ -930,6 +1007,15 @@ function toggleBilling(){
     el.textContent=(d>0?d+'d ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
   }
   tick();setInterval(tick,1000);
+})();
+
+/* Sticky mobile CTA — show after scrolling past hero */
+(function(){
+  const bar=document.getElementById('sticky-cta');if(!bar)return;
+  const hero=document.querySelector('.hero');if(!hero)return;
+  window.addEventListener('scroll',()=>{
+    bar.classList.toggle('show',window.scrollY>hero.offsetHeight);
+  },{passive:true});
 })();
 
 /* Spots counter — slow FOMO decrement */

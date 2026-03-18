@@ -22,14 +22,14 @@ def post(path, data):
         return json.loads(r.read())
 
 # ── EmailAgent: SendGrid SMTP primary ─────────────────────────────────────────
-emailagent_code = open("/Users/secondmind/claudecodetest/agents/emailagent.py").read()
+emailagent_code = open("os.path.dirname(os.path.abspath(__file__))/agents/emailagent.py").read()
 
 # ── Emailer: consolidated stub — defers to emailagent ────────────────────────
 emailer_code = '''
 def run_emailer():
     import time, json, os
     aid = "emailer"
-    CWD = "/Users/secondmind/claudecodetest"
+    CWD = "os.path.dirname(os.path.abspath(__file__))"
     # emailer is consolidated into emailagent. It monitors the emailagent queue
     # depth and reports it, but does NOT consume messages — emailagent is the sole
     # processor of email_queue.json to prevent double-dispatch race conditions.

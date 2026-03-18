@@ -128,5 +128,39 @@
     "name": "QA Tester",
     "subscribed_at": "2026-03-18T21:18:12.572644",
     "source": "landing_page"
+  },
+  {
+    "email": "test@probe.invalid",
+    "name": "",
+    "subscribed_at": "2026-03-19T00:30:36.071039",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@probe.invalid",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-19T00:30:36.356812",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@demo-test.local",
+    "name": "",
+    "subscribed_at": "2026-03-19T00:40:55.790753",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.local",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-19T00:41:02.745118",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@demotester.local",
+    "name": "",
+    "subscribed_at": "2026-03-19T01:03:12.422819",
+    "source": "landing_page"
   }
 ]

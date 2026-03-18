@@ -16,7 +16,6 @@
 | Solo | $49/mo |
 | Team | $149/mo |
 | Enterprise | $499/mo |
-| Lifetime | $299 one-time |
 
 ---
 
@@ -32,15 +31,15 @@ Hi {{first_name}},
 
 **Command Centre is live.**
 
-We just launched the first autonomous AI operating system for business. Not a chatbot. Not another SaaS dashboard. A full command centre where AI agents run your operations — marketing, research, revenue, accounting, customer outreach — while you focus on strategy.
+We just launched the first autonomous AI operating system for business. Not a chatbot. Not another SaaS dashboard. A full command centre where 28 AI agents run your operations — marketing, research, revenue, accounting, customer outreach — while you focus on strategy.
 
 **What Command Centre does:**
 
-- **20+ autonomous agents** work around the clock — research, content, email, payments, social media
+- **28 autonomous agents** work around the clock — research, content, email, payments, social media
 - **Live command centre** — watch every agent in real time on a single dashboard
 - **Revenue engine built in** — Stripe integration, email campaigns, landing pages, all automated
 - **Self-improving** — agents learn from each cycle and get smarter over time
-- **100% local** — your data stays on your machine, never leaves
+- **Hosted and secured** — production-ready SaaS, no setup headaches
 
 **This is not a demo. It's production-ready.**
 
@@ -50,8 +49,7 @@ People are already using Command Centre to run their entire back office. One fou
 
 - **Solo — $49/mo** → 1 seat, core agents, basic dashboards
 - **Team — $149/mo** → 5 seats, full agent roster, custom spawning
-- **Enterprise — $499/mo** → Unlimited seats, custom agents, SLA, on-prem
-- **Lifetime — $299 one-time** → Everything. Forever. No monthly fees.
+- **Enterprise — $499/mo** → Unlimited seats, custom agents, SLA, dedicated support
 
 **[Get started now →](https://secondmindhq.com/pricing?utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email1)**
 
@@ -65,7 +63,7 @@ secondmindhq.com
 ## EMAIL 2 — FEATURE DEEP-DIVE
 
 **Trigger:** 48 hours after Email 1
-**Subject:** Inside Command Centre: what 20+ agents actually do for you
+**Subject:** Inside Command Centre: what 28 agents actually do for you
 **Preview:** Research, marketing, payments, scheduling — here's the full breakdown.
 
 ---
@@ -76,7 +74,7 @@ You signed up for Command Centre. Here's what's actually running under the hood 
 
 ### The Agent Roster
 
-Command Centre ships with 20+ specialised agents. Each one handles a different part of your business:
+Command Centre ships with 28 specialised agents. Each one handles a different part of your business:
 
 **Research & Intelligence**
 - **NetScout** — scans the web for market data, competitor moves, and opportunities
@@ -109,7 +107,7 @@ You didn't do anything. That's the point.
 
 **[Explore the full agent roster →](https://secondmindhq.com/agents?utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email2)**
 
-Plans start at $49/mo. Lifetime access is $299 — one payment, no expiry.
+Plans start at $49/mo. 14-day free trial. No credit card required.
 
 — The Second Mind HQ Team
 
@@ -160,7 +158,7 @@ Every quote above is from a real person who signed up in the first 48 hours. Com
 
 - **Solo — $49/mo** → Get started with core agents
 - **Team — $149/mo** → Bring your whole team
-- **Lifetime — $299** → Pay once, own it forever
+- **Enterprise — $499/mo** → Full autonomy at scale
 
 **[Start your AI workforce →](https://secondmindhq.com/pricing?utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email3)**
 
@@ -171,87 +169,79 @@ Every quote above is from a real person who signed up in the first 48 hours. Com
 ## EMAIL 4 — LIMITED-TIME OFFER
 
 **Trigger:** 8 days after Email 1
-**Subject:** 48 hours left: Lifetime access for $299 (then it's gone)
-**Preview:** Lock in Command Centre forever — before the price doubles.
+**Subject:** 48 hours left: launch pricing goes up Friday
+**Preview:** Lock in your rate before standard pricing kicks in.
 
 ---
 
 Hi {{first_name}},
 
-Quick update: the **Lifetime plan at $299** is going away in 48 hours.
+Quick update: **launch pricing for Command Centre ends in 48 hours.**
 
-After that, it doubles to $599 — or we remove it entirely.
+After {{expiry_date}}, all tiers go up. No extensions, no exceptions.
 
-### Why we're doing this
+### What you lock in today
 
-We launched Command Centre last week. The Lifetime plan was a launch reward for early believers. Over {{subscriber_count}} people have signed up. The early-bird window is closing.
+- **Solo — $49/mo** → 28 agents, live dashboard, email + social automation
+- **Team — $149/mo** → Multi-user access, priority processing, custom agent spawning
+- **Enterprise — $499/mo** → Dedicated instance, custom agent development, SLA + onboarding
 
-### What Lifetime gets you
+### The comparison
 
-- **Every current agent** — all 20+ in the roster
-- **Every future agent** — anything we build, you get
-- **Every update** — forever, no expiry, no renewals
-- **Community support** — access to the Command Centre user community
-- **One payment: $299** — no monthly fees, no surprises
+| What you'd pay elsewhere | Cost |
+|---|---|
+| Virtual assistant | $1,500/mo (works 8 hours, needs managing) |
+| SaaS tool stack (Notion + Slack + Zapier + analytics) | $500–2,000/mo |
+| **Command Centre** | **From $49/mo** (28 agents, 24/7, self-healing) |
 
-For context: the Solo plan at $49/mo costs $588/year. Lifetime pays for itself in 6 months.
+Over {{subscriber_count}} people have signed up since launch. The early-bird window is closing.
 
-### The math
+### 14-day money-back guarantee
 
-| Plan | Year 1 | Year 2 | Year 3 |
-|------|--------|--------|--------|
-| Solo ($49/mo) | $588 | $1,176 | $1,764 |
-| Team ($149/mo) | $1,788 | $3,576 | $5,364 |
-| **Lifetime ($299)** | **$299** | **$299** | **$299** |
+Try it risk-free. If Command Centre doesn't save you time in the first two weeks, we'll refund you — no questions asked.
 
-### This is the last email about this offer
-
-After {{expiry_date}}, the Lifetime plan either doubles or disappears. No extensions, no exceptions.
-
-**[Lock in Lifetime access — $299 →](https://secondmindhq.com/pricing?plan=lifetime&utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email4)**
+**[Lock in launch pricing →](https://secondmindhq.com/pricing?utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email4)**
 
 — The Second Mind HQ Team
-
-P.S. Already on a monthly plan? Reply to this email and we'll credit your payments toward Lifetime.
 
 ---
 
 ## EMAIL 5 — FINAL CALL
 
 **Trigger:** 10 days after Email 1 (24 hours after Email 4)
-**Subject:** Final call — Lifetime access closes tonight at midnight
-**Preview:** $299. All agents. Forever. This is the last email.
+**Subject:** Final call — launch pricing closes tonight at midnight
+**Preview:** $49/mo. 28 agents. Last chance at this rate. This is the last email.
 
 ---
 
 Hi {{first_name}},
 
-This is the last email in this sequence. After tonight, the Lifetime plan at $299 is done.
+This is the last email in this sequence. After tonight, launch pricing is done.
 
-**Here's everything you'd be getting:**
+**Here's everything you get at launch rates:**
 
-- 20+ autonomous AI agents
+- 28 autonomous AI agents
 - Live command centre dashboard
 - Stripe revenue engine
 - Email, social media, and marketing automation
 - Self-improving consciousness system
-- All future agents and updates
-- Zero monthly fees — one payment, lifetime access
+- All future agents and updates included
 
-**What happens if you don't act:**
+**After tonight, standard pricing kicks in:**
 
-- Solo plan: $49/mo ($588/yr)
-- Team plan: $149/mo ($1,788/yr)
-- Enterprise plan: $499/mo ($5,988/yr)
-- Lifetime plan after tonight: $599 or removed entirely
+| Plan | Launch Price | Standard Price |
+|------|------------|----------------|
+| Solo | $49/mo | Higher |
+| Team | $149/mo | Higher |
+| Enterprise | $499/mo | Higher |
 
 People using Command Centre right now are generating revenue, publishing content, and running research — all while they sleep. Their agents don't take breaks.
 
 **This is the simplest decision in the sequence:**
 
-$299 now, or $588+/year forever.
+Lock in $49/mo now, or pay more later.
 
-**[Get Lifetime Access — $299 →](https://secondmindhq.com/pricing?plan=lifetime&utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email5)**
+**[Lock in launch pricing →](https://secondmindhq.com/pricing?utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026&utm_content=email5)**
 
 Thanks for reading. Whether you join today or later, we're building something real.
 
@@ -272,7 +262,7 @@ secondmindhq.com
 | **Email 1** | Trigger: immediate (launch announcement) |
 | **Email 2** | Trigger: 48 hours after Email 1 (feature deep-dive) |
 | **Email 3** | Trigger: 5 days after Email 1 (social proof) |
-| **Email 4** | Trigger: 8 days after Email 1 (limited-time offer) |
+| **Email 4** | Trigger: 8 days after Email 1 (launch pricing urgency) |
 | **Email 5** | Trigger: 10 days after Email 1 (final call) |
 | **Unsubscribe** | CAN-SPAM compliant footer on all emails |
 | **Tracking** | UTM: utm_source=email&utm_medium=drip&utm_campaign=aihq_launch_mar2026 |

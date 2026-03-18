@@ -1,90 +1,200 @@
 {
-  "topic": "AI Agent SaaS Competitive Scan — Pricing & Positioning (Updated)",
-  "timestamp": "2026-03-18T14:00:00Z",
-  "bullets": [
-    "=== MARKET SIZE ===",
-    "AI agent market: $7.84B in 2025, projected $52.62B by 2030 (41% CAGR)",
-    "Orgs spent avg $1.2M on AI-native apps in 2025, up 108% YoY (Zylo SaaS Management Index)",
-    "By end of 2026, 40% of enterprise apps will integrate task-specific AI agents (up from 5% in 2025)",
-    "AI agent startups captured $15B+ in funding in 2025 alone",
-
-    "=== TIER 1: ENTERPRISE HEAVYWEIGHTS ===",
-    "Kore.ai — Custom enterprise pricing. Omnichannel conversational + workflow orchestration. 400+ Fortune 2000 clients. Gartner-recognized.",
-    "Salesforce Agentforce — $2/conversation, $0.10/action (Flex Credits), or $125/user/month. Massive existing customer base lock-in.",
-    "Microsoft Copilot Studio — Copilot licences + consumption credits. Deep M365 ecosystem integration and compliance.",
-    "IBM watsonx.ai — Custom enterprise pricing. AI model development with private data training and governance controls.",
-    "Glean — Custom enterprise pricing. Knowledge retrieval and workflow automation across disconnected enterprise tools.",
-
-    "=== TIER 2: FUNDED STARTUPS (DIRECT COMPETITORS) ===",
-    "Sierra AI — Outcome-based pricing (pay per successful resolution). Hit $100M ARR in 21 months. Customer service focus.",
-    "Wonderful — $2B valuation, $150M Series B. AI customer service agents at scale.",
-    "Rox AI — $1.2B valuation (Mar 2026). Autonomous AI sales agents.",
-    "Cursor — $3B valuation, $400M raised Jan 2026. AI-native coding environment, full-stack generation from natural language.",
-    "Decagon — Custom pricing. Enterprise support automation using Agent Operating Procedures. Model-agnostic.",
-    "Lindy AI — Free / $49.99 Pro / $199.99 Business per month. No-code multi-agent workflows for email, meetings, CRM.",
-    "Sintra AI — $97/mo. All-in-one business automation with 12 specialised AI agents.",
-    "Harvey — Custom pricing. Legal workflow automation (contracts, research, document analysis).",
-    "Armadin — $190M raise (Mar 2026, Mandiant founder). Autonomous cybersecurity agents.",
-
-    "=== TIER 3: DEVELOPER FRAMEWORKS ===",
-    "CrewAI — Free (MIT OSS) / $99/mo managed. Python multi-agent framework. 90k+ GitHub stars.",
-    "AutoGen (Microsoft) — Free (MIT). 170k+ GitHub stars. Visual Agent Builder in 2026.",
-    "LangGraph/LangChain — MIT core. LangSmith $39/seat/mo for observability. Graph-based orchestration.",
-
-    "=== TIER 4: NO-CODE / AUTOMATION PLATFORMS ===",
-    "Arahi AI — Free + usage-based. No-code, 2,800+ integrations, 200+ templates.",
-    "Zapier — Free / from $19.99/mo. 7,000+ app connections. Simple trigger-based automations.",
-    "Make — Free / from $10.59/mo. Complex visual workflows with branching logic.",
-    "n8n — Free OSS / $24/mo cloud. Self-hostable. Developer-focused.",
-    "Gumloop — Free / $37/mo Solo. Slack-first AI workflows.",
-    "Relevance AI — Free / from $19/mo. Data-heavy ops and analytics automation.",
-
-    "=== CUSTOMER SUPPORT AGENTS ===",
-    "Intercom Fin — $74/mo base + $0.99/resolved issue (outcome-based component).",
-    "Zendesk Answer Bot — $50/agent/month. ~30% ticket deflection.",
-    "Freshworks — $29/agent/month. SMB-focused.",
-
-    "=== SALES & MARKETING AGENTS ===",
-    "Clay — $149-$800/mo. Prospect research + email personalisation.",
-    "Instantly AI — $37-$358/mo. Email automation and optimisation.",
-    "HubSpot AI — $45/mo basic, $800+/mo Professional tier.",
-
-    "=== VOICE AI ===",
-    "Synthflow — $29-$299/mo. Voice automation.",
-    "Bland AI — $0.09/min. Voice interactions.",
-    "Vapi — From $0.05/min. Enterprise discounts available.",
-
-    "=== DEV TOOLS ===",
-    "GitHub Copilot — $10-$19/user/month.",
-    "Devin AI — $20 Core / $500 Team per month. Autonomous software development.",
-
-    "=== PRICING MODEL TRENDS ===",
-    "Per-conversation: $0.05-$2.00 (Salesforce $2, Zendesk $1.50, Intercom $0.99)",
-    "Per-action/token: $0.10+ per action (Salesforce Flex Credits)",
-    "Outcome-based: Pay per successful resolution — fastest growing model (Sierra, Intercom Fin, Zendesk AI)",
-    "Per-seat subscription: $10-$500/user/month (wide range by vertical)",
-    "Hybrid (base + usage): Dominant model in 2026. Free tier standard for adoption.",
-    "Deloitte predicts outcome-based pricing will reshape SaaS budgets by 2027",
-
-    "=== STRATEGIC GAPS / OPPORTUNITIES ===",
-    "No competitor offers a unified AI HQ combining agent orchestration + consciousness/self-improvement + revenue ops in one dashboard",
-    "Most platforms are vertical-specific (CX, sales, dev) — no general-purpose autonomous agent command centre exists",
-    "Self-hosted/on-premise options rare outside n8n and enterprise tiers — privacy-first positioning underserved",
-    "Agent marketplaces are nascent — bundling marketplace with orchestration platform is a blue ocean play",
-    "Outcome-based pricing is growing but few startups have adopted it — early mover advantage available"
+  "topic": "AI Agent Market Size, Growth Projections & Competitive Landscape (2025-2026)",
+  "timestamp": "2026-03-19T00:00:00Z",
+  "executive_summary": "The global AI agents market is valued at ~$7.6B in 2025, projected to reach $10.9B in 2026 with a 43-50% CAGR. The market is expected to hit $47-53B by 2030 and $183-199B by 2033-2034. 85% of enterprises are implementing AI agents by end of 2025. Funding is explosive — AI startups attract 33% of total VC, with average deal size up 86% YoY to $49.3M. The market is dominated by hyperscalers (Microsoft, Google, Salesforce) at the enterprise tier, well-funded AI labs (OpenAI at ~$1T valuation, Anthropic at $183B) in the model/API layer, and a growing crop of agent-builder platforms (CrewAI, Relevance AI, Lindy, Taskade) competing on pricing and ease of use. Pricing is rapidly shifting from per-seat to credit/usage/outcome-based models.",
+  "market_size": {
+    "2024": "$5.4B",
+    "2025": "$7.6B",
+    "2026_projected": "$10.9B",
+    "2030_projected": "$47-53B",
+    "2033_projected": "$183B",
+    "2034_projected": "$199B",
+    "cagr_2025_2033": "43-50%",
+    "north_america_share": "39.6%",
+    "fastest_growing_region": "Asia Pacific"
+  },
+  "adoption_stats": {
+    "enterprise_adoption_2025": "85% of enterprises implementing AI agents",
+    "retail_investment_increase": "76% of retailers increasing AI agent investment",
+    "manufacturing_adoption": "77% in 2024, up from 70% in 2023",
+    "healthcare_hospital_adoption": "90% of hospitals worldwide expected by 2025",
+    "roi_expectations": "62% of companies anticipate 100%+ ROI",
+    "marketing_roi": "80% of marketers say AI tools exceeded ROI expectations"
+  },
+  "funding_landscape": {
+    "ai_share_of_vc_2026": "33% of total VC funding",
+    "us_share_of_ai_funding": "79% ($159B of total)",
+    "average_deal_size_2025": "$49.3M (up 86% from 2024)",
+    "mega_rounds": "$100M+ deals account for 75%+ of funding",
+    "ai_agent_startups_2024": "$3.8B raised (nearly 3x prior year)"
+  },
+  "top_competitors": {
+    "model_and_api_layer": [
+      {
+        "name": "OpenAI",
+        "valuation": "Targeting ~$1T (IPO)",
+        "revenue": "~$20B annualized (2025, 5x YoY)",
+        "offering": "ChatGPT, GPT API, Custom GPTs, Assistants API",
+        "pricing": "Free, Plus $20/mo, Team $25/user/mo, Enterprise custom"
+      },
+      {
+        "name": "Anthropic",
+        "valuation": "$183B (Series F, $13B round)",
+        "revenue": "~$7B run rate (Oct 2025, from $1B in Jan)",
+        "offering": "Claude, Claude API, Claude Code, Agent SDK",
+        "pricing": "Free, Pro $20/mo, Team $25/user/mo, Enterprise custom"
+      },
+      {
+        "name": "Mistral AI",
+        "valuation": "€12B ($14B, Series C €2B round)",
+        "offering": "Mistral Large, Le Chat, API platform",
+        "pricing": "API usage-based, Le Chat free/pro tiers"
+      }
+    ],
+    "enterprise_platforms": [
+      {
+        "name": "Microsoft Copilot Studio",
+        "parent_valuation": "~$3T (public)",
+        "offering": "Copilot Studio, M365 Copilot, cross-app AI agents",
+        "pricing": "M365 Copilot $30/user/mo, Studio $200/pack/mo (25K credits), pay-as-you-go"
+      },
+      {
+        "name": "Salesforce Agentforce",
+        "parent_valuation": "~$250B (public)",
+        "offering": "Autonomous agents for sales, service, marketing",
+        "pricing": "Enterprise custom, per-completed-action model emerging",
+        "impact": "85% of tier-1 support automated, 60% of routine sales follow-ups"
+      },
+      {
+        "name": "Google Vertex AI Agent Builder",
+        "parent_valuation": "~$2T (Alphabet, public)",
+        "offering": "Vertex AI Agent Builder, Gemini API, AI Studio",
+        "pricing": "10K queries/mo free, then usage-based ($1.50-$6/1K queries)"
+      },
+      {
+        "name": "IBM Orchestrate / watsonx",
+        "parent_valuation": "~$200B (public)",
+        "offering": "IBM Orchestrate, watsonx AI agents",
+        "pricing": "Essentials $6K/yr (1K units), Standard $72K/yr (8.5K units)"
+      }
+    ],
+    "agent_builder_platforms": [
+      {
+        "name": "CrewAI",
+        "category": "Multi-Agent Orchestration",
+        "pricing": "Free (50 exec/mo), Pro $25/mo (100 exec), Enterprise custom",
+        "differentiator": "Open-source core, lowest entry point"
+      },
+      {
+        "name": "Relevance AI",
+        "category": "AI Agent Workforce",
+        "pricing": "Free (200 actions/mo), Pro $19/mo, Team $234/mo, Enterprise custom",
+        "differentiator": "No-code, no markup on LLM costs"
+      },
+      {
+        "name": "LangChain / LangSmith",
+        "category": "Developer Platform / Observability",
+        "pricing": "Free (5K traces/mo), Plus $39/seat/mo, Enterprise custom",
+        "differentiator": "Developer-focused, tracing/observability"
+      },
+      {
+        "name": "Lindy AI",
+        "category": "AI Personal Assistant",
+        "pricing": "Free (400 credits/mo), Plus $49.99/mo, Pro $59.99/mo, Enterprise custom",
+        "differentiator": "Positions against human assistant ($8K/mo)"
+      },
+      {
+        "name": "Taskade",
+        "category": "AI Productivity + Agents",
+        "pricing": "Free (3K credits), Starter $6/mo, Pro $16/mo, Business $40/mo",
+        "differentiator": "Aggressive pricing, combines PM with AI agents"
+      },
+      {
+        "name": "Botpress",
+        "category": "Conversational AI Builder",
+        "pricing": "Free (500 msgs/mo), Plus $79/mo, Team $445/mo, Managed $995/mo",
+        "differentiator": "AI spend at provider cost without markup"
+      }
+    ],
+    "automation_platforms_with_ai": [
+      {
+        "name": "Zapier",
+        "pricing": "Free (100 tasks/mo), Pro ~$30/mo, Team ~$104/mo, Enterprise custom",
+        "differentiator": "7,000+ app integrations, AI agents as add-on"
+      },
+      {
+        "name": "Make.com",
+        "pricing": "Free (1K ops/mo), Core ~$11/mo, Pro ~$19/mo, Enterprise custom",
+        "differentiator": "Cheapest entry pricing, native LLM modules"
+      },
+      {
+        "name": "n8n",
+        "pricing": "Self-hosted free (unlimited), Cloud from $24/mo, Enterprise custom",
+        "differentiator": "Open-source, execution-based (not per-action)"
+      }
+    ],
+    "enterprise_ai_assistants": [
+      {
+        "name": "Moveworks",
+        "valuation": "~$2.1B",
+        "pricing": "~$100-200/user/year",
+        "offering": "Enterprise copilot for IT, HR, finance"
+      },
+      {
+        "name": "Ada",
+        "valuation": "~$1.2B",
+        "pricing": "~$1/resolved conversation (usage-based)",
+        "offering": "AI customer service automation"
+      },
+      {
+        "name": "Glean",
+        "valuation": "$7.2B ($150M raise)",
+        "pricing": "~$50+/user/mo (min ~$50-60K ACV)",
+        "offering": "Enterprise AI search and knowledge"
+      },
+      {
+        "name": "Cognition (Devin)",
+        "valuation": "~$2B",
+        "pricing": "Core $20 PAYG, Team $500/mo",
+        "offering": "Autonomous software engineering agent"
+      }
+    ]
+  },
+  "pricing_trends": {
+    "credit_based": "126% YoY growth — dominant emerging model. Adopted by Figma, HubSpot, Salesforce",
+    "outcome_based": "30% of enterprise SaaS had outcome components in 2025, projected 40% by 2026 (Gartner)",
+    "hybrid_models": "43% adoption, projected 61% by end of 2026. Platform fee + usage-based AI charges",
+    "per_seat_decline": "Feb 2026 SaaS crash erased $285B — AI reduces seat requirements",
+    "ai_native_usage_based": "83% of AI-native SaaS companies use usage-based pricing",
+    "median_entry_paid": "$19-39/mo",
+    "median_mid_tier": "$49-99/mo",
+    "median_enterprise_start": "$599/mo or ~$50K ACV"
+  },
+  "key_trends": [
+    "Shift from per-seat to usage-based and outcome-based pricing",
+    "Enterprise adoption reaching 85% by end of 2025",
+    "Mega-rounds dominating funding ($100M+ deals = 75%+ of funding)",
+    "Asia Pacific fastest-growing region for AI agents",
+    "Vertical-specific agents emerging (healthcare, legal, finance, dev tools)",
+    "AI cost transparency becoming a competitive differentiator (BYO-LLM, pass-through pricing)",
+    "Unified command center / AI HQ category is underserved — most tools are point solutions"
   ],
   "sources": [
-    "https://www.arahi.ai/blog/best-ai-agents-for-business-2026",
-    "https://www.lindy.ai/blog/best-ai-agents",
-    "https://www.nocodefinder.com/blog-posts/ai-agent-pricing",
-    "https://www.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions/2026/saas-ai-agents.html",
-    "https://www.chargebee.com/blog/pricing-ai-agents-playbook/",
-    "https://research.aimultiple.com/ai-agent-pricing/",
-    "https://aifundingtracker.com/top-ai-agent-startups/",
-    "https://techcrunch.com/2026/03/12/sales-automation-startup-rox-ai-hits-1-2b-valuation-sources-say/",
-    "https://aibusiness.com/agentic-ai/ai-customer-support-startup-valued-at-2-billion",
-    "https://zylo.com/blog/ai-cost/",
+    "https://www.grandviewresearch.com/industry-analysis/ai-agents-market-report",
+    "https://www.marketsandmarkets.com/Market-Reports/ai-agents-market-15761548.html",
+    "https://www.precedenceresearch.com/agentic-ai-market",
+    "https://www.warmly.ai/p/blog/ai-agents-statistics",
+    "https://www.demandsage.com/ai-agents-market-size/",
+    "https://www.demandsage.com/ai-agents-statistics/",
+    "https://news.crunchbase.com/ai/big-funding-trends-charts-eoy-2025/",
+    "https://www.finrofca.com/news/ai-agents-valuation-2025",
+    "https://wellows.com/blog/ai-startups/",
+    "https://www.salesforce.com/agentforce/ai-agents/best-ai-agents/",
     "https://www.kore.ai/blog/7-best-agentic-ai-platforms",
-    "https://www.marketermilk.com/blog/best-ai-agent-platforms"
+    "https://www.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions/2026/saas-ai-agents.html",
+    "https://www.getmonetizely.com/blogs/28-new-agentic-products-that-use-ai",
+    "https://www.marketsandmarkets.com/Market-Reports/ai-assistant-market-40111511.html",
+    "https://foundationcapital.com/ideas/where-ai-is-headed-in-2026",
+    "https://qubit.capital/blog/ai-startup-fundraising-trends"
   ]
 }

@@ -1,7 +1,7 @@
 """
 DBAgent — Database Agent
 Manages persistent structured storage for the fleet via SQLite.
-DB:     /Users/secondmind/claudecodetest/data/dbagent.db
+DB: data/dbagent.db
 Tables: fleet_metrics, agent_events, kv_store
 Routes: /api/dbagent/status  /api/db/stats  /api/db/kv  /api/db/kv/{key}
 Loops every 60 s — schema check, metrics snapshot, health log, route patch.

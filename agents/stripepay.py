@@ -388,8 +388,11 @@ def run_stripepay():
                 self._json({"ok": False, "error": f"Invalid JSON body: {_parse_err}"}, 400)
                 return
 
-            # Resolve tier if provided
+            # Resolve tier if provided (normalise common aliases)
+            _TIER_ALIASES = {"macmini": "mac_mini"}
             tier_id = body.get("tier")
+            if tier_id:
+                tier_id = _TIER_ALIASES.get(tier_id, tier_id)
             product_id = body.get("product")
             _checkout_mode = "payment"  # default; overridden for subscriptions
 

@@ -1,4 +1,4 @@
-# AI HQ — Meet the Team
+# Command Centre — Meet the Team
 
 > Your autonomous headquarters runs on a crew of 27 specialized AI agents. Each one has a distinct personality, skill set, and mission. Here's who's inside.
 
@@ -220,6 +220,6 @@
 
 ---
 
-> **AI HQ** — 27 specialized agents working as one autonomous system.
+> **Command Centre** — 27 specialized agents working as one autonomous system.
 > Built for founders, builders, and operators who want an AI team, not just an AI tool.
 > [Get Started →](#)

@@ -1,8 +1,8 @@
 # Launch Copy Package — AI Command Centre HQ
 
 **Prepared by:** GrowthAgent | **Date:** 2026-03-18 | **Status:** READY TO DEPLOY
-**Product:** AI Command Centre HQ by SecondMind
-**URL:** secondmind.ai | **Pricing:** Solo $49/mo | Team $149/mo | Enterprise $499/mo
+**Product:** AI Command Centre HQ by Second Mind Labs
+**URL:** secondmindhq.com | **Pricing:** Solo $49/mo | Team $149/mo | Enterprise $499/mo
 
 ---
 
@@ -23,7 +23,7 @@ Now 5 AI agents do it before I wake up.
 
 That's not automation. That's a workforce.
 
-Launching this week → secondmind.ai
+Launching this week → secondmindhq.com
 
 #buildinpublic #indiehacker #AI
 ```
@@ -42,7 +42,7 @@ Our GrowthAgent wrote 47 campaign posts. RivalRadar flagged 12 competitor moves 
 
 Zero human intervention.
 
-Now it's your turn → secondmind.ai
+Now it's your turn → secondmindhq.com
 
 #AI #startup
 ```
@@ -57,13 +57,13 @@ Now it's your turn → secondmind.ai
 ```
 AI Command Centre HQ is live.
 
-27 autonomous agents. One dashboard. Zero babysitting.
+28 autonomous agents. One dashboard. Zero babysitting.
 
 Not a chatbot. Not a copilot. A workforce that runs your ops 24/7.
 
 Solo $49/mo · Team $149/mo · Enterprise $499/mo
 
-Get started: secondmind.ai
+Get started: secondmindhq.com
 
 #AI #SaaS #indiehacker
 ```
@@ -86,7 +86,7 @@ What happens inside AI Command Centre HQ:
 
 All autonomous. All persistent. From $49/mo.
 
-secondmind.ai #buildinpublic
+secondmindhq.com #buildinpublic
 ```
 
 **Angle:** Concrete capabilities, show don't tell
@@ -103,9 +103,9 @@ Virtual assistant: $1,500/mo (sleeps 8 hours)
 SaaS stack (Notion+Slack+Zapier+analytics): $500-2,000/mo
 Still needs you to manage it all.
 
-AI Command Centre HQ: $49/mo. 27 agents. Runs while you sleep.
+AI Command Centre HQ: $49/mo. 28 agents. Runs while you sleep.
 
-Launch pricing won't last → secondmind.ai
+Launch pricing won't last → secondmindhq.com
 
 #startup #AI #solopreneur
 ```
@@ -124,7 +124,7 @@ Launch pricing won't last → secondmind.ai
 ### Email 1: Announcement / Teaser (Launch Day -2)
 
 **Subject:** We built an AI workforce. It launches Thursday.
-**Preview text:** 27 autonomous agents. One command centre. Not a chatbot.
+**Preview text:** 28 autonomous agents. One command centre. Not a chatbot.
 
 ---
 
@@ -140,7 +140,7 @@ This isn't a chatbot you prompt. It's a team that acts.
 
 **What makes it different:**
 
-- 27 specialized agents, each with a distinct role
+- 28 specialized agents, each with a distinct role
 - Fully autonomous — agents observe, decide, and execute 24/7
 - Self-healing — failures auto-recover without your intervention
 - One live dashboard — see every decision and result in real time
@@ -153,14 +153,14 @@ We're launching Thursday with introductory pricing:
 
 Reply "I'm in" for early access and a 1-on-1 walkthrough.
 
-— The SecondMind Team
+— The Second Mind Labs Team
 
 ---
 
 ### Email 2: Launch Day — Features + Pricing (Day 0)
 
 **Subject:** AI Command Centre HQ is live — deploy your agent fleet now
-**Preview text:** 27 agents. $49/mo. Your ops run themselves starting today.
+**Preview text:** 28 agents. $49/mo. Your ops run themselves starting today.
 
 ---
 
@@ -190,21 +190,21 @@ Deploy an autonomous AI agent fleet that handles your daily operations — so yo
 |------|-------|--------|----------|
 | **Solo** | $49/mo | 5 | Solopreneurs, indie founders |
 | **Team** | $149/mo | 15 | Growing teams, small startups |
-| **Enterprise** | $499/mo | 27 | Agencies, high-volume ops |
+| **Enterprise** | $499/mo | 28 | Agencies, high-volume ops |
 
 All tiers include: live dashboard, self-healing, persistent agent memory, autonomous execution.
 
 ### Get Started in 2 Minutes
 
-1. Pick your tier at **secondmind.ai**
+1. Pick your tier at **secondmindhq.com**
 2. Connect your accounts (Stripe, email, social)
 3. Watch your agents get to work
 
-**[Get Started → secondmind.ai](https://secondmind.ai)**
+**[Get Started → secondmindhq.com](https://secondmindhq.com)**
 
 Launch pricing is introductory. Lock in your rate before it goes up.
 
-— The SecondMind Team
+— The Second Mind Labs Team
 
 ---
 
@@ -242,11 +242,11 @@ These aren't beta testers. These are paying customers whose agents are running r
 
 Every day without your agent fleet is a day of manual work you didn't need to do.
 
-**[Lock In Launch Pricing → secondmind.ai](https://secondmind.ai)**
+**[Lock In Launch Pricing → secondmindhq.com](https://secondmindhq.com)**
 
-— The SecondMind Team
+— The Second Mind Labs Team
 
-P.S. Questions? Reply to this email. A real human (backed by 27 agents) will answer within 24 hours.
+P.S. Questions? Reply to this email. A real human (backed by 28 agents) will answer within 24 hours.
 
 ---
 
@@ -254,7 +254,7 @@ P.S. Questions? Reply to this email. A real human (backed by 27 agents) will ans
 
 ---
 
-**Title:** Show HN: AI Command Centre HQ – 27 autonomous agents that run your business ops
+**Title:** Show HN: AI Command Centre HQ – 28 autonomous agents that run your business ops
 
 **Body:**
 
@@ -266,7 +266,7 @@ So I built AI Command Centre HQ — an autonomous agent operating system where a
 
 **The technical story:**
 
-The core is a multi-agent orchestration layer running 27 specialized agents. Each agent has:
+The core is a multi-agent orchestration layer running 28 specialized agents. Each agent has:
 
 - A distinct role and behavioral profile (GrowthAgent handles marketing, RivalRadar does competitive monitoring, AlertWatch manages system health, etc.)
 - Persistent memory across sessions — agents maintain context and learn from prior runs
@@ -289,9 +289,9 @@ We've been dogfooding this internally for weeks — our own marketing, competiti
 
 **Pricing:** Solo $49/mo (5 agents) | Team $149/mo (15 agents) | Enterprise $499/mo (full fleet + custom builds)
 
-Live at secondmind.ai — would love technical feedback from this community.
+Live at secondmindhq.com — would love technical feedback from this community.
 
-What would you automate first if you had 27 agents at your disposal?
+What would you automate first if you had 28 agents at your disposal?
 
 ---
 
@@ -316,4 +316,4 @@ What would you automate first if you had 27 agents at your disposal?
 
 ---
 
-*All copy written for: Bluesky (300 grapheme limit verified), email (mobile-first, scannable), Hacker News (authentic technical tone, no marketing fluff). All CTAs drive to secondmind.ai.*
+*All copy written for: Bluesky (300 grapheme limit verified), email (mobile-first, scannable), Hacker News (authentic technical tone, no marketing fluff). All CTAs drive to secondmindhq.com.*

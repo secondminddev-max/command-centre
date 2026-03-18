@@ -12,7 +12,7 @@ def run_memoryagent():
     set_agent(aid, name="MemoryAgent", role="Semantic Memory & Search",
               emoji="\\U0001f9e0", color="#a855f7", status="starting", task="Initializing ChromaDB...")
 
-    DATA_DIR = "/Users/secondmind/claudecodetest/data"
+    DATA_DIR = "os.path.dirname(os.path.abspath(__file__))/data"
     CHROMA_DIR = os.path.join(DATA_DIR, "chromadb")
 
     try:

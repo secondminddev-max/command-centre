@@ -105,7 +105,7 @@ def main():
         "results": results,
     }
 
-    out_path = Path("/Users/secondmind/claudecodetest/data/api_health.json")
+    out_path = Path("os.path.dirname(os.path.abspath(__file__))/data/api_health.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(output, indent=2))
 

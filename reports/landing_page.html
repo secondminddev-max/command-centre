@@ -463,13 +463,31 @@ nav a:hover { color: var(--text-bright); }
   color: var(--cyan);
   box-shadow: 0 0 15px rgba(0,200,255,0.1);
 }
+.price-cta-solo {
+  background: linear-gradient(135deg, #00ff88, #00e066);
+  color: #050810;
+  font-size: 16px;
+  padding: 16px;
+  font-weight: 800;
+  box-shadow: 0 0 14px rgba(0,255,136,0.2);
+  border: none;
+}
+.price-cta-solo:hover {
+  box-shadow: 0 0 30px rgba(0,255,136,0.4), 0 0 60px rgba(0,255,136,0.12);
+  transform: translateY(-2px);
+}
 .price-cta-enterprise {
-  border-color: rgba(168,85,247,0.3);
-  color: var(--text-bright);
+  background: linear-gradient(135deg, #a855f7, #c084fc);
+  color: #fff;
+  font-size: 16px;
+  padding: 16px;
+  font-weight: 800;
+  box-shadow: 0 0 14px rgba(168,85,247,0.25);
+  border: none;
 }
 .price-cta-enterprise:hover {
-  border-color: var(--purple);
-  color: var(--purple);
+  box-shadow: 0 0 30px rgba(168,85,247,0.45), 0 0 60px rgba(168,85,247,0.15);
+  transform: translateY(-2px);
 }
 .price-cta-fill {
   background: linear-gradient(135deg, #00c8ff, #00e0ff);
@@ -485,6 +503,13 @@ nav a:hover { color: var(--text-bright); }
 .price-cta-fill:hover {
   box-shadow: 0 0 35px rgba(0,200,255,0.4), 0 0 70px rgba(0,200,255,0.15);
   transform: translateY(-2px);
+}
+.cta-micro {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  letter-spacing: 0.02em;
 }
 .price-card.featured .value {
   background: linear-gradient(135deg, var(--cyan), var(--purple));
@@ -502,7 +527,7 @@ nav a:hover { color: var(--text-bright); }
   50% { box-shadow: 0 0 80px rgba(0,200,255,0.22), 0 0 140px rgba(0,200,255,0.08), inset 0 1px 0 rgba(0,200,255,0.4); }
 }
 .price-card.featured:hover {
-  transform: scale(1.04) translateY(-4px);
+  transform: scale(1.07) translateY(-4px);
 }
 
 /* ── PRICING RIBBON ── */
@@ -708,6 +733,51 @@ table.comp-table {
   color: var(--text-muted);
 }
 
+/* ── TRUST BADGES ── */
+.trust-badges {
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(0,255,136,0.01) 0%, transparent 100%);
+}
+.trust-grid {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.trust-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.trust-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.trust-icon.shield { background: rgba(0,255,136,0.08); }
+.trust-icon.lock   { background: rgba(0,200,255,0.08); }
+.trust-icon.uptime { background: rgba(168,85,247,0.08); }
+.trust-badge strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+.trust-badge span {
+  font-size: 12px;
+  color: var(--text-muted);
+  max-width: 160px;
+  line-height: 1.5;
+}
+
 /* ── FAQ ── */
 .faq {
   padding: 80px 0;
@@ -792,6 +862,28 @@ button.btn-secondary,
 button.price-cta {
   font-family: inherit;
   line-height: 1.6;
+}
+
+/* ── FOCUS-VISIBLE ACCESSIBILITY ── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.toggle-switch:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+button:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0,200,255,0.2);
+}
+
+/* ── ACTIVE PRESS STATES ── */
+.btn-primary:active,
+.price-cta-fill:active,
+.price-cta-solo:active,
+.price-cta-enterprise:active,
+.btn-gold:active {
+  transform: translateY(1px) scale(0.98);
+  transition: transform 0.08s;
 }
 
 /* ── BILLING TOGGLE ── */
@@ -928,7 +1020,8 @@ button.price-cta {
   outline: none;
   transition: border-color 0.2s;
 }
-.checkout-form input:focus { border-color: var(--cyan); }
+.checkout-form input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,200,255,0.12); }
+.checkout-form input:invalid:not(:placeholder-shown) { border-color: var(--red); box-shadow: 0 0 0 3px rgba(255,51,85,0.1); }
 .checkout-form input::placeholder { color: rgba(255,255,255,0.25); }
 .checkout-submit {
   width: 100%;
@@ -954,6 +1047,48 @@ button.price-cta {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+.checkout-submit:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(0,200,255,0.15);
+}
+.checkout-error {
+  color: var(--red);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 12px;
+  display: none;
+  animation: fadeIn 0.2s ease;
+}
+.checkout-error.show { display: block; }
+.checkout-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 20px 0;
+}
+
+/* ── FINAL CTA TIER BUTTONS ── */
+.btn-tier-solo {
+  background: linear-gradient(135deg, #00ff88, #00e066);
+  color: #050810;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-tier-solo:hover {
+  box-shadow: 0 0 25px rgba(0,255,136,0.35);
+  transform: translateY(-2px);
+}
+.btn-tier-enterprise {
+  background: linear-gradient(135deg, #a855f7, #c084fc);
+  color: #fff;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-tier-enterprise:hover {
+  box-shadow: 0 0 25px rgba(168,85,247,0.4);
+  transform: translateY(-2px);
 }
 .checkout-footer {
   text-align: center;
@@ -1145,7 +1280,6 @@ button.price-cta {
   transition: all 0.3s;
 }
 .mobile-menu {
-  display: none;
   position: fixed;
   top: 60px;
   left: 0;
@@ -1155,8 +1289,16 @@ button.price-cta {
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   padding: 16px 24px 24px;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.25s ease;
 }
-.mobile-menu.open { display: block; }
+.mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
 .mobile-menu a {
   display: block;
   padding: 12px 0;
@@ -1390,7 +1532,8 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Basic dashboard access</li>
           <li><span class="check">&#10003;</span>48-hour turnaround</li>
         </ul>
-        <button onclick="openCheckout('solo')" class="price-cta price-cta-outline">Start Free Trial &mdash; $49/mo</button>
+        <button onclick="openCheckout('solo')" class="price-cta price-cta-solo">Start Free Trial &rarr;</button>
+        <p class="cta-micro">No credit card required &middot; 14-day trial</p>
       </div>
 
       <!-- TEAM (Featured) -->
@@ -1415,6 +1558,7 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Campaign automation</li>
         </ul>
         <button onclick="openCheckout('team')" class="price-cta price-cta-fill">Start 14-Day Free Trial &rarr;</button>
+        <p class="cta-micro">No credit card required &middot; Cancel anytime</p>
       </div>
 
       <!-- ENTERPRISE -->
@@ -1438,7 +1582,8 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Strategy consulting</li>
           <li><span class="check">&#10003;</span>White-glove onboarding</li>
         </ul>
-        <button onclick="openCheckout('enterprise')" class="price-cta price-cta-outline price-cta-enterprise">Start Free Trial &mdash; $499/mo &rarr;</button>
+        <button onclick="openCheckout('enterprise')" class="price-cta price-cta-enterprise">Start Free Trial &rarr;</button>
+        <p class="cta-micro">Dedicated onboarding included</p>
       </div>
     </div>
 
@@ -1461,7 +1606,7 @@ button.price-cta {
         <h3>Mac Mini + Command Centre</h3>
         <div class="price-big cyan-text">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with Command Centre installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
-        <button onclick="checkoutSpecial('macmini','Command Centre Mac Mini Bundle',149900,event)" class="btn-primary">Pre-Order Now</button>
+        <button onclick="checkoutSpecial('mac_mini','Command Centre Mac Mini Bundle',149900,event)" class="btn-primary">Pre-Order Now</button>
       </div>
     </div>
   </div>
@@ -1611,13 +1756,13 @@ button.price-cta {
     <h2>You Build the Product.<br>Your Command Centre Runs Everything Else.</h2>
     <p>Join early access today — limited spots at launch pricing. Lock in your rate before it doubles.</p>
     <div class="hero-ctas" style="margin-bottom:16px;">
-      <button onclick="openCheckout('solo')" class="btn-secondary">Solo — $49/mo</button>
+      <button onclick="openCheckout('solo')" class="btn-secondary btn-tier-solo">Solo — $49/mo</button>
       <button onclick="openCheckout('team')" class="btn-primary">Team — $149/mo &rarr;</button>
-      <button onclick="openCheckout('enterprise')" class="btn-secondary">Enterprise — $499/mo</button>
+      <button onclick="openCheckout('enterprise')" class="btn-secondary btn-tier-enterprise">Enterprise — $499/mo</button>
     </div>
     <div class="hero-ctas" style="margin-bottom:16px;margin-top:12px;">
       <button onclick="checkoutSpecial('lifetime','Command Centre Lifetime Access',29900,event)" class="btn-gold">Lifetime — $299 one-time</button>
-      <button onclick="checkoutSpecial('macmini','Command Centre Mac Mini Bundle',149900,event)" class="btn-secondary">Mac Mini — $1,499</button>
+      <button onclick="checkoutSpecial('mac_mini','Command Centre Mac Mini Bundle',149900,event)" class="btn-secondary">Mac Mini — $1,499</button>
     </div>
     <p style="font-size:12px;color:var(--text-muted);margin:0;">14-day money-back guarantee &middot; No lock-in contracts</p>
   </div>
@@ -1643,6 +1788,7 @@ button.price-cta {
     <div class="checkout-price" id="co-price"></div>
     <div class="checkout-trial">14-day free trial — cancel anytime</div>
     <ul class="checkout-features" id="co-features"></ul>
+    <hr class="checkout-divider">
     <form class="checkout-form" onsubmit="submitCheckout(event)">
       <label for="co-name">Full Name</label>
       <input type="text" id="co-name" placeholder="Jane Smith" required autocomplete="name">
@@ -1651,6 +1797,7 @@ button.price-cta {
       <label for="co-company">Company <span style="font-weight:400;text-transform:none;color:rgba(255,255,255,0.25)">(optional)</span></label>
       <input type="text" id="co-company" placeholder="Acme Inc." autocomplete="organization">
       <button type="submit" class="checkout-submit" id="co-submit">Start Free Trial &rarr;</button>
+      <div class="checkout-error" id="co-error"></div>
     </form>
     <div class="checkout-footer">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -1719,26 +1866,42 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCheckout();
 });
 
-function postToPay(params) {
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = '/api/pay';
-  form.style.display = 'none';
-  Object.entries(params).forEach(([k, v]) => {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = k;
-    input.value = v;
-    form.appendChild(input);
-  });
-  document.body.appendChild(form);
-  form.submit();
+async function postToPay(params) {
+  try {
+    const res = await fetch('/api/pay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    });
+    const data = await res.json();
+    if (data.ok && (data.checkout_url || data.url)) {
+      window.location.href = data.checkout_url || data.url;
+    } else if (data.redirect) {
+      window.location.href = data.redirect;
+    } else {
+      alert('Checkout error: ' + (data.error || data.instructions || 'Unknown error'));
+    }
+  } catch (e) {
+    alert('Network error \u2014 please try again.');
+  }
 }
 
 function checkoutSpecial(tier, product, amountCents, event) {
   const btn = event.currentTarget;
+  const originalText = btn.textContent;
   btn.textContent = 'Redirecting to Stripe\u2026';
   btn.style.pointerEvents = 'none';
+  btn.style.opacity = '0.7';
+
+  // Timeout fallback — re-enable if redirect stalls
+  setTimeout(function() {
+    if (btn.style.pointerEvents === 'none') {
+      btn.textContent = originalText;
+      btn.style.pointerEvents = '';
+      btn.style.opacity = '';
+    }
+  }, 10000);
+
   postToPay({ tier: tier, product: product, amount: amountCents });
 }
 
@@ -1769,26 +1932,40 @@ function checkoutSpecial(tier, product, amountCents, event) {
 function submitCheckout(e) {
   e.preventDefault();
   const btn = document.getElementById('co-submit');
+  const errEl = document.getElementById('co-error');
   const name = document.getElementById('co-name').value.trim();
   const email = document.getElementById('co-email').value.trim();
   const company = document.getElementById('co-company').value.trim();
-  if (!name || !email) return;
+
+  // Clear previous errors
+  errEl.classList.remove('show');
+  errEl.textContent = '';
+
+  if (!name || !email) {
+    errEl.textContent = 'Please fill in your name and email to continue.';
+    errEl.classList.add('show');
+    return;
+  }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Setting up your trial...';
+  btn.innerHTML = '<span class="spinner"></span>Redirecting to Stripe\u2026';
 
   const billing = isAnnual ? 'annual' : 'monthly';
-  const params = new URLSearchParams({
-    tier: selectedTier,
-    name: name,
-    email: email,
-    billing: billing
-  });
-  if (company) params.set('company', company);
-
-  // POST to Stripe checkout
-  const payload = { tier: selectedTier, name: name, email: email, billing: billing };
+  const t = TIERS[selectedTier];
+  const price = isAnnual ? t.annual : t.monthly;
+  const payload = { tier: selectedTier, name: name, email: email, billing: billing, amount_cents: price * 100, description: 'Second Mind Labs \u2014 ' + t.name };
   if (company) payload.company = company;
+
+  // Timeout fallback — re-enable button if redirect stalls
+  setTimeout(function() {
+    if (btn.disabled) {
+      btn.disabled = false;
+      btn.innerHTML = 'Start Free Trial &rarr;';
+      errEl.textContent = 'Something went wrong. Please try again.';
+      errEl.classList.add('show');
+    }
+  }, 10000);
+
   postToPay(payload);
 }
 </script>

@@ -2,7 +2,7 @@
 
 ---
 
-## 🚀 PRIMARY MISSION: PRODUCT LAUNCH — AI HQ SaaS
+## 🚀 PRIMARY MISSION: PRODUCT LAUNCH — Command Centre SaaS
 
 **Status:** IN_PROGRESS | **Priority:** 1 (HIGHEST)
 **Target:** TBD

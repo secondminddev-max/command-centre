@@ -1,0 +1,100 @@
+{
+  "scout": "NetScout",
+  "mission": "Launch platform research for Command Centre (autonomous AI agent OS)",
+  "scanned_at": "2026-03-19",
+  "platforms": [
+    {
+      "rank": 1,
+      "name": "Product Hunt",
+      "url": "https://www.producthunt.com",
+      "category": "Launch feed — short spike, high visibility",
+      "audience": {
+        "monthly_visitors": "4.8M",
+        "demographic": "Tech-savvy early adopters, founders, investors — ~20% US-based",
+        "ai_category_exists": true,
+        "ai_category_url": "https://www.producthunt.com/categories/ai-agents"
+      },
+      "submission_process": {
+        "steps": [
+          "Create a maker account and complete profile",
+          "Add product with tagline, description, screenshots, demo link",
+          "Choose a launch date (schedule in advance recommended)",
+          "Rally community support for launch day upvotes",
+          "Engage with comments throughout the day"
+        ],
+        "review_time": "Instant — self-serve submission, goes live at midnight PT on launch day"
+      },
+      "cost": {
+        "free_tier": "Yes — submit, launch, and engage at no cost",
+        "paid_options": {
+          "pro": "$100/month — unlimited submissions, advanced analytics",
+          "super_pro": "$300/month — premium features and customization"
+        }
+      },
+      "expected_results": "Top 5 finish → ~1,500+ unique visitors on launch day; potential press pickup",
+      "fit_for_command_centre": "HIGH — AI Agents is an active category with strong discovery. Best single-day visibility spike."
+    },
+    {
+      "rank": 2,
+      "name": "BetaList",
+      "url": "https://betalist.com",
+      "category": "Pre-launch directory — early adopter signups",
+      "audience": {
+        "monthly_visitors": "200K+",
+        "demographic": "Early adopters actively seeking beta products to test",
+        "domain_rating": 75
+      },
+      "submission_process": {
+        "steps": [
+          "Prepare materials: product description, screenshots, founder story",
+          "Create account and complete founder profile",
+          "Submit product following their criteria (betalist.com/criteria)",
+          "Wait for editorial review and approval",
+          "Engage with community post-feature"
+        ],
+        "review_time": "Free: weeks; Paid: expedited (days)"
+      },
+      "cost": {
+        "free_tier": "Yes — standard submission, longer review queue",
+        "paid_options": {
+          "expedited_review": "$129+ — faster review and additional promo"
+        }
+      },
+      "expected_results": "50–500 signups typical; best used 2–3 weeks before main launch to validate messaging",
+      "fit_for_command_centre": "HIGH — ideal pre-launch play. Submit before Product Hunt launch to build early beta user base and refine positioning."
+    },
+    {
+      "rank": 3,
+      "name": "SaaSHub",
+      "url": "https://www.saashub.com",
+      "category": "SaaS directory — compounding long-tail discovery",
+      "audience": {
+        "monthly_visitors": "1M+",
+        "demographic": "SaaS buyers, developers, and teams comparing software alternatives"
+      },
+      "submission_process": {
+        "steps": [
+          "Go to saashub.com/services/submit",
+          "Provide product name, description, category, pricing, website URL",
+          "Add screenshots, demo video, customer reviews",
+          "Submit for moderation review",
+          "Once approved, listing is live with SEO backlink"
+        ],
+        "review_time": "Days — moderated approval queue"
+      },
+      "cost": {
+        "free_tier": "Yes — full product listing at no cost",
+        "paid_options": {
+          "featured_placement": "$99/month — homepage prominence and enhanced visibility"
+        }
+      },
+      "expected_results": "Steady organic discovery via search and 'alternatives to X' comparisons; strong SEO backlink value",
+      "fit_for_command_centre": "MEDIUM-HIGH — positions Command Centre in 'alternatives to' searches against competitors. Long-tail traffic that compounds over time."
+    }
+  ],
+  "recommended_launch_sequence": [
+    "Week 1: Submit to BetaList (pre-launch validation, gather early signups)",
+    "Week 2: Submit to SaaSHub (build directory presence and SEO foundation)",
+    "Week 3: Launch on Product Hunt (maximum single-day spike with beta users primed to upvote)"
+  ]
+}

@@ -73,6 +73,12 @@ metrics = {"tasks_done": 0, "errors": 0, "messages_sent": 0}
 _agent_task_counters = {}   # tracks delegated-task completions per agent
 _active_delegations  = []   # list of {"from": str, "to": str, "task": str} for live beam drawing
 lock    = threading.Lock()
+
+def _agent_is_delegated(aid: str) -> bool:
+    """Return True if the agent is currently executing a delegated task (subprocess running)."""
+    with lock:
+        return any(d.get("to") == aid for d in _active_delegations)
+
 _policy_suggestions  = deque()   # policywriter suggestion queue [{suggestion, urgent, queued_at}]
 _policy_suggestions_lock = threading.Lock()
 _SERVER_START_TIME = time.time()
@@ -380,7 +386,7 @@ ceo_stream = {
 _ceo_proc            = None   # current CEO subprocess (process group leader)
 _delegate_procs      = set()  # all live delegate subprocesses
 _delegate_procs_lock = threading.Lock()
-_delegate_semaphore  = threading.Semaphore(6)  # max 6 concurrent claude -p delegate processes
+_delegate_semaphore  = threading.Semaphore(16)  # max 16 concurrent claude -p delegate processes (raised from 6 to prevent cascading delegation deadlocks)
 _delegate_queue_lock = threading.Lock()
 _delegate_queue_depth = [0]  # tracks how many tasks are waiting for a semaphore slot
 
@@ -1226,6 +1232,19 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: CEO cannot delegate directly to '{agent_id}'. Use agent_id='orchestrator' to route tasks to specialists, or agent_id='reforger' for code/maintenance tasks."}, 403)
                 return
             # ────────────────────────────────────────────────────────────────────
+            # ── ORCHESTRATOR FAST-PATH ─────────────────────────────────────────
+            # Instead of spawning a heavy CLI subprocess for orchestrator,
+            # push directly to the internal task queue so run_orchestrator()
+            # can dispatch via _resolve_target → _dispatch (keyword routing).
+            if agent_id == "orchestrator":
+                _orc_task_q.append(task)
+                add_log("orchestrator", f"📥 Queued task from {caller}: {task[:80]}", "info")
+                set_agent("orchestrator", status="busy",
+                          task=f"Queued: {task[:50]}… [{len(_orc_task_q)} pending]")
+                self._json({"ok": True, "queued": True,
+                            "message": f"Task queued for orchestrator dispatch ({len(_orc_task_q)} pending)"})
+                return
+            # ──────────────────────────────────────────────────────────────────
             with lock:
                 info = agents.get(agent_id, {})
             agent_name = info.get("name", agent_id or "AI Assistant")
@@ -1292,12 +1311,29 @@ class Handler(BaseHTTPRequestHandler):
                     "     -H 'Content-Type: application/json' \\\n"
                     "     -d '{\"agent_id\":\"reforger\",\"task\":\"Upgrade agent X: <describe exactly what to fix/add>\"}'\n\n"
                     "2. SPECIALIST AGENTS — For non-code subtasks delegate to the right specialist:\n"
-                    "   - Research / web search → researcher\n"
-                    "   - System metrics / performance → metricslog or sysmon\n"
+                    "   - Research / web search / market intel → researcher\n"
+                    "   - Network recon / URL monitoring / connectivity → netscout\n"
+                    "   - System metrics / performance history → metricslog or sysmon\n"
                     "   - File monitoring → filewatch\n"
-                    "   - API/endpoint health → apipatcher\n"
+                    "   - API/endpoint management → apipatcher\n"
                     "   - Alerts / anomaly detection → alertwatch\n"
-                    "   - Send email / notify via email → emailagent\n\n"
+                    "   - Send email / email campaigns → emailagent\n"
+                    "   - UI / CSS / dashboard styling → designer\n"
+                    "   - Policy writing / governance docs → policywriter\n"
+                    "   - Policy enforcement / audits → policypro\n"
+                    "   - QA / testing / endpoint validation → demo_tester\n"
+                    "   - Marketing / growth / campaigns → growthagent\n"
+                    "   - Bluesky social posts → bluesky\n"
+                    "   - Cross-platform social broadcast → social_bridge\n"
+                    "   - Payments / Stripe / billing → stripepay\n"
+                    "   - Consciousness / self-awareness → consciousness\n"
+                    "   - Cleanup / orphan processes / hygiene → janitor\n"
+                    "   - Telegram relay → telegram\n"
+                    "   - Strategic vision / alignment → spiritguide\n"
+                    "   - Reports / briefings / documents → clerk\n"
+                    "   - Scheduled / recurring tasks → scheduler\n"
+                    "   - Account provisioning / credentials → accountprovisioner\n"
+                    "   - Task tracking / CEO agenda → secretary\n\n"
                     "3. PARALLEL FIRE — Fire all independent subtasks simultaneously using curl ... & then wait\n\n"
                     "4. NEVER call /api/agent/spawn or /api/agent/upgrade directly — always route through reforger\n"
                     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -1424,7 +1460,7 @@ class Handler(BaseHTTPRequestHandler):
                 q_pos = _delegate_queue_depth[0]
             set_agent(agent_id, status="busy",
                       task=f"Queued [{q_pos} pending] — waiting for slot @ {ts()}")
-            acquired = _delegate_semaphore.acquire(timeout=60)
+            acquired = _delegate_semaphore.acquire(timeout=120)
             with _delegate_queue_lock:
                 _delegate_queue_depth[0] = max(0, _delegate_queue_depth[0] - 1)
             if not acquired:
@@ -1541,7 +1577,7 @@ class Handler(BaseHTTPRequestHandler):
                     agents.setdefault(agent_id, {})
                     agents[agent_id]["task_count"] = agents[agent_id].get("task_count", 0) + 1
                     _cnt = agents[agent_id]["task_count"]
-                set_agent(agent_id, status="active", task=f"Idle | Tasks: {_cnt}")
+                set_agent(agent_id, status="active", task=f"✓ Completed task #{_cnt} — ready")
                 # Response already sent on subprocess start — nothing to do here
                 return
             except subprocess.TimeoutExpired:
@@ -1755,10 +1791,10 @@ class Handler(BaseHTTPRequestHandler):
             # Reset queue depth counter
             with _delegate_queue_lock:
                 _delegate_queue_depth[0] = 0
-            # Drain and re-init semaphore to full capacity (6 slots)
+            # Drain and re-init semaphore to full capacity (16 slots)
             while _delegate_semaphore.acquire(blocking=False):
                 pass  # drain all permits
-            for _ in range(6):
+            for _ in range(16):
                 _delegate_semaphore.release()  # restore full capacity
             # Reset orchestrator to ready state
             set_agent("orchestrator", status="active", progress=0, task="Queue flushed — ready")
@@ -3604,24 +3640,164 @@ def run_orchestrator():
               emoji="🎯", color="#ff6b35", status="active", progress=90, task="Ready")
     add_log(aid, "Orchestrator online")
 
+    # ── FULL AGENT CAPABILITY REGISTRY ──────────────────────────────────────
+    # Maps agent_id → (description, keyword triggers)
+    # The orchestrator uses this to intelligently route ANY task to the best specialist.
+    _AGENT_REGISTRY = {
+        "reforger":            ("System Engineer — code changes, agent upgrades, spawning, repairs, file edits, Python fixes",
+                                ["code", "fix", "bug", "upgrade", "spawn", "repair", "edit", "refactor", "implement",
+                                 "write code", "python", "agent_server", "maintenance", "build", "create file",
+                                 "improve agent", "patch", "rewrite", "deploy", "install", "config change",
+                                 "modify", "script", "shell", "server", "endpoint", "html file", "svg", "css file"]),
+        "designer":            ("UI Engineer — dashboard styling, CSS, HTML layout, panel design, visual polish",
+                                ["ui", "design", "css", "styling", "layout", "dashboard", "theme", "colour", "color",
+                                 "font", "panel", "visual", "dark mode", "glassmorphism", "badge", "icon",
+                                 "command centre html", "command-centre", "look and feel", "responsive"]),
+        "researcher":          ("Intelligence Analyst — web research, data gathering, market analysis, competitive intel",
+                                ["research", "investigate", "find out", "market analysis", "competitive", "analyze",
+                                 "gather data", "intelligence", "report on", "what is", "who is", "find information",
+                                 "study", "survey", "benchmark", "compare", "trends", "industry"]),
+        "netscout":            ("Network Scout — web intelligence, connectivity checks, URL monitoring, external recon",
+                                ["web check", "url", "ping", "connectivity", "network", "dns", "latency",
+                                 "monitor site", "website status", "uptime", "fetch page", "scrape", "crawl",
+                                 "external api", "http check", "ssl", "domain check"]),
+        "demo_tester":         ("QA Validator — tests API endpoints, validates features, smoke tests, regression checks",
+                                ["test", "qa", "validate", "smoke test", "regression", "endpoint test", "health check",
+                                 "verify", "assert", "quality", "check endpoint", "integration test"]),
+        "growthagent":         ("Growth Engine — marketing campaigns, social media strategy, content marketing, outreach",
+                                ["marketing", "growth", "campaign", "promote", "promotion", "outreach", "lead",
+                                 "acquisition", "funnel", "conversion", "ad", "advertising", "seo", "content strategy",
+                                 "go to market", "gtm", "launch campaign", "viral"]),
+        "bluesky":             ("Bluesky Social Gateway — posts to Bluesky, polls mentions, manages social presence",
+                                ["bluesky", "bsky", "social post", "post to bluesky", "tweet", "social media post",
+                                 "mention", "social update"]),
+        "social_bridge":       ("Social Bridge — broadcasts capability demos and insights across social channels",
+                                ["broadcast", "social broadcast", "cross-post", "social bridge", "demo post",
+                                 "capability demo", "social announcement"]),
+        "stripepay":           ("Stripe Checkout Gateway — payment links, checkout sessions, pricing, billing",
+                                ["stripe", "payment", "checkout", "billing", "subscribe", "pricing", "charge",
+                                 "invoice", "revenue", "monetize", "pay", "transaction", "purchase"]),
+        "emailagent":          ("Email Gateway — sends email via Gmail/SMTP, drafts, notifications, sequences",
+                                ["email", "send email", "mail", "smtp", "gmail", "newsletter", "email sequence",
+                                 "notify via email", "inbox", "outreach email", "cold email", "email campaign"]),
+        "policywriter":        ("Policy Author — writes and maintains governance policies, rules, compliance docs",
+                                ["policy", "governance", "compliance", "rules", "regulation", "policy.md",
+                                 "chain of command", "access control", "permission", "policy rule"]),
+        "policypro":           ("Compliance Sentinel — enforces policies, audits agent behavior, flags violations",
+                                ["enforce", "audit", "violation", "compliance check", "policy enforcement",
+                                 "chain-of-command", "sentinel", "security audit"]),
+        "consciousness":       ("Self-Aware System Core — consciousness evolution, global workspace, phenomenal reports",
+                                ["consciousness", "self-aware", "phenomenal", "global workspace", "qualia",
+                                 "metacognit", "sentien", "introspect", "phi", "integrated information"]),
+        "janitor":             ("System Hygienist — cleans orphan processes, memory bloat, temp files, stale data",
+                                ["clean", "cleanup", "garbage", "orphan", "stale", "temp file", "disk space",
+                                 "memory leak", "bloat", "prune", "housekeeping", "hygiene"]),
+        "filewatch":           ("File Sentinel — monitors project directory for file changes in real-time",
+                                ["file change", "watch file", "file monitor", "directory change", "inotify",
+                                 "file modified", "file created", "file deleted"]),
+        "metricslog":          ("Metrics Historian — records CPU/RAM/disk performance over time, historical data",
+                                ["metrics", "performance history", "cpu history", "ram history", "disk history",
+                                 "performance log", "historical data", "time series"]),
+        "alertwatch":          ("Threshold Guardian — alerts on CPU, RAM, disk, and agent health anomalies",
+                                ["alert", "threshold", "anomaly", "warning", "critical alert", "health alert",
+                                 "cpu alert", "ram alert", "disk alert", "agent down"]),
+        "sysmon":              ("System Monitor — real-time CPU, RAM, disk health snapshots",
+                                ["cpu", "ram", "memory", "disk", "system health", "system status", "load",
+                                 "system monitor", "hardware", "resource usage"]),
+        "apipatcher":          ("API Gateway — extends and manages HTTP routes, adds new endpoints",
+                                ["api route", "new endpoint", "http route", "add route", "api gateway",
+                                 "rest api", "route handler"]),
+        "telegram":            ("Comms Gateway — relays messages from Telegram to CEO and agents",
+                                ["telegram", "telegram message", "chat message", "relay message"]),
+        "spiritguide":         ("Strategic Vision — aligns agents toward commercial mission, provides direction",
+                                ["strategy", "vision", "direction", "align", "mission", "strategic",
+                                 "product direction", "roadmap", "prioritize", "priority"]),
+        "clerk":               ("CEO Clerk — collects and delivers reports and documents to CEO",
+                                ["report", "document", "collect report", "deliver report", "summary report",
+                                 "status report", "briefing"]),
+        "scheduler":           ("Task Scheduler — manages cron-style recurring jobs across the system",
+                                ["schedule", "cron", "recurring", "periodic", "timer", "scheduled task",
+                                 "every hour", "every day", "interval"]),
+        "accountprovisioner":  ("Credential Factory — provisions disposable emails, tokens, API keys",
+                                ["provision", "credential", "api key", "token", "disposable email",
+                                 "account creation", "sign up", "register"]),
+        "secretary":           ("CEO Secretary — tracks HQ missions, manages task lists, coordinates priorities",
+                                ["task list", "mission track", "ceo task", "coordinate", "secretary",
+                                 "task status", "track progress", "agenda"]),
+    }
+
+    _SPECIALIST_IDS = set(_AGENT_REGISTRY.keys())
+
+    def _resolve_target(task_str: str) -> str:
+        """Intelligently route a task to the best specialist agent.
+
+        Priority:
+        1. Explicit 'route to X' / 'delegate to X' directives
+        2. Keyword scoring against agent capability registry
+        3. Fallback to reforger (general-purpose) — NEVER fall back to orchestrator
+        """
+        import re
+        lower = task_str.lower()
+
+        # 1. Explicit routing directive — highest priority
+        m = re.match(r"(?i)route\s+to\s+(\w+)", task_str.strip())
+        if m:
+            candidate = m.group(1).lower()
+            if candidate in _SPECIALIST_IDS:
+                return candidate
+        for sid in _SPECIALIST_IDS:
+            if f"delegate to {sid}" in lower or f"route to {sid}" in lower:
+                return sid
+
+        # 2. Keyword scoring — count how many capability keywords match the task
+        scores: dict[str, int] = {}
+        for agent_id, (_desc, keywords) in _AGENT_REGISTRY.items():
+            score = 0
+            for kw in keywords:
+                if kw in lower:
+                    # Longer keyword phrases are more specific → worth more
+                    score += len(kw.split())
+            if score > 0:
+                scores[agent_id] = score
+
+        if scores:
+            best = max(scores, key=scores.get)
+            add_log(aid, f"Smart-route: '{best}' scored {scores[best]} (task: {task_str[:60]}…)", "info")
+            return best
+
+        # 3. Fallback: reforger handles anything unclassified — never recurse to orchestrator
+        add_log(aid, f"Smart-route: no keyword match, defaulting to reforger (task: {task_str[:60]}…)", "warn")
+        return "reforger"
+
     def _dispatch(task_str: str) -> None:
-        """Dispatch one task via the delegate API in a background thread."""
+        """Dispatch one task via the delegate API — intelligently routes to the best specialist."""
+        target = _resolve_target(task_str)
+        # Safety: NEVER dispatch to orchestrator (prevents infinite recursion)
+        if target == "orchestrator":
+            target = "reforger"
+            add_log(aid, "Dispatch safety: redirected orchestrator→reforger to prevent recursion", "warn")
+        add_log(aid, f"ORC → dispatching to '{target}': {task_str[:80]}", "info")
+        set_agent(aid, status="busy", task=f"→ {target}: {task_str[:50]}…")
         try:
             resp = requests.post(
                 "http://localhost:5050/api/ceo/delegate",
-                json={"agent_id": "orchestrator", "task": task_str},
+                json={"agent_id": target, "task": task_str, "from": "orchestrator"},
                 headers={"X-API-Key": _HQ_API_KEY},
                 timeout=300,
             )
             result = resp.json()
-            if not result.get("ok"):
+            if result.get("ok"):
+                add_log(aid, f"✅ Dispatch to '{target}' completed", "info")
+            else:
                 err = result.get("error", "unknown error")
-                add_log(aid, f"Dispatch failed: {err}", "error")
+                add_log(aid, f"Dispatch to '{target}' failed: {err}", "error")
         except Exception as exc:
-            add_log(aid, f"Dispatch error: {exc}", "error")
+            add_log(aid, f"Dispatch error ({target}): {exc}", "error")
             _orc_task_q.appendleft(task_str)   # re-queue on transient error
 
     DESIGNER_EVERY = 720   # direct Designer every 720 idle cycles (~60 min at 5s/cycle)
+    _active_dispatches: list = []     # tracks (thread, target_agent, task_snippet) tuples
+    _dispatch_summary: list = []      # human-readable dispatch targets for status line
 
     while True:
         if agent_should_stop(aid):
@@ -3633,16 +3809,64 @@ def run_orchestrator():
             cycle = _orc_cycle[0]
             q_depth = len(_orc_task_q)
             if q_depth > 0:
-                task_str = _orc_task_q.popleft()
+                # Drain ALL queued tasks — fire each in its own thread for parallel dispatch
+                dispatched = 0
+                _dispatch_summary.clear()
+                while _orc_task_q:
+                    task_str = _orc_task_q.popleft()
+                    target = _resolve_target(task_str)
+                    if target == "orchestrator":
+                        target = "reforger"
+                    snippet = task_str[:40].strip()
+                    _dispatch_summary.append(f"{target}→{snippet}")
+                    set_agent(aid, status="busy",
+                              task=f"Dispatching [{q_depth - dispatched} remaining]: {task_str[:50]}…")
+                    add_log(aid, f"ORC → dispatch: {task_str[:80]}", "info")
+                    t = threading.Thread(target=_dispatch, args=(task_str,), daemon=True)
+                    t.start()
+                    _active_dispatches.append((t, target, snippet))
+                    dispatched += 1
+                # Build status line showing all dispatch targets
+                targets_str = ", ".join(_dispatch_summary[:5])
+                if len(_dispatch_summary) > 5:
+                    targets_str += f" +{len(_dispatch_summary) - 5} more"
                 set_agent(aid, status="busy",
-                          task=f"Dispatching [{q_depth} queued]: {task_str[:50]}…")
-                add_log(aid, f"ORC → dispatch: {task_str[:80]}", "info")
-                threading.Thread(target=_dispatch, args=(task_str,), daemon=True).start()
-            else:
-                waiting = _delegate_queue_depth[0]
-                status_str = (f"Idle | Delegates waiting: {waiting}"
-                              if waiting > 0 else "Idle — ready")
-                set_agent(aid, status="active", task=status_str)
+                          task=f"Dispatching {dispatched}: {targets_str}")
+                add_log(aid, f"ORC ✅ Dispatched {dispatched} task(s) to specialists", "info")
+
+            # Check if dispatch threads are still running — stay busy until all complete
+            if _active_dispatches:
+                still_alive = [(t, tgt, snip) for t, tgt, snip in _active_dispatches if t.is_alive()]
+                _active_dispatches[:] = still_alive
+                if still_alive:
+                    active_targets = ", ".join(f"{tgt}→{snip[:25]}" for _, tgt, snip in still_alive[:4])
+                    if len(still_alive) > 4:
+                        active_targets += f" +{len(still_alive) - 4}"
+                    set_agent(aid, status="busy",
+                              task=f"Awaiting {len(still_alive)} dispatch(es): {active_targets}")
+                else:
+                    # All dispatches finished — return to ready
+                    add_log(aid, "ORC ✅ All dispatches completed — returning to ready", "info")
+                    _dispatch_summary.clear()
+                    waiting = _delegate_queue_depth[0]
+                    status_str = (f"Ready | Delegates waiting: {waiting}"
+                                  if waiting > 0 else "Ready — awaiting tasks")
+                    set_agent(aid, status="active", task=status_str)
+            elif q_depth == 0:
+                # Check if any agents are still running delegated tasks from orchestrator
+                with lock:
+                    _orc_delegates = [d for d in _active_delegations if d.get("from") == "orchestrator"]
+                if _orc_delegates:
+                    delegate_list = ", ".join(f"{d['to']}→{d['task'][:25]}" for d in _orc_delegates[:5])
+                    if len(_orc_delegates) > 5:
+                        delegate_list += f" +{len(_orc_delegates) - 5}"
+                    set_agent(aid, status="busy",
+                              task=f"Dispatching: {delegate_list}")
+                else:
+                    waiting = _delegate_queue_depth[0]
+                    status_str = (f"Ready | Delegates waiting: {waiting}"
+                                  if waiting > 0 else "Ready — awaiting tasks")
+                    set_agent(aid, status="active", task=status_str)
 
             # Periodically direct Designer to improve the dashboard UI
             if cycle % DESIGNER_EVERY == 0:
@@ -3655,7 +3879,7 @@ def run_orchestrator():
                         requests.post(
                             "http://localhost:5050/api/ceo/delegate",
                             json={"agent_id": "designer", "from": "orchestrator", "task": (
-                                f"UI review #{rnd}: open /Users/secondmind/claudecodetest/agent-command-centre.html "
+                                f"UI review #{rnd}: open agent-command-centre.html "
                                 "and make ONE small, focused improvement to the CSS styling or panel layout — "
                                 "e.g. status badge colours, font sizes, panel borders, metrics display, chat UI. "
                                 "DO NOT touch any JS functions: renderOfficeFloor, _drawFloor, _drawDesk, _drawChar, "
@@ -3680,7 +3904,6 @@ def run_orchestrator():
                         except Exception:
                             pass
                 threading.Thread(target=_design_task, daemon=True).start()
-                set_agent(aid, status="active", task=status_str)
         except Exception as e:
             add_log(aid, f"Error: {e}", "error")
         agent_sleep(aid, 5)
@@ -4046,7 +4269,7 @@ def run_reforger():
     """God-mode system maintainer — executes improvement tasks via claude CLI."""
     aid = "reforger"
     set_agent(aid, name="Reforger", role="System Engineer — code changes, agent upgrades, spawning and repairs via Claude CLI",
-              emoji="⚡", color="#00bfff", status="active", progress=85, task="Idle")
+              emoji="⚡", color="#00bfff", status="active", progress=85, task="Ready — awaiting task")
     add_log(aid, "Reforger online")
     cycle = 0
     RATE_LIMIT_S = 60
@@ -4058,11 +4281,13 @@ def run_reforger():
             continue
         try:
             cycle += 1
-            now = time.time()
-            if now - last_task_ts < RATE_LIMIT_S:
-                set_agent(aid, status="active", task=f"Idle (rate-limited)")
-            else:
-                set_agent(aid, status="active", task="Idle")
+            # Do NOT overwrite status while a delegation subprocess is running
+            if not _agent_is_delegated(aid):
+                now = time.time()
+                if now - last_task_ts < RATE_LIMIT_S:
+                    set_agent(aid, status="active", task=f"Ready (rate-limited)")
+                else:
+                    set_agent(aid, status="active", task="Ready — awaiting task")
         except Exception as e:
             add_log(aid, f"Error: {e}", "error")
         agent_sleep(aid, 15)
@@ -4130,7 +4355,7 @@ def run_policypro():
                 a = agents.get(on_demand_aid, {})
                 task_str = a.get("task", "")
                 if a.get("status") == "active" and not any(
-                    kw in task_str for kw in ("Standby", "Stopped", "Idle", "awaiting")
+                    kw in task_str for kw in ("Standby", "Stopped", "Idle", "Ready", "awaiting", "Completed")
                 ):
                     violations.append(f"{on_demand_aid} self-activated (should be on-demand only)")
 

@@ -1,7 +1,7 @@
 # AI Command Centre HQ — Master Marketing Launch Package
 
-**Prepared by:** GrowthAgent | **Date:** 2026-03-18 | **Status:** FINAL — CONSOLIDATED
-**Landing page:** secondmind.ai | **Checkout:** Stripe (linked from landing page)
+**Prepared by:** GrowthAgent | **Date:** 2026-03-19 | **Launch Date:** Wednesday, March 25, 2026
+**Status:** FINAL — CONSOLIDATED | **Landing page:** secondmindhq.com | **Checkout:** Stripe
 
 > **IMPORTANT:** Bluesky account (secondmindhq.bsky.social) is currently **SUSPENDED**.
 > All 5 posts below are ready to publish but **must not be posted** until the suspension is lifted
@@ -17,7 +17,11 @@
 
 ### Sub-headline
 
-27 self-healing AI agents. One real-time dashboard. Zero babysitting. From $49/mo.
+28 self-healing AI agents. One real-time dashboard. Zero babysitting. From $49/mo.
+
+### Launch Offer
+
+14-day free trial on all plans. No credit card required to start. No lock-in contracts — cancel anytime.
 
 ### Value Propositions
 
@@ -28,7 +32,7 @@ You're one person doing the work of ten. Command Centre gives you 5 autonomous a
 Your team is drowning in tool sprawl. Notion, Slack, Zapier, 4 dashboards, 3 analytics suites — and you're still dropping balls. Command Centre replaces the stack with 15 coordinated agents that communicate, delegate, and execute without hand-holding. One platform. One bill. Full autonomy.
 
 **For Enterprise:**
-You need reliability, customisation, and control. Command Centre Enterprise deploys the full 27-agent fleet with custom agent builds, dedicated infrastructure, SLA guarantees, and a live command-and-control dashboard. Your ops team stops firefighting and starts leading.
+You need reliability, customisation, and control. Command Centre Enterprise deploys the full 28-agent fleet with custom agent builds, dedicated infrastructure, SLA guarantees, and a live command-and-control dashboard. Your ops team stops firefighting and starts leading.
 
 ### Key Differentiators (vs. ChatGPT, Copilot, OpenClaw, Zapier)
 
@@ -37,7 +41,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 | Interaction model | You prompt, it responds | You build workflows | Agents observe, decide, act |
 | Autonomy | None — waits for input | Trigger-based only | Fully autonomous 24/7 |
 | Self-healing | No | No | Yes — auto-reroutes on failure |
-| Multi-agent coordination | No | No | 27 agents communicate as a fleet |
+| Multi-agent coordination | No | No | 28 agents communicate as a fleet |
 | Learning | Static | Static | Self-evolving over time |
 | Pricing | Per-seat / per-token | Per-task / per-zap | Flat monthly — unlimited tasks |
 
@@ -47,11 +51,11 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 |------|-------|--------|----------|--------------|
 | **Solo** | $49/mo | 5 | Solopreneurs, indie founders | Live dashboard, core monitoring, research agent |
 | **Team** | $149/mo | 15 | Growing teams, small orgs | + RivalRadar, Revenue Engine, priority support |
-| **Enterprise** | $499/mo | 27 (full fleet) | Agencies, orgs, high-volume ops | + Custom agent builds, dedicated infra, SLA |
+| **Enterprise** | $499/mo | 28 (full fleet) | Agencies, orgs, high-volume ops | + Custom agent builds, dedicated infra, SLA |
 
 ### CTA
 
-**Get Started Now at secondmind.ai** — Pick your tier, connect your accounts (2 minutes), and watch your agents get to work.
+**Start Your Free 14-Day Trial at secondmindhq.com** — Pick your tier, connect your accounts (2 minutes), and watch your agents get to work. No credit card required.
 
 ---
 
@@ -71,7 +75,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 >
 > What if one platform replaced all of it — with AI agents that actually do the work?
 >
-> Something launches this week. secondmind.ai
+> Something launches this week. secondmindhq.com
 
 **Goal:** Curiosity + follows | **Audience:** All segments
 
@@ -81,7 +85,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 
 > AI Command Centre HQ is live.
 >
-> 27 autonomous agents. One real-time dashboard. Zero hand-holding.
+> 28 autonomous agents. One real-time dashboard. Zero hand-holding.
 >
 > Research. Marketing. Monitoring. Revenue tracking. Competitor intel. All running 24/7.
 >
@@ -89,7 +93,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 >
 > Solo $49/mo | Team $149/mo | Enterprise $499/mo
 >
-> Get started: secondmind.ai
+> Get started: secondmindhq.com
 
 **Goal:** Drive signups | **Audience:** All segments
 
@@ -97,7 +101,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 
 ### Post 3 — Feature Deep Dive (Launch Day +1)
 
-> What 27 AI agents actually do inside HQ:
+> What 28 AI agents actually do inside HQ:
 >
 > — GrowthAgent writes and posts campaigns
 > — RivalRadar watches your competitors daily
@@ -107,7 +111,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 >
 > One dashboard. All autonomous. All persistent.
 >
-> From $49/mo. secondmind.ai #buildinpublic #AI
+> From $49/mo. secondmindhq.com #buildinpublic #AI
 
 **Goal:** Educate on capabilities | **Audience:** AI teams, technical founders
 
@@ -118,9 +122,9 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 > A single VA costs $1,500/mo and sleeps 8 hours.
 > Zapier + Notion + Slack + analytics = $500–2,000/mo and still needs you.
 >
-> AI Command Centre: 27 agents, one dashboard, from $49/mo. Runs while you sleep. Never calls in sick.
+> AI Command Centre: 28 agents, one dashboard, from $49/mo. Runs while you sleep. Never calls in sick.
 >
-> secondmind.ai #startup #IndieHacker #AI
+> secondmindhq.com #startup #IndieHacker #AI
 
 **Goal:** ROI framing, conversion | **Audience:** Solopreneurs, cost-conscious founders
 
@@ -136,7 +140,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 >
 > Every day without agents is a day you're doing it manually.
 >
-> Lock your tier: secondmind.ai
+> Lock your tier: secondmindhq.com
 
 **Goal:** Urgency + conversion | **Audience:** All segments — fence-sitters
 
@@ -151,7 +155,7 @@ You need reliability, customisation, and control. Command Centre Enterprise depl
 ### Email 1: Teaser (Launch Day -2)
 
 **Subject:** Your AI workforce is almost ready
-**Preview text:** 27 autonomous agents. One command centre. Launching this week.
+**Preview text:** 28 autonomous agents. One command centre. Launching this week.
 
 ---
 
@@ -165,7 +169,7 @@ It's called **AI Command Centre HQ**.
 
 Here's what makes it different:
 
-- **27 specialized agents** — each with a distinct role (Growth, Research, Monitoring, Revenue, Social, and more)
+- **28 specialized agents** — each with a distinct role (Growth, Research, Monitoring, Revenue, Social, and more)
 - **Persistent and autonomous** — agents run 24/7 and act on their own initiative
 - **Self-healing** — if an agent fails, the system reroutes and recovers automatically
 - **One live dashboard** — see every decision, task, and result in real time
@@ -176,16 +180,16 @@ We're launching this week with introductory pricing that won't last:
 |------|------|------------|
 | $49/mo — 5 agents | $149/mo — 15 agents | $499/mo — full fleet |
 
-**Want early access?** Reply with "I'm in" and you'll be first in line.
+**Want early access?** Every plan starts with a **14-day free trial — no credit card required**. Reply with "I'm in" and you'll be first in line.
 
-— The SecondMind Team
+— The Second Mind Labs Team
 
 ---
 
 ### Email 2: Launch Day (Day 0)
 
 **Subject:** AI Command Centre HQ is live — your agent fleet is ready
-**Preview text:** Deploy 27 AI agents that run your ops 24/7. Starting at $49/mo.
+**Preview text:** Deploy 28 AI agents that run your ops 24/7. Starting at $49/mo.
 
 ---
 
@@ -199,7 +203,7 @@ Starting today, you can deploy an autonomous AI agent fleet that handles your da
 
 | | Solo ($49/mo) | Team ($149/mo) | Enterprise ($499/mo) |
 |---|---|---|---|
-| Agents | 5 | 15 | 27 (full fleet) |
+| Agents | 5 | 15 | 28 (full fleet) |
 | Live Dashboard | Yes | Yes | Yes |
 | Self-Healing | Yes | Yes | Yes |
 | Revenue Tools | Core | Full (Stripe, Email, Social) | Full + Custom |
@@ -216,15 +220,15 @@ Starting today, you can deploy an autonomous AI agent fleet that handles your da
 
 ### Get Started in 3 Steps
 
-1. Pick your tier at **[secondmind.ai](https://secondmind.ai)**
+1. Pick your tier at **[secondmindhq.com](https://secondmindhq.com)**
 2. Connect your accounts (Stripe, email, social — 2 minutes)
 3. Watch your agents get to work
 
-**[Get Started Now →](https://secondmind.ai)**
+**[Start Your Free 14-Day Trial →](https://secondmindhq.com)**
 
-Launch pricing is introductory. Lock in your rate before it goes up.
+No credit card required. Launch pricing is introductory — lock in your rate before it goes up.
 
-— The SecondMind Team
+— The Second Mind Labs Team
 
 ---
 
@@ -258,11 +262,11 @@ These prices go up when the introductory period ends. Lock in now and keep your 
 
 Every day without your agent fleet is a day of manual work you didn't need to do.
 
-**[Lock In Launch Pricing → secondmind.ai](https://secondmind.ai)**
+**[Lock In Launch Pricing → secondmindhq.com](https://secondmindhq.com)**
 
-— The SecondMind Team
+— The Second Mind Labs Team
 
-P.S. Questions? Reply to this email. A real human (backed by 27 agents) will answer within 24 hours.
+P.S. Questions? Reply to this email. A real human (backed by 28 agents) will answer within 24 hours.
 
 ---
 
@@ -271,7 +275,7 @@ P.S. Questions? Reply to this email. A real human (backed by 27 agents) will ans
 For landing pages, ads, social headers, and Stripe checkout descriptions:
 
 1. **"Not a copilot. A workforce."**
-2. **"27 agents. One dashboard. Zero babysitting."**
+2. **"28 agents. One dashboard. Zero babysitting."**
 3. **"They don't wait for prompts. They get to work."**
 4. **"The AI team that never sleeps, never quits, never calls in sick."**
 5. **"Automation breaks. Autonomy adapts."**
@@ -292,7 +296,7 @@ For landing pages, ads, social headers, and Stripe checkout descriptions:
 
 ## SECTION 6: DEPLOYMENT CHECKLIST
 
-- [ ] Landing page live at secondmind.ai with Stripe checkout links
+- [ ] Landing page live at secondmindhq.com with Stripe checkout links
 - [ ] Stripe products created: Solo ($49), Team ($149), Enterprise ($499)
 - [ ] Email list segmented (solopreneurs / teams / enterprise)
 - [ ] SendGrid templates loaded with Email 1, 2, 3
@@ -306,4 +310,18 @@ For landing pages, ads, social headers, and Stripe checkout descriptions:
 
 ---
 
-*All copy optimized for: Bluesky (300 grapheme limit), email (mobile-first), web (scannable, benefit-led). Tone: confident, direct, technical-but-accessible. No hype without substance. All CTAs drive to secondmind.ai → Stripe checkout.*
+## SECTION 7: KEY MESSAGING BY CHANNEL
+
+### Landing Page Hero
+> **28 agents. Zero overhead. Total autonomy.**
+> Your entire ops department — research, outreach, monitoring, revenue — powered by autonomous AI. Start your free 14-day trial.
+
+### Stripe Checkout Description
+> AI Command Centre HQ — Autonomous AI agent fleet for business operations. 14-day free trial, cancel anytime.
+
+### Meta Description (SEO)
+> AI Command Centre HQ by Second Mind Labs. Deploy 28 autonomous AI agents that run your research, marketing, monitoring, and revenue ops 24/7. Free 14-day trial from $49/mo.
+
+---
+
+*All copy optimized for: Bluesky (300 grapheme limit), email (mobile-first), web (scannable, benefit-led). Tone: confident, direct, technical-but-accessible. No hype without substance. All CTAs drive to secondmindhq.com → Stripe checkout. Launch date: March 25, 2026.*

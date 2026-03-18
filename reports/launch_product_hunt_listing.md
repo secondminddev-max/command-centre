@@ -5,7 +5,7 @@
 
 ## Tagline
 
-**Your business, running itself — 27 autonomous AI agents in one command centre.**
+**Your business, running itself — 28 autonomous AI agents in one command centre.**
 
 ---
 
@@ -51,7 +51,7 @@ Built for indie hackers, solopreneurs, and AI-native founders who want to run a 
 
 ## Makers
 
-SecondMind — Building autonomous agent infrastructure for the one-person company.
+Second Mind Labs — Building autonomous agent infrastructure for the one-person company.
 
 ---
 

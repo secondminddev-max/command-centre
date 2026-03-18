@@ -9,7 +9,7 @@ def run_memoryagent():
     from urllib.parse import urlparse, parse_qs
 
     aid = "memoryagent"
-    DATA_DIR = "/Users/secondmind/claudecodetest/data"
+    DATA_DIR = "os.path.dirname(os.path.abspath(__file__))/data"
     CHROMA_DIR = os.path.join(DATA_DIR, "chromadb")
 
     set_agent(aid, name="MemoryAgent", role="Semantic Memory & Search",

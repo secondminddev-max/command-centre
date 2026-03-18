@@ -11,5 +11,7 @@
   "_test_probe": "ok",
   "demo_test_flag": "true",
   "qa_test_flag": "true",
-  "qa": "1"
+  "qa": "1",
+  "__probe__": "None",
+  "demo_test_run": "true"
 }

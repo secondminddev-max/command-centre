@@ -11,7 +11,7 @@ def run_apipatcher():
     from urllib.parse import urlparse
 
     aid = "apipatcher"
-    DIR = "/Users/secondmind/claudecodetest"
+    DIR = "os.path.dirname(os.path.abspath(__file__))"
     ACCOUNTS_DIR  = f"{DIR}/data/accounts"
     QUEUE_FILE    = f"{ACCOUNTS_DIR}/provision_queue.json"
 

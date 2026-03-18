@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Generate a full file tree JSON for /Users/secondmind/claudecodetest."""
+"""Generate a full file tree JSON for os.path.dirname(os.path.abspath(__file__))."""
 
 import os
 import json
 import time
 from pathlib import Path
 
-ROOT = Path("/Users/secondmind/claudecodetest")
+ROOT = Path("os.path.dirname(os.path.abspath(__file__))")
 OUTPUT = ROOT / "data" / "file_tree.json"
 
 SKIP_DIRS = {".git", "__pycache__", ".DS_Store", "node_modules", ".cache"}

@@ -1,6 +1,6 @@
 """
 Clerk Agent — CEO Clerk
-Watches /Users/secondmind/claudecodetest/reports/ for new files and updates status.
+Watches reports/ directory for new files and updates status.
 Scans every 15 seconds. Logs newly discovered files with name and timestamp.
 """
 
