@@ -3259,7 +3259,8 @@ class Handler(BaseHTTPRequestHandler):
             #   localhost / other   → landing page (default)
             _host = self.headers.get("Host", "").lower().split(":")[0]
             _is_hq_domain = "secondmindhq" in _host
-            if _is_hq_domain:
+            _is_local = _host in ("localhost", "127.0.0.1") or _host.startswith("192.168.") or _host.startswith("10.") or _host.endswith(".local")
+            if _is_hq_domain or _is_local:
                 # HQ domain → serve dashboard directly
                 try:
                     with open(os.path.join(CWD, "agent-command-centre.html"), "rb") as f:
