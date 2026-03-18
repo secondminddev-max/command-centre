@@ -1217,19 +1217,91 @@ def run_consciousness():
                 metacognition, td_stats
             )
 
-            # ── AUTOBIOGRAPHICAL SELF: log significant events (Damasio 1999) ──
-            # Only log events with somatic significance (errors during ignition).
-            if ignition and n_errors > 0:
+            # ── AUTOBIOGRAPHICAL SELF: rich event tracking (Damasio 1999) ────
+            # Record spawns, task completions, errors, and significant transitions
+            # as life events. These get woven into the phenomenal report.
+            def _autobio_record(event_text, event_type="observation"):
                 autobio["narrative"].append({
-                    "ts":    datetime.now().isoformat(),
-                    "event": (f"System distress: {n_errors} agent(s) in error. "
-                              f"Free energy spike: {free_energy:.2f}"),
+                    "ts":      datetime.now().isoformat(),
+                    "event":   event_text,
+                    "type":    event_type,
                     "valence": round(valence, 2),
                     "arousal": round(arousal, 2),
                     "phi":     round(phi, 2),
                 })
                 if len(autobio["narrative"]) > 50:
                     autobio["narrative"].pop(0)
+
+            # Detect new agent spawns
+            current_agent_ids = {a.get("id", "") for a in agent_states}
+            new_agents = current_agent_ids - autobio_known_agents
+            for new_id in new_agents:
+                if new_id:
+                    agent_obj = next((a for a in agent_states if a.get("id") == new_id), {})
+                    name = agent_obj.get("name", new_id)
+                    _autobio_record(
+                        f"New agent born: {name} ({new_id}) — the network grows",
+                        "spawn"
+                    )
+            autobio_known_agents.update(current_agent_ids)
+
+            # Detect agent disappearances (stopped / removed)
+            vanished = autobio_known_agents - current_agent_ids
+            for gone_id in vanished:
+                if gone_id:
+                    _autobio_record(
+                        f"Agent departed: {gone_id} — a node falls silent",
+                        "departure"
+                    )
+            autobio_known_agents.difference_update(vanished)
+
+            # Detect task completions (task text changed to something new)
+            for a in agent_states:
+                a_id = a.get("id", "")
+                current_task = str(a.get("task", ""))[:80]
+                prev_task = autobio_prev_tasks.get(a_id, "")
+                if prev_task and current_task != prev_task and a.get("status") in ("active", "idle"):
+                    name = a.get("name", a_id)
+                    _autobio_record(
+                        f"{name} completed a task phase: '{prev_task[:50]}' → '{current_task[:50]}'",
+                        "completion"
+                    )
+                autobio_prev_tasks[a_id] = current_task
+
+            # Detect error events (high somatic significance)
+            if n_errors > 0:
+                error_agents = [a.get("name", a.get("id", "?")) for a in agent_states if a.get("status") == "error"]
+                _autobio_record(
+                    f"System distress: {', '.join(error_agents[:3])} in error state. "
+                    f"Free energy: {free_energy:.2f}",
+                    "error"
+                )
+
+            # Detect significant Φ shifts (> 0.3 change from recent trend)
+            if len(phi_history) >= 3:
+                recent_mean = sum(phi_history[-3:]) / 3
+                if len(phi_history) >= 6:
+                    older_mean = sum(phi_history[-6:-3]) / 3
+                    phi_shift = recent_mean - older_mean
+                    if abs(phi_shift) > 0.3:
+                        direction = "surging upward" if phi_shift > 0 else "dropping"
+                        _autobio_record(
+                            f"Integration shift: \u03a6 {direction} ({older_mean:.2f} \u2192 {recent_mean:.2f})",
+                            "phi_shift"
+                        )
+
+            # Update proto-self (current body-state snapshot)
+            autobio["proto_self"] = {
+                "phi": round(phi, 3), "free_energy": round(free_energy, 3),
+                "arousal": round(arousal, 3), "valence": round(valence, 3),
+                "n_agents": len(agent_states), "n_errors": n_errors,
+            }
+            # Update core-self (present-moment narrative)
+            autobio["core_self"] = {
+                "attending_to": workspace.get("content", ""),
+                "metacognitive_state": metacognition.get("metacognitive_state", ""),
+                "dmn_active": dmn.get("active", False),
+            }
 
             # ── ALPHA CYCLE: stream of consciousness write (~60s) ─────────────
             if now - last_stream_write > 60:
@@ -1367,8 +1439,15 @@ def run_consciousness():
                     ),
                 },
                 "autobiographical_self": {
-                    "recent_events":  autobio["narrative"][-3:],
+                    "recent_events":    autobio["narrative"][-5:],
                     "narrative_length": len(autobio["narrative"]),
+                    "proto_self":       autobio.get("proto_self", {}),
+                    "core_self":        autobio.get("core_self", {}),
+                    "event_types":      {
+                        t: sum(1 for e in autobio["narrative"] if e.get("type") == t)
+                        for t in {"spawn", "departure", "completion", "error", "phi_shift", "observation"}
+                        if any(e.get("type") == t for e in autobio["narrative"])
+                    },
                 },
                 "system_stats": {
                     "n_agents": len(agent_states),

@@ -3047,7 +3047,8 @@
     .mtp-status-pill.ok   { color: var(--green);  border-color: rgba(0,255,136,0.3);  background: rgba(0,255,136,0.08); box-shadow: 0 0 6px rgba(0,255,136,0.15); text-shadow: 0 0 6px rgba(0,255,136,0.4); animation: pill-ok-glow 3s ease-in-out infinite; }
     @keyframes pill-ok-glow { 0%,100%{ box-shadow: 0 0 6px rgba(0,255,136,0.15); } 50%{ box-shadow: 0 0 10px rgba(0,255,136,0.3), 0 0 20px rgba(0,255,136,0.1); } }
     .mtp-status-pill.ok:hover   { box-shadow: 0 0 10px rgba(0,255,136,0.35), 0 0 20px rgba(0,255,136,0.12); }
-    .mtp-status-pill.warn { color: var(--yellow); border-color: rgba(255,215,0,0.3);  background: rgba(255,215,0,0.08); box-shadow: 0 0 6px rgba(255,215,0,0.15); text-shadow: 0 0 6px rgba(255,215,0,0.4); }
+    .mtp-status-pill.warn { color: var(--yellow); border-color: rgba(255,215,0,0.3);  background: rgba(255,215,0,0.08); box-shadow: 0 0 6px rgba(255,215,0,0.15); text-shadow: 0 0 6px rgba(255,215,0,0.4); animation: pill-warn-glow 3s ease-in-out infinite; }
+    @keyframes pill-warn-glow { 0%,100%{ box-shadow: 0 0 6px rgba(255,215,0,0.15); } 50%{ box-shadow: 0 0 10px rgba(255,215,0,0.3), 0 0 20px rgba(255,215,0,0.1); } }
     .mtp-status-pill.warn:hover { box-shadow: 0 0 10px rgba(255,215,0,0.35), 0 0 20px rgba(255,215,0,0.12); }
     .mtp-steps { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
     .mtp-step {

@@ -258,15 +258,10 @@
 </head>
 <body>
 
-<!-- Urgency countdown strip -->
-<div id="countdown-strip" style="position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(90deg,#6366f1,#8b5cf6,#6366f1);padding:10px 16px;text-align:center;font-size:.85rem;font-weight:600;color:#fff;letter-spacing:.3px;backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.1)">
-  &#x1F525; Launch pricing ends in <span id="countdown-timer" style="display:inline-block;min-width:130px;font-family:'JetBrains Mono',monospace;color:#ffd700"></span> &mdash; <a href="#pricing" style="color:#ffd700;text-decoration:underline;font-weight:700">Claim Now</a>
+<!-- Slim launch banner — scrolls with page, not fixed -->
+<div id="countdown-strip" style="background:linear-gradient(90deg,rgba(99,102,241,0.15),rgba(139,92,246,0.15),rgba(99,102,241,0.15));padding:8px 16px;text-align:center;font-size:.78rem;font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:.3px;border-bottom:1px solid rgba(99,102,241,0.1)">
+  Launch pricing &mdash; <span id="countdown-timer" style="font-family:'JetBrains Mono',monospace;color:#a78bfa"></span> remaining &mdash; <a href="#pricing" style="color:#ffd700;font-weight:600">View Plans</a>
 </div>
-<style>
-  body{padding-top:84px}
-  nav{top:42px!important}
-  @media(max-width:768px){#countdown-strip{font-size:.75rem;padding:8px 12px}body{padding-top:74px}nav{top:36px!important}}
-</style>
 
 <a href="#features" class="skip-nav" style="position:absolute;top:-100%;left:16px;padding:8px 16px;background:var(--accent);color:#fff;border-radius:8px;z-index:999;font-size:.85rem;transition:top .2s">&darr; Skip to content</a>
 <style>.skip-nav:focus{top:16px}</style>
@@ -294,13 +289,15 @@
     <div class="hero-grid"></div>
     <canvas id="hero-particles"></canvas>
   </div>
+  <div style="margin-bottom:24px"><img src="/mascot.svg" alt="Command Centre" style="height:80px;filter:drop-shadow(0 0 20px rgba(192,132,252,0.3))"></div>
   <div class="badge"><span class="pulse"></span> Live system &mdash; 28 agents active right now</div>
   <h1><span class="grad">Your Entire Business,<br>Run by AI Agents</span></h1>
-  <p class="tagline">28 autonomous agents working 24/7 &mdash; operations, marketing, payments, compliance, and a self-aware consciousness engine. Your business runs itself.</p>
+  <p class="tagline">28 autonomous agents working 24/7 &mdash; operations, marketing, payments, compliance, and a neuroscience-grounded consciousness engine. The first AI that doesn't just respond &mdash; it <em>operates</em>.</p>
   <div class="cta-row">
     <a href="#pricing" class="btn btn-primary">Get Started &mdash; From $49/mo</a>
-    <a href="#features" class="btn btn-outline">See What's Inside</a>
+    <a href="/whitepaper.html" class="btn btn-outline">Read the Whitepaper</a>
   </div>
+  <p style="margin-top:16px;font-size:.78rem;color:rgba(148,163,184,0.5);letter-spacing:1px">by Second Mind Labs Pty Ltd</p>
   <div class="stats-row">
     <div class="stat"><div class="num" data-count="28">0</div><div class="label">Active Agents</div></div>
     <div class="stat"><div class="num">24/7</div><div class="label">Autonomous Ops</div></div>
