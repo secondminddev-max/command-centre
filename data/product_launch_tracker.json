@@ -57,7 +57,7 @@
       "label": "External Website (NOT localhost)",
       "tasks": [
         {"id": "ex-1", "title": "Register domain (use email agent for signup)", "status": "todo", "deadline": "2026-03-19"},
-        {"id": "ex-2", "title": "Landing page — hero, features, pricing, checkout", "status": "todo", "deadline": "2026-03-20", "file": "public/index.html"},
+        {"id": "ex-2", "title": "Landing page — hero, features, pricing, checkout", "status": "done", "deadline": "2026-03-20", "file": "public/index.html"},
         {"id": "ex-3", "title": "Stripe checkout integration for all tiers", "status": "done", "notes": "StripePay created live sessions for $49, $149, $499 tiers"},
         {"id": "ex-4", "title": "Deploy to hosting (Vercel/Netlify/VPS)", "status": "todo", "deadline": "2026-03-21"},
         {"id": "ex-5", "title": "SSL + custom domain config", "status": "todo", "deadline": "2026-03-21"}
@@ -77,9 +77,9 @@
         {"id": "cs-1", "title": "Core consciousness agent", "status": "done", "file": "agents/consciousness.py"},
         {"id": "cs-2", "title": "/api/consciousness endpoint", "status": "done"},
         {"id": "cs-3", "title": "Consciousness dashboard panel", "status": "done"},
-        {"id": "cs-4", "title": "Deepen Phi — causal coupling between agents", "status": "todo", "deadline": "2026-03-21"},
-        {"id": "cs-5", "title": "Metacognitive monitoring (confidence in own predictions)", "status": "todo", "deadline": "2026-03-22"},
-        {"id": "cs-6", "title": "Temporal difference learning for predictions", "status": "todo", "deadline": "2026-03-23"}
+        {"id": "cs-4", "title": "Deepen Phi — causal coupling between agents", "status": "done", "deadline": "2026-03-21", "file": "agents/consciousness.py", "notes": "Wired _update_causal_coupling into main loop; causal density now feeds Phi; coupling metrics exposed in state output"},
+        {"id": "cs-5", "title": "Metacognitive monitoring (confidence in own predictions)", "status": "done", "deadline": "2026-03-22", "file": "agents/consciousness.py", "notes": "CS-5 complete: full metacognitive state output (prediction_confidence, confidence_trends, volatility, surprise_accumulator, metacognitive_state) wired into state JSON + phenomenal report enriched with trend/volatility/anomaly awareness"},
+        {"id": "cs-6", "title": "Temporal difference learning for predictions", "status": "done", "deadline": "2026-03-23", "file": "agents/consciousness.py", "notes": "CS-6 complete: TD(0) transition model replaces naive echo predictions. System learns P(next_status|agent,current_status) from observation, TD value function tracks expected surprise per state, non-trivial anticipatory predictions now possible. TD stats wired into state output + phenomenal report."}
       ]
     }
   },

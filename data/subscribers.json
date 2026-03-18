@@ -102,5 +102,31 @@
     "subscribed_at": "2026-03-18T20:55:37.397952",
     "status": "active",
     "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "q@t.l",
+    "name": "",
+    "subscribed_at": "2026-03-18T21:02:31.790790",
+    "source": "landing_page"
+  },
+  {
+    "email": "q@t.l",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-18T21:02:31.792234",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "qa-test@example.com",
+    "name": "",
+    "subscribed_at": "2026-03-18T21:10:43.524374",
+    "source": "landing_page"
+  },
+  {
+    "email": "qa-test@demotester.local",
+    "name": "QA Tester",
+    "subscribed_at": "2026-03-18T21:18:12.572644",
+    "source": "landing_page"
   }
 ]

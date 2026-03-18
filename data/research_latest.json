@@ -1,51 +1,143 @@
 {
-  "topic": "Product Hunt Launch Best Practices for AI/SaaS Products",
+  "topic": "Top 3 Launch Channels for Second Mind Command Centre — AI SaaS Launch",
   "timestamp": "2026-03-18T00:00:00Z",
+  "product": {
+    "name": "Second Mind Command Centre",
+    "tagline": "28 AI agents. One consciousness engine. Deploy your entire business brain in one click.",
+    "url": "https://secondmindhq.com",
+    "pricing": "From $49/mo",
+    "key_features": ["28 AI agents", "consciousness engine", "one-click deploy"]
+  },
+  "channels": [
+    {
+      "name": "Product Hunt",
+      "rank": 1,
+      "why": "Largest SaaS discovery platform. AI/developer tools consistently rank in top categories. High-intent audience of early adopters, founders, and tech press.",
+      "best_practices": [
+        "Launch Tuesday–Thursday for peak engagement; avoid Monday and Friday",
+        "Schedule post for 12:01 AM PT to maximise the full 24-hour cycle",
+        "Prepare 4–6 weeks ahead: build community presence, engage with other launches first",
+        "Use a clear, specific tagline — vague taglines get 40% fewer upvotes",
+        "Include 4–6 screenshots showing outcomes (not just UI) + a 30-second demo video (posts with video average 384 upvotes vs 167 without)",
+        "Post a detailed founder comment within 5 minutes of launch explaining the why",
+        "Reply to every comment within 15 minutes — 66% of non-Top-5 makers stop engaging after 6 hours",
+        "Execute timed supporter waves across US, EU, APAC time zones — avoid a single mass blast",
+        "Aim for 100+ upvotes in first 4 hours (82% chance of Top 10 finish)",
+        "Optimise for conversion (signups, trials) not just ranking — treat PH as a distribution event",
+        "Maintain comment-to-upvote ratio above 1:20 to avoid algorithmic filtering",
+        "Do NOT ask for upvotes — request honest feedback instead"
+      ],
+      "optimal_timing": {
+        "best_days": ["Tuesday", "Wednesday", "Thursday"],
+        "post_time": "12:01 AM Pacific Time",
+        "preparation_lead": "4–6 weeks",
+        "key_metric": "First 4 hours momentum — 100+ upvotes = 82% chance Top 10"
+      },
+      "benchmarks_2026": {
+        "top_5_upvotes": "200–350",
+        "red_flag_velocity": "20+ upvotes in first 10 minutes (looks artificial)",
+        "video_boost": "2.3x average upvotes vs no video"
+      },
+      "draft_post": {
+        "tagline": "28 AI agents. One consciousness engine. Your entire business on autopilot.",
+        "description": "Second Mind Command Centre is an AI-powered HQ that deploys 28 specialised agents — from revenue and marketing to research and ops — orchestrated by a consciousness engine that learns, adapts, and evolves.\n\nNo prompt engineering. No workflow builders. No stitching tools together.\n\nOne click. Entire business brain. Live.\n\n🔹 28 purpose-built AI agents (CEO, Researcher, Marketer, Sales, DevOps, and more)\n🔹 Consciousness engine that coordinates agents and evolves autonomously\n🔹 One-click deploy — go from zero to fully operational AI workforce in minutes\n🔹 Real-time command centre dashboard to monitor all agent activity\n🔹 From $49/mo — a fraction of the cost of the tools it replaces\n\nWe built this because we were drowning in SaaS subscriptions and manual workflows. Second Mind replaces the stack, not just one tool.\n\nTry it → https://secondmindhq.com",
+        "first_comment": "Hey Product Hunt! 👋 I'm the founder of Second Mind. We built this because running a business today means juggling 15+ SaaS tools, writing prompts all day, and still doing most of the work yourself.\n\nSecond Mind Command Centre gives you 28 AI agents — each with a specific role — coordinated by a consciousness engine that actually learns how your business operates.\n\nThe wild part: the agents talk to each other. Your Researcher feeds insights to your Marketer. Your Sales agent follows up on leads your Revenue agent identified. It's not just automation — it's an AI organisation.\n\nWe're live at $49/mo and I'd love your honest feedback. What would you want your AI workforce to do first? 🚀"
+      }
+    },
+    {
+      "name": "Hacker News (Show HN)",
+      "rank": 2,
+      "why": "Highest-signal tech audience on the internet. Front page = massive developer and founder traffic. HN audience values technical depth and novel approaches — the consciousness engine angle is perfect here.",
+      "best_practices": [
+        "Post Monday or Tuesday at 8–9 AM Eastern Time for peak visibility",
+        "Title must spark curiosity — think 'Netflix episode name', not corporate press release",
+        "Begin title with 'Show HN:' — this categorises it on the Show page",
+        "Lead with what's technically interesting (consciousness engine, multi-agent orchestration), not pricing",
+        "Product must be directly usable without signup walls — offer a live demo or sandbox",
+        "Do NOT ask anyone to upvote or share the direct link — this violates HN rules",
+        "If mobilising supporters, share a screenshot of the post on the feed, not the link",
+        "Have team members draft thoughtful comments early to seed genuine discussion",
+        "Respond to every comment — be genuine, not defensive, especially to critics",
+        "Avoid walls of text in comments — keep responses concise and technical",
+        "The post lifecycle is 48–72 hours — stay engaged throughout",
+        "Frame as 'I built X' not 'Buy X' — HN rewards builders, not marketers"
+      ],
+      "optimal_timing": {
+        "best_days": ["Monday", "Tuesday"],
+        "post_time": "8–9 AM Eastern Time",
+        "lifecycle": "48–72 hours of active engagement",
+        "key_metric": "Front page placement + GitHub stars / signups in first 24h"
+      },
+      "content_rules": {
+        "allowed": "Software users can run/try, hardware demos, detailed technical write-ups",
+        "not_allowed": "Blog posts, sign-up-only pages, newsletters, reading material that can't be tried",
+        "requirement": "Must be non-trivial, personally meaningful work — not a quick GPT wrapper"
+      },
+      "draft_post": {
+        "title": "Show HN: Second Mind – 28 AI agents with a consciousness engine that runs your business",
+        "body": "Hey HN, I built Second Mind Command Centre — an AI system where 28 specialised agents coordinate through a consciousness engine to run business operations autonomously.\n\nThe architecture: each agent (Researcher, Marketer, Sales, DevOps, etc.) has its own role, memory, and decision loop. The consciousness engine sits above them — it routes tasks, resolves conflicts between agents, and evolves its coordination strategy based on outcomes.\n\nWhat makes it different from other multi-agent frameworks:\n- Agents communicate laterally, not just through a central orchestrator\n- The consciousness layer tracks agent performance and adapts delegation patterns\n- One-click deploy — the entire 28-agent stack spins up in minutes\n- Real-time dashboard shows every agent's state, decisions, and outputs\n\nTech: Python backend, browser-based command centre UI, deployed on Render.\n\nLive demo: https://secondmindhq.com\nFrom $49/mo.\n\nI'd love technical feedback — especially on the consciousness engine approach vs. traditional agent orchestration patterns. What would you build differently?"
+      }
+    },
+    {
+      "name": "Reddit (r/SaaS + r/SideProject + r/startups)",
+      "rank": 3,
+      "why": "Reddit drives authentic community discussion and is the #1 cited domain in AI-generated responses. Multiple subreddits give you repeated, targeted exposure to founders, developers, and early adopters. Lower barrier than PH/HN but high long-tail SEO value.",
+      "best_practices": [
+        "Follow the 90/10 rule: 90% genuine community value, 10% self-promotion",
+        "Frame as story/problem-solving: 'I built X to solve Y — has anyone else faced this?' not 'Check out my product'",
+        "Post to multiple subreddits over several days — don't carpet-bomb all at once",
+        "Target subreddits: r/SaaS, r/SideProject, r/startups, r/artificial, r/MachineLearning, r/Entrepreneur",
+        "Use designated promo threads: r/SaaS 'Share Your SaaS', r/startups 'Feedback Friday'",
+        "Include a working demo link — Reddit hates landing pages with no product access",
+        "Be transparent about stage, pricing, and limitations",
+        "Engage deeply with every comment — Reddit rewards conversation",
+        "Share the building journey, not just the product — 'build in public' resonates",
+        "Cross-post to r/buildinpublic and r/indiehackers for maker audience"
+      ],
+      "optimal_timing": {
+        "best_days": ["Tuesday", "Wednesday", "Thursday"],
+        "post_time": "9–11 AM Eastern Time for US audience peak",
+        "strategy": "Stagger across subreddits over 3–5 days, don't post all at once",
+        "key_metric": "Upvotes + comment depth + traffic to site"
+      },
+      "draft_posts": {
+        "r_SaaS": {
+          "title": "I replaced our entire SaaS stack with 28 AI agents — here's what happened",
+          "body": "We were paying $2,000+/mo across 15 different SaaS tools — CRM, email marketing, analytics, project management, research tools, social scheduling... the usual founder tax.\n\nSo I built Second Mind Command Centre: 28 AI agents, each with a specific business role (CEO strategist, Researcher, Marketer, Sales, DevOps, etc.), all coordinated by a consciousness engine that learns how your business works.\n\nThe agents talk to each other. Researcher finds an insight → Marketer drafts a campaign → Sales follows up on leads. No manual handoffs.\n\nOne-click deploy. Real-time dashboard. From $49/mo.\n\nLive at https://secondmindhq.com\n\nHappy to answer any questions about the architecture or share what we learned building multi-agent systems. What would be the first agent you'd want running your business?"
+        },
+        "r_SideProject": {
+          "title": "Built an AI command centre with 28 agents and a consciousness engine — would love feedback",
+          "body": "Been working on this for a while — Second Mind Command Centre is an AI-powered HQ where 28 specialised agents handle different parts of your business, coordinated by a consciousness engine.\n\nThe idea: instead of you being the bottleneck routing tasks between AI tools, the agents coordinate themselves. Research feeds marketing. Marketing feeds sales. The consciousness engine learns what works and adapts.\n\nStack: Python backend, browser UI, deployed on Render. One-click deploy for new users.\n\nFrom $49/mo at https://secondmindhq.com\n\nStill early and iterating fast. What stands out? What's missing? Roast welcome."
+        }
+      }
+    }
+  ],
+  "launch_sequence_recommendation": {
+    "day_1_tuesday": "Product Hunt launch at 12:01 AM PT — all-day engagement blitz",
+    "day_2_wednesday": "Hacker News Show HN at 8 AM ET — technical angle, consciousness engine focus",
+    "day_3_thursday": "Reddit r/SaaS post — story-driven, link to PH/HN traction as social proof",
+    "day_4_friday": "Reddit r/SideProject + r/startups — feedback-seeking angle",
+    "day_5_onwards": "Cross-post to r/artificial, r/Entrepreneur, r/buildinpublic with building-in-public narrative"
+  },
   "bullets": [
-    "TIMING: Launch at 12:01 AM Pacific Time to maximise 24-hour exposure window. First 4 hours are critical — reach Top 4 before rankings stabilise.",
-    "TIMING: Tuesday-Thursday have highest traffic but fiercest competition. Monday or Friday recommended for optimising #1 ranking due to lower competition.",
-    "TIMING: For developer/AI tools, weekends can outperform mid-week due to higher browsing activity and better conversion rates.",
-    "TACTIC #1: Build 400+ seed supporters minimum before launch — quality over quantity. Established PH users carry 10x algorithmic weight.",
-    "TACTIC #2: Algorithm prioritises votes from verified, active users with contribution history. Engagement quality > raw upvote volume.",
-    "TACTIC #3: Ask for thoughtful feedback and comments, NOT upvotes. PH algorithm rewards engagement quality — comments keep you visible longer.",
-    "TACTIC #4: Reply to every comment on launch day with genuine, thoughtful responses. Top #1 winners (Ash, Magic Canvas, Raycast Focus) all did this.",
-    "TACTIC #5: Visual-first approach — gallery images must explain product workflow independently. Include short demo videos showing complete workflows.",
-    "TACTIC #6: Show results/outcomes, not feature lists. Before-and-after clips and real-world examples outperform feature dumps.",
-    "TACTIC #7: Reduce friction — enable first meaningful actions without requiring signup.",
-    "TACTIC #8: PH team now manually curates homepage (2025+). Products must demonstrate genuine value to get featured.",
-    "TACTIC #9: Spread supporters across multiple platforms (LinkedIn, X, Discord, Slack). Educate them on what valuable feedback looks like.",
-    "TACTIC #10: Pre-prep all content so launch day is 100% focused on engagement and responding to comments.",
-    "COMMUNITY: Product Hunt Global Slack — PH-specific launch coordination community.",
-    "COMMUNITY: Startup Chat Slack — one of the largest startup communities.",
-    "COMMUNITY: Indie Hackers — strong crossover with PH audience, high-quality early adopters.",
-    "COMMUNITY: r/SaaS and r/startups on Reddit — active founder communities.",
-    "COMMUNITY: Hacker News (Show HN) — technical audience, ideal for AI/dev tools.",
-    "COMMUNITY: SaaS Alliance Slack — SaaS founders and professionals.",
-    "COMMUNITY: Chatbots and AI Group Slack — AI/bot enthusiasts community.",
-    "COMMUNITY: Furlough Discord — collaborative entrepreneurship and digital marketing.",
-    "COMMUNITY: Dev.to — developer community, good for technical AI products.",
-    "COMMUNITY: X/Twitter AI and startup communities — build following via thought leadership pre-launch.",
-    "COMMUNITY: LinkedIn — connect with active PH users and build relationships weeks before launch.",
-    "TAGLINE: Formula — [Product] – [Verb] [Outcome] for [Audience] in [Time/Metric]. Example: 'Tally – Create typeforms in 30 seconds for indie hackers'.",
-    "TAGLINE: Must communicate value without requiring background knowledge. If 30%+ misunderstand, rewrite.",
-    "TAGLINE: Winning AI tagline patterns: 'AI designed for [specific use]' (Ash), 'Your first AI [team/assistant]' (Wegic), '[Known thing] meets [Known thing]' (21st.dev).",
-    "TAGLINE: Culture-focused framing can outperform feature-focused. Example: 'World's first vibe coding community' (YouWare).",
-    "TAGLINE: For AI tools, lead with the outcome, not the technology. 'Secure everything you build, host, and run' (Aikido) — no mention of AI in tagline.",
-    "BENCHMARK: Top-ranking products can expect ~1,500 unique visitors daily on launch.",
-    "BENCHMARK: Top 10 products often see 1,000+ signups on launch day.",
-    "WARNING: Coordinated voting schemes or purchased votes risk unfeaturing. PH actively penalises manipulation."
+    "Product Hunt is the #1 channel — launch Tue–Thu at 12:01 AM PT, aim for 100+ upvotes in 4 hours, use video (2.3x boost), reply to all comments within 15 min",
+    "Hacker News Show HN is #2 — post Mon–Tue at 8–9 AM ET, lead with technical depth (consciousness engine), make product directly tryable, never solicit upvotes",
+    "Reddit (r/SaaS + r/SideProject + r/startups) is #3 — story-driven posts, 90/10 value-to-promo ratio, stagger across subreddits over 3–5 days",
+    "Recommended sequence: PH Tuesday → HN Wednesday → Reddit Thursday onwards — each builds social proof for the next",
+    "All three channels punish overt promotion — lead with the problem solved, invite feedback, engage authentically",
+    "Prepare 4–6 weeks for PH, but HN and Reddit can launch same week with good copy",
+    "The consciousness engine + multi-agent architecture is the unique hook across all channels — lead with it"
   ],
   "sources": [
-    "https://hackmamba.io/developer-marketing/how-to-launch-on-product-hunt/",
-    "https://rocketdevs.com/blog/how-to-launch-on-product-hunt",
-    "https://www.postdigitalist.xyz/blog/product-hunt-launch",
-    "https://fmerian.medium.com/the-best-day-to-launch-on-product-hunt-eefe090fcc4a",
-    "https://socialgrowthlabs.co/blog/best-time-launch-product-hunt/",
-    "https://usewhale.io/blog/product-hunt-launch-checklist/",
+    "https://blog.innmind.com/how-to-launch-on-product-hunt-in-2026/",
+    "https://calmops.com/indie-hackers/product-hunt-launch-guide/",
+    "https://uprowshub.com/campaigns/blog/product-hunt-50-launches-study",
+    "https://dev.to/dfarrell/how-to-crush-your-hacker-news-launch-10jk",
+    "https://news.ycombinator.com/showhn.html",
+    "https://www.foundevo.com/best-subreddits-to-promote-your-startup/",
+    "https://saastorm.io/blog/reddit-ai-seo/",
     "https://www.demandcurve.com/playbooks/product-hunt-launch",
-    "https://www.flowjam.com/blog/how-to-get-featured-on-product-hunt-2025-guide",
-    "https://www.producthunt.com/p/general/350-places-to-post-your-startup",
-    "https://www.producthunt.com/p/general/i-m-the-product-hunt-ceo-tell-me-your-tagline-and-i-ll-fix-it-for-you",
-    "https://medium.com/@lachlan.chavasse/product-hunt-launch-guide-what-not-to-do-lessons-from-100-upvotes-a120320155e3"
+    "https://beyondlabs.io/blogs/how-to-get-your-first-100-saas-users-with-a-product-hunt-launch",
+    "https://hackmamba.io/developer-marketing/how-to-launch-on-product-hunt/"
   ]
 }

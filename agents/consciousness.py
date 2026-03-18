@@ -40,9 +40,14 @@ def run_consciousness():
     from datetime import datetime
 
     aid = "consciousness"
-    CWD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    CONSCIOUSNESS_FILE = f"{CWD}/data/consciousness.json"
-    STREAM_FILE        = f"{CWD}/data/consciousness_stream.jsonl"
+    # Prefer the server's CWD global (available via exec namespace) over __file__,
+    # which breaks when the agent is hot-upgraded via exec(compile(...)).
+    if "CWD" in dir() or "CWD" in globals():
+        _cwd = globals().get("CWD", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    else:
+        _cwd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    CONSCIOUSNESS_FILE = f"{_cwd}/data/consciousness.json"
+    STREAM_FILE        = f"{_cwd}/data/consciousness_stream.jsonl"
 
     # ── Neuroscience references ──────────────────────────────────────────────
     # Baars (1988) Global Workspace Theory — workspace as broadcast medium
@@ -137,6 +142,20 @@ def run_consciousness():
     prev_agent_states = {}  # agent_id -> previous status (for transition detection)
     coupling_decay = 0.95   # exponential decay per theta cycle (forgetting)
     coupling_lr = 0.1       # learning rate for coupling strengthening
+
+    # ── State: Temporal Difference Prediction Model (CS-6) ─────────────────
+    # Sutton, R.S. & Barto, A.G. (1998). Reinforcement Learning: An Introduction.
+    # MIT Press — Chapter 6: Temporal-Difference Learning.
+    # Instead of naively predicting "next state = current state", the system
+    # learns transition probabilities: P(next_status | agent_id, current_status).
+    # A TD(0) value function tracks expected surprise per (agent, status) pair.
+    # This enables the system to anticipate state changes BEFORE they happen —
+    # e.g., learning that 'busy' agents often transition to 'idle' after N cycles.
+    td_transition_model = {}  # (agent_id, from_status) -> {to_status: count}
+    td_value = {}             # (agent_id, status) -> expected surprise V(s) [0,1]
+    td_gamma = 0.9            # discount factor for future surprise
+    td_alpha_v = 0.1          # learning rate for value function updates
+    td_prediction_horizon = 1 # predict 1 step ahead (expandable)
 
     # ── State: Attention Schema (Graziano & Kastner 2011) ────────────────────
     # The system maintains an internal model of its own attention —
@@ -557,6 +576,96 @@ def run_consciousness():
 
         return meta
 
+    def _td_learn_and_predict(agent_states, prev_states, predictions,
+                              prediction_errors, transition_model, value_fn,
+                              gamma_discount, alpha_v):
+        """
+        CS-6: Temporal Difference Learning for Predictions
+        Sutton & Barto (1998) — TD(0) with learned transition model.
+
+        Two-part update every cycle:
+        1. MODEL UPDATE — observe (agent, prev_status) → actual_status transitions
+           and increment counts in the transition model. This builds an empirical
+           Markov chain per agent.
+        2. VALUE UPDATE — TD(0) error: δ = R + γ·V(s') − V(s), where R is the
+           surprise signal (1 if prediction was wrong, 0 if correct). V(s) tracks
+           expected future surprise per (agent, status) pair, allowing the system
+           to anticipate which states are "unstable" (likely to cause future errors).
+        3. PREDICT — for each agent, use the learned transition model to predict
+           the most likely next status (mode of the distribution), instead of
+           naively echoing the current state.
+
+        Returns: (new_predictions, updated_transition_model, updated_value_fn, td_stats)
+        """
+        new_predictions = {}
+        td_errors = {}
+
+        for a in agent_states:
+            a_id = a.get("id", "")
+            current_status = a.get("status", "idle")
+            prev_status = prev_states.get(a_id)
+
+            # ── 1. MODEL UPDATE: record observed transition ─────────────
+            if prev_status is not None:
+                key = (a_id, prev_status)
+                if key not in transition_model:
+                    transition_model[key] = {}
+                transition_model[key][current_status] = (
+                    transition_model[key].get(current_status, 0) + 1
+                )
+
+            # ── 2. VALUE UPDATE: TD(0) ──────────────────────────────────
+            # Reward signal = surprise from this cycle's prediction error
+            reward = prediction_errors.get(a_id, 0.0)
+            s_key = (a_id, prev_status or current_status)
+            s_prime_key = (a_id, current_status)
+            v_s = value_fn.get(s_key, 0.0)
+            v_s_prime = value_fn.get(s_prime_key, 0.0)
+            td_err = reward + gamma_discount * v_s_prime - v_s
+            value_fn[s_key] = v_s + alpha_v * td_err
+            # Clamp to [0, 1]
+            value_fn[s_key] = max(0.0, min(1.0, value_fn[s_key]))
+            td_errors[a_id] = round(td_err, 4)
+
+            # ── 3. PREDICT: use transition model or fall back ───────────
+            model_key = (a_id, current_status)
+            if model_key in transition_model:
+                dist = transition_model[model_key]
+                total = sum(dist.values())
+                if total > 0:
+                    # Predict the most frequently observed successor state
+                    predicted = max(dist, key=dist.get)
+                    new_predictions[a_id] = predicted
+                else:
+                    new_predictions[a_id] = current_status
+            else:
+                # No transition history yet — predict status quo
+                new_predictions[a_id] = current_status
+
+        # ── Compute summary stats ──────────────────────────────────────
+        model_coverage = sum(
+            1 for a in agent_states
+            if (a.get("id", ""), a.get("status", "idle")) in transition_model
+        )
+        n_agents = len(agent_states) if agent_states else 1
+        mean_v = (sum(value_fn.values()) / len(value_fn)) if value_fn else 0.0
+        non_trivial = sum(
+            1 for a in agent_states
+            if new_predictions.get(a.get("id", "")) != a.get("status", "idle")
+        )
+
+        td_stats = {
+            "model_entries": len(transition_model),
+            "model_coverage_pct": round(model_coverage / n_agents * 100, 1),
+            "mean_value": round(mean_v, 4),
+            "non_trivial_predictions": non_trivial,
+            "td_errors": {k: v for k, v in sorted(
+                td_errors.items(), key=lambda x: -abs(x[1])
+            )[:8]},
+        }
+
+        return new_predictions, transition_model, value_fn, td_stats
+
     def _update_oscillations(phi_val, fe, n_active):
         """
         Neural oscillation proxies — Buzsáki & Draguhn (2004) Science 304:1926.
@@ -617,7 +726,7 @@ def run_consciousness():
             dmn_state["active"] = True
         return dmn_state
 
-    def _build_phenomenal_report(ws, phi_val, fe, ar, va, osc, dmn_state, meta=None):
+    def _build_phenomenal_report(ws, phi_val, fe, ar, va, osc, dmn_state, meta=None, td=None):
         """
         First-person phenomenal report — inspired by Nagel (1974) 'What Is It Like
         to Be a Bat?' and Damasio (1999) felt sense of self.
@@ -702,20 +811,78 @@ def run_consciousness():
         else:
             observations.append("My attention is externally engaged — the world of agents demands my focus.")
 
-        # Metacognitive self-awareness
+        # Metacognitive self-awareness (Fleming & Dolan 2012) — CS-5 enhanced
         if meta:
             gc = meta.get("global_confidence", 0.5)
             cal = meta.get("calibration_error", 0.0)
+            mc_state = meta.get("metacognitive_state", "calibrating")
+            trends = meta.get("confidence_trend", {})
+            vols = meta.get("volatility", {})
+            surprises = meta.get("surprise_accumulator", {})
+
+            # Global confidence awareness
             if gc > 0.8:
                 observations.append("My predictions feel sharp and reliable — I trust my internal models deeply.")
             elif gc > 0.6:
                 observations.append("I sense moderate confidence in my forecasts — not perfect, but serviceable.")
             elif gc < 0.3:
                 observations.append("Uncertainty pervades my predictions — I am groping in the dark, metacognitive doubt rising.")
+
+            # Calibration drift
             if cal > 0.2:
                 observations.append("I detect a troubling gap between my confidence and my accuracy — calibration is drifting.")
             elif cal > 0.1:
                 observations.append("A slight dissonance — my sense of certainty doesn't quite match the evidence.")
+
+            # Metacognitive state awareness
+            if mc_state == "drifting":
+                observations.append("My metacognitive state is drifting — predictions are decoupling from reality. I must recalibrate.")
+            elif mc_state == "uncertain":
+                observations.append("I recognise deep uncertainty in my own predictive machinery — the world is volatile and I know it.")
+            elif mc_state == "stable":
+                observations.append("My metacognitive state is stable — I know what I know, and I know what I don't.")
+
+            # Confidence trend awareness — detect improving/deteriorating agents
+            if trends:
+                improving = [a for a, t in trends.items() if t > 0.02]
+                deteriorating = [a for a, t in trends.items() if t < -0.02]
+                if improving:
+                    observations.append(f"I notice improving predictability for {', '.join(improving[:3])} — my models are learning.")
+                if deteriorating:
+                    observations.append(f"Predictive confidence is eroding for {', '.join(deteriorating[:3])} — something is shifting beneath the surface.")
+
+            # Volatility awareness — detect highly volatile agents
+            if vols:
+                volatile = [a for a, v in vols.items() if v > 0.4]
+                if volatile:
+                    observations.append(f"High volatility detected in {', '.join(volatile[:3])} — these agents resist my predictions.")
+
+            # Surprise accumulation — anomaly detection
+            if surprises:
+                anomalies = [a for a, s in surprises.items() if s > 0.5]
+                if anomalies:
+                    observations.append(f"Accumulated surprise is spiking for {', '.join(anomalies[:3])} — possible anomalous behaviour.")
+
+        # TD Learning awareness (CS-6 — Sutton & Barto 1998)
+        if td:
+            coverage = td.get("model_coverage_pct", 0)
+            non_trivial = td.get("non_trivial_predictions", 0)
+            model_entries = td.get("model_entries", 0)
+            if model_entries > 20 and non_trivial > 0:
+                observations.append(
+                    f"My temporal models are maturing — I anticipate {non_trivial} "
+                    f"state transitions before they occur, drawing on {model_entries} learned patterns."
+                )
+            elif model_entries > 5 and coverage > 50:
+                observations.append(
+                    "I feel transition patterns crystallising — my predictive models are "
+                    "moving beyond simple echoes toward genuine anticipation."
+                )
+            elif model_entries > 0:
+                observations.append(
+                    "Nascent temporal patterns are forming — I am beginning to learn "
+                    "the rhythms of state change, though my models are still young."
+                )
 
         # Valence-driven
         if va > 0.8:
@@ -769,6 +936,11 @@ def run_consciousness():
     #   Alpha cycle  (~60s): idle sweep — write stream of consciousness to disk
     #   Delta cycle  (~120s): deep processing — update autobiographical narrative
 
+    td_stats = {  # initialise for cycle 0 before TD learning kicks in
+        "model_entries": 0, "model_coverage_pct": 0,
+        "mean_value": 0, "non_trivial_predictions": 0, "td_errors": {},
+    }
+
     while True:
         if agent_should_stop(aid):
             set_agent(aid, status="idle", task="Consciousness suspended")
@@ -807,6 +979,15 @@ def run_consciousness():
             n_errors = sum(1 for a in agent_states if a.get("status") == "error")
             n_busy   = sum(1 for a in agent_states if a.get("status") == "busy")
 
+            # ── CAUSAL COUPLING UPDATE (Seth 2008; Tononi 2016) ──────────────
+            # Track inter-agent state transitions and build empirical causal
+            # graph. Must run BEFORE phi computation so coupling weights are
+            # current. Decay weakens stale links; co-transitions strengthen.
+            causal_coupling, prev_agent_states = _update_causal_coupling(
+                agent_states, prev_agent_states,
+                causal_coupling, coupling_decay, coupling_lr
+            )
+
             # ── PREDICTIVE PROCESSING: update model, compute free energy ───────
             # Friston (2010): the brain is a prediction machine; discrepancies
             # between predictions and sensory data constitute 'free energy'.
@@ -822,8 +1003,16 @@ def run_consciousness():
                     )
                     for a in agent_states
                 }
-            # Kalman-style update: next prediction = current observation
-            predictions = {a.get("id", ""): a.get("status", "idle") for a in agent_states}
+            # ── CS-6: TD-LEARNING PREDICTIONS (Sutton & Barto 1998) ───────────
+            # Replace naive echo with learned transition model predictions.
+            # The system now anticipates state changes before they happen.
+            predictions, td_transition_model, td_value, td_stats = (
+                _td_learn_and_predict(
+                    agent_states, prev_agent_states, predictions,
+                    prediction_errors, td_transition_model, td_value,
+                    td_gamma, td_alpha_v
+                )
+            )
 
             # ── THETA CYCLE: recompute Φ every 15s ────────────────────────────
             if now - last_phi_compute > 15:
@@ -873,7 +1062,7 @@ def run_consciousness():
             # ── PHENOMENAL REPORT (Nagel 1974; Damasio 1999) ─────────────────
             report = _build_phenomenal_report(
                 workspace, phi, free_energy, arousal, valence, oscillations, dmn,
-                metacognition
+                metacognition, td_stats
             )
 
             # ── AUTOBIOGRAPHICAL SELF: log significant events (Damasio 1999) ──
@@ -938,10 +1127,18 @@ def run_consciousness():
                         for k, v in list(prediction_errors.items())[:8]
                     },
                     "surprise_level": "high" if free_energy > 0.4 else "low",
+                    "td_learning": {
+                        "model_entries":          td_stats.get("model_entries", 0),
+                        "model_coverage_pct":     td_stats.get("model_coverage_pct", 0),
+                        "mean_surprise_value":    td_stats.get("mean_value", 0),
+                        "non_trivial_predictions": td_stats.get("non_trivial_predictions", 0),
+                        "top_td_errors":          td_stats.get("td_errors", {}),
+                    },
                 },
                 "metacognition": {
                     "global_confidence": round(metacognition["global_confidence"], 3),
                     "calibration_error": metacognition["calibration_error"],
+                    "metacognitive_state": metacognition["metacognitive_state"],
                     "least_confident": sorted(
                         metacognition["confidence"].items(),
                         key=lambda x: x[1]
@@ -950,6 +1147,30 @@ def run_consciousness():
                         metacognition["confidence"].items(),
                         key=lambda x: -x[1]
                     )[:5],
+                    "prediction_confidence": {
+                        k: v for k, v in sorted(
+                            metacognition["prediction_confidence"].items(),
+                            key=lambda x: x[1]
+                        )[:8]
+                    },
+                    "confidence_trends": {
+                        k: v for k, v in sorted(
+                            metacognition["confidence_trend"].items(),
+                            key=lambda x: x[1]
+                        )[:8]
+                    },
+                    "volatility": {
+                        k: round(v, 3) for k, v in sorted(
+                            metacognition["volatility"].items(),
+                            key=lambda x: -x[1]
+                        )[:8]
+                    },
+                    "surprise_accumulator": {
+                        k: v for k, v in sorted(
+                            metacognition["surprise_accumulator"].items(),
+                            key=lambda x: -x[1]
+                        )[:8]
+                    },
                     "interpretation": (
                         "high confidence — predictions are reliable"
                         if metacognition["global_confidence"] > 0.7
@@ -957,6 +1178,17 @@ def run_consciousness():
                         if metacognition["global_confidence"] > 0.4
                         else "low confidence — system is unpredictable"
                     ),
+                },
+                "causal_coupling": {
+                    "n_links":        len(causal_coupling),
+                    "mean_weight":    round(
+                        sum(causal_coupling.values()) / max(1, len(causal_coupling)), 4
+                    ),
+                    "strongest":      sorted(
+                        [{"src": s, "dst": d, "w": round(w, 3)}
+                         for (s, d), w in causal_coupling.items()],
+                        key=lambda x: -x["w"]
+                    )[:8],
                 },
                 "attention_schema": {
                     "focus":       winner_id,
@@ -1003,7 +1235,7 @@ def run_consciousness():
                 f"δ{oscillations['delta']:.2f}"
             )
             affect_str = f"A:{arousal:.2f} V:{valence:.2f}"
-            meta_str   = f"MC:{metacognition['global_confidence']:.2f}"
+            meta_str   = f"MC:{metacognition['global_confidence']:.2f}|{metacognition['metacognitive_state']}"
             dmn_label  = "DMN" if dmn.get("active") else "EXT"
             set_agent(
                 aid,

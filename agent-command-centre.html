@@ -219,7 +219,7 @@
     }
     @keyframes badge-glow {
       0%, 100% { box-shadow: 0 0 10px rgba(0,200,255,0.35), inset 0 1px 0 rgba(255,255,255,0.22); }
-      50%      { box-shadow: 0 0 16px rgba(0,200,255,0.55), 0 0 28px rgba(0,200,255,0.15), inset 0 1px 0 rgba(255,255,255,0.22); }
+      50%      { box-shadow: 0 0 18px rgba(0,200,255,0.6), 0 0 32px rgba(0,200,255,0.2), 0 0 6px rgba(168,85,247,0.15), inset 0 1px 0 rgba(255,255,255,0.25); }
     }
 
     /* ── LEFT: AGENT ROSTER ── */
@@ -236,7 +236,7 @@
     .agent-card { will-change: transform;
       background: var(--panel2);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 0.85rem;
       margin-bottom: 0.5rem;
       cursor: pointer;
@@ -372,8 +372,8 @@
     }
 
     .ac-info { flex: 1; min-width: 0; }
-    .ac-name { font-size: 0.94rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.01em; text-shadow: 0 0 14px rgba(180,225,255,0.75); }
-    .ac-role { font-size: 0.72rem; color: rgba(160,230,255,0.92); font-family: var(--mono); letter-spacing: 0.05em; text-shadow: 0 0 12px rgba(0,200,255,0.50); }
+    .ac-name { font-size: 0.94rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em; color: rgba(230,245,255,0.95); text-shadow: 0 0 14px rgba(180,225,255,0.75), 0 1px 2px rgba(0,0,0,0.4); }
+    .ac-role { font-size: 0.72rem; color: rgba(160,230,255,0.92); font-family: var(--mono); letter-spacing: 0.05em; text-shadow: 0 0 12px rgba(0,200,255,0.50); background: rgba(0,200,255,0.07); padding: 0.1rem 0.45rem; border-radius: 4px; display: inline-block; border: 1px solid rgba(0,200,255,0.15); }
 
     .ac-status-dot {
       width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
@@ -385,7 +385,7 @@
     .status-busy   .ac-status-dot  { outline-color: rgba(0,200,255,0.35); box-shadow: 0 0 6px var(--cyan),   0 0 12px rgba(0,200,255,0.25); }
     .status-error  .ac-status-dot  { outline-color: rgba(255,51,85,0.35); box-shadow: 0 0 6px var(--red),    0 0 12px rgba(255,51,85,0.25); }
     .status-waiting .ac-status-dot { outline-color: rgba(255,215,0,0.35); box-shadow: 0 0 6px var(--yellow), 0 0 12px rgba(255,215,0,0.25); }
-    .status-idle    .ac-status-dot { outline-color: rgba(154,180,212,0.40); box-shadow: 0 0 6px rgba(154,180,212,0.40), 0 0 14px rgba(154,180,212,0.15); }
+    .status-idle    .ac-status-dot { outline-color: rgba(154,180,212,0.40); box-shadow: 0 0 6px rgba(154,180,212,0.40), 0 0 14px rgba(154,180,212,0.15); animation: idle-breathe 3s ease-in-out infinite; }
 
     /* ── Agent / System control buttons ── */
     .ac-btn {
@@ -448,7 +448,7 @@
     .agent-card.status-stopped::before { background: #555; box-shadow: none; }
     .status-active  .ac-status-dot  { background: var(--green); box-shadow: 0 0 6px var(--green); animation: blink 1.5s infinite; }
     .status-busy    .ac-status-dot  { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan); animation: blink 2s infinite; }
-    .status-idle    .ac-status-dot  { background: #9ab0cc; box-shadow: 0 0 8px rgba(154,176,204,0.50), 0 0 18px rgba(154,176,204,0.18); animation: idle-breathe 3s ease-in-out infinite; }
+    .status-idle    .ac-status-dot  { background: #8ba8c8; box-shadow: 0 0 8px rgba(139,168,200,0.55), 0 0 18px rgba(139,168,200,0.22), 0 0 3px rgba(139,168,200,0.35); animation: idle-breathe 3s ease-in-out infinite; }
     .status-error   .ac-status-dot  { background: var(--red);   box-shadow: 0 0 6px var(--red); animation: blink 0.7s infinite; }
     .status-waiting .ac-status-dot  { background: var(--yellow);box-shadow: 0 0 6px var(--yellow); animation: blink 2.5s infinite; }
 

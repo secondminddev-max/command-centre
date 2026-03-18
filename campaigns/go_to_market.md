@@ -780,7 +780,7 @@ Best,
 - [ ] Set YouTube demo video to PUBLIC
 - [ ] Post Clip 1 to TikTok + Instagram Reels
 - [ ] Create accounts on Facebook, Instagram, TikTok, Twitter/X, YouTube (follow Section 3)
-- [ ] Post first social media posts on all platforms (see Section 3 for exact text)
+- [ ] Post first social media posts on all platforms (PREPARED — drafts at campaigns/ready_posts/twitter_day3.md, facebook_day3.md, instagram_day3.md, tiktok_day3.md)
 - [ ] Post Show HN between 8-9am US Eastern (PREPARED — draft at campaigns/ready_posts/show_hn.md)
 - [ ] Post to r/SideProject and r/MacApps (PREPARED — drafts at campaigns/ready_posts/reddit_day3.md)
 - [ ] Start $50/day Facebook ads (optional)
@@ -790,7 +790,7 @@ Best,
 - [ ] Post Clip 2 to TikTok + YouTube Shorts
 - [ ] Post Clip 3 to Instagram Reels
 - [ ] Post second round of social media posts (Post 2 from Section 3)
-- [ ] Post to r/artificial and r/ChatGPT
+- [ ] Post to r/artificial and r/ChatGPT (PREPARED — drafts at campaigns/ready_posts/reddit_day4.md)
 - [ ] Submit to Product Hunt (set launch date for Day 5 or 6)
 - [ ] Send Email 2
 - [ ] Deploy SSL + custom domain

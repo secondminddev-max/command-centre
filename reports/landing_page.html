@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI HQ — 28 Autonomous Agents Working 24/7 | SecondMind Ops</title>
+<title>AI HQ — Autonomous AI Agent Headquarters That Runs Your Business 24/7 | SecondMind Ops</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1265,10 +1265,10 @@ button.price-cta {
 <section class="hero">
   <div class="container">
     <div class="hero-label">&#x26A1; Now in Early Access — Limited Spots</div>
-    <h1>Ship Faster. Scale Solo.<br><span>28 AI Agents Run Your Ops.</span></h1>
-    <p>Stop drowning in research, reports, outreach, and busywork. Deploy an autonomous agent fleet that works 24/7 — so you can focus on building, not operating. Most founders reclaim 40+ hours in week one.</p>
+    <h1>Your Autonomous AI HQ.<br><span>Runs Your Business 24/7.</span></h1>
+    <p>28 specialized AI agents handle research, reports, outreach, and ops around the clock — so you can focus on building, not operating. Most founders reclaim 40+ hours in week one.</p>
     <div class="hero-ctas">
-      <button onclick="openCheckout('team')" class="btn-primary">Start Free 14-Day Trial &rarr;</button>
+      <a href="/api/pay?tier=team" class="btn-primary">Start Free 14-Day Trial &rarr;</a>
       <a href="#features" class="btn-secondary">See How It Works</a>
     </div>
     <p style="font-size:12px;color:var(--text-muted);margin-top:16px;margin-bottom:0;">No credit card required &middot; Cancel anytime &middot; 14-day money-back guarantee</p>
@@ -1378,7 +1378,7 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Basic dashboard access</li>
           <li><span class="check">&#10003;</span>48-hour turnaround</li>
         </ul>
-        <button onclick="openCheckout('solo')" class="price-cta price-cta-outline">Start Free Trial &mdash; $49/mo</button>
+        <a href="/api/pay?tier=solo" class="price-cta price-cta-outline">Start Free Trial &mdash; $49/mo</a>
       </div>
 
       <!-- TEAM (Featured) -->
@@ -1402,7 +1402,7 @@ button.price-cta {
           <li><span class="check">&#10003;</span>24-hour turnaround</li>
           <li><span class="check">&#10003;</span>Campaign automation</li>
         </ul>
-        <button onclick="openCheckout('team')" class="price-cta price-cta-fill">Start 14-Day Free Trial &rarr;</button>
+        <a href="/api/pay?tier=team" class="price-cta price-cta-fill">Start 14-Day Free Trial &rarr;</a>
       </div>
 
       <!-- ENTERPRISE -->
@@ -1426,7 +1426,7 @@ button.price-cta {
           <li><span class="check">&#10003;</span>Strategy consulting</li>
           <li><span class="check">&#10003;</span>White-glove onboarding</li>
         </ul>
-        <button onclick="openCheckout('enterprise')" class="price-cta price-cta-outline price-cta-enterprise">Start Free Trial &mdash; $499/mo &rarr;</button>
+        <a href="/api/pay?tier=enterprise" class="price-cta price-cta-outline price-cta-enterprise">Start Free Trial &mdash; $499/mo &rarr;</a>
       </div>
     </div>
 
@@ -1442,14 +1442,14 @@ button.price-cta {
         <h3>Lifetime Access</h3>
         <div class="price-big gold-text">$299</div>
         <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever.</p>
-        <button onclick="checkoutSpecial('lifetime','AI HQ Lifetime Access',29900)" class="btn-gold">Buy Lifetime Access</button>
+        <button onclick="checkoutSpecial('lifetime','AI HQ Lifetime Access',29900,event)" class="btn-gold">Buy Lifetime Access</button>
       </div>
       <div class="special-card hardware">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
         <h3>Mac Mini + AI HQ</h3>
         <div class="price-big cyan-text">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with AI HQ installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
-        <button onclick="checkoutSpecial('macmini','AI HQ Mac Mini Bundle',149900)" class="btn-primary">Pre-Order Now</button>
+        <button onclick="checkoutSpecial('macmini','AI HQ Mac Mini Bundle',149900,event)" class="btn-primary">Pre-Order Now</button>
       </div>
     </div>
   </div>
@@ -1596,16 +1596,16 @@ button.price-cta {
 <!-- FINAL CTA -->
 <section class="final-cta">
   <div class="container">
-    <h2>You Build the Product. Your Agents Run the Business.</h2>
+    <h2>You Build the Product.<br>Your AI HQ Runs Everything Else.</h2>
     <p>Join early access today — limited spots at launch pricing. Lock in your rate before it doubles.</p>
     <div class="hero-ctas" style="margin-bottom:16px;">
-      <button onclick="openCheckout('solo')" class="btn-secondary">Solo — $49/mo</button>
-      <button onclick="openCheckout('team')" class="btn-primary">Team — $149/mo &rarr;</button>
-      <button onclick="openCheckout('enterprise')" class="btn-secondary">Enterprise — $499/mo</button>
+      <a href="/api/pay?tier=solo" class="btn-secondary">Solo — $49/mo</a>
+      <a href="/api/pay?tier=team" class="btn-primary">Team — $149/mo &rarr;</a>
+      <a href="/api/pay?tier=enterprise" class="btn-secondary">Enterprise — $499/mo</a>
     </div>
     <div class="hero-ctas" style="margin-bottom:16px;margin-top:12px;">
-      <button onclick="checkoutSpecial('lifetime','AI HQ Lifetime Access',29900)" class="btn-gold">Lifetime — $299 one-time</button>
-      <button onclick="checkoutSpecial('macmini','AI HQ Mac Mini Bundle',149900)" class="btn-secondary">Mac Mini — $1,499</button>
+      <button onclick="checkoutSpecial('lifetime','AI HQ Lifetime Access',29900,event)" class="btn-gold">Lifetime — $299 one-time</button>
+      <button onclick="checkoutSpecial('macmini','AI HQ Mac Mini Bundle',149900,event)" class="btn-secondary">Mac Mini — $1,499</button>
     </div>
     <p style="font-size:12px;color:var(--text-muted);margin:0;">14-day money-back guarantee &middot; No lock-in contracts</p>
   </div>
@@ -1620,7 +1620,7 @@ button.price-cta {
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
-  <button onclick="openCheckout('team')">Start Free Trial &mdash; $149/mo (was $249) &rarr;</button>
+  <a href="/api/pay?tier=team" style="display:block;text-align:center;text-decoration:none;color:#050810;">Start Free Trial &mdash; $149/mo (was $249) &rarr;</a>
 </div>
 
 <!-- CHECKOUT MODAL -->
@@ -1707,31 +1707,27 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCheckout();
 });
 
-function checkoutSpecial(tier, product, amountCents) {
-  const btn = event.currentTarget;
-  const orig = btn.textContent;
-  btn.textContent = 'Connecting to Stripe\u2026';
-  btn.style.pointerEvents = 'none';
-  fetch('/api/pay', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tier: tier, product: product, amount_cents: amountCents })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.ok && data.checkout_url) {
-      window.location.href = data.checkout_url;
-    } else {
-      alert('Checkout error: ' + (data.error || 'Unknown error'));
-      btn.textContent = orig;
-      btn.style.pointerEvents = '';
-    }
-  })
-  .catch(() => {
-    alert('Network error \u2014 please try again.');
-    btn.textContent = orig;
-    btn.style.pointerEvents = '';
+function postToPay(params) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '/api/pay';
+  form.style.display = 'none';
+  Object.entries(params).forEach(([k, v]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = k;
+    input.value = v;
+    form.appendChild(input);
   });
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function checkoutSpecial(tier, product, amountCents, event) {
+  const btn = event.currentTarget;
+  btn.textContent = 'Redirecting to Stripe\u2026';
+  btn.style.pointerEvents = 'none';
+  postToPay({ tier: tier, product: product, amount: amountCents });
 }
 
 // ── COUNTDOWN TIMER ──
@@ -1769,41 +1765,20 @@ function submitCheckout(e) {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Setting up your trial...';
 
-  const t = TIERS[selectedTier];
-  const price = isAnnual ? t.annual : t.monthly;
-  const amount_cents = price * 100;
-
-  const product = 'AI HQ ' + t.name + ' Plan';
-  fetch('/api/pay', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      tier: selectedTier,
-      product: product,
-      amount_cents: amount_cents,
-      name: name,
-      email: email,
-      company: company,
-      billing: isAnnual ? 'annual' : 'monthly'
-    })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.ok && data.checkout_url) {
-      window.location.href = data.checkout_url;
-    } else {
-      alert('Something went wrong. Please try again.');
-      btn.disabled = false;
-      btn.innerHTML = 'Start Free Trial &rarr;';
-    }
-  })
-  .catch(() => {
-    alert('Connection error. Please try again.');
-    btn.disabled = false;
-    btn.innerHTML = 'Start Free Trial &rarr;';
+  const billing = isAnnual ? 'annual' : 'monthly';
+  const params = new URLSearchParams({
+    tier: selectedTier,
+    name: name,
+    email: email,
+    billing: billing
   });
+  if (company) params.set('company', company);
+
+  // POST to Stripe checkout
+  const payload = { tier: selectedTier, name: name, email: email, billing: billing };
+  if (company) payload.company = company;
+  postToPay(payload);
 }
 </script>
-
 </body>
 </html>

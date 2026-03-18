@@ -205,6 +205,31 @@
       "email": "test@launch-readiness.test",
       "tier": "free",
       "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T21:02:31.790790",
+      "event": "email_capture",
+      "email": "q@t.l",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T21:02:31.792234",
+      "event": "premarket_signup",
+      "email": "q@t.l",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-18T21:10:43.524374",
+      "event": "email_capture",
+      "email": "qa-test@example.com",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-18T21:18:12.572644",
+      "event": "email_capture",
+      "email": "qa-test@demotester.local",
+      "source": "landing_page"
     }
   ]
 }

@@ -2705,7 +2705,23 @@ class Handler(BaseHTTPRequestHandler):
             except FileNotFoundError:
                 self.send_response(404); self._cors(); self.end_headers()
 
-        elif path in ("/agent-command-centre.html", "/", ""):
+        elif path in ("/", ""):
+            # Public visitors see the landing/sales page; dashboard is at /hq
+            _landing = os.path.join(CWD, "public", "index.html")
+            if os.path.exists(_landing):
+                with open(_landing, "rb") as f:
+                    content = f.read()
+                self.send_response(200); self._cors()
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(content)))
+                self.end_headers(); self.wfile.write(content)
+            else:
+                # Fallback to dashboard if no landing page
+                self.send_response(302); self._cors()
+                self.send_header("Location", "/hq")
+                self.end_headers()
+
+        elif path in ("/agent-command-centre.html", "/hq", "/dashboard"):
             try:
                 with open(os.path.join(CWD, "agent-command-centre.html"), "rb") as f:
                     content = f.read()
@@ -3500,7 +3516,33 @@ async function subscribe() {
             self.end_headers(); self.wfile.write(_nb)
 
         else:
-            self.send_response(404); self._cors(); self.end_headers()
+            # Serve static files from public/ and reports/ directories
+            _static_map = {
+                ".html": "text/html; charset=utf-8",
+                ".svg": "image/svg+xml",
+                ".css": "text/css; charset=utf-8",
+                ".js": "application/javascript; charset=utf-8",
+                ".json": "application/json",
+                ".png": "image/png",
+                ".jpg": "image/jpeg",
+                ".ico": "image/x-icon",
+                ".pdf": "application/pdf",
+            }
+            _ext = os.path.splitext(path)[1].lower()
+            _served = False
+            if _ext in _static_map:
+                for _sdir in ("public", "reports"):
+                    _spath = os.path.join(CWD, _sdir, path.lstrip("/").replace(_sdir + "/", "", 1) if path.startswith("/" + _sdir) else path.lstrip("/"))
+                    if os.path.isfile(_spath):
+                        with open(_spath, "rb") as _sf:
+                            _sb = _sf.read()
+                        self.send_response(200); self._cors()
+                        self.send_header("Content-Type", _static_map[_ext])
+                        self.send_header("Content-Length", str(len(_sb)))
+                        self.end_headers(); self.wfile.write(_sb)
+                        _served = True; break
+            if not _served:
+                self.send_response(404); self._cors(); self.end_headers()
 
     def _json(self, data, code=200):
         body = json.dumps(data).encode()

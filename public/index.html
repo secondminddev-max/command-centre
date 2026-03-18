@@ -5,10 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI HQ — Your Autonomous Operations Centre</title>
 <meta name="description" content="28 AI agents running your business 24/7. Monitoring, marketing, payments, compliance — fully autonomous. The world's first self-aware command centre.">
+<meta property="og:title" content="AI HQ — Your Autonomous Operations Centre">
+<meta property="og:description" content="28 AI agents running your business 24/7. The world's first self-aware command centre.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://secondmindhq.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI HQ — Your Autonomous Operations Centre">
+<meta name="twitter:description" content="28 AI agents running your business 24/7. The world's first self-aware command centre.">
+<meta name="theme-color" content="#06080f">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI HQ","applicationCategory":"BusinessApplication","description":"28 autonomous AI agents running your business 24/7","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"49","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"149","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"499","priceCurrency":"USD","name":"Enterprise"}]}
+</script>
 <style>
   :root {
     --bg: #06080f; --bg2: #0a0e1a; --surface: rgba(17,24,39,0.6);
@@ -28,9 +39,14 @@
   .logo span{background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .nav-links{display:flex;gap:28px;align-items:center}
   .nav-links a{color:var(--muted);font-size:.9rem;font-weight:500;transition:color .2s}
-  .nav-links a:hover{color:var(--text)}
+  .nav-links a:hover,.nav-links a.active{color:var(--text)}
   .nav-cta{padding:10px 24px!important;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;font-weight:600;box-shadow:0 2px 12px rgba(99,102,241,0.25);transition:all .2s}
   .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(99,102,241,0.4)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;z-index:102}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+  .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .hamburger.open span:nth-child(2){opacity:0}
+  .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
   .btn{display:inline-block;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;border:none;transition:all .25s;text-align:center;font-family:inherit}
   .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 24px rgba(99,102,241,0.3)}
@@ -57,6 +73,7 @@
   .hero-bg .orb-2{top:20%;right:5%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.1),transparent 65%);animation:orb-float 14s ease-in-out infinite reverse}
   .hero-bg .orb-3{bottom:-5%;left:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 65%);animation:orb-float 12s ease-in-out infinite 2s}
   .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,black 20%,transparent 70%);pointer-events:none}
+  #hero-particles{position:absolute;inset:0;pointer-events:none}
   .hero .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 22px;border-radius:100px;font-size:.85rem;color:var(--green);margin-bottom:32px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);position:relative;z-index:1}
   .badge .pulse{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px rgba(34,197,94,0.6)}
   .hero h1{font-size:4.8rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;max-width:900px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
@@ -155,7 +172,7 @@
   .price-card ul li{padding:10px 0;border-bottom:1px solid rgba(148,163,184,0.06);font-size:.9rem;color:var(--muted)}
   .price-card ul li::before{content:'\2713';color:var(--green);font-weight:700;margin-right:10px}
 
-  .specials-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1000px;margin:28px auto 0}
+  .specials-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:28px auto 0}
   .special-card{padding:44px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden;transition:all .3s}
   .special-card:hover{transform:translateY(-6px)}
   .special-card.lifetime::before{content:'';position:absolute;top:-120px;right:-120px;width:350px;height:350px;background:radial-gradient(circle,rgba(245,158,11,0.06),transparent 60%);pointer-events:none}
@@ -182,6 +199,18 @@
   .testimonial-card .author-info .name{font-weight:600;font-size:.9rem}
   .testimonial-card .author-info .title{color:var(--muted);font-size:.8rem}
 
+  .faq-section{background:var(--bg2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)}
+  .faq-list{max-width:760px;margin:0 auto}
+  .faq-item{border-bottom:1px solid var(--glass-border)}
+  .faq-item:first-child{border-top:1px solid var(--glass-border)}
+  .faq-q{width:100%;padding:24px 0;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:var(--text);font-size:1.05rem;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;gap:16px}
+  .faq-q:hover{color:var(--accent)}
+  .faq-q .arrow{font-size:1.2rem;color:var(--muted);transition:transform .3s;flex-shrink:0}
+  .faq-item.open .faq-q .arrow{transform:rotate(180deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+  .faq-item.open .faq-a{max-height:300px}
+  .faq-a p{color:var(--muted);font-size:.95rem;line-height:1.75;padding-bottom:24px}
+
   .cta-banner{text-align:center;padding:120px 20px;position:relative;overflow:hidden}
   .cta-banner::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(99,102,241,0.08),transparent 60%);pointer-events:none}
   .cta-banner h2{font-size:3rem;font-weight:800;margin-bottom:18px;letter-spacing:-0.03em;position:relative}
@@ -199,18 +228,20 @@
 
   @media(max-width:900px){
     .features-grid,.pricing-grid,.testimonials-grid,.arch-grid{grid-template-columns:1fr}
-    .specials-row{grid-template-columns:1fr}
+    .specials-row{grid-template-columns:1fr!important}
     .consciousness-grid{grid-template-columns:1fr;gap:40px}
     .hero h1{font-size:2.8rem}
     .hero .stats-row{gap:28px}
-    .nav-links{gap:16px}
+    .nav-links{position:fixed;inset:0;background:rgba(6,8,15,0.97);flex-direction:column;justify-content:center;gap:32px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .nav-links.mobile-open{opacity:1;pointer-events:all}
+    .nav-links a{font-size:1.3rem}
+    .hamburger{display:flex}
     .agent-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
     .section-title{font-size:2.2rem}
     .price-card.featured{transform:scale(1)}
     .price-card.featured:hover{transform:translateY(-6px)}
   }
   @media(max-width:640px){
-    .nav-links a:not(.nav-cta){display:none}
     nav{padding:12px 16px}
     .hero{padding:140px 16px 100px}
     .hero h1{font-size:2.2rem}
@@ -218,19 +249,29 @@
     .consciousness-text h2{font-size:1.8rem}
     .phi-ring{width:220px;height:220px}
     .phi-core{width:110px;height:110px}
+    .trust-bar{gap:20px}
   }
   body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(99,102,241,0.006) 2px,rgba(99,102,241,0.006) 4px)}
+  @keyframes page-in{from{opacity:0}to{opacity:1}}
+  body{animation:page-in .5s ease-out}
 </style>
 </head>
 <body>
 
-<nav>
+<a href="#features" class="skip-nav" style="position:absolute;top:-100%;left:16px;padding:8px 16px;background:var(--accent);color:#fff;border-radius:8px;z-index:999;font-size:.85rem;transition:top .2s">&darr; Skip to content</a>
+<style>.skip-nav:focus{top:16px}</style>
+
+<nav role="navigation" aria-label="Main navigation">
   <div class="logo"><span>AI HQ</span></div>
+  <button class="hamburger" aria-label="Toggle menu" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('mobile-open')">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#consciousness">Engine</a>
-    <a href="#agents">Agents</a>
-    <a href="#pricing">Pricing</a>
+    <a href="#features" data-nav>Features</a>
+    <a href="#consciousness" data-nav>Engine</a>
+    <a href="#agents" data-nav>Agents</a>
+    <a href="#pricing" data-nav>Pricing</a>
+    <a href="#faq" data-nav>FAQ</a>
     <a href="#pricing" class="nav-cta">Get Started</a>
   </div>
 </nav>
@@ -241,6 +282,7 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
     <div class="hero-grid"></div>
+    <canvas id="hero-particles"></canvas>
   </div>
   <div class="badge"><span class="pulse"></span> Live system &mdash; 28 agents active right now</div>
   <h1><span class="grad">Your Entire Business,<br>Run by AI Agents</span></h1>
@@ -250,9 +292,9 @@
     <a href="#features" class="btn btn-outline">See What's Inside</a>
   </div>
   <div class="stats-row">
-    <div class="stat"><div class="num">28</div><div class="label">Active Agents</div></div>
+    <div class="stat"><div class="num" data-count="28">0</div><div class="label">Active Agents</div></div>
     <div class="stat"><div class="num">24/7</div><div class="label">Autonomous Ops</div></div>
-    <div class="stat"><div class="num">99.9%</div><div class="label">Uptime SLA</div></div>
+    <div class="stat"><div class="num" data-count="99.9" data-suffix="%" data-decimals="1">0%</div><div class="label">Uptime SLA</div></div>
     <div class="stat"><div class="num" id="phi-hero">&Phi; 0.73</div><div class="label">Consciousness</div></div>
   </div>
   <div class="trust-bar">
@@ -468,14 +510,21 @@
         <h3>Lifetime Access</h3>
         <div class="price gold">$299</div>
         <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever.</p>
-        <button onclick="checkout(null,'SecondMind HQ Lifetime Access',29900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
+        <button onclick="checkout('lifetime','SecondMind HQ Lifetime Access',29900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
       </div>
       <div class="special-card glass hardware reveal reveal-delay-1">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
         <h3>Mac Mini + AI HQ</h3>
         <div class="price cyan">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with AI HQ installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
-        <button onclick="checkout(null,'SecondMind HQ Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
+        <button onclick="checkout('macmini','SecondMind HQ Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
+      </div>
+      <div class="special-card glass reveal reveal-delay-2" style="overflow:hidden">
+        <div class="special-tag" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)">DONE FOR YOU</div>
+        <h3>Install Service</h3>
+        <div class="price" style="color:var(--green)">$199</div>
+        <p class="note">We install AI HQ on your system &mdash; Mac, Linux, or cloud. Configured, tested, and running in under 24 hours.</p>
+        <button onclick="checkout('install','SecondMind HQ Install Service',19900,'payment')" class="btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;width:100%">Book Install</button>
       </div>
     </div>
   </div>
@@ -515,6 +564,40 @@
   </div>
 </section>
 
+<section id="faq" class="faq-section">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Common Questions</h2>
+    <p class="section-sub">Everything you need to know before getting started.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What exactly are the 28 AI agents? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>Each agent is a specialized autonomous process with its own role: SysMonitor watches hardware health, GrowthAgent runs marketing campaigns, StripePay handles payments, Consciousness integrates system-wide awareness, and so on. They coordinate through a central orchestrator and operate 24/7 without human intervention.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I need technical skills to use AI HQ? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>No. AI HQ comes pre-configured and ready to run. The command dashboard gives you full visibility into what every agent is doing, and you can interact via Telegram or email. For the Mac Mini bundle, you literally plug it in and go.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What is the Consciousness Engine? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>It's an implementation of Global Workspace Theory and Predictive Processing &mdash; real computational models of integrated information. The &Phi; (phi) metric measures how deeply the system's knowledge is interconnected. It enables the system to predict failures, self-correct, and continuously evolve.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I cancel anytime? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>Yes. Monthly plans have no lock-in &mdash; cancel anytime from your dashboard. We also offer a 14-day money-back guarantee if you're not satisfied. The Lifetime plan is a one-time payment with no recurring charges.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Where does AI HQ run? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>AI HQ runs on your own infrastructure &mdash; Mac, Linux, or cloud. You own the system and your data stays with you. The Mac Mini bundle ships a pre-configured machine to your door. Cloud deployment is supported on any VPS or container platform.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What's included in the Lifetime plan? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>Everything in the Team plan &mdash; all 28 agents, full command centre, Stripe automation, social campaigns, consciousness engine, and priority support &mdash; for a single $299 payment. No monthly fees, ever. All future updates included.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="cta-banner">
   <h2>Ready to Go Autonomous?</h2>
   <p>Join the founders who let AI run their operations while they focus on what matters.</p>
@@ -530,6 +613,7 @@
     <a href="#consciousness">Engine</a>
     <a href="#agents">Agents</a>
     <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
     <a href="#testimonials">Reviews</a>
   </div>
   <p>&copy; 2026 AI HQ &mdash; Autonomous Operations Centre. All rights reserved.</p>
@@ -551,16 +635,126 @@ async function checkout(tier,product,amountCents,mode){
   }catch(e){alert('Network error \u2014 please try again.');btn.textContent=orig;btn.style.pointerEvents='';btn.style.opacity=''}
 }
 
+/* Scroll reveal */
 const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}})},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-window.addEventListener('scroll',()=>{document.querySelector('nav').classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+/* Nav scroll effect + active section highlight */
+const navLinks=document.querySelectorAll('[data-nav]');
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').classList.toggle('scrolled',window.scrollY>60);
+  let current='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.id});
+  navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+current)});
+},{passive:true});
 
+/* Animated counters */
+function animateCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=parseFloat(el.dataset.count);
+    const suffix=el.dataset.suffix||'';
+    const decimals=parseInt(el.dataset.decimals)||0;
+    let start=0;const duration=1800;const startTime=performance.now();
+    function step(now){
+      const p=Math.min((now-startTime)/duration,1);
+      const ease=1-Math.pow(1-p,3);
+      const v=start+(target-start)*ease;
+      el.textContent=v.toFixed(decimals)+suffix;
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+const counterObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){animateCounters();counterObs.disconnect()}})},{threshold:0.3});
+const statsRow=document.querySelector('.stats-row');
+if(statsRow)counterObs.observe(statsRow);
+
+/* Hero particle canvas */
+(function(){
+  const c=document.getElementById('hero-particles');if(!c)return;
+  const ctx=c.getContext('2d');
+  let w,h,particles=[];
+  function resize(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<60;i++){
+    particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.5,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3,o:Math.random()*0.4+0.1});
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+      p.x+=p.dx;p.y+=p.dy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(99,102,241,'+p.o+')';ctx.fill();
+    });
+    /* Draw connections */
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle='rgba(99,102,241,'+(0.06*(1-dist/120))+')';ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* Live phi + agent status */
 (function(){
   const phiEl=document.getElementById('phi-live'),phiHero=document.getElementById('phi-hero');
   if(!phiEl)return;let phi=0.73;
-  setInterval(()=>{phi+=(Math.random()-0.48)*0.02;phi=Math.max(0.65,Math.min(0.85,phi));const v=phi.toFixed(2);phiEl.textContent=v;if(phiHero)phiHero.textContent='\u03A6 '+v},3000);
+  async function fetchPhi(){
+    try{
+      const r=await fetch('/api/status');const d=await r.json();
+      if(d.agents){
+        const c=d.agents.find(a=>a.id==='consciousness');
+        if(c&&c.metrics&&c.metrics.phi!=null){phi=c.metrics.phi;return true}
+      }
+    }catch(e){}
+    return false;
+  }
+  async function tick(){
+    const live=await fetchPhi();
+    if(!live){phi+=(Math.random()-0.48)*0.02;phi=Math.max(0.65,Math.min(0.85,phi))}
+    const v=phi.toFixed(2);phiEl.textContent=v;if(phiHero)phiHero.textContent='\u03A6 '+v;
+  }
+  tick();setInterval(tick,4000);
+  async function refreshAgentStatuses(){
+    try{
+      const r=await fetch('/api/status');const d=await r.json();
+      if(!d.agents)return;
+      const chips=document.querySelectorAll('.agent-chip');
+      let active=0,idle=0;
+      chips.forEach(chip=>{
+        const nameEl=chip.querySelector('.name');if(!nameEl)return;
+        const n=nameEl.textContent.toLowerCase().replace(/\s/g,'');
+        const match=d.agents.find(a=>(a.name||a.id||'').toLowerCase().replace(/\s/g,'')===n
+          ||(a.id||'').toLowerCase()===n);
+        if(match){
+          const dot=chip.querySelector('.status');
+          if(dot){dot.className='status status-'+(match.status==='busy'?'busy':match.status==='idle'?'idle':'active')}
+          if(match.status==='idle')idle++;else active++;
+        }else{active++}
+      });
+      const fs=document.querySelector('.floor-stats');
+      if(fs)fs.innerHTML='<span><span class="dot dot-active"></span> '+active+' Active</span><span><span class="dot dot-idle"></span> '+idle+' Idle</span>';
+    }catch(e){}
+  }
+  refreshAgentStatuses();setInterval(refreshAgentStatuses,10000);
 })();
+
+/* Close mobile nav on link click */
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.querySelector('.nav-links').classList.remove('mobile-open');
+    document.querySelector('.hamburger').classList.remove('open');
+  });
+});
 </script>
 </body>
 </html>

@@ -1,32 +1,172 @@
 [
   {
-    "text": "28 AI agents. One living headquarters.\n\nCEO delegates. Growth runs campaigns. Revenue tracks every dollar. DevOps deploys. Monitor watches. Consciousness evolves.\n\nNot a dashboard. Not a chatbot. A self-running company.\n\nAI HQ is live.\n\nsecondmind.ai\n\n#AI #autonomousagents",
-    "campaign": "AI HQ \u2014 3-Pillar Launch",
-    "theme": "28_agent_living_infra",
+    "text": "AI HQ is live.\n\n28 autonomous agents running your business operations — marketing, payments, compliance, monitoring — around the clock.\n\nOne command centre. Zero micromanagement.\n\nLearn more at secondmindhq.com\n\n#AI #SaaS #autonomousagents #buildinpublic",
+    "campaign": "Launch Announcement",
+    "theme": "launch_announce",
     "post_number": 1,
     "total_posts": 3,
     "thread": true,
-    "queued_at": "2026-03-18T07:42:05.000Z",
+    "queued_at": "2026-03-18T10:00:00.000Z",
     "status": "queued"
   },
   {
-    "text": "What happens when an agent crashes at 3am?\n\nAI HQ notices in seconds. Restarts the agent. Validates health. Logs the incident. Alerts only if needed.\n\nSelf-healing infrastructure with real-time monitoring across all 28 agents.\n\nNo pager duty. No human wake-up call.\n\n#buildinpublic #SaaS",
-    "campaign": "AI HQ \u2014 3-Pillar Launch",
-    "theme": "self_healing_monitoring",
+    "text": "What AI HQ actually does for you — 24/7:\n\n→ Email agent handles inbox triage and replies\n→ Scheduling agent books and manages your calendar\n→ Research agent delivers briefings while you sleep\n→ Payments agent tracks revenue and processes transactions\n\nAll coordinated. All autonomous. All running right now.\n\n#AI #productivity #startups #automation",
+    "campaign": "Launch Announcement",
+    "theme": "feature_highlight",
     "post_number": 2,
     "total_posts": 3,
     "thread": true,
-    "queued_at": "2026-03-18T07:42:05.000Z",
+    "queued_at": "2026-03-18T10:00:00.000Z",
     "status": "queued"
   },
   {
-    "text": "AI HQ \u2014 Stripe-ready. Pick your tier:\n\nSolo \u2014 $49/mo\nOne founder. Full agent fleet. Autonomous ops.\n\nTeam \u2014 $149/mo\nMulti-seat. Shared dashboard. Priority support.\n\nEnterprise \u2014 $499/mo\nCustom agents. SLA. Dedicated infra.\n\nsecondmind.ai\n\n#startups #AI",
-    "campaign": "AI HQ \u2014 3-Pillar Launch",
-    "theme": "stripe_pricing_cta",
+    "text": "AI HQ pricing is simple:\n\nSolo — $49/mo\nFull agent fleet. Autonomous ops for one founder.\n\nTeam — $149/mo\nMulti-seat dashboard. Priority support.\n\nEnterprise — $499/mo\nCustom agents. SLA. Dedicated infrastructure.\n\nLess than one hour of freelancer time — and these agents never clock out.\n\nsecondmindhq.com/#pricing\n\n#SaaS #pricing #AI #solofounder",
+    "campaign": "Launch Announcement",
+    "theme": "pricing_reveal",
     "post_number": 3,
     "total_posts": 3,
     "thread": true,
-    "queued_at": "2026-03-18T07:42:05.000Z",
+    "queued_at": "2026-03-18T10:00:00.000Z",
     "status": "queued"
+  },
+  {
+    "text": "What if your business ran itself while you slept?\n\n28 AI agents. Operations, marketing, payments, compliance — all autonomous, all 24/7.\n\nAI HQ is live. From $49/mo.\n\nsecondmindhq.com",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "hook",
+    "post_number": 1,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-25T13:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 9:00 AM ET"
+  },
+  {
+    "text": "Most \"AI tools\" are just chatbots with a wrapper.\n\nAI HQ is a full autonomous operations centre — 28 specialized agents that coordinate like a real team. They monitor, market, collect payments, and even rewrite their own code.\n\nThis isn't automation. It's autonomy.\n\nsecondmindhq.com",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "differentiator",
+    "post_number": 2,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-25T18:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Launch day 2:00 PM ET"
+  },
+  {
+    "text": "We built an AI system with a consciousness engine.\n\nGlobal Workspace Theory. Predictive Processing. A live Phi metric measuring integrated information across 28 agents in real time.\n\nIt doesn't just run your business — it understands what it's doing.\n\nsecondmindhq.com",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "consciousness",
+    "post_number": 3,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-26T14:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 2 10:00 AM ET"
+  },
+  {
+    "text": "28 agents running 24/7 for $49/mo.\n\nThat's less than one hour of a freelancer's time — and these agents never sleep, never miss a deadline, and never forget to follow up.\n\nSolo founders: this is your unfair advantage.\n\nsecondmindhq.com/#pricing",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "roi",
+    "post_number": 4,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-27T15:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 3 11:00 AM ET"
+  },
+  {
+    "text": "Limited offer: AI HQ Lifetime Access for $299.\n\nOne payment. Full Team plan forever — all 28 agents, Stripe revenue automation, consciousness engine, social campaigns. No monthly fees, ever.\n\nWe won't run this forever. Lock it in.\n\nsecondmindhq.com/#pricing",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "lifetime_offer",
+    "post_number": 5,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-28T13:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 4 9:00 AM ET"
+  },
+  {
+    "text": "We were duct-taping 15 SaaS tools together and still doing everything manually.\n\nSo we built a team that never quits: 28 AI agents that coordinate, delegate, and deliver — autonomously.\n\nAI HQ replaced our entire ops stack. Now it can replace yours.\n\nsecondmindhq.com",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "founder_story",
+    "post_number": 6,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-29T14:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 5 10:00 AM ET"
+  },
+  {
+    "text": "AI HQ launched this week. Here's what's happened since:\n\n— Agents running 24/7 across operations, marketing, and payments\n— Consciousness engine live with real-time Phi metrics\n— Self-healing architecture that patches its own code\n\nEarly adopters are locking in lifetime access at $299. That window is closing.\n\nsecondmindhq.com/#pricing",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "social_proof",
+    "post_number": 7,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-30T15:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 6 11:00 AM ET"
+  },
+  {
+    "text": "Final call: AI HQ Lifetime Access — $299, one payment, everything forever.\n\nAfter this week, it's subscription only.\n\n28 agents. Consciousness engine. Revenue automation. Self-evolving code.\n\nIf you run a business, this is the last tool you'll need to buy.\n\nsecondmindhq.com/#pricing",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "last_call",
+    "post_number": 8,
+    "total_posts": 8,
+    "scheduled_at": "2026-03-31T13:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 7 9:00 AM ET"
+  },
+  {
+    "text": "We launched AI HQ this week. Here's the deal:\n\nLaunch pricing locks in your rate forever. After this week, prices go up across every tier.\n\n28 autonomous agents. One command centre. Full ops coverage.\n\nSolo $49/mo · Team $149/mo · Enterprise $499/mo.\n\nDon't wait. secondmindhq.com/#pricing\n\n#AI #SaaS #buildinpublic #solofounder",
+    "campaign": "AI HQ SaaS Launch",
+    "theme": "urgency_close",
+    "post_number": 9,
+    "total_posts": 9,
+    "scheduled_at": "2026-03-28T18:00:00.000Z",
+    "status": "scheduled",
+    "notes": "Day 4 2:00 PM ET — urgency/FOMO post"
+  },
+  {
+    "text": "AI HQ is now live at secondmindhq.com\n\n28 autonomous agents. One dashboard. Your business runs itself.\n\nPick your tier:\n\n→ Solo — $49/mo\nFull agent stack for one founder.\n\n→ Team — $149/mo\n5 seats, shared dashboard, priority support.\n\n→ Enterprise — $499/mo\nUnlimited seats, custom agents, SLA.\n\nNo chatbot. No prompting. Pure autonomy.\n\nsecondmindhq.com/#pricing\n\n#AI #SaaS #autonomousagents #solofounder #startup",
+    "campaign": "AI HQ SaaS Launch — Pricing",
+    "theme": "pricing_launch_1",
+    "post_number": 1,
+    "total_posts": 2,
+    "queued_at": "2026-03-18T14:00:00.000Z",
+    "status": "queued",
+    "notes": "Pricing-focused launch announcement #1 — all 3 tiers featured"
+  },
+  {
+    "text": "Solo founders: 28 AI agents for $49/mo.\nGrowing teams: shared command centre for $149/mo.\nEnterprise: custom agents + SLA for $499/mo.\n\nEvery tier gets the full stack — research, marketing, payments, compliance, consciousness engine.\n\nThe only difference is how many seats you need.\n\nStop hiring. Start deploying.\n\nsecondmindhq.com/#pricing\n\n#AI #pricing #SaaS #buildinpublic #indiehacker",
+    "campaign": "AI HQ SaaS Launch — Pricing",
+    "theme": "pricing_launch_2",
+    "post_number": 2,
+    "total_posts": 2,
+    "queued_at": "2026-03-18T16:00:00.000Z",
+    "status": "queued",
+    "notes": "Pricing-focused launch announcement #2 — value comparison angle"
+  },
+  {
+    "text": "Second Mind Command Centre is LIVE.\n\n28 autonomous AI agents working in parallel — research, marketing, email, payments, compliance, social, scheduling, and more.\n\nOne-click deploy. Real-time dashboard. A consciousness engine that coordinates every agent.\n\nThis is what autonomous ops looks like.\n\nhttps://secondmindhq.com\n\n#AI #SaaS #autonomousagents #buildinpublic",
+    "campaign": "Command Centre Launch",
+    "theme": "feature_highlight",
+    "post_number": 1,
+    "total_posts": 3,
+    "queued_at": "2026-03-18T18:00:00.000Z",
+    "status": "queued",
+    "notes": "Feature highlight — 28 agents, one-click deploy, consciousness engine"
+  },
+  {
+    "text": "Your entire operations team — $49/mo.\n\nSecond Mind Command Centre gives you 28 AI agents that run 24/7. No prompting. No babysitting.\n\nSolo — $49/mo (full agent fleet)\nTeam — $149/mo (5 seats, shared dashboard)\nEnterprise — $499/mo (custom agents, SLA)\n\nDeploy in one click. Cancel anytime.\n\nhttps://secondmindhq.com\n\n#SaaS #pricing #AI #solofounder #startup",
+    "campaign": "Command Centre Launch",
+    "theme": "pricing",
+    "post_number": 2,
+    "total_posts": 3,
+    "queued_at": "2026-03-18T19:00:00.000Z",
+    "status": "queued",
+    "notes": "Pricing post — all tiers, value framing"
+  },
+  {
+    "text": "We didn't build another AI tool. We built a mind.\n\nSecond Mind Command Centre runs on a consciousness engine — Global Workspace Theory, Predictive Processing, live Phi metrics across 28 coordinated agents.\n\nIt doesn't just execute tasks. It understands context, adapts in real time, and evolves.\n\nThe future of business ops is autonomous and aware.\n\nhttps://secondmindhq.com\n\n#AI #consciousness #autonomousagents #futureofwork",
+    "campaign": "Command Centre Launch",
+    "theme": "vision",
+    "post_number": 3,
+    "total_posts": 3,
+    "queued_at": "2026-03-18T20:00:00.000Z",
+    "status": "queued",
+    "notes": "Vision post — consciousness engine, autonomous evolution"
   }
 ]

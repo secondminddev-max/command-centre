@@ -10,5 +10,6 @@
   "NGROK_DOMAIN": "${NGROK_DOMAIN}",
   "_test_probe": "ok",
   "demo_test_flag": "true",
-  "qa_test_flag": "true"
+  "qa_test_flag": "true",
+  "qa": "1"
 }
