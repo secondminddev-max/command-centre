@@ -1261,14 +1261,39 @@ class Handler(BaseHTTPRequestHandler):
     def _is_tunnel_request(self):
         """Return True if this request came through the Cloudflare tunnel (external visitor)."""
         host = self.headers.get("Host", "").lower().split(":")[0]
-        return "hq.secondmindhq" in host
+        # Cloudflare tunnel forwards with Cf-Connecting-Ip header
+        has_cf_header = bool(self.headers.get("Cf-Connecting-Ip"))
+        return "hq.secondmindhq" in host or has_cf_header
+
+    def handle_one_request(self):
+        """Override to intercept ALL requests (including monkey-patched POST) from tunnel."""
+        # Parse the request line first so we know the method
+        try:
+            self.raw_requestline = self.rfile.readline(65537)
+            if not self.raw_requestline:
+                self.close_connection = True
+                return
+            if not self.parse_request():
+                return
+        except Exception:
+            self.close_connection = True
+            return
+        # ── TUNNEL LOCKDOWN: block ALL POST/PUT/DELETE from external visitors ──
+        if self.command in ("POST", "PUT", "DELETE") and self._is_tunnel_request():
+            self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
+            return
+        # Normal dispatch
+        mname = 'do_' + self.command
+        if not hasattr(self, mname):
+            self.send_error(501, "Unsupported method (%r)" % self.command)
+            return
+        method = getattr(self, mname)
+        method()
+        self.wfile.flush()
 
     def do_POST(self):
         global _system_paused, _build_mode
         path   = urlparse(self.path).path
-        # ── TUNNEL LOCKDOWN: block ALL POST endpoints from external visitors ──
-        if self._is_tunnel_request():
-            self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403); return
         # ── API key gate on sensitive endpoints ──────────────────────────────
         if path in _PROTECTED_PATHS:
             if not _check_api_key(self):
