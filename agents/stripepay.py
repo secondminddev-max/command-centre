@@ -69,38 +69,38 @@ def run_stripepay():
     TIERS = {
         "solo": {
             "name":        "SecondMind HQ Solo",
-            "price":       4900,
+            "price":       7900,
             "currency":    "usd",
-            "price_label": "$49/mo",
+            "price_label": "$79/mo",
             "features":    ["1 user seat", "Core agent roster", "Basic dashboards", "Email support"],
         },
         "team": {
             "name":        "SecondMind HQ Team",
-            "price":       14900,
+            "price":       19900,
             "currency":    "usd",
-            "price_label": "$149/mo",
+            "price_label": "$199/mo",
             "features":    ["Up to 5 user seats", "Full agent roster", "Advanced dashboards", "Priority support", "Custom agent spawning"],
         },
         "enterprise": {
             "name":        "SecondMind HQ Enterprise",
-            "price":       49900,
+            "price":       69900,
             "currency":    "usd",
-            "price_label": "$499/mo",
+            "price_label": "$699/mo",
             "features":    ["Unlimited seats", "Full agent roster + custom agents", "White-label dashboards", "Dedicated support", "Custom integrations", "SLA guarantee", "On-prem deployment option"],
         },
         "lifetime": {
             "name":        "SecondMind HQ Lifetime",
-            "price":       29900,
+            "price":       49900,
             "currency":    "usd",
-            "price_label": "$299 one-time",
+            "price_label": "$499 one-time",
             "one_time":    True,
             "features":    ["Lifetime access", "All current agents", "All future updates", "Community support"],
         },
         "mac_mini": {
             "name":        "SecondMind HQ Mac Mini Edition",
-            "price":       149900,
+            "price":       249900,
             "currency":    "usd",
-            "price_label": "$1499 one-time",
+            "price_label": "$2,499 one-time",
             "one_time":    True,
             "features":    ["Pre-configured Mac Mini", "Full agent roster", "Hardware + software bundle", "1 year priority support", "Plug-and-play deployment"],
         },
@@ -134,6 +134,13 @@ def run_stripepay():
             _qs = _pqs(urlparse(self.path).query)
             _product_param = (_qs.get("product") or [None])[0]
 
+            # Resolve base URL for GET handler
+            _get_base = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+            if not _get_base:
+                _get_host = self.headers.get("Host", "localhost:5050")
+                _get_scheme = "https" if "secondmindhq" in _get_host or "trycloudflare" in _get_host else "http"
+                _get_base = f"{_get_scheme}://{_get_host}"
+
             if _product_param and _product_param in PRODUCTS:
                 # Buy-button redirect — create checkout session and 302 to Stripe
                 _secret_key   = os.environ.get("STRIPE_SECRET_KEY", "")
@@ -141,9 +148,9 @@ def run_stripepay():
                 _preset = PRODUCTS[_product_param]
                 _success = (
                     _preset.get("success_url")
-                    or "http://localhost:5050/api/pay/success?session_id={CHECKOUT_SESSION_ID}"
+                    or f"{_get_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
                 )
-                _cancel = "http://localhost:5050/reports/landing_page.html"
+                _cancel = f"{_get_base}/reports/landing_page.html"
 
                 if _secret_key:
                     try:
@@ -185,8 +192,8 @@ def run_stripepay():
                 _secret_key   = os.environ.get("STRIPE_SECRET_KEY", "")
                 _payment_link = os.environ.get("STRIPE_PAYMENT_LINK", "")
                 _tier = TIERS[_plan_param]
-                _success = "http://localhost:5050/reports/landing_page.html?checkout=success"
-                _cancel  = "http://localhost:5050/reports/landing_page.html"
+                _success = f"{_get_base}/reports/landing_page.html?checkout=success"
+                _cancel  = f"{_get_base}/reports/landing_page.html"
 
                 if _secret_key:
                     try:
@@ -475,19 +482,29 @@ def run_stripepay():
                     description  = _resolved["description"]
             else:
                 price_id = _raw_price_id
+            # Resolve base URL — prefer public domain, fall back to localhost
+            _base = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+            if not _base:
+                _host = self.headers.get("Host", "localhost:5050")
+                _scheme = "https" if "secondmindhq" in _host or "trycloudflare" in _host else "http"
+                _base = f"{_scheme}://{_host}"
+
             if tier_id:
-                _default_success = "http://localhost:5050/reports/landing_page.html?checkout=success"
+                _default_success = f"{_base}/reports/landing_page.html?checkout=success&session_id={{CHECKOUT_SESSION_ID}}"
             elif product_id and product_id in PRODUCTS:
                 _default_success = (
                     PRODUCTS[product_id].get("success_url")
-                    or "http://localhost:5050/api/pay/success?session_id={CHECKOUT_SESSION_ID}"
+                    or f"{_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
                 )
             else:
-                _default_success = "http://localhost:5050/api/pay/success?session_id={CHECKOUT_SESSION_ID}"
+                _default_success = f"{_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
             success_url = body.get("success_url", _default_success)
             # Cancel URL — always back to landing page
-            _default_cancel = "http://localhost:5050/reports/landing_page.html"
+            _default_cancel = f"{_base}/reports/landing_page.html"
             cancel_url  = body.get("cancel_url",  _default_cancel)
+
+            # Prefill customer email on Stripe checkout if provided
+            _customer_email = body.get("email", "")
 
             try:
                 if price_id:
@@ -504,6 +521,8 @@ def run_stripepay():
                         "success_url":                     success_url,
                         "cancel_url":                      cancel_url,
                     }
+                    if _customer_email:
+                        params["customer_email"] = _customer_email
                     if _price_mode == "subscription":
                         params.pop("customer_creation", None)
                 elif _checkout_mode == "subscription":
@@ -518,6 +537,8 @@ def run_stripepay():
                         "success_url":                                                  success_url,
                         "cancel_url":                                                   cancel_url,
                     }
+                    if _customer_email:
+                        params["customer_email"] = _customer_email
                 else:
                     # One-time payment with ad-hoc price
                     # customer_creation=always ensures a Customer object is created in Stripe
@@ -531,6 +552,8 @@ def run_stripepay():
                         "success_url":                                   success_url,
                         "cancel_url":                                    cancel_url,
                     }
+                    if _customer_email:
+                        params["customer_email"] = _customer_email
 
                 result = _stripe_post("/checkout/sessions", params, secret_key)
                 checkout_url = result.get("url", "")
