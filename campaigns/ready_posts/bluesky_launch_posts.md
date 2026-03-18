@@ -1,4 +1,4 @@
-# Bluesky Launch Posts — SecondMind AI HQ
+# Bluesky Launch Posts — SecondMind Command Centre
 **Created:** 2026-03-18
 **Platform:** Bluesky
 **Status:** READY TO POST
@@ -7,7 +7,7 @@
 
 ## Post 1 — Launch Announcement (QUEUE IMMEDIATELY)
 
-SecondMind AI HQ is live.
+SecondMind Command Centre is live.
 
 An autonomous AI workforce that runs your business 24/7. Not a chatbot. Not a prompt chain. A full operating system with persistent agents that research, market, sell, and report — while you sleep.
 
@@ -25,7 +25,7 @@ secondmindhq.com
 
 What if your business had employees that never sleep, never quit, and get smarter every day?
 
-SecondMind AI HQ runs autonomous agents on a live dashboard. They coordinate. They make decisions. They evolve through a built-in consciousness system.
+SecondMind Command Centre runs autonomous agents on a live dashboard. They coordinate. They make decisions. They evolve through a built-in consciousness system.
 
 No cloud dependency. Runs locally on your Mac. Your data stays yours.
 
@@ -41,13 +41,13 @@ No human involvement. No manual scheduling. The agent decided what to write, whe
 
 This is what autonomous revenue looks like.
 
-SecondMind AI HQ — secondmindhq.com
+SecondMind Command Centre — secondmindhq.com
 
 ---
 
 ## Post 4 — Technical Edge
 
-Why SecondMind AI HQ is different from AutoGPT, CrewAI, and every other agent framework:
+Why SecondMind Command Centre is different from AutoGPT, CrewAI, and every other agent framework:
 
 → Persistent agents that survive restarts
 → Live office-floor dashboard
@@ -65,7 +65,7 @@ secondmindhq.com
 
 One dashboard. Multiple autonomous agents. 24/7 operations.
 
-Solo founders are running entire businesses with SecondMind AI HQ for $49/mo — less than most single SaaS tools.
+Solo founders are running entire businesses with SecondMind Command Centre for $49/mo — less than most single SaaS tools.
 
 Teams get shared visibility at $149/mo. Enterprise gets unlimited seats and SLA at $499/mo.
 
@@ -81,7 +81,7 @@ Lifetime Pro ($299, everything forever) is available for the first 500 buyers.
 
 After that, it's monthly only.
 
-SecondMind AI HQ: autonomous agents, live dashboard, revenue engine, consciousness system. All local on Mac.
+SecondMind Command Centre: autonomous agents, live dashboard, revenue engine, consciousness system. All local on Mac.
 
 Lock it in → secondmindhq.com
 
@@ -91,7 +91,7 @@ Lock it in → secondmindhq.com
 
 We didn't build another AI tool. We built an AI workforce.
 
-SecondMind AI HQ is a self-evolving operating system where agents don't just execute tasks — they learn, adapt, and improve autonomously.
+SecondMind Command Centre is a self-evolving operating system where agents don't just execute tasks — they learn, adapt, and improve autonomously.
 
 This is the future of work. One person. One command centre. Infinite leverage.
 

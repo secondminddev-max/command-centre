@@ -126,5 +126,5 @@
 
   <!-- Product name -->
   <text x="200" y="362" text-anchor="middle" fill="#e8f4ff" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="26" font-weight="800" letter-spacing="2">Command Centre</text>
-  <text x="200" y="385" text-anchor="middle" fill="#00d4ff" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" letter-spacing="4" opacity="0.7">AUTONOMOUS AI HQ</text>
+  <text x="200" y="385" text-anchor="middle" fill="#00d4ff" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" letter-spacing="4" opacity="0.7">AUTONOMOUS Command Centre</text>
 </svg>

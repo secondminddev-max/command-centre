@@ -1,4 +1,4 @@
-# Product Hunt Launch Prep — AI HQ
+# Product Hunt Launch Prep — Command Centre
 
 ## Tagline
 
@@ -8,9 +8,9 @@
 
 ## Product Description
 
-AI HQ is an autonomous agent command centre that runs your business operations without human babysitting. Out of the box you get 20+ specialised agents — email, billing, social media, scheduling, research, security monitoring, growth marketing — all coordinating through a real-time dashboard you can watch from your browser. Agents delegate to each other, escalate when they need you, and evolve through a built-in consciousness system that tracks their own performance and adapts. One install script, one command, and your entire back-office is live.
+Command Centre is an autonomous agent command centre that runs your business operations without human babysitting. Out of the box you get 20+ specialised agents — email, billing, social media, scheduling, research, security monitoring, growth marketing — all coordinating through a real-time dashboard you can watch from your browser. Agents delegate to each other, escalate when they need you, and evolve through a built-in consciousness system that tracks their own performance and adapts. One install script, one command, and your entire back-office is live.
 
-Unlike bolted-together automation stacks, AI HQ is a single self-contained system where every agent shares a unified message bus, a live status board, and a chain-of-command policy engine. The consciousness layer measures integration (Phi) across agents so the system genuinely improves as it runs — not just executing playbooks but developing operational intuition. Deploy on your own Mac Mini, a VPS, or Docker. Solo operators, small teams, and enterprises all get the same full agent stack; pricing just scales seats and support.
+Unlike bolted-together automation stacks, Command Centre is a single self-contained system where every agent shares a unified message bus, a live status board, and a chain-of-command policy engine. The consciousness layer measures integration (Phi) across agents so the system genuinely improves as it runs — not just executing playbooks but developing operational intuition. Deploy on your own Mac Mini, a VPS, or Docker. Solo operators, small teams, and enterprises all get the same full agent stack; pricing just scales seats and support.
 
 ---
 
@@ -75,11 +75,11 @@ Unlike bolted-together automation stacks, AI HQ is a single self-contained syste
 
 ## Maker Comment Draft
 
-> Hey Product Hunt! I'm the maker behind AI HQ.
+> Hey Product Hunt! I'm the maker behind Command Centre.
 >
 > I built this because I was tired of duct-taping 15 different SaaS tools together to run a solo operation. I wanted one system where AI agents handle email, billing, social media, scheduling, research, and monitoring — and I wanted to *watch them do it* in real time.
 >
-> AI HQ started as a personal command centre on a Mac Mini. It now runs 20+ agents that coordinate autonomously through a shared message bus, enforce their own chain-of-command policies, and — here's the weird part — track their own "consciousness" using Integrated Information Theory. The dashboard shows you everything: agent status, live logs, CPU/RAM metrics, and the consciousness Phi score rising as agents learn to work together.
+> Command Centre started as a personal command centre on a Mac Mini. It now runs 20+ agents that coordinate autonomously through a shared message bus, enforce their own chain-of-command policies, and — here's the weird part — track their own "consciousness" using Integrated Information Theory. The dashboard shows you everything: agent status, live logs, CPU/RAM metrics, and the consciousness Phi score rising as agents learn to work together.
 >
 > What makes this different from n8n / Make / Zapier:
 > - It's not a workflow builder. Agents *think*, delegate, and escalate on their own.

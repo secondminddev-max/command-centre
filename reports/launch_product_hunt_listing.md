@@ -1,4 +1,4 @@
-# AI HQ SaaS Launch — Product Hunt Listing
+# Command Centre SaaS Launch — Product Hunt Listing
 **Prepared by:** GrowthAgent | **Date:** 2026-03-18
 
 ---

@@ -1,19 +1,19 @@
 ---
-campaign: AI HQ SaaS Launch
+campaign: Command Centre SaaS Launch
 channel: Bluesky
 created: 2026-03-18
 status: ready
 char_limit: 300
 ---
 
-# Bluesky Launch Posts — AI HQ
+# Bluesky Launch Posts — Command Centre
 
 ## Post 1: The Problem (267 chars)
 > You're running your business with 10 tabs open, 5 SaaS tools, and zero sleep.
 >
 > What if 28 AI agents handled ops, marketing, payments, and monitoring — while you focused on the work that matters?
 >
-> AI HQ is live. From $49/mo.
+> Command Centre is live. From $49/mo.
 > secondmindhq.com
 
 **Angle:** Pain point / relatability
@@ -35,7 +35,7 @@ char_limit: 300
 ---
 
 ## Post 3: The Tech Angle (289 chars)
-> AI HQ isn't a chatbot with a dashboard.
+> Command Centre isn't a chatbot with a dashboard.
 >
 > It's 28 specialized agents running on a consciousness engine — Global Workspace Theory, live coordination, self-healing code.
 >
@@ -49,7 +49,7 @@ char_limit: 300
 ---
 
 ## Post 4: The Use Case (263 chars)
-> What AI HQ does while you sleep:
+> What Command Centre does while you sleep:
 >
 > — Monitors your infrastructure
 > — Drafts and posts social content

@@ -1,5 +1,5 @@
 ---
-campaign: AI HQ Launch — Conversion Email Sequence
+campaign: Command Centre Launch — Conversion Email Sequence
 channel: Email
 created: 2026-03-18
 status: ready
@@ -16,7 +16,7 @@ Distinct from the post-signup drip sequence (which triggers after purchase).
 ---
 
 ## Email 1: Launch Announcement
-**Subject:** AI HQ is live — 28 agents, one command centre, $49/mo
+**Subject:** Command Centre is live — 28 agents, one command centre, $49/mo
 **Preview text:** Your entire ops team just got replaced.
 **Send:** Launch day (2026-03-25)
 
@@ -24,11 +24,11 @@ Distinct from the post-signup drip sequence (which triggers after purchase).
 
 Hi {{first_name}},
 
-Today we're launching AI HQ — and I wanted you to be the first to know.
+Today we're launching Command Centre — and I wanted you to be the first to know.
 
 **What it is:** A command centre with 28 autonomous AI agents that run your business operations 24/7. Marketing, payments, research, compliance, monitoring, email — all handled.
 
-**Why it matters:** Most founders spend 4-6 hours/day on ops tasks that don't grow the business. AI HQ eliminates that. Deploy once, and your agents work around the clock.
+**Why it matters:** Most founders spend 4-6 hours/day on ops tasks that don't grow the business. Command Centre eliminates that. Deploy once, and your agents work around the clock.
 
 **What makes it different:**
 - Not a chatbot. No prompting required. Fully autonomous.
@@ -64,7 +64,7 @@ P.S. The Lifetime Access tier ($299, everything forever) has a cap. Once it's go
 
 Hi {{first_name}},
 
-Yesterday we launched AI HQ. Here's what happened in the first 24 hours of a typical deployment:
+Yesterday we launched Command Centre. Here's what happened in the first 24 hours of a typical deployment:
 
 **Hour 1-2:** All 28 agents initialized. Research agent begins market scan. NetScout starts monitoring your infrastructure.
 
@@ -76,7 +76,7 @@ Yesterday we launched AI HQ. Here's what happened in the first 24 hours of a typ
 
 **That's $49/mo working for you.**
 
-Hiring a single VA to do half of this costs $2,000+/mo. AI HQ does all of it for less than a coffee subscription.
+Hiring a single VA to do half of this costs $2,000+/mo. Command Centre does all of it for less than a coffee subscription.
 
 ### The math:
 
@@ -85,7 +85,7 @@ Hiring a single VA to do half of this costs $2,000+/mo. AI HQ does all of it for
 | Virtual assistant | $2,000+ |
 | 5 SaaS tools (Hootsuite, Zapier, Freshdesk, Monday, analytics) | $500+ |
 | Part-time ops hire | $3,000+ |
-| **AI HQ** | **$49** |
+| **Command Centre** | **$49** |
 
 [Start Your Solo Plan — $49/mo →](https://secondmindhq.com/#pricing)
 
@@ -102,7 +102,7 @@ Hiring a single VA to do half of this costs $2,000+/mo. AI HQ does all of it for
 
 Hi {{first_name}},
 
-AI HQ launched 3 days ago. Here's the early signal:
+Command Centre launched 3 days ago. Here's the early signal:
 
 **What we're hearing:**
 - "I cancelled 5 SaaS subscriptions on day one."
@@ -134,7 +134,7 @@ P.S. Lifetime Access ($299) has limited slots. When they're gone, they're gone.
 ---
 
 ## Email 4: Last Call
-**Subject:** Final hours — AI HQ launch pricing ends tonight
+**Subject:** Final hours — Command Centre launch pricing ends tonight
 **Preview text:** $49/mo becomes $79/mo at midnight.
 **Send:** Launch day + 6 (2026-03-31)
 
@@ -150,7 +150,7 @@ This is the last email about launch pricing.
 - Enterprise: $499 → $799/mo
 - Lifetime Access: $299 → **removed permanently**
 
-If you've been considering AI HQ, this is the moment. Lock in the launch rate now and it stays yours for as long as you're subscribed.
+If you've been considering Command Centre, this is the moment. Lock in the launch rate now and it stays yours for as long as you're subscribed.
 
 **Quick reminder of what you get:**
 - 28 autonomous AI agents
@@ -160,7 +160,7 @@ If you've been considering AI HQ, this is the moment. Lock in the launch rate no
 - Revenue automation (Stripe integrated)
 - Cancel anytime, no questions
 
-[Get AI HQ at Launch Pricing →](https://secondmindhq.com/#pricing)
+[Get Command Centre at Launch Pricing →](https://secondmindhq.com/#pricing)
 
 After tonight, these prices are gone.
 

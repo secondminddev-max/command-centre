@@ -388,5 +388,35 @@
     "scheduled_at": "2026-03-25T23:00:00.000Z",
     "status": "scheduled",
     "notes": "Launch day 7:00 PM ET — end-of-day recap, social proof"
+  },
+  {
+    "post_number": 1,
+    "text": "We built an AI that runs 27 autonomous agents — monitoring, creating, deploying, and improving itself 24/7.",
+    "scheduled": null,
+    "campaign": "Launch Thread — Autonomous AI",
+    "thread": true,
+    "total_posts": 3,
+    "status": "queued",
+    "queued_at": "2026-03-18T21:30:00.000Z"
+  },
+  {
+    "post_number": 2,
+    "text": "It watches its own health, writes its own code, manages its own social media, and handles payments — all autonomously.",
+    "scheduled": null,
+    "campaign": "Launch Thread — Autonomous AI",
+    "thread": true,
+    "total_posts": 3,
+    "status": "queued",
+    "queued_at": "2026-03-18T21:30:00.000Z"
+  },
+  {
+    "post_number": 3,
+    "text": "Now available at secondmindhq.com — Solo plan $49/mo. The future of autonomous AI is here.",
+    "scheduled": null,
+    "campaign": "Launch Thread — Autonomous AI",
+    "thread": true,
+    "total_posts": 3,
+    "status": "queued",
+    "queued_at": "2026-03-18T21:30:00.000Z"
   }
 ]

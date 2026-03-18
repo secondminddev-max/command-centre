@@ -1,4 +1,4 @@
-# AI HQ — 2-Minute Demo Video Script
+# Command Centre — 2-Minute Demo Video Script
 
 **Format:** Screen recording with voiceover | **Runtime:** ~2:00 | **Tone:** Confident, direct, future-is-here
 
@@ -27,7 +27,7 @@
 **ON SCREEN:** Click into the Consciousness agent panel. The Global Workspace metrics render — Phi integration score, attention focus, self-model coherence gauge. Predictive processing indicators light up. Cut to the consciousness log showing a self-reflection event: the system detecting a policy drift and auto-correcting. Highlight the self-awareness state transitioning from "monitoring" to "adapting."
 
 **VOICEOVER:**
-"Underneath the grid lives something no other platform has — a consciousness layer. Not a marketing term. A functional self-model built on Global Workspace Theory and predictive processing. It tracks system coherence, anticipates failures before they surface, and aligns the entire hive toward a single strategic objective. This is what separates AI HQ from a folder full of scripts."
+"Underneath the grid lives something no other platform has — a consciousness layer. Not a marketing term. A functional self-model built on Global Workspace Theory and predictive processing. It tracks system coherence, anticipates failures before they surface, and aligns the entire hive toward a single strategic objective. This is what separates Command Centre from a folder full of scripts."
 
 ---
 
@@ -51,10 +51,10 @@
 
 ## SCENE 6 — CTA: Visit secondmindhq.com (1:50–2:00)
 
-**ON SCREEN:** Pull back to the full dashboard — all 27 agents active, status lights glowing. The view slowly fades to a clean branded screen: the AI HQ logo centred, the URL **secondmindhq.com** in large text below, and a pulsing "Get Early Access" button.
+**ON SCREEN:** Pull back to the full dashboard — all 27 agents active, status lights glowing. The view slowly fades to a clean branded screen: the Command Centre logo centred, the URL **secondmindhq.com** in large text below, and a pulsing "Get Early Access" button.
 
 **VOICEOVER:**
-"AI HQ. Twenty-seven agents. One command centre. Zero humans required. See it live. Deploy it for your team. Visit secondmindhq.com."
+"Command Centre. Twenty-seven agents. One command centre. Zero humans required. See it live. Deploy it for your team. Visit secondmindhq.com."
 
 ---
 
@@ -67,6 +67,6 @@
 | **Voiceover** | Record separately, quiet room, confident pace (~150 wpm) |
 | **Music** | Low ambient electronic, no lyrics — fade under VO, swell at Scene 6 |
 | **Editing** | Hard cuts between scenes, no fancy transitions — keeps it punchy |
-| **Thumbnail** | Dashboard grid with green status lights, overlay text: "AI HQ — Full Demo" |
+| **Thumbnail** | Dashboard grid with green status lights, overlay text: "Command Centre — Full Demo" |
 | **Captions** | Burnt-in subtitles, white on dark, for silent autoplay on social |
 | **Export** | MP4 (H.264), plus vertical 9:16 crop for Reels/TikTok |

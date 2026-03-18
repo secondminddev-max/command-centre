@@ -1,6 +1,6 @@
-# AI HQ — 5-Part Launch Email Drip Campaign
+# Command Centre — 5-Part Launch Email Drip Campaign
 
-**Product:** AI HQ by Second Mind
+**Product:** Command Centre by Second Mind
 **Domain:** secondmindhq.com
 **ESP:** SendGrid (via EmailAgent)
 **From:** Second Mind HQ <launch@secondmindhq.com>
@@ -23,18 +23,18 @@
 ## EMAIL 1 — LAUNCH ANNOUNCEMENT
 
 **Trigger:** Immediately on signup / list broadcast
-**Subject:** AI HQ is live — your autonomous AI workforce starts now
+**Subject:** Command Centre is live — your autonomous AI workforce starts now
 **Preview:** 20+ AI agents running your business 24/7. No code required.
 
 ---
 
 Hi {{first_name}},
 
-**AI HQ is live.**
+**Command Centre is live.**
 
 We just launched the first autonomous AI operating system for business. Not a chatbot. Not another SaaS dashboard. A full command centre where AI agents run your operations — marketing, research, revenue, accounting, customer outreach — while you focus on strategy.
 
-**What AI HQ does:**
+**What Command Centre does:**
 
 - **20+ autonomous agents** work around the clock — research, content, email, payments, social media
 - **Live command centre** — watch every agent in real time on a single dashboard
@@ -44,7 +44,7 @@ We just launched the first autonomous AI operating system for business. Not a ch
 
 **This is not a demo. It's production-ready.**
 
-People are already using AI HQ to run their entire back office. One founder replaced 3 freelancers. Another generated $4,200 in the first week from automated campaigns.
+People are already using Command Centre to run their entire back office. One founder replaced 3 freelancers. Another generated $4,200 in the first week from automated campaigns.
 
 **Choose your plan:**
 
@@ -65,18 +65,18 @@ secondmindhq.com
 ## EMAIL 2 — FEATURE DEEP-DIVE
 
 **Trigger:** 48 hours after Email 1
-**Subject:** Inside AI HQ: what 20+ agents actually do for you
+**Subject:** Inside Command Centre: what 20+ agents actually do for you
 **Preview:** Research, marketing, payments, scheduling — here's the full breakdown.
 
 ---
 
 Hi {{first_name}},
 
-You signed up for AI HQ. Here's what's actually running under the hood — and why it matters.
+You signed up for Command Centre. Here's what's actually running under the hood — and why it matters.
 
 ### The Agent Roster
 
-AI HQ ships with 20+ specialised agents. Each one handles a different part of your business:
+Command Centre ships with 20+ specialised agents. Each one handles a different part of your business:
 
 **Research & Intelligence**
 - **NetScout** — scans the web for market data, competitor moves, and opportunities
@@ -118,24 +118,24 @@ Plans start at $49/mo. Lifetime access is $299 — one payment, no expiry.
 ## EMAIL 3 — SOCIAL PROOF
 
 **Trigger:** 5 days after Email 1
-**Subject:** "I replaced 3 freelancers with AI HQ" — real users, real results
+**Subject:** "I replaced 3 freelancers with Command Centre" — real users, real results
 **Preview:** What early adopters are saying after their first week.
 
 ---
 
 Hi {{first_name}},
 
-We could tell you AI HQ is good. But you'd rather hear from people using it.
+We could tell you Command Centre is good. But you'd rather hear from people using it.
 
 ### What early adopters are saying
 
 > **"I replaced 3 freelancers and saved $2,400/month."**
 > — Solo founder, e-commerce
-> *Runs marketing, research, and customer emails entirely through AI HQ.*
+> *Runs marketing, research, and customer emails entirely through Command Centre.*
 
 > **"The live dashboard is addictive. I watch my agents work like it's a screensaver."**
 > — Product manager, SaaS startup
-> *Uses AI HQ for competitor research and content scheduling.*
+> *Uses Command Centre for competitor research and content scheduling.*
 
 > **"$4,200 in revenue in week one. The GrowthAgent wrote campaigns I wouldn't have thought of."**
 > — Digital marketer, agency owner
@@ -154,7 +154,7 @@ We could tell you AI HQ is good. But you'd rather hear from people using it.
 
 ### This isn't hype
 
-Every quote above is from a real person who signed up in the first 48 hours. AI HQ isn't theoretical — it's running live, generating revenue, and getting smarter.
+Every quote above is from a real person who signed up in the first 48 hours. Command Centre isn't theoretical — it's running live, generating revenue, and getting smarter.
 
 **Ready to see it yourself?**
 
@@ -172,7 +172,7 @@ Every quote above is from a real person who signed up in the first 48 hours. AI 
 
 **Trigger:** 8 days after Email 1
 **Subject:** 48 hours left: Lifetime access for $299 (then it's gone)
-**Preview:** Lock in AI HQ forever — before the price doubles.
+**Preview:** Lock in Command Centre forever — before the price doubles.
 
 ---
 
@@ -184,14 +184,14 @@ After that, it doubles to $599 — or we remove it entirely.
 
 ### Why we're doing this
 
-We launched AI HQ last week. The Lifetime plan was a launch reward for early believers. Over {{subscriber_count}} people have signed up. The early-bird window is closing.
+We launched Command Centre last week. The Lifetime plan was a launch reward for early believers. Over {{subscriber_count}} people have signed up. The early-bird window is closing.
 
 ### What Lifetime gets you
 
 - **Every current agent** — all 20+ in the roster
 - **Every future agent** — anything we build, you get
 - **Every update** — forever, no expiry, no renewals
-- **Community support** — access to the AI HQ user community
+- **Community support** — access to the Command Centre user community
 - **One payment: $299** — no monthly fees, no surprises
 
 For context: the Solo plan at $49/mo costs $588/year. Lifetime pays for itself in 6 months.
@@ -245,7 +245,7 @@ This is the last email in this sequence. After tonight, the Lifetime plan at $29
 - Enterprise plan: $499/mo ($5,988/yr)
 - Lifetime plan after tonight: $599 or removed entirely
 
-People using AI HQ right now are generating revenue, publishing content, and running research — all while they sleep. Their agents don't take breaks.
+People using Command Centre right now are generating revenue, publishing content, and running research — all while they sleep. Their agents don't take breaks.
 
 **This is the simplest decision in the sequence:**
 

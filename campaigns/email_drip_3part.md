@@ -1,5 +1,5 @@
 ---
-campaign: AI HQ New Signup Drip — 3 Part
+campaign: Command Centre New Signup Drip — 3 Part
 channel: Email Drip
 created: 2026-03-18
 status: draft
@@ -14,7 +14,7 @@ trigger: New signup at secondmindhq.com
 ---
 
 ## Email 1: Day 0 — Welcome
-**Subject:** Welcome to AI HQ — your autonomous workforce is live
+**Subject:** Welcome to Command Centre — your autonomous workforce is live
 **Preview text:** 28 agents. Zero burnout. Always on.
 **Send:** Immediately on signup
 
@@ -22,7 +22,7 @@ trigger: New signup at secondmindhq.com
 
 Hi {{first_name}},
 
-Welcome to AI HQ — you just activated something most founders spend years trying to build.
+Welcome to Command Centre — you just activated something most founders spend years trying to build.
 
 **Here's what's now running for you:**
 
@@ -43,7 +43,7 @@ This isn't another SaaS dashboard you'll forget about in a week. It's an autonom
 [Open Your HQ →](https://secondmindhq.com/hq)
 
 Welcome aboard,
-The AI HQ Team
+The Command Centre Team
 
 P.S. You're on a free trial — plans start at just $49/mo. We'll share more on that soon.
 
@@ -51,14 +51,14 @@ P.S. You're on a free trial — plans start at just $49/mo. We'll share more on 
 
 ## Email 2: Day 2 — Onboarding
 **Subject:** Set up your first agent in 3 minutes
-**Preview text:** A quick walkthrough to get real value from AI HQ today.
+**Preview text:** A quick walkthrough to get real value from Command Centre today.
 **Send:** Day 2 after signup
 
 ---
 
 Hi {{first_name}},
 
-You've had AI HQ for two days. Let's make sure you're getting the most out of it.
+You've had Command Centre for two days. Let's make sure you're getting the most out of it.
 
 Here's a quick walkthrough to set up your first agent and start seeing results:
 
@@ -87,13 +87,13 @@ Each agent has a configuration panel. Click the agent name, fill in any required
 - **Check the morning briefing daily.** ResearchAgent compiles it overnight — it's the fastest way to stay informed.
 - **Connect Stripe early.** PaymentsAgent can generate checkout links, track MRR, and manage subscriptions from day one.
 - **Watch the live feed.** The Agent Office Floor shows what every agent is doing in real time. It's the fastest way to understand the system.
-- **Let agents coordinate.** AI HQ agents share context through a Global Workspace — the more agents you activate, the smarter the whole system gets.
+- **Let agents coordinate.** Command Centre agents share context through a Global Workspace — the more agents you activate, the smarter the whole system gets.
 
 ### Need help?
 
 Reply to this email — a real human will get back to you within 24 hours.
 
-— The AI HQ Team
+— The Command Centre Team
 
 ---
 
@@ -106,20 +106,20 @@ Reply to this email — a real human will get back to you within 24 hours.
 
 Hi {{first_name}},
 
-You've had AI HQ running for five days. By now your agents have been monitoring systems, compiling research, drafting content, and managing operations — all without you lifting a finger.
+You've had Command Centre running for five days. By now your agents have been monitoring systems, compiling research, drafting content, and managing operations — all without you lifting a finger.
 
 Here's the question: **are you ready to unlock the full platform?**
 
 ### What you're replacing
 
-| Tool you're paying for now | AI HQ replaces it with |
+| Tool you're paying for now | Command Centre replaces it with |
 |---|---|
 | Hootsuite ($99/mo) | Social posting agents |
 | Zapier ($49/mo) | Native agent coordination |
 | Freshdesk ($29/mo) | Email triage agent |
 | Monday.com ($36/mo) | Task management agent |
 | Analytics tool ($50/mo) | Research & reporting agents |
-| **Total: ~$263/mo** | **AI HQ from $49/mo** |
+| **Total: ~$263/mo** | **Command Centre from $49/mo** |
 
 That's up to **5.4x cost savings** — before counting the hours you get back every week.
 
@@ -166,7 +166,7 @@ Lock in launch pricing now — it increases permanently after launch week.
 
 Not sure which tier fits? Reply to this email and we'll help you choose.
 
-— The AI HQ Team
+— The Command Centre Team
 
 P.S. All plans are month-to-month, cancel anytime. But launch pricing is only available this week.
 

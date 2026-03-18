@@ -1,5 +1,5 @@
 ---
-campaign: AI HQ SaaS Launch
+campaign: Command Centre SaaS Launch
 channel: Email Drip
 created: 2026-03-18
 updated: 2026-03-18
@@ -22,7 +22,7 @@ agent: GrowthAgent → EmailAgent
 
 Hi {{first_name}},
 
-Welcome to AI HQ.
+Welcome to Command Centre.
 
 You just got something most founders spend years building — a full operations team that works around the clock.
 
@@ -39,14 +39,14 @@ This isn't another dashboard you'll forget about. It's an autonomous headquarter
 [Open Your HQ →](https://secondmindhq.com/hq)
 
 Welcome aboard,
-The AI HQ Team
+The Command Centre Team
 
 **P.S.** You're on the free trial. Plans start at $49/mo — more on that soon.
 
 ---
 
 ## Email 2: Day 1 — Quick Wins
-**Subject:** 3 things to try in AI HQ right now
+**Subject:** 3 things to try in Command Centre right now
 **Send:** Day 1 after signup
 **Preview text:** Get value from your agents in the next 10 minutes.
 
@@ -54,7 +54,7 @@ The AI HQ Team
 
 Hi {{first_name}},
 
-You signed up yesterday. Here are three things you can do right now to see AI HQ in action:
+You signed up yesterday. Here are three things you can do right now to see Command Centre in action:
 
 **1. Check your morning briefing.**
 Open the dashboard — the Research Agent already compiled overnight market intelligence. Click it to read the full report.
@@ -69,12 +69,12 @@ Each of these takes under 2 minutes. Together, they replace hours of daily ops w
 
 [Open Your Dashboard →](https://secondmindhq.com/hq)
 
-— The AI HQ Team
+— The Command Centre Team
 
 ---
 
 ## Email 3: Day 3 — Value & Use Cases
-**Subject:** 4 things AI HQ handles (that you're still doing manually)
+**Subject:** 4 things Command Centre handles (that you're still doing manually)
 **Send:** Day 3 after signup
 **Preview text:** Monitoring. Posting. Reports. Payments. All handled.
 
@@ -82,7 +82,7 @@ Each of these takes under 2 minutes. Together, they replace hours of daily ops w
 
 Hi {{first_name}},
 
-You've had AI HQ for three days. Here's what it can take off your plate — starting now:
+You've had Command Centre for three days. Here's what it can take off your plate — starting now:
 
 **1. 24/7 Infrastructure Monitoring**
 NetScout agents watch your systems continuously. When something breaks at 3am, they diagnose it and begin fixing it before you wake up.
@@ -100,12 +100,12 @@ PaymentsAgent handles checkout sessions, subscription management, and revenue tr
 
 [Explore the Command Centre →](https://secondmindhq.com/hq)
 
-— The AI HQ Team
+— The Command Centre Team
 
 ---
 
 ## Email 4: Day 5 — Social Proof & Differentiation
-**Subject:** Why founders are switching to AI HQ
+**Subject:** Why founders are switching to Command Centre
 **Send:** Day 5 after signup
 **Preview text:** Not a chatbot. Not another wrapper. Here's the difference.
 
@@ -113,7 +113,7 @@ PaymentsAgent handles checkout sessions, subscription management, and revenue tr
 
 Hi {{first_name}},
 
-Every week a new AI tool launches. Here's why AI HQ is different:
+Every week a new AI tool launches. Here's why Command Centre is different:
 
 **Fully autonomous — no prompting required.** You don't type commands. Agents run 24/7, make decisions, and take action on their own.
 
@@ -125,18 +125,18 @@ Every week a new AI tool launches. Here's why AI HQ is different:
 
 **One system replaces five:**
 
-| What you're paying for now | What AI HQ replaces it with |
+| What you're paying for now | What Command Centre replaces it with |
 |---|---|
 | Hootsuite ($99/mo) | Social posting agent |
 | Zapier ($49/mo) | Native agent coordination |
 | Freshdesk ($29/mo) | Email triage agent |
 | Monday.com ($36/mo) | Task management agent |
 | Analytics tool ($50/mo) | Research & reporting agents |
-| **Total: $263/mo** | **AI HQ: $49/mo** |
+| **Total: $263/mo** | **Command Centre: $49/mo** |
 
 [See the Full Platform →](https://secondmindhq.com)
 
-— The AI HQ Team
+— The Command Centre Team
 
 ---
 
@@ -180,7 +180,7 @@ You've had 28 agents working for a week. You've seen what autonomous ops looks l
 
 Not sure which plan fits? Reply to this email — a real human will help you choose.
 
-— The AI HQ Team
+— The Command Centre Team
 
 **P.S.** Month-to-month, cancel anytime, no questions. But launch pricing is only available this week.
 

@@ -1,16 +1,16 @@
 ---
-campaign: AI HQ SaaS Launch
+campaign: Command Centre SaaS Launch
 channel: Twitter/X
 type: launch thread (5 tweets)
 created: 2026-03-18
 status: ready
 ---
 
-# Twitter/X Launch Thread — AI HQ
+# Twitter/X Launch Thread — Command Centre
 
 ## Tweet 1 (Hook)
 
-We just launched AI HQ — 28 autonomous AI agents that run your business 24/7.
+We just launched Command Centre — 28 autonomous AI agents that run your business 24/7.
 
 Not a chatbot. Not a wrapper. A full operations team that coordinates, delegates, and delivers while you sleep.
 
@@ -26,11 +26,11 @@ Most founders spend 4-6 hours/day on tasks that don't grow the business.
 
 Marketing, payments, monitoring, compliance, email — all manual. All repetitive.
 
-AI HQ replaces 5+ SaaS tools with one autonomous system. Deploy once. It runs forever.
+Command Centre replaces 5+ SaaS tools with one autonomous system. Deploy once. It runs forever.
 
 ## Tweet 3 (Differentiation)
 
-What makes AI HQ different:
+What makes Command Centre different:
 
 → 28 specialized agents, not one generic chatbot
 → Self-healing architecture — agents detect failures and patch their own code
@@ -47,7 +47,7 @@ One system replaces:
 • Analytics dashboards
 
 Total cost of those: ~$300-500/mo
-AI HQ Solo: $49/mo
+Command Centre Solo: $49/mo
 
 The math is simple.
 

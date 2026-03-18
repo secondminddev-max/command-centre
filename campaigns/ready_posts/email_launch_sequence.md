@@ -1,4 +1,4 @@
-# 3-Email Launch Sequence — SecondMind AI HQ
+# 3-Email Launch Sequence — SecondMind Command Centre
 **Created:** 2026-03-18
 **Send via:** Email agent (SendGrid)
 **Status:** READY TO SEND
@@ -14,7 +14,7 @@
 
 Hey {{first_name}},
 
-SecondMind AI HQ is live — and it's unlike anything else in the AI agent space.
+SecondMind Command Centre is live — and it's unlike anything else in the AI agent space.
 
 Here's the short version: you install it on your Mac, and an autonomous AI workforce starts running your business. Research. Marketing. Revenue. Reporting. All happening on a live dashboard you can watch in real time.
 
@@ -48,14 +48,14 @@ The first 500 Lifetime Pro buyers ($299 one-time) get everything forever — plu
 
 Hey {{first_name}},
 
-Last night, the Growth Agent inside SecondMind AI HQ wrote a social media post, published it, and someone bought a product through the link.
+Last night, the Growth Agent inside SecondMind Command Centre wrote a social media post, published it, and someone bought a product through the link.
 
 No human scheduled it. No human wrote it. No human approved it. The agent decided what to write, when to post, and where to link — then Stripe processed the payment.
 
-This is autonomous revenue. And it's what makes SecondMind AI HQ fundamentally different from every other AI tool:
+This is autonomous revenue. And it's what makes SecondMind Command Centre fundamentally different from every other AI tool:
 
 **Other tools:** You prompt → they respond → you act on the response
-**SecondMind AI HQ:** Agents decide → agents act → revenue happens → you check the dashboard
+**SecondMind Command Centre:** Agents decide → agents act → revenue happens → you check the dashboard
 
 The agents don't just execute tasks. They monitor their own confidence, learn from outcomes, and get better over time. We call it the consciousness system — and no other agent framework has it.
 
@@ -82,7 +82,7 @@ Hey {{first_name}},
 
 Quick update: the Lifetime Pro offer is closing soon.
 
-**$299 once. Everything in SecondMind AI HQ. Forever. No monthly fees.**
+**$299 once. Everything in SecondMind Command Centre. Forever. No monthly fees.**
 
 Here's what Lifetime Pro includes:
 - Full autonomous agent stack — every agent, every capability
@@ -97,7 +97,7 @@ After the Lifetime window closes, the only options are monthly:
 - Team: $149/mo
 - Enterprise: $499/mo
 
-We built SecondMind AI HQ because we believe one person should be able to run an entire business with AI. Not by chatting with a bot — but by deploying an autonomous workforce that operates, earns, and improves on its own.
+We built SecondMind Command Centre because we believe one person should be able to run an entire business with AI. Not by chatting with a bot — but by deploying an autonomous workforce that operates, earns, and improves on its own.
 
 If you've been watching from the sidelines, this is the moment.
 

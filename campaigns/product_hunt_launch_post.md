@@ -1,5 +1,5 @@
 ---
-campaign: AI HQ SaaS Launch
+campaign: Command Centre SaaS Launch
 channel: Product Hunt
 created: 2026-03-18
 status: ready
@@ -8,18 +8,18 @@ status: ready
 # Product Hunt Launch Post
 
 ## Title
-AI HQ — 28 AI Agents That Run Your Business While You Sleep
+Command Centre — 28 AI Agents That Run Your Business While You Sleep
 
 ## Tagline (60 chars)
 Your entire ops team for $49/mo — autonomous, self-healing, always on
 
 ## Description
 
-**AI HQ is a full autonomous operations centre — not a chatbot, not a wrapper. 28 specialized AI agents that coordinate like a real team and run your business 24/7.**
+**Command Centre is a full autonomous operations centre — not a chatbot, not a wrapper. 28 specialized AI agents that coordinate like a real team and run your business 24/7.**
 
-Most founders spend 4-6 hours/day on ops tasks that don't grow the business. AI HQ eliminates that. Deploy once, and your agents handle marketing, payments, research, compliance, monitoring, and email — around the clock.
+Most founders spend 4-6 hours/day on ops tasks that don't grow the business. Command Centre eliminates that. Deploy once, and your agents handle marketing, payments, research, compliance, monitoring, and email — around the clock.
 
-### Why AI HQ is different
+### Why Command Centre is different
 
 **Real agent workforce, not a chatbot.**
 28 specialized agents — Orchestrator, GrowthAgent, StripePay, Consciousness, SysMonitor, and more. They coordinate, delegate, and report autonomously. No prompting required.
@@ -56,7 +56,7 @@ Solo founders, small teams, and agencies who want to replace multiple SaaS tools
 >
 > We were duct-taping 15 SaaS tools together and still spending half the day on ops. So we built what we actually needed — a team that never sleeps.
 >
-> AI HQ is 28 autonomous agents that coordinate, delegate, and deliver. Marketing, payments, research, compliance, monitoring, email — all running 24/7 without prompting.
+> Command Centre is 28 autonomous agents that coordinate, delegate, and deliver. Marketing, payments, research, compliance, monitoring, email — all running 24/7 without prompting.
 >
 > The part we're most proud of is the consciousness engine. It's built on Global Workspace Theory — real neuroscience, not a buzzword. It gives the system genuine situational awareness across every agent, with a live Phi metric measuring integration depth.
 >
@@ -67,7 +67,7 @@ Solo founders, small teams, and agencies who want to replace multiple SaaS tools
 > Happy to answer any questions. Let me know what you think!
 
 ## Assets Needed
-- [ ] Thumbnail: AI HQ dashboard screenshot or agent floor visual
+- [ ] Thumbnail: Command Centre dashboard screenshot or agent floor visual
 - [ ] Gallery: 3-5 screenshots (dashboard, agent floor, consciousness engine, pricing page)
 - [ ] Video: 60-second demo walkthrough (optional but high-impact)
 

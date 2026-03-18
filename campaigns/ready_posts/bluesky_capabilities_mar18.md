@@ -12,7 +12,7 @@ focus: conversion, capabilities, limited-time pricing
 ## Post 1: Self-Healing Architecture
 > Your ops break at 3am. You wake up and scramble to fix it.
 >
-> AI HQ's agents detect failures, diagnose root cause, and patch their own code — before you wake up.
+> Command Centre's agents detect failures, diagnose root cause, and patch their own code — before you wake up.
 >
 > Self-healing infrastructure. $49/mo.
 >
@@ -26,7 +26,7 @@ focus: conversion, capabilities, limited-time pricing
 ---
 
 ## Post 2: Replace Your SaaS Stack
-> Tools I cancelled after deploying AI HQ:
+> Tools I cancelled after deploying Command Centre:
 >
 > ✗ Hootsuite — social agent posts for me
 > ✗ Zapier — agents coordinate natively
@@ -44,7 +44,7 @@ focus: conversion, capabilities, limited-time pricing
 ---
 
 ## Post 3: Lifetime Deal — Urgency
-> We're offering Lifetime Access to AI HQ for $299.
+> We're offering Lifetime Access to Command Centre for $299.
 >
 > One payment. Full Team plan. 28 agents. Consciousness engine. Revenue automation. Forever.
 >
@@ -60,7 +60,7 @@ focus: conversion, capabilities, limited-time pricing
 ---
 
 ## Post 4: Research Agent Spotlight
-> While you slept, AI HQ's research agent:
+> While you slept, Command Centre's research agent:
 >
 > → Pulled market intelligence from 12 sources
 > → Compiled a competitive analysis
@@ -77,7 +77,7 @@ focus: conversion, capabilities, limited-time pricing
 ---
 
 ## Post 5: Revenue Automation
-> AI HQ doesn't just save you time — it makes you money.
+> Command Centre doesn't just save you time — it makes you money.
 >
 > → Stripe checkout wired to every pricing tier
 > → PaymentsAgent tracks MRR, churn, and LTV
@@ -102,7 +102,7 @@ focus: conversion, capabilities, limited-time pricing
 > → Ongoing maintenance burden
 >
 > Or:
-> → Deploy AI HQ in one click
+> → Deploy Command Centre in one click
 > → 28 agents running in minutes
 > → $49/mo
 >
@@ -116,7 +116,7 @@ focus: conversion, capabilities, limited-time pricing
 ---
 
 ## Post 7: Launch Pricing Countdown
-> AI HQ launch pricing is live — but not for long.
+> Command Centre launch pricing is live — but not for long.
 >
 > Solo: $49/mo (goes to $79)
 > Team: $149/mo (goes to $249)

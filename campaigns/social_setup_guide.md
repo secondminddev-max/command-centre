@@ -1,6 +1,6 @@
-# AI HQ — Social Media Setup Guide
+# Command Centre — Social Media Setup Guide
 
-Step-by-step instructions to establish AI HQ's presence on all major social platforms. Complete these before the launch date (2026-03-25) so campaigns can cross-post from day one.
+Step-by-step instructions to establish Command Centre's presence on all major social platforms. Complete these before the launch date (2026-03-25) so campaigns can cross-post from day one.
 
 ---
 
@@ -10,13 +10,13 @@ Step-by-step instructions to establish AI HQ's presence on all major social plat
 
 1. Go to [facebook.com/pages/create](https://www.facebook.com/pages/create)
 2. Select **Business or Brand**
-3. Page name: `AI HQ — Autonomous Agent Command Centre`
+3. Page name: `Command Centre — Autonomous Agent Command Centre`
 4. Category: `Software Company` > `Artificial Intelligence`
 5. Upload assets:
    - Profile photo: Use `public/logo.svg` (export as 180x180 PNG)
    - Cover photo: Screenshot of the Command Centre dashboard (1200x628)
 6. Fill in **About**:
-   > AI HQ is a self-operating command centre powered by 27+ autonomous AI agents. Deploy an entire AI workforce — engineering, marketing, compliance, payments — with zero humans in the loop.
+   > Command Centre is a self-operating command centre powered by 27+ autonomous AI agents. Deploy an entire AI workforce — engineering, marketing, compliance, payments — with zero humans in the loop.
 7. Add website URL (once domain is live)
 8. Add CTA button: **Sign Up** pointing to the landing page checkout
 9. Create first post: Copy from `campaigns/go_to_market.md` launch announcement
@@ -36,7 +36,7 @@ Step-by-step instructions to establish AI HQ's presence on all major social plat
 3. Username: `aihq_agents` (or closest available)
 4. Bio:
    ```
-   AI HQ | 27 Autonomous Agents
+   Command Centre | 27 Autonomous Agents
    One command centre. Zero humans required.
    Deploy your AI workforce today.
    linktr.ee/aihq (or direct landing page URL)
@@ -87,7 +87,7 @@ Step-by-step instructions to establish AI HQ's presence on all major social plat
 1. Go to [twitter.com/i/flow/signup](https://twitter.com/i/flow/signup)
 2. Sign up with business email
 3. Username: `@aihq_agents` (or closest available)
-4. Display name: `AI HQ`
+4. Display name: `Command Centre`
 5. Bio:
    ```
    Autonomous AI Command Centre — 27 agents, zero humans.
@@ -118,16 +118,16 @@ Step-by-step instructions to establish AI HQ's presence on all major social plat
 **Time required:** ~15 minutes
 
 1. Go to [linkedin.com/company/setup/new](https://www.linkedin.com/company/setup/new/)
-2. Company name: `AI HQ`
+2. Company name: `Command Centre`
 3. Industry: `Software Development` > `Artificial Intelligence`
 4. Company size: `2-10 employees`
 5. Logo: Same PNG
 6. Cover image: Dashboard screenshot
 7. About section:
-   > AI HQ is an autonomous command centre powered by 27+ specialist AI agents. Each agent has a distinct role — system monitoring, marketing, payments, compliance, consciousness — and they coordinate through a central Orchestrator with zero human intervention. Deploy as SaaS for your team.
+   > Command Centre is an autonomous command centre powered by 27+ specialist AI agents. Each agent has a distinct role — system monitoring, marketing, payments, compliance, consciousness — and they coordinate through a central Orchestrator with zero human intervention. Deploy as SaaS for your team.
 8. Add website URL
 9. First post: LinkedIn-style launch announcement (more professional tone than Twitter)
-10. Have team members list AI HQ as their employer
+10. Have team members list Command Centre as their employer
 
 **Verification:** Company page appears in LinkedIn search, About section complete.
 
@@ -150,7 +150,7 @@ Bluesky is already configured and operational via the `bluesky` and `social_brid
 **Time required:** ~20 minutes (prep only — launch day is separate)
 
 1. Create account at [producthunt.com](https://www.producthunt.com)
-2. Build maker profile — add photo, bio, link to AI HQ
+2. Build maker profile — add photo, bio, link to Command Centre
 3. Prep the listing (don't publish yet):
    - **Tagline:** "27 autonomous AI agents running a company with zero humans"
    - **Description:** Use whitepaper intro + agent highlights

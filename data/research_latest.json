@@ -1,19 +1,25 @@
 {
-  "topic": "Stripe Checkout Validation — 3 Core Tiers",
-  "timestamp": "2026-03-18T00:00:00Z",
+  "topic": "Landing Page Audit — reports/landing_page.html & public/index.html",
+  "timestamp": "2026-03-18",
   "bullets": [
-    "GET /api/pay/tiers — returns 5 tiers total (solo, team, enterprise, lifetime, mac_mini)",
-    "Solo tier: $49/mo (4900 cents) — checkout URL generated successfully, mode=subscription",
-    "Team tier: $149/mo (14900 cents) — checkout URL generated successfully, mode=subscription",
-    "Enterprise tier: $499/mo (49900 cents) — checkout URL generated successfully, mode=subscription",
-    "All 3 target tiers return ok:true with valid Stripe checkout.stripe.com URLs",
-    "All 3 use cs_live_ session IDs indicating LIVE mode (not test)",
-    "No errors encountered on any endpoint"
+    "PRICING CORRECT: Both pages show Solo $49/mo, Team $149/mo, Enterprise $499/mo — matches spec",
+    "STRIPE CHECKOUT (public/index.html): Uses fetch POST to /api/pay with JSON body — correctly wired to stripepay.py backend",
+    "STRIPE CHECKOUT (reports/landing_page.html): Uses hidden form POST to /api/pay — also correctly wired but different mechanism",
+    "ISSUE: reports/landing_page.html checkout form POST does NOT send amount_cents — relies on tier name only, while public/index.html sends amount_cents explicitly",
+    "ISSUE: reports/landing_page.html has Privacy and Terms links pointing to href='#' (dead links)",
+    "ISSUE: reports/landing_page.html logo href='#' — scrolls to top instead of navigating home",
+    "ISSUE: public/index.html footer has NO Privacy or Terms links at all",
+    "ISSUE: reports/landing_page.html branding says 'SecondMind Ops' while public/index.html says 'AI HQ' — inconsistent branding across pages",
+    "ISSUE: reports/landing_page.html shows strike-through regular prices ($79/$249/$799) implying 40% launch discount — these inflated anchors are not real prices",
+    "ISSUE: public/index.html has extra product 'Install Service' at $199 not present in reports/landing_page.html — inconsistent product catalogue",
+    "ISSUE: stripepay.py hardcodes success_url to localhost:5050 — will fail in production",
+    "ISSUE: stripepay.py has only ONE Stripe price ID hardcoded — unclear if all tiers map to distinct Stripe prices",
+    "COPY: Both pages are well-written and compelling. No typos or grammar issues found.",
+    "INTERNAL LINKS: All anchor links (#features, #pricing, #faq, etc.) reference valid section IDs in both files"
   ],
   "sources": [
-    "http://localhost:5050/api/pay/tiers",
-    "http://localhost:5050/api/pay (POST, tier=solo)",
-    "http://localhost:5050/api/pay (POST, tier=team)",
-    "http://localhost:5050/api/pay (POST, tier=enterprise)"
+    "reports/landing_page.html (local)",
+    "public/index.html (local)",
+    "agents/stripepay.py (local)"
   ]
 }

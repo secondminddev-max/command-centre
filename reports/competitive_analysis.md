@@ -1,4 +1,4 @@
-# AI HQ SaaS — Competitive Analysis
+# Command Centre SaaS — Competitive Analysis
 **Date:** 2026-03-18 | **Prepared by:** Researcher Agent
 
 ---
@@ -101,7 +101,7 @@ The AI agent orchestration market is valued at **$10.91B in 2026**, growing at *
 
 ---
 
-## Key Differentiators for AI HQ
+## Key Differentiators for Command Centre
 
 Based on competitive gaps, these are the strongest positioning angles:
 

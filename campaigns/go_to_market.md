@@ -789,7 +789,7 @@ Best,
 ### Day 4 -- Friday 2026-03-21
 - [ ] Post Clip 2 to TikTok + YouTube Shorts
 - [ ] Post Clip 3 to Instagram Reels
-- [ ] Post second round of social media posts (Post 2 from Section 3)
+- [ ] Post second round of social media posts (Post 2 from Section 3) (PREPARED — drafts at campaigns/ready_posts/twitter_day4.md, facebook_day4.md, instagram_day4.md, tiktok_day4.md)
 - [ ] Post to r/artificial and r/ChatGPT (PREPARED — drafts at campaigns/ready_posts/reddit_day4.md)
 - [ ] Submit to Product Hunt (set launch date for Day 5 or 6)
 - [ ] Send Email 2

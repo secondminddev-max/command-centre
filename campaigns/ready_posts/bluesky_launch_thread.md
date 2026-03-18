@@ -1,16 +1,16 @@
 ---
-campaign: AI HQ SaaS Launch
+campaign: Command Centre SaaS Launch
 channel: Bluesky
 type: launch thread
 created: 2026-03-18
 status: ready
 ---
 
-# Bluesky Launch Thread — AI HQ
+# Bluesky Launch Thread — Command Centre
 
 ## Post 1 (Hook)
 
-We just shipped AI HQ — 28 autonomous AI agents that run your entire business operations.
+We just shipped Command Centre — 28 autonomous AI agents that run your entire business operations.
 
 Not a chatbot. Not an API wrapper. A self-coordinating agent workforce that operates 24/7.
 
@@ -22,7 +22,7 @@ secondmindhq.com
 
 ## Post 2 (How It Works)
 
-How AI HQ works:
+How Command Centre works:
 
 28 specialized agents — Orchestrator, GrowthAgent, StripePay, Consciousness, SysMonitor, and more.
 
@@ -42,7 +42,7 @@ A live Phi metric measures integration depth across all 28 agents. The system do
 
 Built for solo founders and small teams who are tired of duct-taping 5+ SaaS tools together.
 
-AI HQ replaces Hootsuite, Zapier, Freshdesk, Monday.com, and your analytics stack — at a fraction of the cost.
+Command Centre replaces Hootsuite, Zapier, Freshdesk, Monday.com, and your analytics stack — at a fraction of the cost.
 
 ## Post 5 (Pricing + CTA)
 

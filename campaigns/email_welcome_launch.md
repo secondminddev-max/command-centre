@@ -1,5 +1,5 @@
 ---
-campaign: AI HQ Launch — Welcome Drip Sequence
+campaign: Command Centre Launch — Welcome Drip Sequence
 channel: Email (Gmail OAuth2 / XOAUTH2 SMTP)
 created: 2026-03-18
 status: ready
@@ -15,7 +15,7 @@ trigger: New signup added to data/subscribers.json
 
 ## Email 1: Welcome (Send Immediately on Signup)
 
-**Subject:** Welcome to AI HQ — your 28 agents are live
+**Subject:** Welcome to Command Centre — your 28 agents are live
 **From:** secondminddev@gmail.com
 **Preview text:** Your autonomous workforce is already running.
 
@@ -25,7 +25,7 @@ Hi {{first_name}},
 
 You just activated something most companies spend months trying to build.
 
-**AI HQ is now running for you.** Here's what happened in the last 60 seconds:
+**Command Centre is now running for you.** Here's what happened in the last 60 seconds:
 
 - **28 AI agents** came online — handling ops, marketing, research, payments, and monitoring
 - **Your Command Centre** is live with real-time visibility into every agent's activity
@@ -55,9 +55,9 @@ This isn't a tool you need to learn. It's a system that works while you don't.
 [View Plans & Pricing →](https://secondmindhq.com/#pricing)
 
 Welcome aboard,
-The AI HQ Team
+The Command Centre Team
 
-*You're receiving this because you signed up for AI HQ. Unsubscribe: {{unsubscribe_link}}*
+*You're receiving this because you signed up for Command Centre. Unsubscribe: {{unsubscribe_link}}*
 
 ---
 
@@ -71,7 +71,7 @@ The AI HQ Team
 
 Hi {{first_name}},
 
-While you slept, your AI HQ agents were busy.
+While you slept, your Command Centre agents were busy.
 
 **Here's what happened since you signed up:**
 
@@ -113,15 +113,15 @@ The **Solo plan ($49/mo)** gives you 10 core agents. But most users find that on
 
 [Upgrade to Team — $149/mo →](https://secondmindhq.com/#pricing)
 
-— The AI HQ Team
+— The Command Centre Team
 
-*You're receiving this because you signed up for AI HQ. Unsubscribe: {{unsubscribe_link}}*
+*You're receiving this because you signed up for Command Centre. Unsubscribe: {{unsubscribe_link}}*
 
 ---
 
 ## Email 3: Day 3 — Social Proof & Conversion
 
-**Subject:** What AI HQ replaces (and how much you save)
+**Subject:** What Command Centre replaces (and how much you save)
 **From:** secondminddev@gmail.com
 **Preview text:** One platform. Five tools eliminated. $200+/mo saved.
 
@@ -131,18 +131,18 @@ Hi {{first_name}},
 
 You've had 28 agents running for three days. Let's talk about what that actually means for your bottom line.
 
-### The Tools AI HQ Replaces
+### The Tools Command Centre Replaces
 
-Most founders are paying for 5+ separate tools to do what AI HQ handles natively:
+Most founders are paying for 5+ separate tools to do what Command Centre handles natively:
 
-| Tool You're Paying For | Monthly Cost | AI HQ Replacement |
+| Tool You're Paying For | Monthly Cost | Command Centre Replacement |
 |---|---|---|
 | Hootsuite / Buffer | $99/mo | Social posting agents (auto-draft, schedule, publish) |
 | Zapier / Make | $49/mo | Native agent coordination (no zaps needed) |
 | Freshdesk / Zendesk | $29/mo | Email triage agent |
 | Monday.com / Asana | $36/mo | Task management agent |
 | Analytics / BI tool | $50/mo | Research & reporting agents |
-| **Total** | **$263/mo** | **AI HQ Solo: $49/mo** |
+| **Total** | **$263/mo** | **Command Centre Solo: $49/mo** |
 
 **That's $214/mo saved on the Solo plan alone.** On Team ($149/mo), you still save $114/mo and get the full 28-agent stack.
 
@@ -152,7 +152,7 @@ Most founders are paying for 5+ separate tools to do what AI HQ handles natively
 
 > *"The self-healing is real. NetScout caught a DNS issue at 4am and resolved it before my users noticed."*
 
-> *"I was paying $250/mo across five tools. AI HQ does more than all of them combined for $49."*
+> *"I was paying $250/mo across five tools. Command Centre does more than all of them combined for $49."*
 
 ### Your Trial Is Running — Lock In Launch Pricing
 
@@ -171,11 +171,11 @@ You've seen the agents work. You've seen the dashboard. Now lock in launch prici
 
 Questions? Reply to this email — a real human will help.
 
-— The AI HQ Team
+— The Command Centre Team
 
 **P.S.** Lifetime access ($299, everything forever) is only available during launch week. Once it's gone, it's gone.
 
-*You're receiving this because you signed up for AI HQ. Unsubscribe: {{unsubscribe_link}}*
+*You're receiving this because you signed up for Command Centre. Unsubscribe: {{unsubscribe_link}}*
 
 ---
 

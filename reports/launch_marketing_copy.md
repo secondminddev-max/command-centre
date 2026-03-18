@@ -22,13 +22,13 @@
 ### Value Propositions
 
 **For Solopreneurs:**
-You're one person doing the work of ten. AI HQ gives you 5 autonomous agents — research, marketing, monitoring, revenue tracking — that run 24/7 for less than the cost of one lunch meeting a week. Stop juggling. Start commanding.
+You're one person doing the work of ten. Command Centre gives you 5 autonomous agents — research, marketing, monitoring, revenue tracking — that run 24/7 for less than the cost of one lunch meeting a week. Stop juggling. Start commanding.
 
 **For AI Teams & Startups:**
-Your team is drowning in tool sprawl. Notion, Slack, Zapier, 4 dashboards, 3 analytics suites — and you're still dropping balls. AI HQ replaces the stack with 15 coordinated agents that communicate, delegate, and execute without hand-holding. One platform. One bill. Full autonomy.
+Your team is drowning in tool sprawl. Notion, Slack, Zapier, 4 dashboards, 3 analytics suites — and you're still dropping balls. Command Centre replaces the stack with 15 coordinated agents that communicate, delegate, and execute without hand-holding. One platform. One bill. Full autonomy.
 
 **For Enterprise:**
-You need reliability, customisation, and control. AI HQ Enterprise deploys the full 27-agent fleet with custom agent builds, dedicated infrastructure, SLA guarantees, and a live command-and-control dashboard. Your ops team stops firefighting and starts leading.
+You need reliability, customisation, and control. Command Centre Enterprise deploys the full 27-agent fleet with custom agent builds, dedicated infrastructure, SLA guarantees, and a live command-and-control dashboard. Your ops team stops firefighting and starts leading.
 
 ### Key Differentiators (vs. ChatGPT, Copilot, OpenClaw, Zapier)
 

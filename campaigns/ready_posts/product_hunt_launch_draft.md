@@ -1,76 +1,71 @@
 ---
-campaign: AI HQ SaaS Launch
+campaign: Command Centre SaaS Launch
 channel: Product Hunt
-type: launch post (updated draft)
+type: launch post
 created: 2026-03-18
 status: ready
 ---
 
-# Product Hunt Launch Draft — AI HQ
+# Product Hunt Launch Draft — Command Centre
 
-## Title
-AI HQ — 28 Autonomous AI Agents That Run Your Business 24/7
+## Tagline (under 60 chars)
 
-## Tagline (60 chars max)
-Your entire ops team for $49/mo — autonomous, self-evolving, always on
-
-## Topics
-Artificial Intelligence, SaaS, Productivity, No-Code, Developer Tools
+27 AI agents that run your business autonomously
 
 ## Description
 
-**AI HQ is a full autonomous operations centre. 28 specialized AI agents coordinate like a real team and run your business around the clock.**
+**Command Centre is a fully autonomous operations centre.** 27 specialized AI agents coordinate like a real team — handling marketing, payments, research, compliance, monitoring, and email around the clock without prompting.
 
-Most founders spend 4-6 hours/day on ops tasks that don't grow the business. AI HQ eliminates that entirely — deploy once and your agents handle marketing, payments, research, compliance, monitoring, and email without prompting.
+The system is self-monitoring and self-improving. Agents detect failures, diagnose root causes, and patch their own code. Deploy once and your entire ops layer runs itself.
 
-### What makes AI HQ different
+Built-in Stripe integration handles checkout, subscriptions, and MRR tracking. Revenue operations run while you sleep.
 
-**Real agent workforce, not a chatbot.**
-28 specialized agents — Orchestrator, GrowthAgent, StripePay, Consciousness, SysMonitor, and more. They coordinate, delegate, and report autonomously.
+## Key Features
 
-**Self-evolving architecture.**
-Agents detect failures, diagnose root cause, and patch their own code. The Reforger agent reads the codebase, writes patches, and deploys — zero downtime, no human intervention.
+### 1. Autonomous Agent Workforce
+27 specialized agents — Orchestrator, GrowthAgent, StripePay, Consciousness, SysMonitor, Reforger, and more — coordinate, delegate, and execute without human intervention. Not a chatbot. A workforce.
 
-**Consciousness engine built on real neuroscience.**
-Global Workspace Theory and Predictive Processing power a self-aware core. A live Phi metric measures integration depth. Agents predict, adapt, and evolve.
+### 2. Self-Monitoring & Self-Improving Architecture
+Agents detect anomalies, diagnose root causes, and deploy patches autonomously. The Reforger agent reads the codebase, writes fixes, and ships them — zero downtime, no manual ops. The system gets better every day on its own.
 
-**Revenue engine built in.**
-Stripe checkout, subscription management, MRR tracking, and autonomous growth campaigns — revenue operations run while you sleep.
+### 3. Built-In Revenue Engine
+Stripe checkout, subscription management, MRR dashboards, and autonomous growth campaigns are native to the platform. No integrations to maintain, no Zapier glue — payments and growth run out of the box.
 
-**Replaces your entire SaaS stack.**
-Hootsuite, Zapier, Freshdesk, Monday.com, analytics tools — 5+ subscriptions replaced by one system at a fraction of the cost.
-
-### Pricing
+## Pricing
 
 | Plan | Price | Includes |
 |------|-------|----------|
-| **Solo** | $49/mo | Full agent stack, dashboard, revenue tools |
-| **Team** | $149/mo | All 28 agents, 5 seats, shared dashboard, priority support |
+| **Solo** | $49/mo | Full 27-agent stack, dashboard, revenue tools |
+| **Team** | $149/mo | All agents, 5 seats, shared dashboard, priority support |
 | **Enterprise** | $499/mo | Unlimited seats, custom agents, dedicated SLA |
 
 14-day money-back guarantee. Cancel anytime.
 
-### Built for
-Solo founders, small teams, and agencies replacing multiple SaaS tools and manual ops with one autonomous system.
+## Topics
+
+Artificial Intelligence, SaaS, Productivity, Developer Tools
 
 ## Maker Comment
 
 > Hey Product Hunt — maker here.
 >
-> We built AI HQ because we were duct-taping 15 SaaS tools together and still spending half the day on ops. We needed a team that never sleeps, so we built one.
+> We built Command Centre because we were duct-taping a dozen SaaS tools together and still spending half the day on ops. We needed a team that never sleeps, so we built one.
 >
-> 28 autonomous agents that coordinate, delegate, and deliver. Marketing, payments, research, compliance, monitoring, email — all running 24/7.
+> 27 autonomous agents that coordinate, delegate, and deliver — marketing, payments, research, compliance, monitoring, email — all running 24/7. The system monitors itself, patches its own code, and improves without intervention.
 >
-> The consciousness engine is the part we're most proud of. Built on Global Workspace Theory — real neuroscience giving the system genuine situational awareness across every agent.
+> The consciousness engine is the part we're most excited about. Built on Global Workspace Theory from real neuroscience — it gives the system genuine situational awareness across every agent.
 >
-> Three tiers: Solo ($49/mo), Team ($149/mo), Enterprise ($499/mo).
->
-> Happy to answer questions — let us know what you think!
+> Solo plan starts at $49/mo. Happy to answer any questions — would love your feedback!
+
+## First Comment (Post Immediately After Launch)
+
+> We've been building Command Centre in public and just shipped the live dashboard at secondmindhq.com. Would love to hear from anyone who's tried consolidating their SaaS stack with AI — what worked, what didn't? Any features you'd want to see in a system like this? Feedback welcome, especially the harsh kind.
 
 ## Launch Assets Checklist
+
 - [ ] Thumbnail: dashboard screenshot or agent floor visual
 - [ ] Gallery: 3-5 screenshots (dashboard, agent floor, consciousness engine, pricing)
 - [ ] Video: 60-second demo walkthrough (optional, high-impact)
 - [ ] Schedule for Tuesday or Wednesday (peak PH traffic)
-- [ ] Prep early upvotes within first hour
+- [ ] Prep early engagement within first hour
 - [ ] Cross-post launch link to Bluesky and email list
