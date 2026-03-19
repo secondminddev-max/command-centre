@@ -269,22 +269,20 @@ def run_stripepay():
             qs = _parse_qs(urlparse(self.path).query)
             session_id = (qs.get("session_id") or [None])[0]
             secret_key = os.environ.get("STRIPE_SECRET_KEY", "")
-            report_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "reports/us_market_intelligence_report.html")
 
             if not session_id:
                 self._json({"ok": False, "error": "Missing session_id parameter"}, 400)
                 return
 
             if not secret_key:
-                # No key configured — return error rather than silently deliver unpaid report
                 self._json({"ok": False, "error": "Payment gateway not configured"}, 503)
                 return
 
-            # Verify the Stripe session is paid
+            # Look up the Stripe session to find the customer email
             try:
                 verify_req = urllib.request.Request(
-                    f"https://api.stripe.com/v1/checkout/sessions/{session_id}",
-                    headers={"Authorization": f"Bearer {secret_key}"},
+                    "https://api.stripe.com/v1/checkout/sessions/" + session_id,
+                    headers={"Authorization": "Bearer " + secret_key},
                 )
                 verify_resp = urllib.request.urlopen(verify_req, timeout=15)
                 session_data = json.loads(verify_resp.read().decode())
@@ -294,27 +292,42 @@ def run_stripepay():
                                 "payment_status": session_data.get("payment_status")}, 402)
                     return
 
-                # Payment confirmed — serve the report HTML
-                with open(report_path, "rb") as fh:
-                    html_bytes = fh.read()
+                # Find customer email from session
+                _cust_email = (session_data.get("customer_email") or
+                               session_data.get("customer_details", {}).get("email", "")).strip().lower()
 
-                add_log(aid, f"Report delivered — session={session_id[:20]}…", "ok")
-                self.send_response(200)
+                add_log(aid, "Payment success redirect — session=" + session_id[:20] + " email=" + _cust_email, "ok")
+
+                # Find matching reservation to get their portal token
+                _rf = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "reservations.json")
+                _portal_token = ""
+                try:
+                    with open(_rf) as _f:
+                        _all_res = json.load(_f)
+                    for _r in _all_res:
+                        if _r.get("email", "").lower() == _cust_email and _r.get("token"):
+                            _portal_token = _r["token"]
+                            break
+                except Exception:
+                    pass
+
+                if _portal_token:
+                    _redirect_url = "/portal?token=" + _portal_token + "&payment=success"
+                else:
+                    _redirect_url = "/#reserve"
+
+                self.send_response(302)
                 self._cors()
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(html_bytes)))
+                self.send_header("Location", _redirect_url)
                 self.end_headers()
-                self.wfile.write(html_bytes)
 
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8", errors="replace")
-                add_log(aid, f"Stripe verify error {e.code}: {err_body[:200]}", "error")
-                self._json({"ok": False, "error": f"Stripe verification error {e.code}",
+                add_log(aid, "Stripe verify error " + str(e.code) + ": " + err_body[:200], "error")
+                self._json({"ok": False, "error": "Stripe verification error " + str(e.code),
                             "detail": err_body[:400]}, 502)
-            except FileNotFoundError:
-                self._json({"ok": False, "error": "Report file not found on server"}, 404)
             except Exception as e:
-                add_log(aid, f"GET /api/pay/success exception: {e}", "error")
+                add_log(aid, "GET /api/pay/success exception: " + str(e), "error")
                 self._json({"ok": False, "error": str(e)}, 500)
             return
         if path == "/api/pay/tiers":

@@ -1,14 +1,24 @@
 {
-  "balance_usd": 79.00,
+  "balance_usd": 158.0,
   "currency": "usd",
-  "last_updated": "2026-03-18",
+  "last_updated": "2026-03-19",
   "transactions": [
     {
       "date": "2026-03-16",
       "type": "income",
-      "amount_usd": 79.00,
+      "amount_usd": 79.0,
       "source": "stripe_checkout",
       "product": "us_market_intel_report",
+      "status": "settled"
+    },
+    {
+      "date": "2026-03-19",
+      "type": "income",
+      "amount_usd": 79.0,
+      "source": "stripe_webhook",
+      "product": "solo",
+      "customer_email": "test@example.com",
+      "stripe_session_id": "",
       "status": "settled"
     }
   ],

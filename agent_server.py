@@ -1420,7 +1420,7 @@ class Handler(BaseHTTPRequestHandler):
         if self._is_tunnel_request():
             _req_path = urlparse(self.path).path
             # Block all POST/PUT/DELETE except whitelisted
-            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay", "/api/portal/update"}
+            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay", "/api/portal/update", "/api/stripe/webhook"}
             if self.command in ("POST", "PUT", "DELETE") and _req_path not in _TUNNEL_ALLOWED_POSTS:
                 self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
                 return
@@ -2817,6 +2817,114 @@ class Handler(BaseHTTPRequestHandler):
             add_log("system", f"Portal profile updated: {_user.get('email','')}", "ok")
             self._json({"ok": True, "message": "Profile saved!"}); return
 
+        elif path == "/api/stripe/webhook":
+            # ── Stripe Webhook — checkout.session.completed ──────────────────
+            # Receives Stripe events, updates reservation status, generates license key
+            try:
+                _event = body
+                _event_type = _event.get("type", "")
+                if _event_type != "checkout.session.completed":
+                    self._json({"ok": True, "received": True, "ignored": _event_type}); return
+
+                _session = _event.get("data", {}).get("object", {})
+                _cust_email = (_session.get("customer_email") or
+                               _session.get("customer_details", {}).get("email", "")).strip().lower()
+                _amount = _session.get("amount_total", 0)
+                _currency = _session.get("currency", "usd")
+                _session_id = _session.get("id", "")
+
+                if not _cust_email:
+                    add_log("system", "Stripe webhook: no customer email in session", "warn")
+                    self._json({"ok": True, "received": True, "warning": "no customer email"}); return
+
+                # Find matching reservation
+                _rf = os.path.join(CWD, "data", "reservations.json")
+                try:
+                    with open(_rf) as _f:
+                        _reservations = json.load(_f)
+                except Exception:
+                    _reservations = []
+
+                _matched = None
+                for _r in _reservations:
+                    if _r.get("email", "").lower() == _cust_email and _r.get("type") == "customer":
+                        _matched = _r
+                        break
+
+                # Determine tier from amount
+                _tier_map = {
+                    7900: "solo", 19900: "team", 69900: "enterprise",
+                    49900: "lifetime", 249900: "mac_mini",
+                    75600: "solo_annual", 190800: "team_annual", 670800: "enterprise_annual",
+                }
+                _detected_tier = _tier_map.get(_amount, "")
+
+                # Generate license key
+                _license_key = "SML-" + (_detected_tier or "std").upper() + "-" + uuid.uuid4().hex[:12].upper()
+
+                _pay_ts = datetime.now().isoformat()
+
+                if _matched:
+                    _matched["status"] = "paid"
+                    if _detected_tier:
+                        _matched["tier"] = _detected_tier
+                    _matched["payment_date"] = _pay_ts
+                    _matched["license_key"] = _license_key
+                    _matched["stripe_session_id"] = _session_id
+                    _matched["amount_paid"] = _amount
+                    with open(_rf, "w") as _f:
+                        json.dump(_reservations, _f, indent=2)
+                    add_log("system",
+                            "Payment confirmed: " + _cust_email + " | tier=" + (_detected_tier or "unknown") + " | license=" + _license_key,
+                            "ok")
+                else:
+                    # No existing reservation — create one
+                    _new_entry = {
+                        "email": _cust_email, "name": "", "type": "customer",
+                        "tier": _detected_tier or "unknown",
+                        "message": "", "token": uuid.uuid4().hex[:16],
+                        "ref_code": "", "reserved_at": _pay_ts,
+                        "status": "paid", "payment_date": _pay_ts,
+                        "license_key": _license_key,
+                        "stripe_session_id": _session_id,
+                        "amount_paid": _amount,
+                    }
+                    _reservations.append(_new_entry)
+                    with open(_rf, "w") as _f:
+                        json.dump(_reservations, _f, indent=2)
+                    add_log("system",
+                            "New paid customer (no prior reservation): " + _cust_email + " | license=" + _license_key,
+                            "ok")
+
+                # Log payment to treasury.json
+                _tf = os.path.join(CWD, "data", "treasury.json")
+                try:
+                    with open(_tf) as _f:
+                        _treasury = json.load(_f)
+                except Exception:
+                    _treasury = {"balance_usd": 0, "currency": "usd", "transactions": [], "products": []}
+                _amount_usd = _amount / 100.0
+                _treasury["balance_usd"] = _treasury.get("balance_usd", 0) + _amount_usd
+                _treasury["last_updated"] = _pay_ts[:10]
+                _treasury.setdefault("transactions", []).append({
+                    "date": _pay_ts[:10],
+                    "type": "income",
+                    "amount_usd": _amount_usd,
+                    "source": "stripe_webhook",
+                    "product": _detected_tier or "checkout",
+                    "customer_email": _cust_email,
+                    "stripe_session_id": _session_id,
+                    "status": "settled",
+                })
+                with open(_tf, "w") as _f:
+                    json.dump(_treasury, _f, indent=2)
+
+                self._json({"ok": True, "received": True, "email": _cust_email,
+                            "license_key": _license_key}); return
+            except Exception as _wh_err:
+                add_log("system", "Stripe webhook error: " + str(_wh_err), "error")
+                self._json({"ok": False, "error": str(_wh_err)}, 500); return
+
         elif path == "/api/premarket/subscribe":
             _email = body.get("email", "").strip().lower()
             _tier = body.get("tier", "free").strip().lower()
@@ -3747,8 +3855,56 @@ class Handler(BaseHTTPRequestHandler):
             _uemail = _user.get("email", "")
 
             # Type-specific content
-            if _utype == "customer":
-                _content = f"""
+            _is_paid = _user.get("status") == "paid"
+            _license_key = _user.get("license_key", "")
+            _payment_date = _user.get("payment_date", "")
+            # Check for success flash message
+            _flash_msg = ""
+            _qs_params = parse_qs(urlparse(self.path).query)
+            if _qs_params.get("payment", [""])[0] == "success":
+                _flash_msg = '<div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:16px;margin-bottom:20px;text-align:center"><span style="font-size:1.1rem;font-weight:700;color:#22c55e">Payment successful!</span><br><span style="font-size:.85rem;color:#94a3b8">Your license key and install instructions are below.</span></div>'
+            if _utype == "customer" and _is_paid:
+                _tier_display = _esc(_user.get("tier", "Unknown")).replace("_", " ").title()
+                _content = _flash_msg + (
+                    '<div class="card" style="border-color:rgba(34,197,94,0.3)">'
+                    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
+                    '<h2 style="color:#22c55e;margin:0">Your Plan</h2>'
+                    '<span class="badge" style="background:rgba(34,197,94,0.15);color:#22c55e">PAID</span>'
+                    '</div>'
+                    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">'
+                    '<div style="padding:14px;background:rgba(34,197,94,0.06);border-radius:10px"><div style="font-size:.72rem;color:#94a3b8">Tier</div><div style="font-size:1.1rem;font-weight:700">' + _tier_display + '</div></div>'
+                    '<div style="padding:14px;background:rgba(34,197,94,0.06);border-radius:10px"><div style="font-size:.72rem;color:#94a3b8">Payment Date</div><div style="font-size:1.1rem;font-weight:700">' + _esc(_payment_date[:10]) + '</div></div>'
+                    '</div></div>'
+                    '<div class="card" style="border-color:rgba(167,139,250,0.3);margin-top:16px">'
+                    '<h2 style="color:#a78bfa">License Key</h2>'
+                    '<div style="background:rgba(0,0,0,0.4);padding:18px;border-radius:10px;font-family:monospace;font-size:1.1rem;font-weight:700;color:#c084fc;text-align:center;letter-spacing:.05em;margin:12px 0;word-break:break-all">'
+                    + _esc(_license_key) +
+                    '</div>'
+                    '<p style="font-size:.78rem;color:#94a3b8;text-align:center">Save this key. You will need it to activate your installation.</p>'
+                    '</div>'
+                    '<div class="card" style="border-color:rgba(167,139,250,0.3);margin-top:16px">'
+                    '<h2 style="color:#a78bfa">Quick Install</h2>'
+                    '<p style="margin-bottom:12px">Run this single command to download and set up your command centre:</p>'
+                    '<div style="background:rgba(0,0,0,0.4);padding:14px;border-radius:10px;font-family:monospace;font-size:.85rem;color:#22c55e;word-break:break-all">'
+                    'curl -sL https://secondmindlabs.com/install.sh | bash'
+                    '</div>'
+                    '</div>'
+                    '<div class="card" style="border-color:rgba(167,139,250,0.3);margin-top:16px">'
+                    '<h2 style="color:#a78bfa">Setup Steps</h2>'
+                    '<div class="steps">'
+                    '<div class="step"><span class="sn">1</span><div><strong>Run the installer above</strong><br>Or manually: <code>git clone https://github.com/secondminddev-max/command-centre.git</code></div></div>'
+                    '<div class="step"><span class="sn">2</span><div><strong>Get a Claude API key</strong><br>Sign up at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></div></div>'
+                    '<div class="step"><span class="sn">3</span><div><strong>Configure environment</strong><br><code>cd command-centre &amp;&amp; cp .env.example .env</code> then add your API keys</div></div>'
+                    '<div class="step"><span class="sn">4</span><div><strong>Launch</strong><br><code>python3 agent_server.py</code> then open <code>http://localhost:5050</code></div></div>'
+                    '</div></div>'
+                    '<div class="card" style="border-color:rgba(6,182,212,0.3);margin-top:16px">'
+                    '<h2 style="color:#06b6d4">Need Help?</h2>'
+                    '<p>Book an installation service ($399) and we will set everything up for you.</p>'
+                    '<p style="margin-top:8px">Contact: <a href="mailto:hello@secondmindlabs.com">hello@secondmindlabs.com</a></p>'
+                    '</div>'
+                )
+            elif _utype == "customer":
+                _content = _flash_msg + f"""
                 <div class="card" style="border-color:rgba(167,139,250,0.3)">
                   <h2 style="color:#a78bfa">Getting Started</h2>
                   <div class="steps">
@@ -3763,7 +3919,7 @@ class Handler(BaseHTTPRequestHandler):
                 <div class="card" style="border-color:rgba(34,197,94,0.3);margin-top:16px">
                   <h2 style="color:#22c55e">Your Plan</h2>
                   <p>Tier: <strong>{_esc(_user.get('tier','Not selected'))}</strong></p>
-                  <p>Status: <strong style="color:#22c55e">Reserved</strong> — we'll notify you when access opens</p>
+                  <p>Status: <span class="badge" style="background:rgba(245,158,11,0.15);color:#f59e0b">RESERVED</span> — we'll notify you when access opens</p>
                 </div>
                 <div class="card" style="border-color:rgba(6,182,212,0.3);margin-top:16px">
                   <h2 style="color:#06b6d4">Need Help?</h2>
