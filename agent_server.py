@@ -5121,6 +5121,9 @@ async function subscribe() {
                 ".jpg": "image/jpeg",
                 ".ico": "image/x-icon",
                 ".pdf": "application/pdf",
+                ".sh": "text/x-shellscript; charset=utf-8",
+                ".txt": "text/plain; charset=utf-8",
+                ".md": "text/markdown; charset=utf-8",
             }
             _ext = os.path.splitext(path)[1].lower()
             _served = False
