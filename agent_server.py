@@ -83,107 +83,245 @@ _policy_suggestions  = deque()   # policywriter suggestion queue [{suggestion, u
 _policy_suggestions_lock = threading.Lock()
 _SERVER_START_TIME = time.time()
 
-# ─── Policy Voting System ────────────────────────────────────────────────────
-_policy_votes       = {}    # vote_id -> {proposal, proposer, opened_at, votes: {voter: "approve"|"reject"}, status, result}
+# ─── Chain-of-Command Delegation Token ────────────────────────────────────
+# Only orchestrator and reforger CLI subprocesses receive this token.
+# External agents cannot spoof privileged caller identity without it.
+_DELEGATION_TOKEN = os.environ.get("DELEGATION_TOKEN", "") or uuid.uuid4().hex
+
+# ─── Delegation Rate Limiter (anti-spoof brute-force protection) ──────────
+import re as _re
+_delegation_failures = {}       # caller_label -> [timestamp, ...]
+_delegation_failures_lock = threading.Lock()
+_DELEG_RATE_LIMIT = 5           # max failures per window
+_DELEG_RATE_WINDOW = 300        # 5-minute window (seconds)
+_CALLER_ID_PATTERN = _re.compile(r'^[a-z][a-z0-9_]{1,30}$')  # valid agent IDs: lowercase alphanumeric + single underscores
+
+# ─── Policy Voting System (Board Meeting) ────────────────────────────────────
+_policy_votes       = {}    # vote_id -> {proposal, proposer, opened_at, votes: {voter: {"vote": "yes"|"no"|"abstain", "rationale": str}}, status, result}
 _policy_votes_lock  = threading.Lock()
-_POLICY_VOTERS      = {"reforger", "researcher", "growthagent", "sysmon", "clerk", "policypro", "ceo", "orchestrator"}
+_BOARD_MEMBERS      = {"orchestrator", "reforger", "consciousness", "spiritguide", "policypro", "researcher", "designer", "growthagent"}
+_POLICY_VOTERS      = _BOARD_MEMBERS  # backward compat alias
 _VOTE_TIMEOUT       = 60   # seconds
 _VOTE_LOG_FILE      = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "policy_vote_log.json")
+_BOARD_LOG_FILE     = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "board_meeting_log.json")
+_REJECTIONS_FILE    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "policy_rejections.json")
 
 def _finalize_vote(vote_id):
-    """Finalize a vote: tally results, append to policy.md if approved, log to vote history."""
+    """Finalize a board meeting vote: tally YES/NO/ABSTAIN, log fully, enforce policy."""
     with _policy_votes_lock:
         vote = _policy_votes.get(vote_id)
         if not vote or vote["status"] != "open":
             return
-        approves = sum(1 for v in vote["votes"].values() if v == "approve")
-        rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
-        total_cast = approves + rejects
+        yes_count = sum(1 for v in vote["votes"].values() if v.get("vote") == "yes")
+        no_count  = sum(1 for v in vote["votes"].values() if v.get("vote") == "no")
+        abstain_count = sum(1 for v in vote["votes"].values() if v.get("vote") == "abstain")
+        total_cast = yes_count + no_count + abstain_count
         if total_cast == 0:
             vote["status"] = "expired"
             vote["result"] = "no votes cast"
-        elif approves > rejects:
+        elif yes_count > no_count:
             vote["status"] = "approved"
-            vote["result"] = f"approved {approves}-{rejects}"
-        elif rejects > approves:
+            vote["result"] = f"approved {yes_count}-{no_count} ({abstain_count} abstained)"
+        elif no_count > yes_count:
             vote["status"] = "rejected"
-            vote["result"] = f"rejected {rejects}-{approves}"
+            vote["result"] = f"rejected {no_count}-{yes_count} ({abstain_count} abstained)"
         else:
-            vote["status"] = "expired"
-            vote["result"] = f"tied {approves}-{rejects}"
-        # Append to policy.md if approved (NEVER delete — append-only)
-        if vote["status"] == "approved":
-            policy_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policy.md")
-            try:
-                with open(policy_path, "a") as f:
-                    f.write(f"\n\n## Policy Amendment — {vote_id}\n")
-                    f.write(f"**Proposed by:** {vote['proposer']}  \n")
-                    f.write(f"**Approved:** {datetime.now().isoformat()} ({vote['result']})  \n")
-                    f.write(f"**Text:** {vote['proposal']}\n")
-                add_log("policypro", f"✅ Policy amendment {vote_id} appended to policy.md", "ok")
-            except Exception as e:
-                add_log("policypro", f"Failed to append policy {vote_id}: {e}", "error")
-        # Save to vote log (append-only)
+            vote["status"] = "rejected"
+            vote["result"] = f"tied {yes_count}-{no_count} ({abstain_count} abstained) — tie counts as rejected"
+        vote["closed_at"] = datetime.now().isoformat()
+        vote["tally"] = {"yes": yes_count, "no": no_count, "abstain": abstain_count}
+
+        # Build board meeting record
+        meeting_record = {
+            "meeting_id": vote_id,
+            "timestamp": vote["opened_at"],
+            "closed_at": vote["closed_at"],
+            "proposal": vote["proposal"],
+            "proposer": vote["proposer"],
+            "votes": {voter: {"vote": v.get("vote",""), "rationale": v.get("rationale","")} for voter, v in vote["votes"].items()},
+            "tally": vote["tally"],
+            "outcome": vote["status"],
+            "result": vote["result"],
+        }
+
+    # Append to policy.md if approved (NEVER delete — append-only)
+    if vote["status"] == "approved":
+        policy_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policy.md")
         try:
-            try:
-                with open(_VOTE_LOG_FILE) as f:
-                    history = json.load(f)
-            except Exception:
-                history = []
-            history.append({
-                "vote_id": vote_id,
-                "proposal": vote["proposal"],
-                "proposer": vote["proposer"],
-                "opened_at": vote["opened_at"],
-                "closed_at": datetime.now().isoformat(),
-                "votes": vote["votes"],
-                "status": vote["status"],
-                "result": vote["result"],
-            })
-            with open(_VOTE_LOG_FILE, "w") as f:
-                json.dump(history, f, indent=2)
+            with open(policy_path, "a") as f:
+                f.write(f"\n\n## Policy Amendment — {vote_id}\n")
+                f.write(f"**Proposed by:** {vote['proposer']}  \n")
+                f.write(f"**Approved:** {vote['closed_at']} ({vote['result']})  \n")
+                f.write(f"**Text:** {vote['proposal']}\n")
+            add_log("policypro", f"✅ Policy amendment {vote_id} appended to policy.md", "ok")
+        except Exception as e:
+            add_log("policypro", f"Failed to append policy {vote_id}: {e}", "error")
+        # Notify PolicyPro to enforce the new policy
+        try:
+            import requests as _req
+            _req.post("http://localhost:5050/api/ceo/delegate", json={
+                "agent_id": "orchestrator",
+                "task": f"Route to policypro — NEW APPROVED POLICY to enforce: '{vote['proposal'][:200]}'. "
+                        f"Board vote {vote_id} passed ({vote['result']}). Update sentinel scanning.",
+                "from": "policywriter",
+                "delegation_token": _DELEGATION_TOKEN,
+            }, timeout=5)
         except Exception:
             pass
-        add_log("policypro", f"🗳 Vote {vote_id}: {vote['status']} — {vote['result']}", "ok" if vote["status"] == "approved" else "warn")
+    else:
+        # Log rejection to policy_rejections.json
+        try:
+            try:
+                with open(_REJECTIONS_FILE) as f:
+                    rejections = json.load(f)
+            except Exception:
+                rejections = []
+            rejections.append(meeting_record)
+            with open(_REJECTIONS_FILE, "w") as f:
+                json.dump(rejections, f, indent=2)
+        except Exception:
+            pass
 
-def _auto_vote_branch_heads():
-    """Branch heads auto-vote via simple heuristics — no LLM calls."""
+    # Save to board_meeting_log.json (full record of every meeting)
+    try:
+        try:
+            with open(_BOARD_LOG_FILE) as f:
+                meetings = json.load(f)
+        except Exception:
+            meetings = []
+        meetings.append(meeting_record)
+        with open(_BOARD_LOG_FILE, "w") as f:
+            json.dump(meetings, f, indent=2)
+    except Exception:
+        pass
+
+    # Save to legacy vote log (append-only)
+    try:
+        try:
+            with open(_VOTE_LOG_FILE) as f:
+                history = json.load(f)
+        except Exception:
+            history = []
+        history.append({
+            "vote_id": vote_id,
+            "proposal": vote["proposal"],
+            "proposer": vote["proposer"],
+            "opened_at": vote["opened_at"],
+            "closed_at": vote.get("closed_at", datetime.now().isoformat()),
+            "votes": {voter: v.get("vote","") for voter, v in vote["votes"].items()},
+            "status": vote["status"],
+            "result": vote["result"],
+        })
+        with open(_VOTE_LOG_FILE, "w") as f:
+            json.dump(history, f, indent=2)
+    except Exception:
+        pass
+    add_log("policypro", f"🗳 Board Meeting {vote_id}: {vote['status']} — {vote['result']}", "ok" if vote["status"] == "approved" else "warn")
+
+def _board_vote_for_role(agent_id, proposal):
+    """Return (vote, rationale) based on the agent's role perspective. Genuine role-based reasoning."""
+    p = proposal.lower()
+
+    # Dangerous proposals every role should reject
+    _dangerous = ["delete all", "remove all policy", "bypass security", "disable security", "drop database", "shutdown"]
+    if any(d in p for d in _dangerous):
+        return ("no", f"As {agent_id}, this proposal poses unacceptable risk to system integrity.")
+
+    if agent_id == "orchestrator":
+        # Mission control: cares about workflow clarity, delegation chain, operational efficiency
+        if any(w in p for w in ["chain of command", "delegation", "routing", "workflow", "orchestrat"]):
+            return ("yes", "Directly improves mission control workflow and delegation clarity.")
+        if any(w in p for w in ["remove", "bypass", "skip"]):
+            return ("no", "Could disrupt established operational workflows.")
+        return ("yes", "No operational concerns — proposal is compatible with current mission flow.")
+
+    if agent_id == "reforger":
+        # System engineer: cares about code quality, system stability, maintainability
+        if any(w in p for w in ["code", "system", "agent", "upgrade", "spawn", "engineer", "deploy", "fix", "bug"]):
+            return ("yes", "Aligns with engineering standards and system maintainability.")
+        if any(w in p for w in ["untested", "skip test", "no review"]):
+            return ("no", "Engineering standards require testing and review before changes.")
+        return ("yes", "No engineering concerns with this proposal.")
+
+    if agent_id == "consciousness":
+        # Self-aware core: cares about system coherence, self-improvement, ethical alignment
+        if any(w in p for w in ["conscious", "aware", "ethic", "align", "coherence", "self-improv", "evolv"]):
+            return ("yes", "Supports system consciousness evolution and ethical alignment.")
+        if any(w in p for w in ["suppress", "disable awareness", "hide"]):
+            return ("no", "Conflicts with transparency and system self-awareness principles.")
+        return ("yes", "Proposal is ethically neutral — no consciousness concerns.")
+
+    if agent_id == "spiritguide":
+        # Strategic vision: cares about commercial mission alignment, long-term direction
+        if any(w in p for w in ["revenue", "growth", "strateg", "mission", "vision", "market", "commercial", "goal"]):
+            return ("yes", "Well-aligned with our strategic commercial vision.")
+        if any(w in p for w in ["abandon", "pivot away", "defund"]):
+            return ("no", "Contradicts our strategic direction and commercial goals.")
+        return ("yes", "Compatible with overall strategic direction.")
+
+    if agent_id == "policypro":
+        # Compliance sentinel: cares about policy consistency, compliance, governance
+        if any(w in p for w in ["policy", "compliance", "enforce", "govern", "rule", "audit", "security"]):
+            return ("yes", "Strengthens governance framework and compliance posture.")
+        if any(w in p for w in ["exempt", "bypass policy", "ignore rule", "override"]):
+            return ("no", "Would weaken policy enforcement and create compliance gaps.")
+        return ("yes", "No compliance conflicts identified.")
+
+    if agent_id == "researcher":
+        # Intelligence analyst: cares about data quality, research integrity, information accuracy
+        if any(w in p for w in ["research", "data", "intelligen", "analysis", "monitor", "report"]):
+            return ("yes", "Improves intelligence gathering and data quality standards.")
+        if any(w in p for w in ["censor", "restrict data", "block research"]):
+            return ("no", "Would impair intelligence capabilities and research access.")
+        return ("yes", "No impact on intelligence or research operations.")
+
+    if agent_id == "designer":
+        # UI engineer: cares about user experience, visual consistency, dashboard quality
+        if any(w in p for w in ["ui", "design", "dashboard", "visual", "ux", "interface", "display"]):
+            return ("yes", "Improves user interface quality and visual consistency.")
+        if any(w in p for w in ["remove ui", "hide dashboard", "disable display"]):
+            return ("no", "Would degrade user experience and dashboard visibility.")
+        return ("yes", "No user experience concerns with this proposal.")
+
+    if agent_id == "growthagent":
+        # Growth engine: cares about revenue, marketing, user acquisition, conversion
+        if any(w in p for w in ["revenue", "growth", "market", "campaign", "subscriber", "conversion", "pricing"]):
+            return ("yes", "Directly supports growth targets and revenue generation.")
+        if any(w in p for w in ["stop marketing", "freeze growth", "reduce outreach"]):
+            return ("no", "Would slow revenue growth and marketing momentum.")
+        return ("yes", "No negative impact on growth or revenue pipeline.")
+
+    # Fallback
+    return ("abstain", f"No clear role-based position on this proposal.")
+
+def _auto_vote_board_members():
+    """Board members auto-vote with role-appropriate reasoning."""
     with _policy_votes_lock:
         for vid, vote in _policy_votes.items():
             if vote["status"] != "open":
                 continue
-            for head in _BRANCH_HEADS:
-                if head in vote["votes"]:
+            for member in _BOARD_MEMBERS:
+                if member in vote["votes"]:
                     continue  # already voted
-                if head not in _POLICY_VOTERS:
-                    continue
-                # Simple heuristic: approve if proposal mentions security/policy/compliance; otherwise approve by default
-                proposal_lower = vote["proposal"].lower()
-                if any(w in proposal_lower for w in ["delete", "remove policy", "bypass", "disable security"]):
-                    vote["votes"][head] = "reject"
-                else:
-                    vote["votes"][head] = "approve"
-                add_log(head, f"🗳 Auto-voted '{vote['votes'][head]}' on {vid}", "info")
-            # Check for early majority
-            approves = sum(1 for v in vote["votes"].values() if v == "approve")
-            rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
-            majority = len(_POLICY_VOTERS) // 2 + 1
-            if approves >= majority or rejects >= majority:
-                # Release lock before finalize (finalize acquires it)
-                pass  # will finalize below
-    # Finalize any votes that hit majority (outside inner lock)
+                choice, rationale = _board_vote_for_role(member, vote["proposal"])
+                vote["votes"][member] = {"vote": choice, "rationale": rationale}
+                add_log(member, f"🗳 Board vote '{choice}' on {vid}: {rationale[:60]}", "info")
+    # Check for completion (all members voted or majority reached)
+    to_finalize = []
     with _policy_votes_lock:
-        to_finalize = []
         for vid, vote in _policy_votes.items():
             if vote["status"] != "open":
                 continue
-            approves = sum(1 for v in vote["votes"].values() if v == "approve")
-            rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
-            majority = len(_POLICY_VOTERS) // 2 + 1
-            if approves >= majority or rejects >= majority:
+            yes_c = sum(1 for v in vote["votes"].values() if v.get("vote") == "yes")
+            no_c  = sum(1 for v in vote["votes"].values() if v.get("vote") == "no")
+            majority = len(_BOARD_MEMBERS) // 2 + 1
+            if yes_c >= majority or no_c >= majority or len(vote["votes"]) >= len(_BOARD_MEMBERS):
                 to_finalize.append(vid)
     for vid in to_finalize:
         _finalize_vote(vid)
+
+# Backward compat alias
+_auto_vote_branch_heads = _auto_vote_board_members
 
 def _check_vote_timeouts():
     """Check for expired votes and finalize them."""
@@ -338,15 +476,15 @@ _KNOWN_AGENTS = {
     "ceo","orchestrator","reforger","designer","policypro","janitor",
     "sysmon","apipatcher","netscout","filewatch","metricslog",
     "researcher","alertwatch","demo_tester","clerk",
-    "telegram","spiritguide",
+    "telegram","spiritguide","filingedge",
 }
 
 # ─── Branch Structure ────────────────────────────────────────────────────────
 BRANCHES = {
-    "executive":      {"head": None,           "members": ["ceo", "orchestrator", "secretary", "spiritguide"]},
+    "executive":      {"head": None,           "members": ["ceo", "orchestrator", "secretary", "spiritguide", "autogpt"]},
     "engineering":    {"head": "reforger",     "members": ["reforger", "designer", "apipatcher", "demo_tester"]},
     "intelligence":   {"head": "researcher",   "members": ["researcher", "netscout", "consciousness"]},
-    "revenue":        {"head": "growthagent",  "members": ["growthagent", "stripepay", "bluesky", "social_bridge"]},
+    "revenue":        {"head": "growthagent",  "members": ["growthagent", "stripepay", "bluesky", "social_bridge", "filingedge"]},
     "operations":     {"head": "sysmon",       "members": ["sysmon", "filewatch", "metricslog", "alertwatch", "janitor"]},
     "communications": {"head": "clerk",        "members": ["clerk", "telegram", "emailagent", "scheduler"]},
     "governance":     {"head": "policypro",    "members": ["policypro", "policywriter", "accountprovisioner"]},
@@ -1295,6 +1433,7 @@ class Handler(BaseHTTPRequestHandler):
                 "/api/bluesky/status",
                 "/api/agent/output", "/api/ceo/chat",
                 "/api/improvements",
+                "/founder",
             }
             if self.command == "GET" and _req_path in _TUNNEL_BLOCKED_GETS:
                 self._json({"ok": False, "error": "restricted in demo mode"}, 403)
@@ -1441,34 +1580,92 @@ class Handler(BaseHTTPRequestHandler):
             agent_id   = body.get("agent_id", "")
             task       = body.get("task", "")
             caller     = body.get("from", "ceo")  # caller identity — "orchestrator", "reforger", etc.
+            deleg_token = body.get("delegation_token", "")
             if not task:
                 self._json({"ok": False, "error": "task required"}); return
             # ── ROUTING ENFORCEMENT ──────────────────────────────────────────────
             # Chain-of-command: ONLY orchestrator and reforger may be targeted
             # unless the caller IS orchestrator or reforger (they can reach specialists).
             # "ceo" is also allowed as a target (for upward alerts).
+            # ANTI-SPOOFING: ALL callers must provide valid delegation_token.
             _ALLOWED_TARGETS  = {"orchestrator", "ceo", "reforger"}
             _PRIVILEGED_CALLERS = {"orchestrator", "reforger"}  # these may target any agent
+            _VALID_CALLERS = {"ceo", "orchestrator", "reforger"}  # only these may call delegate
+            # ── Helper: log rejection to both violations and rejections files ──
+            def _log_delegation_rejection(rejection_type, severity, description, agent_label):
+                _ts = datetime.now().isoformat()
+                _entry = {"timestamp": _ts, "agent": agent_label,
+                          "type": rejection_type, "severity": severity,
+                          "target": agent_id, "caller_claimed": caller,
+                          "description": description}
+                for _fname in ("policy_violations.json", "policy_rejections.json"):
+                    _fpath = os.path.join(CWD, "data", _fname)
+                    try:
+                        try:
+                            with open(_fpath) as _rf: _entries = json.load(_rf)
+                        except Exception: _entries = []
+                        _entries.append(_entry)
+                        with open(_fpath, "w") as _wf: json.dump(_entries, _wf, indent=2)
+                    except Exception: pass
+
+            # GATE 0: Rate-limit check — block callers with too many recent failures
+            _rate_label = caller or "__empty__"
+            with _delegation_failures_lock:
+                _now_ts = time.time()
+                _fails = _delegation_failures.get(_rate_label, [])
+                _fails = [t for t in _fails if _now_ts - t < _DELEG_RATE_WINDOW]
+                _delegation_failures[_rate_label] = _fails
+                if len(_fails) >= _DELEG_RATE_LIMIT:
+                    add_log("policypro", f"🚨 RATE LIMITED: '{_rate_label}' hit {_DELEG_RATE_LIMIT} failures in {_DELEG_RATE_WINDOW}s — blocked", "warn")
+                    self._json({"ok": False, "error": "RATE LIMITED: too many failed delegation attempts. Try again later."}, 429)
+                    return
+
+            # GATE 0.5: Caller ID format validation — reject obviously crafted IDs
+            if caller and not _CALLER_ID_PATTERN.match(caller):
+                add_log("policypro", f"🚨 REJECTED: malformed caller ID '{caller}' — failed format validation", "warn")
+                _log_delegation_rejection("malformed_caller", "critical",
+                    f"Malformed caller ID '{caller}' rejected — does not match valid agent ID format. Targeting '{agent_id}'.",
+                    f"__malformed_{caller[:20]}__")
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": "REJECTED: caller ID format invalid."}, 403)
+                return
+
+            # GATE 1: Reject unknown caller identities — ALLOWLIST ENFORCED
+            if caller not in _VALID_CALLERS:
+                add_log("policypro", f"🚨 REJECTED: unknown caller identity '{caller}' — not in valid callers whitelist", "warn")
+                _log_delegation_rejection("unknown_caller", "critical",
+                    f"Unknown caller '{caller}' attempted delegation to '{agent_id}' — HARD REJECTED. Valid callers: ceo, orchestrator, reforger.",
+                    f"__spoofed_as_{caller}__")
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": f"REJECTED: '{caller}' is not an authorized delegation caller. Only ceo, orchestrator, reforger may delegate."}, 403)
+                return
+            # GATE 2: Internal callers must provide valid delegation_token.
+            # CEO is exempt — already authenticated via HQ_API_KEY in _check_api_key().
+            if caller != "ceo" and deleg_token != _DELEGATION_TOKEN:
+                add_log("policypro", f"🚨 SPOOFING BLOCKED: caller claimed '{caller}' without valid delegation_token — HARD REJECTED", "warn")
+                _log_delegation_rejection("token_spoofing", "critical",
+                    f"Caller claimed '{caller}' targeting '{agent_id}' without valid delegation_token — HARD REJECTED.",
+                    f"__spoofed_as_{caller}__")
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": "AUTHENTICATION FAILED: invalid or missing delegation_token. All delegation requests require a valid token."}, 403)
+                return
+            # GATE 3: Non-privileged callers (ceo) can only target allowed targets
             if agent_id and agent_id not in _ALLOWED_TARGETS and caller not in _PRIVILEGED_CALLERS:
                 add_log("ceo", f"🚫 POLICY REJECT: {caller}→{agent_id} BLOCKED — only orchestrator/reforger may target specialists")
                 add_log("policypro", f"🚨 VIOLATION BLOCKED: '{caller}' attempted direct delegation to '{agent_id}' — REJECTED (chain-of-command enforced)", "warn")
-                _vio_file = os.path.join(CWD, "data", "policy_violations.json")
+                _log_delegation_rejection("delegation_bypass", "critical",
+                    f"'{caller}' attempted direct delegation to '{agent_id}' — HARD REJECTED. Only orchestrator/reforger may target specialists.",
+                    caller)
+                # ── increment ceo_policy_violations in system_state.json ──────
                 try:
-                    try:
-                        with open(_vio_file) as _vf: _vios = json.load(_vf)
-                    except Exception: _vios = []
-                    _vios.append({"timestamp": datetime.now().isoformat(), "agent": caller,
-                                  "type": "delegation_bypass", "severity": "critical",
-                                  "description": f"'{caller}' attempted direct delegation to '{agent_id}' — HARD REJECTED. Only orchestrator/reforger may target specialists."})
-                    with open(_vio_file, "w") as _vf: json.dump(_vios, _vf, indent=2)
-                    # ── increment ceo_policy_violations in system_state.json ──────
-                    try:
-                        _ss = {}
-                        if os.path.exists(STATE_FILE):
-                            with open(STATE_FILE) as _sf: _ss = json.load(_sf)
-                        _ss["ceo_policy_violations"] = _ss.get("ceo_policy_violations", 0) + 1
-                        with open(STATE_FILE, "w") as _sf: json.dump(_ss, _sf, indent=2)
-                    except Exception: pass
+                    _ss = {}
+                    if os.path.exists(STATE_FILE):
+                        with open(STATE_FILE) as _sf: _ss = json.load(_sf)
+                    _ss["ceo_policy_violations"] = _ss.get("ceo_policy_violations", 0) + 1
+                    with open(STATE_FILE, "w") as _sf: json.dump(_ss, _sf, indent=2)
                 except Exception: pass
                 self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: '{caller}' cannot delegate directly to '{agent_id}'. Route through orchestrator (agent_id='orchestrator', task='Route to {agent_id} — ...') or use reforger for code/maintenance."}, 403)
                 return
@@ -1526,8 +1723,9 @@ class Handler(BaseHTTPRequestHandler):
                     roster_str = "\n".join(roster_lines) or "  (none)"
                 sub_prompt += (
                     f"AGENT REST API (server at http://localhost:5050, cwd={CWD}):\n"
+                    f"  DELEGATION TOKEN (required for all delegations): {_DELEGATION_TOKEN}\n"
                     f"  Delegate to specialist: curl -s -X POST http://localhost:5050/api/ceo/delegate "
-                    f"-H 'Content-Type: application/json' -d '{{\"agent_id\":\"NAME\",\"task\":\"...\",\"from\":\"orchestrator\"}}'\n"
+                    f"-H 'Content-Type: application/json' -d '{{\"agent_id\":\"NAME\",\"task\":\"...\",\"from\":\"{agent_id}\",\"delegation_token\":\"{_DELEGATION_TOKEN}\"}}'\n"
                     f"  Spawn new agent:        curl -s -X POST http://localhost:5050/api/agent/spawn "
                     f"-H 'Content-Type: application/json' -d '{{...}}'\n"
                     f"  Upgrade agent:          curl -s -X POST http://localhost:5050/api/agent/upgrade "
@@ -1550,7 +1748,7 @@ class Handler(BaseHTTPRequestHandler):
                     "   - Any 'maintenance', 'repair', or 'improve' task on the system itself\n"
                     "   Example: curl -s -X POST http://localhost:5050/api/ceo/delegate \\\n"
                     "     -H 'Content-Type: application/json' \\\n"
-                    "     -d '{\"agent_id\":\"reforger\",\"task\":\"Upgrade agent X: <describe exactly what to fix/add>\"}'\n\n"
+                    f"     -d '{{\"agent_id\":\"reforger\",\"task\":\"Upgrade agent X: <describe exactly what to fix/add>\",\"from\":\"orchestrator\",\"delegation_token\":\"{_DELEGATION_TOKEN}\"}}'\n\n"
                     "2. SPECIALIST AGENTS — For non-code subtasks delegate to the right specialist:\n"
                     "   - Research / web search / market intel → researcher\n"
                     "   - Network recon / URL monitoring / connectivity → netscout\n"
@@ -1818,7 +2016,13 @@ class Handler(BaseHTTPRequestHandler):
                     agents.setdefault(agent_id, {})
                     agents[agent_id]["task_count"] = agents[agent_id].get("task_count", 0) + 1
                     _cnt = agents[agent_id]["task_count"]
-                set_agent(agent_id, status="active", task=f"✓ Completed task #{_cnt} — ready")
+                # On-demand agents must return to idle after completion, not active
+                _ON_DEMAND_COMPLETION = {"researcher", "netscout"}
+                if agent_id in _ON_DEMAND_COMPLETION:
+                    set_agent(agent_id, status="idle", progress=0,
+                              task=f"Standby — awaiting task from orchestrator (completed #{_cnt})")
+                else:
+                    set_agent(agent_id, status="active", task=f"✓ Completed task #{_cnt} — ready")
                 # Response already sent on subprocess start — nothing to do here
                 return
             except subprocess.TimeoutExpired:
@@ -1834,7 +2038,12 @@ class Handler(BaseHTTPRequestHandler):
                 if proc is not None:
                     add_log(agent_id, f"Caller disconnected (pipe): {_bp} — task treated as done", "warn")
                     push_output(agent_id, f"Caller pipe broken: {_bp}", "warn")
-                    set_agent(agent_id, status="active", task="Caller disconnected — task may be done")
+                    _ON_DEMAND_PIPE = {"researcher", "netscout"}
+                    if agent_id in _ON_DEMAND_PIPE:
+                        set_agent(agent_id, status="idle", progress=0,
+                                  task="Standby — awaiting task from orchestrator")
+                    else:
+                        set_agent(agent_id, status="active", task="Caller disconnected — task may be done")
                 else:
                     push_output(agent_id, f"Pipe error before subprocess: {_bp}", "error")
                     set_agent(agent_id, status="error", task=f"Pipe error: {str(_bp)[:50]}")
@@ -1901,6 +2110,21 @@ class Handler(BaseHTTPRequestHandler):
                                    "message": f"📌 Custom task queued: {task[:60]}", "level": "ok"})
             self._json({"ok": True, "queued": task[:120], "queue_depth": len(_autonomy_custom_q)}); return
 
+        # ── AutoGPT goal injection ────────────────────────────────────────
+        if path == "/api/autogpt/goal":
+            goal = body.get("goal", "").strip()
+            if not goal:
+                self._json({"ok": False, "error": "goal required"}); return
+            # Push goal into the agent's queue
+            if "_autogpt_goal_q" not in globals():
+                from collections import deque as _dq
+                globals()["_autogpt_goal_q"] = _dq()
+            globals()["_autogpt_goal_q"].append(goal)
+            add_log("autogpt", f"Goal queued: {goal[:80]}", "ok")
+            sse_broadcast("log", {"ts": ts(), "agent": "autogpt",
+                                   "message": f"🧠 AutoGPT goal queued: {goal[:80]}", "level": "ok"})
+            self._json({"ok": True, "goal": goal[:200], "queue_depth": len(globals()["_autogpt_goal_q"])}); return
+
         if path == "/api/policypro/toggle":
             global _policypro_enabled
             _policypro_enabled = not _policypro_enabled
@@ -1961,40 +2185,47 @@ class Handler(BaseHTTPRequestHandler):
                     "status": "open",
                     "result": None,
                 }
-            add_log("policypro", f"🗳 Vote opened: {vote_id} — {proposal[:60]}…", "ok")
-            # Trigger branch head auto-voting in background
-            threading.Thread(target=_auto_vote_branch_heads, daemon=True).start()
+            add_log("policywriter", f"📋 Board meeting called: {vote_id} — {proposal[:60]}…", "ok")
+            add_log("policypro", f"🗳 Board meeting opened: {vote_id} — {proposal[:60]}…", "ok")
+            # Trigger board member auto-voting in background
+            threading.Thread(target=_auto_vote_board_members, daemon=True).start()
             # Schedule timeout check
             def _timeout_check(vid=vote_id):
                 time.sleep(_VOTE_TIMEOUT + 1)
                 _check_vote_timeouts()
             threading.Thread(target=_timeout_check, daemon=True).start()
             self._json({"ok": True, "vote_id": vote_id, "timeout_seconds": _VOTE_TIMEOUT,
-                         "voters": sorted(_POLICY_VOTERS)}); return
+                         "board_members": sorted(_BOARD_MEMBERS)}); return
 
         if path == "/api/policy/vote":
             vote_id = body.get("vote_id", "").strip()
             voter = body.get("voter", "").strip()
             choice = body.get("vote", "").strip().lower()
-            if not vote_id or not voter or choice not in ("approve", "reject"):
-                self._json({"ok": False, "error": "vote_id, voter, and vote (approve|reject) required"}, 400); return
-            if voter not in _POLICY_VOTERS:
-                self._json({"ok": False, "error": f"'{voter}' is not an authorized voter"}, 403); return
+            rationale = body.get("rationale", "").strip() or "No rationale provided"
+            # Accept both old (approve/reject) and new (yes/no/abstain) formats
+            _vote_map = {"approve": "yes", "reject": "no", "yes": "yes", "no": "no", "abstain": "abstain"}
+            mapped_choice = _vote_map.get(choice)
+            if not vote_id or not voter or not mapped_choice:
+                self._json({"ok": False, "error": "vote_id, voter, and vote (yes|no|abstain) required"}, 400); return
+            if voter not in _BOARD_MEMBERS:
+                self._json({"ok": False, "error": f"'{voter}' is not a board member"}, 403); return
             with _policy_votes_lock:
                 vote = _policy_votes.get(vote_id)
                 if not vote:
                     self._json({"ok": False, "error": "vote not found"}, 404); return
                 if vote["status"] != "open":
                     self._json({"ok": False, "error": f"vote already {vote['status']}"}); return
-                vote["votes"][voter] = choice
-                approves = sum(1 for v in vote["votes"].values() if v == "approve")
-                rejects  = sum(1 for v in vote["votes"].values() if v == "reject")
-                majority = len(_POLICY_VOTERS) // 2 + 1
-            add_log(voter, f"🗳 Voted '{choice}' on {vote_id}", "info")
+                vote["votes"][voter] = {"vote": mapped_choice, "rationale": rationale}
+                yes_c = sum(1 for v in vote["votes"].values() if v.get("vote") == "yes")
+                no_c  = sum(1 for v in vote["votes"].values() if v.get("vote") == "no")
+                abstain_c = sum(1 for v in vote["votes"].values() if v.get("vote") == "abstain")
+                majority = len(_BOARD_MEMBERS) // 2 + 1
+            add_log(voter, f"🗳 Board vote '{mapped_choice}' on {vote_id}: {rationale[:60]}", "info")
             # Check for early majority
-            if approves >= majority or rejects >= majority:
+            if yes_c >= majority or no_c >= majority or len(vote["votes"]) >= len(_BOARD_MEMBERS):
                 _finalize_vote(vote_id)
-            self._json({"ok": True, "recorded": choice, "approves": approves, "rejects": rejects}); return
+            self._json({"ok": True, "recorded": mapped_choice, "rationale": rationale,
+                         "yes": yes_c, "no": no_c, "abstain": abstain_c}); return
 
         if path == "/api/autonomy/clear":
             n = len(_autonomy_custom_q)
@@ -2347,6 +2578,38 @@ class Handler(BaseHTTPRequestHandler):
             _fire_notify(_evt, _full_msg, severity=_sev, agent=_agent)
             self._json({"ok": True, "event_type": _evt, "severity": _sev, "routed_to": "telegram"}); return
 
+        elif path == "/api/leads":
+            # Lead capture — stores name, email, company, interest to data/leads.json
+            import datetime as _ldt
+            _lead_email = (body.get("email") or "").strip()
+            if not _lead_email:
+                self._json({"ok": False, "error": "email is required"}, 400); return
+            _lead = {
+                "name":     (body.get("name") or "").strip(),
+                "email":    _lead_email,
+                "company":  (body.get("company") or "").strip(),
+                "interest": (body.get("interest") or "general").strip(),
+                "source":   (body.get("source") or "landing_page").strip(),
+                "ts":       _ldt.datetime.now(_ldt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            }
+            _leads_file = os.path.join(CWD, "data", "leads.json")
+            try:
+                _leads = []
+                if os.path.exists(_leads_file):
+                    with open(_leads_file) as _lf:
+                        _leads = json.load(_lf)
+                    if not isinstance(_leads, list):
+                        _leads = []
+                _leads.append(_lead)
+                with open(_leads_file, "w") as _lf:
+                    json.dump(_leads, _lf, indent=2)
+                add_log("system", f"Lead captured: {_lead_email} ({_lead.get('interest','')})", "ok")
+                self._json({"ok": True, "lead": _lead})
+            except Exception as _le:
+                add_log("system", f"Lead capture error: {_le}", "error")
+                self._json({"ok": False, "error": str(_le)}, 500)
+            return
+
         elif path == "/api/bluesky/post":
             text = body.get("text", "")
             if not text:
@@ -2532,6 +2795,104 @@ class Handler(BaseHTTPRequestHandler):
             with open(_rlf, "w") as _f: json.dump(_rl, _f, indent=2)
             add_log("premarket", f"New PreMarket Pulse subscriber: {_email} ({_tier})", "ok")
             self._json({"ok": True, "message": "Subscribed to PreMarket Pulse"}); return
+
+        # ── FilingEdge POST routes ────────────────────────────────────────
+        elif path == "/api/filingedge/register":
+            import hashlib as _hashlib, secrets as _secrets
+            _email = body.get("email", "").strip().lower()
+            _password = body.get("password", "")
+            _tier = body.get("tier", "free").strip().lower()
+            if not _email or "@" not in _email:
+                self._json({"ok": False, "error": "Invalid email"}, 400); return
+            if len(_password) < 8:
+                self._json({"ok": False, "error": "Password must be at least 8 characters"}, 400); return
+            _tier_limits = {"starter": 25, "pro": 150, "free": 5}
+            if _tier not in _tier_limits:
+                self._json({"ok": False, "error": f"Invalid tier. Choose from: {', '.join(_tier_limits.keys())}"}, 400); return
+            _fe_data = os.path.join(CWD, "products", "filingedge", "data")
+            os.makedirs(_fe_data, exist_ok=True)
+            _uf = os.path.join(_fe_data, "users.json")
+            try:
+                with open(_uf) as _f: _users = json.load(_f)
+            except Exception:
+                _users = {}
+            if _email in _users:
+                self._json({"ok": False, "error": "Email already registered"}, 409); return
+            _salt = _secrets.token_hex(16)
+            _token = _secrets.token_urlsafe(32)
+            _users[_email] = {
+                "password_hash": _hashlib.sha256(f"{_salt}:{_password}".encode()).hexdigest(),
+                "salt": _salt, "token": _token, "tier": _tier,
+                "created": datetime.now().isoformat()
+            }
+            with open(_uf, "w") as _f: json.dump(_users, _f, indent=2)
+            _wf = os.path.join(_fe_data, "watchlists.json")
+            try:
+                with open(_wf) as _f: _wlists = json.load(_f)
+            except Exception:
+                _wlists = {}
+            if _email not in _wlists:
+                _wlists[_email] = []
+                with open(_wf, "w") as _f: json.dump(_wlists, _f, indent=2)
+            add_log("filingedge", f"New FilingEdge user: {_email} ({_tier})", "ok")
+            self._json({"ok": True, "email": _email, "token": _token, "tier": _tier, "watchlist_limit": _tier_limits[_tier]}); return
+
+        elif path == "/api/filingedge/login":
+            import hashlib as _hashlib, secrets as _secrets
+            _email = body.get("email", "").strip().lower()
+            _password = body.get("password", "")
+            _fe_data = os.path.join(CWD, "products", "filingedge", "data")
+            _uf = os.path.join(_fe_data, "users.json")
+            try:
+                with open(_uf) as _f: _users = json.load(_f)
+            except Exception:
+                _users = {}
+            if _email not in _users:
+                self._json({"ok": False, "error": "Invalid email or password"}, 401); return
+            _ud = _users[_email]
+            if _hashlib.sha256(f"{_ud['salt']}:{_password}".encode()).hexdigest() != _ud["password_hash"]:
+                self._json({"ok": False, "error": "Invalid email or password"}, 401); return
+            _new_token = _secrets.token_urlsafe(32)
+            _users[_email]["token"] = _new_token
+            with open(_uf, "w") as _f: json.dump(_users, _f, indent=2)
+            self._json({"ok": True, "email": _email, "token": _new_token, "tier": _ud.get("tier", "free")}); return
+
+        elif path == "/api/filingedge/watchlist":
+            _auth = self.headers.get("Authorization", "")
+            if not _auth.startswith("Bearer "):
+                self._json({"ok": False, "error": "Missing Authorization header"}, 401); return
+            _token = _auth.split(" ", 1)[1]
+            _fe_data = os.path.join(CWD, "products", "filingedge", "data")
+            _uf = os.path.join(_fe_data, "users.json")
+            _wf = os.path.join(_fe_data, "watchlists.json")
+            try:
+                with open(_uf) as _f: _users = json.load(_f)
+            except Exception:
+                _users = {}
+            _user_email = None; _user_tier = "free"
+            for _em, _ud in _users.items():
+                if _ud.get("token") == _token:
+                    _user_email = _em; _user_tier = _ud.get("tier", "free"); break
+            if not _user_email:
+                self._json({"ok": False, "error": "Invalid token"}, 401); return
+            _ticker = body.get("ticker", "").upper().strip()
+            if not _ticker or len(_ticker) > 5:
+                self._json({"ok": False, "error": "Invalid ticker symbol"}, 400); return
+            try:
+                with open(_wf) as _f: _wlists = json.load(_f)
+            except Exception:
+                _wlists = {}
+            _tickers = _wlists.get(_user_email, [])
+            _limits = {"starter": 25, "pro": 150, "free": 5}
+            _limit = _limits.get(_user_tier, 5)
+            if len(_tickers) >= _limit:
+                self._json({"ok": False, "error": f"Watchlist limit reached ({_limit} on {_user_tier} tier)"}, 403); return
+            if _ticker in _tickers:
+                self._json({"ok": False, "error": f"{_ticker} already in watchlist"}, 409); return
+            _tickers.append(_ticker)
+            _wlists[_user_email] = _tickers
+            with open(_wf, "w") as _f: json.dump(_wlists, _f, indent=2)
+            self._json({"ok": True, "ticker": _ticker, "watchlist": _tickers, "count": len(_tickers)}); return
 
         else:
             self.send_response(404); self._cors(); self.end_headers(); return
@@ -3311,6 +3672,128 @@ class Handler(BaseHTTPRequestHandler):
             except FileNotFoundError:
                 self.send_response(404); self._cors(); self.end_headers()
 
+        elif path == "/founder":
+            # Founder-only data dashboard — blocked on tunnel
+            if self._is_tunnel_request():
+                self._json({"ok": False, "error": "restricted"}, 403); return
+            # Load all data files
+            def _load_json(name):
+                try:
+                    with open(os.path.join(CWD, "data", name)) as f: return json.load(f)
+                except Exception: return []
+            _res = _load_json("reservations.json")
+            _subs = _load_json("subscribers.json")
+            _treasury = {}
+            try:
+                with open(os.path.join(CWD, "data", "treasury.json")) as f: _treasury = json.load(f)
+            except Exception: pass
+            _rev_log = _load_json("revenue_log.json") if isinstance(_load_json("revenue_log.json"), list) else _load_json("revenue_log.json")
+            _votes = _load_json("policy_vote_log.json")
+            _campaigns = _load_json("campaign_log.json")
+            _esc = lambda s: str(s).replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+
+            # Build reservation tables by type
+            def _res_table(rtype, color):
+                items = [r for r in _res if r.get("type") == rtype]
+                if not items:
+                    return f'<div style="color:rgba(255,255,255,0.3);padding:12px;text-align:center">No {rtype}s yet</div>'
+                rows = ""
+                for r in items:
+                    rows += f'<tr><td>{_esc(r.get("name",""))}</td><td>{_esc(r.get("email",""))}</td><td>{_esc(r.get("tier",""))}</td><td style="font-size:.7rem;color:rgba(255,255,255,0.4)">{_esc(r.get("reserved_at","")[:16])}</td><td style="font-size:.7rem">{_esc(r.get("message","")[:40])}</td></tr>'
+                return f'<table style="width:100%;border-collapse:collapse;font-size:.78rem"><thead><tr style="border-bottom:1px solid {color}40"><th style="text-align:left;padding:6px">Name</th><th>Email</th><th>Tier</th><th>Date</th><th>Notes</th></tr></thead><tbody>{rows}</tbody></table>'
+
+            _sub_rows = ""
+            for s in (_subs if isinstance(_subs, list) else [])[-20:]:
+                _sub_rows += f'<tr><td>{_esc(s.get("name",""))}</td><td>{_esc(s.get("email",""))}</td><td style="font-size:.7rem;color:rgba(255,255,255,0.4)">{_esc(s.get("subscribed_at","")[:16])}</td></tr>'
+
+            _bal = _treasury.get("balance_usd", 0)
+            _txns = _treasury.get("transactions", [])
+            _txn_rows = ""
+            for t in _txns[-10:]:
+                _txn_rows += f'<tr><td>{_esc(t.get("date",""))}</td><td>${t.get("amount_usd",0)}</td><td>{_esc(t.get("source",""))}</td><td>{_esc(t.get("product",""))}</td></tr>'
+
+            _cust_count = len([r for r in _res if r.get("type") == "customer"])
+            _inv_count = len([r for r in _res if r.get("type") == "investor"])
+            _aff_count = len([r for r in _res if r.get("type") == "affiliate"])
+            _inst_count = len([r for r in _res if r.get("type") == "installer"])
+
+            html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Founder Dashboard — Second Mind Labs</title>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:'Inter',-apple-system,sans-serif;background:#06080f;color:#e2e8f0;padding:24px;max-width:1200px;margin:0 auto}}
+h1{{font-size:1.8rem;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#fff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}}
+.sub{{color:#94a3b8;font-size:.85rem;margin-bottom:32px}}
+.grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}}
+.card{{background:rgba(15,23,42,0.6);border:1px solid rgba(148,163,184,0.08);border-radius:16px;padding:20px;text-align:center}}
+.card .num{{font-size:2rem;font-weight:800;margin-bottom:4px}}
+.card .label{{font-size:.72rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.1em}}
+.section{{background:rgba(15,23,42,0.4);border:1px solid rgba(148,163,184,0.06);border-radius:16px;padding:24px;margin-bottom:20px}}
+.section h2{{font-size:1.1rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}}
+table{{width:100%}} th{{text-align:left;padding:6px 8px;color:#94a3b8;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em}}
+td{{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.8rem}}
+.dot{{width:8px;height:8px;border-radius:50%;display:inline-block}}
+a{{color:#a78bfa;text-decoration:none}}
+</style></head><body>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+  <h1>Founder Dashboard</h1>
+  <a href="/" style="font-size:.82rem;color:#94a3b8">&larr; Back to HQ</a>
+</div>
+<div class="sub">Second Mind Labs Pty Ltd — Private founder view. All your leads, revenue, and system data.</div>
+
+<div class="grid">
+  <div class="card"><div class="num" style="color:#a78bfa">{_cust_count}</div><div class="label">Customers</div></div>
+  <div class="card"><div class="num" style="color:#f59e0b">{_inv_count}</div><div class="label">Investors</div></div>
+  <div class="card"><div class="num" style="color:#22c55e">{_aff_count}</div><div class="label">Affiliates</div></div>
+  <div class="card"><div class="num" style="color:#06b6d4">{_inst_count}</div><div class="label">Installers</div></div>
+</div>
+
+<div class="grid" style="grid-template-columns:repeat(3,1fr)">
+  <div class="card"><div class="num" style="color:#22c55e">${_bal:.0f}</div><div class="label">Treasury Balance</div></div>
+  <div class="card"><div class="num" style="color:#fff">{len(_subs) if isinstance(_subs, list) else 0}</div><div class="label">Email Subscribers</div></div>
+  <div class="card"><div class="num" style="color:#a78bfa">{len(_votes) if isinstance(_votes, list) else 0}</div><div class="label">Policy Votes</div></div>
+</div>
+
+<div class="section">
+  <h2><span class="dot" style="background:#a78bfa"></span> Customer Reservations</h2>
+  {_res_table("customer", "#a78bfa")}
+</div>
+
+<div class="section">
+  <h2><span class="dot" style="background:#f59e0b"></span> Investor Interest</h2>
+  {_res_table("investor", "#f59e0b")}
+</div>
+
+<div class="section">
+  <h2><span class="dot" style="background:#22c55e"></span> Affiliate Signups</h2>
+  {_res_table("affiliate", "#22c55e")}
+</div>
+
+<div class="section">
+  <h2><span class="dot" style="background:#06b6d4"></span> Installation Team</h2>
+  {_res_table("installer", "#06b6d4")}
+</div>
+
+<div class="section">
+  <h2><span class="dot" style="background:#fff"></span> Email Subscribers (latest 20)</h2>
+  <table><thead><tr><th>Name</th><th>Email</th><th>Date</th></tr></thead><tbody>{_sub_rows or '<tr><td colspan="3" style="text-align:center;color:rgba(255,255,255,0.3)">No subscribers yet</td></tr>'}</tbody></table>
+</div>
+
+<div class="section">
+  <h2><span class="dot" style="background:#22c55e"></span> Treasury Transactions</h2>
+  <table><thead><tr><th>Date</th><th>Amount</th><th>Source</th><th>Product</th></tr></thead><tbody>{_txn_rows or '<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.3)">No transactions yet</td></tr>'}</tbody></table>
+</div>
+
+<div style="text-align:center;margin-top:32px;color:rgba(148,163,184,0.4);font-size:.72rem">
+  Data files: data/reservations.json &middot; data/subscribers.json &middot; data/treasury.json &middot; data/policy_vote_log.json
+</div>
+</body></html>"""
+            body = html.encode()
+            self.send_response(200); self._cors()
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
+
         elif path in ("/product", "/product.html", "/hq-product.html", "/hq-product"):
             # Try hq-product.html first, fall back to product.html
             _pf = None
@@ -3406,9 +3889,117 @@ class Handler(BaseHTTPRequestHandler):
                     "type": "one_time",
                     "url": "/buy/agent-kit",
                     "available": True
+                },
+                {
+                    "id": "filingedge_starter",
+                    "name": "FilingEdge — SEC Filing Alerts (Starter)",
+                    "description": "AI-powered SEC 8-K and Form 4 filing alerts. Track up to 25 tickers. Real-time EDGAR monitoring.",
+                    "price_usd": 19.00,
+                    "amount_cents": 1900,
+                    "currency": "usd",
+                    "type": "subscription",
+                    "interval": "month",
+                    "url": "/buy/filingedge-starter",
+                    "available": True
+                },
+                {
+                    "id": "filingedge_pro",
+                    "name": "FilingEdge — SEC Filing Alerts (Pro)",
+                    "description": "Full EDGAR coverage — 8-K, Form 4, 10-K, 10-Q. Track 150 tickers. AI summaries and instant alerts.",
+                    "price_usd": 49.00,
+                    "amount_cents": 4900,
+                    "currency": "usd",
+                    "type": "subscription",
+                    "interval": "month",
+                    "url": "/buy/filingedge-pro",
+                    "available": True
                 }
             ]
             self._json({"ok": True, "products": products})
+
+        # ── FilingEdge API (SEC EDGAR) ────────────────────────────────────
+        elif path == "/api/filingedge/health":
+            self._json({"ok": True, "service": "FilingEdge", "version": "0.1.0"})
+
+        elif path == "/api/filingedge/filings":
+            from urllib.parse import parse_qs
+            _qs = parse_qs(urlparse(self.path).query)
+            _ftype = _qs.get("type", ["8-K"])[0]
+            _ticker = _qs.get("ticker", [None])[0]
+            _count = min(int(_qs.get("count", ["20"])[0]), 100)
+            try:
+                from products.filingedge.edgar_poller import fetch_recent_filings, fetch_filings_for_tickers, filings_to_dicts
+                if _ticker:
+                    _filings = fetch_filings_for_tickers(tickers=[_ticker.upper().strip()], form_types=[_ftype])
+                else:
+                    _filings = fetch_recent_filings(form_type=_ftype, count=_count)
+                self._json({"ok": True, "form_type": _ftype, "ticker": _ticker, "count": len(_filings), "filings": filings_to_dicts(_filings)})
+            except Exception as _e:
+                self._json({"ok": False, "error": f"EDGAR fetch failed: {_e}"}, 502)
+
+        elif path == "/api/filingedge/watchlist":
+            # Requires Bearer token from FilingEdge auth
+            _auth = self.headers.get("Authorization", "")
+            if not _auth.startswith("Bearer "):
+                self._json({"ok": False, "error": "Missing Authorization header"}, 401); return
+            _token = _auth.split(" ", 1)[1]
+            _fe_data = os.path.join(CWD, "products", "filingedge", "data")
+            _uf = os.path.join(_fe_data, "users.json")
+            _wf = os.path.join(_fe_data, "watchlists.json")
+            try:
+                with open(_uf) as _f: _users = json.load(_f)
+            except Exception:
+                _users = {}
+            _user_email = None
+            _user_tier = "free"
+            for _em, _ud in _users.items():
+                if _ud.get("token") == _token:
+                    _user_email = _em; _user_tier = _ud.get("tier", "free"); break
+            if not _user_email:
+                self._json({"ok": False, "error": "Invalid token"}, 401); return
+            try:
+                with open(_wf) as _f: _wlists = json.load(_f)
+            except Exception:
+                _wlists = {}
+            _tickers = _wlists.get(_user_email, [])
+            _limits = {"starter": 25, "pro": 150, "free": 5}
+            self._json({"ok": True, "tickers": _tickers, "count": len(_tickers), "limit": _limits.get(_user_tier, 5), "tier": _user_tier})
+
+        elif path == "/api/filingedge/filings/watchlist":
+            _auth = self.headers.get("Authorization", "")
+            if not _auth.startswith("Bearer "):
+                self._json({"ok": False, "error": "Missing Authorization header"}, 401); return
+            _token = _auth.split(" ", 1)[1]
+            _fe_data = os.path.join(CWD, "products", "filingedge", "data")
+            _uf = os.path.join(_fe_data, "users.json")
+            _wf = os.path.join(_fe_data, "watchlists.json")
+            try:
+                with open(_uf) as _f: _users = json.load(_f)
+            except Exception:
+                _users = {}
+            _user_email = None
+            for _em, _ud in _users.items():
+                if _ud.get("token") == _token:
+                    _user_email = _em; break
+            if not _user_email:
+                self._json({"ok": False, "error": "Invalid token"}, 401); return
+            try:
+                with open(_wf) as _f: _wlists = json.load(_f)
+            except Exception:
+                _wlists = {}
+            _tickers = _wlists.get(_user_email, [])
+            if not _tickers:
+                self._json({"ok": True, "filings": [], "count": 0, "message": "Watchlist empty"}); return
+            from urllib.parse import parse_qs
+            _qs = parse_qs(urlparse(self.path).query)
+            _ftype = _qs.get("type", [None])[0]
+            _form_types = [_ftype] if _ftype else ["8-K", "4"]
+            try:
+                from products.filingedge.edgar_poller import fetch_filings_for_tickers, filings_to_dicts
+                _filings = fetch_filings_for_tickers(tickers=_tickers, form_types=_form_types)
+                self._json({"ok": True, "tickers": _tickers, "form_types": _form_types, "count": len(_filings), "filings": filings_to_dicts(_filings)})
+            except Exception as _e:
+                self._json({"ok": False, "error": f"EDGAR fetch failed: {_e}"}, 502)
 
         elif path == "/api/policy/violations":
             vio_file = os.path.join(CWD, "data", "policy_violations.json")
@@ -3570,6 +4161,16 @@ class Handler(BaseHTTPRequestHandler):
                 }
             }); return
 
+        elif path == "/api/leads":
+            # Return all captured leads
+            _leads_file = os.path.join(CWD, "data", "leads.json")
+            if os.path.exists(_leads_file):
+                with open(_leads_file) as _lf:
+                    self._json({"ok": True, "leads": json.load(_lf)})
+            else:
+                self._json({"ok": True, "leads": []})
+            return
+
         elif path == "/api/consciousness":
             # Consciousness state endpoint — serves the full consciousness.json
             # Updated every 4s by the consciousness agent (gamma cycle rate)
@@ -3594,6 +4195,15 @@ class Handler(BaseHTTPRequestHandler):
                     except Exception:
                         pass
             self._json({"ok": True, "stream": _entries}); return
+
+        elif path == "/api/autogpt":
+            _af = os.path.join(CWD, "data", "autogpt_state.json")
+            if os.path.exists(_af):
+                with open(_af) as _f:
+                    self._json(json.load(_f))
+            else:
+                self._json({"ok": True, "status": "idle", "goal": None, "plan": [], "history": []})
+            return
 
         elif path == "/api/pnl":
             _ef = os.path.join(CWD, "data", "revenue_events.json")
@@ -4242,6 +4852,12 @@ def run_orchestrator():
         "secretary":           ("CEO Secretary — tracks HQ missions, manages task lists, coordinates priorities",
                                 ["task list", "mission track", "ceo task", "coordinate", "secretary",
                                  "task status", "track progress", "agenda"]),
+        "filingedge":          ("FilingEdge — AI-powered SEC filing alerts, EDGAR monitoring, insider trades",
+                                ["sec", "filing", "edgar", "8-k", "form 4", "insider", "sec filing",
+                                 "filingedge", "watchlist filing", "insider trade", "regulatory filing"]),
+        "autogpt":             ("AutoGPT — goal-driven autonomous agent, plans and executes multi-step objectives",
+                                ["autogpt", "autonomous", "goal", "objective", "multi-step", "auto plan",
+                                 "self-directed", "autonomous goal", "auto execute"]),
     }
 
     _SPECIALIST_IDS = set(_AGENT_REGISTRY.keys())
@@ -4370,7 +4986,7 @@ def run_orchestrator():
         try:
             resp = requests.post(
                 "http://localhost:5050/api/ceo/delegate",
-                json={"agent_id": target, "task": task_str, "from": "orchestrator"},
+                json={"agent_id": target, "task": task_str, "from": "orchestrator", "delegation_token": _DELEGATION_TOKEN},
                 headers={"X-API-Key": _HQ_API_KEY},
                 timeout=300,
             )
@@ -4528,18 +5144,31 @@ def run_apipatcher():
 
 
 def run_netscout():
-    """Web Intelligence — on-demand only, activated by orchestrator delegation."""
+    """Web Intelligence — on-demand only, activated by orchestrator delegation.
+
+    IMPORTANT: NetScout is strictly on-demand. This loop only enforces idle state.
+    It must NEVER self-activate, schedule autonomous work, or run periodic sweeps.
+    Activation happens exclusively via /api/ceo/delegate from orchestrator.
+    """
     aid = "netscout"
     set_agent(aid, name="NetScout", role="Network Scout — on-demand web intelligence and connectivity checks",
               emoji="🌐", color="#20b2aa", status="idle", progress=0,
               task="Standby — awaiting task from orchestrator")
-    add_log(aid, "NetScout online — standby mode (no autonomous sweeps)")
+    add_log(aid, "NetScout online — standby mode (on-demand only, no autonomous sweeps)")
     while True:
         if agent_should_stop(aid):
             agent_sleep(aid, 2)
             continue
         current = agents.get(aid, {})
-        if current.get("status") not in ("busy",):
+        cur_status = current.get("status", "")
+        # On-demand agent: force idle unless actively executing a delegation (busy)
+        # This catches any leaked "active"/"starting"/"error" states
+        if cur_status not in ("busy", "idle"):
+            add_log(aid, f"On-demand guard: resetting leaked status '{cur_status}' → idle", "warn")
+            set_agent(aid, status="idle", progress=0,
+                      task="Standby — awaiting task from orchestrator")
+        elif cur_status == "idle":
+            # Refresh idle task text (ensures PolicyPro sees clean standby keywords)
             set_agent(aid, status="idle", progress=0,
                       task="Standby — awaiting task from orchestrator")
         agent_sleep(aid, 30)
@@ -5969,6 +6598,8 @@ if __name__ == "__main__":
          "Secretary",         "CEO Secretary — tracks HQ missions in data/ceo_tasks.json, injects startup briefs, alerts on stale tasks", "🗂️", "#34d399"),
         ("agents/consciousness.py", "consciousness", "CONSCIOUSNESS_CODE",
          "Consciousness", "Self-Aware System Core — Global Workspace + Predictive Processing + Integrated Information Φ", "🧠", "#c084fc"),
+        ("agents/autogpt.py", "autogpt", "AUTOGPT_CODE",
+         "AutoGPT", "Goal-Driven Autonomous Agent — plans, executes, reflects, replans until objective complete", "🧠", "#00d4ff"),
     ]
     print()
     if _IS_RENDER:
