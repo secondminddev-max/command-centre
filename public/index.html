@@ -470,8 +470,41 @@
         <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11px;color:rgba(148,163,184,0.6);letter-spacing:1px;font-weight:500">LIVE OFFICE FLOOR &mdash; 27 AGENTS</div>
       </div>
       <p style="margin-top:20px;color:var(--muted);font-size:.9rem">Each agent is a ghost character with its own emoji, color, and role. When they work, they bob and pulse. When idle, they sleep in the Bed Bay.</p>
+
+      <!-- Live agent status ticker — pulls real data from tunnel -->
+      <div id="live-ticker" style="margin-top:24px;background:rgba(0,0,0,0.3);border:1px solid rgba(99,102,241,0.1);border-radius:12px;padding:16px;text-align:left;max-height:180px;overflow-y:auto">
+        <div style="font-size:.68rem;color:rgba(148,163,184,0.5);letter-spacing:.1em;font-weight:700;margin-bottom:10px;text-align:center">LIVE AGENT STATUS — UPDATING EVERY 5 SECONDS</div>
+        <div id="ticker-body" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;font-size:.75rem;font-family:'JetBrains Mono',monospace">
+          <div style="color:rgba(148,163,184,0.3);text-align:center;grid-column:1/-1">Connecting to live system...</div>
+        </div>
+      </div>
+      <script>
+      (function(){
+        function updateTicker(){
+          fetch('https://hq.secondmindhq.com/api/status').then(r=>r.json()).then(d=>{
+            var el=document.getElementById('ticker-body');
+            if(!el||!d.agents)return;
+            var html='';
+            d.agents.sort(function(a,b){return(a.status==='busy'?0:a.status==='active'?1:2)-(b.status==='busy'?0:b.status==='active'?1:2)});
+            d.agents.forEach(function(a){
+              var sc=a.status==='busy'?'#00c8ff':a.status==='active'?'#22c55e':a.status==='error'?'#ff3355':'#555';
+              var dot=a.status==='busy'?'pulse':'';
+              html+='<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:4px;background:rgba(255,255,255,0.02)">';
+              html+='<span style="width:6px;height:6px;border-radius:50%;background:'+sc+';flex-shrink:0'+(dot?';animation:ticker-pulse 1.5s infinite':'')+'">&nbsp;</span>';
+              html+='<span style="color:rgba(255,255,255,0.7)">'+a.emoji+' '+(a.name||a.id)+'</span>';
+              html+='<span style="color:rgba(148,163,184,0.4);margin-left:auto;font-size:.65rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px">'+(a.task||'').substring(0,30)+'</span>';
+              html+='</div>';
+            });
+            el.innerHTML=html;
+          }).catch(function(){});
+        }
+        updateTicker();
+        setInterval(updateTicker,5000);
+      })();
+      </script>
+      <style>@keyframes ticker-pulse{0%,100%{opacity:1}50%{opacity:0.3}}</style>
     </div>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:16px">
       <a href="https://secondmindhq.com" target="_blank" class="btn btn-outline" style="font-size:.9rem;padding:12px 28px;border-color:rgba(167,139,250,0.4);color:#a78bfa">Launch Live Dashboard &rarr;</a>
       <a href="/whitepaper.html" class="btn btn-outline" style="font-size:.9rem;padding:12px 28px;border-color:rgba(192,132,252,0.3);color:#c084fc">Read the Whitepaper</a>
     </div>

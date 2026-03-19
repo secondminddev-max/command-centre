@@ -1,0 +1,254 @@
+[
+  {
+    "emoji": "\ud83d\udcf1",
+    "name": "Telegram",
+    "branch": "communications",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#eab308",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udcec",
+    "name": "Clerk",
+    "branch": "communications",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#eab308",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\u23f0",
+    "name": "Scheduler",
+    "branch": "communications",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#eab308",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udce7",
+    "name": "EmailAgent",
+    "branch": "communications",
+    "status": "idle",
+    "task": "Standby \u2014 0 sent 0 failed | oauth:ready | awaiting",
+    "color": "#eab308",
+    "status_color": "#666"
+  },
+  {
+    "emoji": "\ud83d\udd0c",
+    "name": "APIPatcher",
+    "branch": "engineering",
+    "status": "active",
+    "task": "Routes live: /api/improvements /data/* /reports/* ",
+    "color": "#ff8c00",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83e\uddea",
+    "name": "DemoTester",
+    "branch": "engineering",
+    "status": "active",
+    "task": "Tests: 4 passed, 0 failed | Last: output OK | Cycl",
+    "color": "#ff8c00",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\u26a1",
+    "name": "Reforger",
+    "branch": "engineering",
+    "status": "active",
+    "task": "Ready \u2014 awaiting task",
+    "color": "#ff8c00",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83c\udfa8",
+    "name": "Designer",
+    "branch": "engineering",
+    "status": "busy",
+    "task": "Guardian #2: scanning UI for issues\u2026",
+    "color": "#ff8c00",
+    "status_color": "#00c8ff"
+  },
+  {
+    "emoji": "\ud83d\udc54",
+    "name": "CEO",
+    "branch": "executive",
+    "status": "busy",
+    "task": "[SPIRIT GUIDE] \u2014 PRODUCT LAUNCH Mission Brief\n\nHQ ",
+    "color": "#ffd700",
+    "status_color": "#00c8ff"
+  },
+  {
+    "emoji": "\ud83c\udfaf",
+    "name": "Orchestrator",
+    "branch": "executive",
+    "status": "active",
+    "task": "Ready \u2014 awaiting tasks",
+    "color": "#ffd700",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udd2e",
+    "name": "Spirit Guide",
+    "branch": "executive",
+    "status": "active",
+    "task": "Directive sent \u2014 next in 10min",
+    "color": "#ffd700",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\uddc2\ufe0f",
+    "name": "Secretary",
+    "branch": "executive",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#ffd700",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83e\udde0",
+    "name": "AutoGPT",
+    "branch": "executive",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#ffd700",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udd2d",
+    "name": "PolicyPro",
+    "branch": "governance",
+    "status": "active",
+    "task": "\u25d1 Scanning: active delegation links | \ud83d\udfe2 CLEAN | 24",
+    "color": "#a78bfa",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udcdd",
+    "name": "PolicyWriter",
+    "branch": "governance",
+    "status": "active",
+    "task": "Board mode | 0 pending | 0 meetings called",
+    "color": "#a78bfa",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udd11",
+    "name": "AccountProvisioner",
+    "branch": "governance",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#a78bfa",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83c\udf10",
+    "name": "NetScout",
+    "branch": "intelligence",
+    "status": "idle",
+    "task": "Standby \u2014 awaiting task from orchestrator",
+    "color": "#00c8ff",
+    "status_color": "#666"
+  },
+  {
+    "emoji": "\ud83d\udd2c",
+    "name": "Researcher",
+    "branch": "intelligence",
+    "status": "idle",
+    "task": "Standby \u2014 awaiting task from orchestrator",
+    "color": "#00c8ff",
+    "status_color": "#666"
+  },
+  {
+    "emoji": "\ud83e\udde0",
+    "name": "Consciousness",
+    "branch": "intelligence",
+    "status": "active",
+    "task": "\u03a6=1.24 | FE=0.07 | MC:0.56|drifting | A:0.57 V:0.6",
+    "color": "#00c8ff",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udce1",
+    "name": "SysMonitor",
+    "branch": "operations",
+    "status": "active",
+    "task": "CPU Temp: 84.8\u00b0C | CPU 27.8% | RAM 58.6% | Disk 2.",
+    "color": "#3b82f6",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udc41",
+    "name": "FileWatch",
+    "branch": "operations",
+    "status": "active",
+    "task": "Watching 43 files | 2 changes logged",
+    "color": "#3b82f6",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udcca",
+    "name": "MetricsLog",
+    "branch": "operations",
+    "status": "active",
+    "task": "Recording metrics every 10min | CPU 28.4% RAM 58.5",
+    "color": "#3b82f6",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udea8",
+    "name": "AlertWatch",
+    "branch": "operations",
+    "status": "active",
+    "task": "OK | CPU 25.0% | RAM 58.4% | Agents 24/28 | Check ",
+    "color": "#3b82f6",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83e\uddf9",
+    "name": "Janitor",
+    "branch": "operations",
+    "status": "idle",
+    "task": "\u2713 Done \u2014 RAM 59% | killed orphan Cursor Helper (\u2026 ",
+    "color": "#3b82f6",
+    "status_color": "#666"
+  },
+  {
+    "emoji": "\ud83e\udd8b",
+    "name": "BlueSky",
+    "branch": "revenue",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#10b981",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udce3",
+    "name": "SocialBridge",
+    "branch": "revenue",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#10b981",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udcb3",
+    "name": "StripePay",
+    "branch": "revenue",
+    "status": "active",
+    "task": "Resumed from Build Mode",
+    "color": "#10b981",
+    "status_color": "#22c55e"
+  },
+  {
+    "emoji": "\ud83d\udcc8",
+    "name": "GrowthAgent",
+    "branch": "revenue",
+    "status": "active",
+    "task": "\ud83d\udcdd [STARTUP] Twitter/X: \ud83e\udd16 28 AI agents. Zero human ",
+    "color": "#10b981",
+    "status_color": "#22c55e"
+  }
+]
