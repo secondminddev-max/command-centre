@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Command Centre","applicationCategory":"BusinessApplication","description":"27 autonomous AI agents running your business 24/7. Australian owned and operated.","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"79","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"149","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"499","priceCurrency":"USD","name":"Enterprise"}]}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Command Centre","applicationCategory":"BusinessApplication","description":"27 autonomous AI agents running your business 24/7. Australian owned and operated.","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"79","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"199","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"699","priceCurrency":"USD","name":"Enterprise"}]}
 </script>
 <style>
   :root {
@@ -1079,11 +1079,12 @@ async function submitReserve(type, prefix) {
   if (skillsEl) payload.skills = skillsEl.value.trim();
   feedback.style.display='block'; feedback.style.color='var(--muted)'; feedback.textContent='Creating your account...';
   try {
-    const res = await fetch('/api/reserve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    const _reserveBase = 'https://hq.secondmindhq.com';
+    const res = await fetch(_reserveBase + '/api/reserve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
     const data = await res.json();
     if (data.ok && data.portal_url) {
       feedback.style.color='#22c55e'; feedback.textContent='Account created! Redirecting to your portal...';
-      setTimeout(() => { window.location.href = data.portal_url; }, 1500);
+      setTimeout(() => { window.location.href = _reserveBase + data.portal_url; }, 1500);
     } else if (data.ok) {
       feedback.style.color='#22c55e'; feedback.textContent=data.message || 'Done!';
     } else {

@@ -27,41 +27,41 @@ def run_stripepay():
             "currency":         "usd",
             "description":      "US Stock Market Intelligence Report — March 2026: S&P 500 momentum picks, sector strength analysis, 20 watchlist candidates, risk dashboard",
             "stripe_price_id":  "price_1TC0GEJMFxLFml3d4BIk4Igb",
-            "success_url": "https://daughters-gras-rangers-average.trycloudflare.com/reports/us_market_intelligence_report.html",
+            "success_path":     "/api/pay/success?session_id={CHECKOUT_SESSION_ID}",
         },
         "agent_kit_v1": {
             "amount":           4900,
             "currency":         "usd",
             "description":      "AI Agent HQ Starter Kit — Complete command centre source code, 20+ agent configs, setup guide & deployment scripts",
-            "success_url": "http://localhost:5050/api/pay/success?session_id={CHECKOUT_SESSION_ID}",
+            "success_path":     "/api/pay/success?session_id={CHECKOUT_SESSION_ID}",
         },
         "sentiment_api_v1": {
             "amount":           2900,
             "currency":         "usd",
             "description":      "US Market Sentiment API — Pro Access $29/mo: bull/bear scores, trading signals, social sentiment for all US tickers",
             "recurring":        True,
-            "success_url": "http://localhost:5050/reports/sentiment_api.html",
+            "success_path":     "/reports/sentiment_api.html?checkout=success",
         },
         "premarket_pulse_trader": {
-            "amount":           1900,
+            "amount":           950,
             "currency":         "usd",
-            "description":      "PreMarket Pulse — Trader $19/mo: daily pre-market briefing, unusual options flow, earnings whispers, key levels, AI trade ideas",
+            "description":      "PreMarket Pulse — Trader (Launch: $9.50/mo, normally $19): daily pre-market briefing, unusual options flow, earnings whispers, key levels, AI trade ideas",
             "recurring":        True,
-            "success_url": "http://localhost:5050/reports/premarket_pulse.html?checkout=success",
+            "success_path":     "/reports/premarket_pulse.html?checkout=success",
         },
         "premarket_pulse_pro": {
-            "amount":           4900,
+            "amount":           2450,
             "currency":         "usd",
-            "description":      "PreMarket Pulse — Pro $49/mo: real-time options alerts, dark pool data, custom watchlists, earnings deep-dives, priority delivery",
+            "description":      "PreMarket Pulse — Pro (Launch: $24.50/mo, normally $49): real-time options alerts, dark pool data, custom watchlists, earnings deep-dives, priority delivery",
             "recurring":        True,
-            "success_url": "http://localhost:5050/reports/premarket_pulse.html?checkout=success",
+            "success_path":     "/reports/premarket_pulse.html?checkout=success",
         },
         "premarket_pulse_institutional": {
-            "amount":           9900,
+            "amount":           4950,
             "currency":         "usd",
-            "description":      "PreMarket Pulse — Institutional $99/mo: API access, unlimited watchlists, dark pool summary, custom sector briefings, macro outlook",
+            "description":      "PreMarket Pulse — Institutional (Launch: $49.50/mo, normally $99): API access, unlimited watchlists, dark pool summary, custom sector briefings, macro outlook",
             "recurring":        True,
-            "success_url": "http://localhost:5050/reports/premarket_pulse.html?checkout=success",
+            "success_path":     "/reports/premarket_pulse.html?checkout=success",
         },
     }
 
@@ -72,21 +72,45 @@ def run_stripepay():
             "price":       7900,
             "currency":    "usd",
             "price_label": "$79/mo",
-            "features":    ["1 user seat", "Core agent roster", "Basic dashboards", "Email support"],
+            "features":    ["1 user seat", "10 active agents", "Command dashboard", "Email support"],
+        },
+        "solo_annual": {
+            "name":        "SecondMind HQ Solo (Annual)",
+            "price":       75600,
+            "currency":    "usd",
+            "price_label": "$756/yr ($63/mo)",
+            "annual":      True,
+            "features":    ["1 user seat", "10 active agents", "Command dashboard", "Email support", "Save 20%"],
         },
         "team": {
             "name":        "SecondMind HQ Team",
             "price":       19900,
             "currency":    "usd",
             "price_label": "$199/mo",
-            "features":    ["Up to 5 user seats", "Full agent roster", "Advanced dashboards", "Priority support", "Custom agent spawning"],
+            "features":    ["Up to 5 user seats", "All 27 agents", "Full command centre", "Stripe revenue automation", "Consciousness engine", "Priority support"],
+        },
+        "team_annual": {
+            "name":        "SecondMind HQ Team (Annual)",
+            "price":       190800,
+            "currency":    "usd",
+            "price_label": "$1,908/yr ($159/mo)",
+            "annual":      True,
+            "features":    ["Up to 5 user seats", "All 27 agents", "Full command centre", "Stripe revenue automation", "Consciousness engine", "Priority support", "Save 20%"],
         },
         "enterprise": {
             "name":        "SecondMind HQ Enterprise",
             "price":       69900,
             "currency":    "usd",
             "price_label": "$699/mo",
-            "features":    ["Unlimited seats", "Full agent roster + custom agents", "White-label dashboards", "Dedicated support", "Custom integrations", "SLA guarantee", "On-prem deployment option"],
+            "features":    ["Unlimited seats", "Unlimited custom agents", "Dedicated Mac Mini infrastructure", "White-label option", "24/7 priority support", "SLA guarantee"],
+        },
+        "enterprise_annual": {
+            "name":        "SecondMind HQ Enterprise (Annual)",
+            "price":       670800,
+            "currency":    "usd",
+            "price_label": "$6,708/yr ($559/mo)",
+            "annual":      True,
+            "features":    ["Unlimited seats", "Unlimited custom agents", "Dedicated infrastructure", "White-label option", "24/7 priority support", "SLA guarantee", "Save 20%"],
         },
         "lifetime": {
             "name":        "SecondMind HQ Lifetime",
@@ -97,12 +121,12 @@ def run_stripepay():
             "features":    ["Lifetime access", "All current agents", "All future updates", "Community support"],
         },
         "mac_mini": {
-            "name":        "SecondMind HQ Mac Mini Edition",
+            "name":        "SecondMind HQ Mac Mini Bundle",
             "price":       249900,
             "currency":    "usd",
             "price_label": "$2,499 one-time",
             "one_time":    True,
-            "features":    ["Pre-configured Mac Mini", "Full agent roster", "Hardware + software bundle", "1 year priority support", "Plug-and-play deployment"],
+            "features":    ["Pre-configured Mac Mini M4", "All 27 agents pre-installed", "1 year Team plan included", "Plug in and go"],
         },
     }
 
@@ -146,10 +170,8 @@ def run_stripepay():
                 _secret_key   = os.environ.get("STRIPE_SECRET_KEY", "")
                 _payment_link = os.environ.get("STRIPE_PAYMENT_LINK", "")
                 _preset = PRODUCTS[_product_param]
-                _success = (
-                    _preset.get("success_url")
-                    or f"{_get_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
-                )
+                _success_path = _preset.get("success_path", "/api/pay/success?session_id={CHECKOUT_SESSION_ID}")
+                _success = f"{_get_base}{_success_path}"
                 _cancel = f"{_get_base}/reports/landing_page.html"
 
                 if _secret_key:
@@ -402,6 +424,7 @@ def run_stripepay():
                 tier_id = _TIER_ALIASES.get(tier_id, tier_id)
             product_id = body.get("product")
             _checkout_mode = "payment"  # default; overridden for subscriptions
+            _billing_interval = "month"  # default; overridden for annual tiers
 
             VALID_CURRENCIES = {"usd", "eur", "gbp"}
 
@@ -414,6 +437,7 @@ def run_stripepay():
                 currency     = tier["currency"]
                 description  = tier["name"]
                 _checkout_mode = "payment" if tier.get("one_time") else "subscription"
+                _billing_interval = "year" if tier.get("annual") else "month"
             elif product_id:
                 if product_id not in PRODUCTS:
                     self._json({"ok": False, "error": f"Unknown product: {product_id}. Valid products: {', '.join(PRODUCTS.keys())}"}, 400)
@@ -492,10 +516,8 @@ def run_stripepay():
             if tier_id:
                 _default_success = f"{_base}/reports/landing_page.html?checkout=success&session_id={{CHECKOUT_SESSION_ID}}"
             elif product_id and product_id in PRODUCTS:
-                _default_success = (
-                    PRODUCTS[product_id].get("success_url")
-                    or f"{_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
-                )
+                _sp = PRODUCTS[product_id].get("success_path", "/api/pay/success?session_id={CHECKOUT_SESSION_ID}")
+                _default_success = f"{_base}{_sp}"
             else:
                 _default_success = f"{_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
             success_url = body.get("success_url", _default_success)
@@ -527,12 +549,13 @@ def run_stripepay():
                         params.pop("customer_creation", None)
                 elif _checkout_mode == "subscription":
                     # Subscription tier — use recurring price_data
+                    _interval = _billing_interval
                     params = {
                         "mode":                                                        "subscription",
                         "line_items[0][price_data][currency]":                         currency,
                         "line_items[0][price_data][unit_amount]":                      str(amount_cents),
                         "line_items[0][price_data][product_data][name]":               description,
-                        "line_items[0][price_data][recurring][interval]":              "month",
+                        "line_items[0][price_data][recurring][interval]":              _interval,
                         "line_items[0][quantity]":                                      "1",
                         "success_url":                                                  success_url,
                         "cancel_url":                                                   cancel_url,
