@@ -692,9 +692,9 @@
       <div class="special-card glass hardware reveal reveal-delay-1">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
         <h3>Mac Mini + Command Centre</h3>
-        <div class="price cyan">$2,499</div>
+        <div class="price cyan">$1,499</div>
         <p class="note">Pre-configured Mac Mini M4 with Command Centre installed. Plug in, power on, fully autonomous. Includes 1 year Team plan ($2,388 value).</p>
-        <button onclick="checkout('mac_mini','Second Mind Labs — Mac Mini Bundle',249900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
+        <button onclick="checkout('mac_mini','Second Mind Labs — Mac Mini Bundle',149900,'payment')" class="btn btn-cyan">Pre-Order Now</button>
       </div>
       <div class="special-card glass reveal reveal-delay-2" style="overflow:hidden">
         <div class="special-tag" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)">DONE FOR YOU</div>
@@ -839,7 +839,7 @@
             <span style="font-size:1.6rem">📊</span>
             <div style="color:#f59e0b;font-weight:700;font-size:.95rem">Investor Pitch Deck</div>
           </div>
-          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">10-slide deck covering: problem/solution, live product demo, consciousness differentiator, $47B market opportunity, SaaS + hardware business model ($79&ndash;$699/mo + $2,499 hardware), path to $2.39M ARR, $500K seed ask.</div>
+          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">10-slide deck covering: problem/solution, live product demo, consciousness differentiator, $47B market opportunity, SaaS + hardware business model ($79&ndash;$699/mo + $1,499 hardware), path to $2.39M ARR, $500K seed ask.</div>
         </a>
         <a href="/whitepaper.html" target="_blank" class="glass" style="padding:24px;text-decoration:none;transition:all .2s;border-color:rgba(34,197,94,0.3)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
@@ -887,7 +887,7 @@
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:.72rem;color:var(--muted)">
           <div style="text-align:center">+ <strong style="color:#f59e0b">$499</strong> Lifetime</div>
-          <div style="text-align:center">+ <strong style="color:#06b6d4">$2,499</strong> Mac Mini Bundle</div>
+          <div style="text-align:center">+ <strong style="color:#06b6d4">$1,499</strong> Mac Mini Bundle</div>
           <div style="text-align:center">+ <strong style="color:#22c55e">$399</strong> Install Service</div>
         </div>
         <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.78rem">
@@ -1014,7 +1014,7 @@ function unlockInvestor() {
           <option value="team" selected>Team — $149/mo</option>
           <option value="enterprise">Enterprise — $499/mo</option>
           <option value="lifetime">Lifetime — $499 one-time</option>
-          <option value="mac_mini">Mac Mini Bundle — $2,499</option>
+          <option value="mac_mini">Mac Mini Bundle — $1,499</option>
         </select>
         <button onclick="submitReserve('customer','res-cust')" class="btn btn-primary" style="width:100%;padding:12px">Reserve My Spot</button>
         <div id="res-cust-msg" style="margin-top:8px;font-size:.78rem;display:none"></div>
@@ -1049,9 +1049,11 @@ function unlockInvestor() {
         <div style="font-size:2.2rem;margin-bottom:10px">🔧</div>
         <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:6px;color:#06b6d4">Installation Team</h3>
         <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px">Join our certified installer network. Help customers deploy Command Centre on their systems. Earn per install.</p>
-        <input type="text" id="res-inst-name" placeholder="Name" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <input type="text" id="res-inst-name" placeholder="Full name" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
         <input type="email" id="res-inst-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
-        <textarea id="res-inst-message" placeholder="Technical background (Mac/Linux experience, location, etc)" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.82rem;margin-bottom:12px;box-sizing:border-box;min-height:60px;resize:vertical"></textarea>
+        <input type="text" id="res-inst-location" placeholder="City, State, Country" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <input type="text" id="res-inst-skills" placeholder="Skills (Mac, Linux, Docker, cloud, networking)" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
+        <textarea id="res-inst-message" placeholder="Why you'd be a great installer (optional)" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.3);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.82rem;margin-bottom:12px;box-sizing:border-box;min-height:50px;resize:vertical"></textarea>
         <button onclick="submitReserve('installer','res-inst')" class="btn btn-cyan" style="width:100%;padding:12px;border:none;cursor:pointer">Apply to Install Team</button>
         <div id="res-inst-msg" style="margin-top:8px;font-size:.78rem;display:none"></div>
       </div>
@@ -1066,16 +1068,23 @@ async function submitReserve(type, prefix) {
   const email = document.getElementById(prefix+'-email').value.trim();
   const tierEl = document.getElementById(prefix+'-tier');
   const msgEl = document.getElementById(prefix+'-message');
+  const locEl = document.getElementById(prefix+'-location');
+  const skillsEl = document.getElementById(prefix+'-skills');
   const feedback = document.getElementById(prefix+'-msg');
   if (!email || !email.includes('@')) {
     feedback.style.display='block'; feedback.style.color='#ef4444'; feedback.textContent='Please enter a valid email.'; return;
   }
   const payload = {type, email, name, tier: tierEl ? tierEl.value : '', message: msgEl ? msgEl.value.trim() : ''};
-  feedback.style.display='block'; feedback.style.color='var(--muted)'; feedback.textContent='Submitting...';
+  if (locEl) payload.location = locEl.value.trim();
+  if (skillsEl) payload.skills = skillsEl.value.trim();
+  feedback.style.display='block'; feedback.style.color='var(--muted)'; feedback.textContent='Creating your account...';
   try {
     const res = await fetch('/api/reserve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
     const data = await res.json();
-    if (data.ok) {
+    if (data.ok && data.portal_url) {
+      feedback.style.color='#22c55e'; feedback.textContent='Account created! Redirecting to your portal...';
+      setTimeout(() => { window.location.href = data.portal_url; }, 1500);
+    } else if (data.ok) {
       feedback.style.color='#22c55e'; feedback.textContent=data.message || 'Done!';
     } else {
       feedback.style.color='#ef4444'; feedback.textContent=data.error || 'Something went wrong.';

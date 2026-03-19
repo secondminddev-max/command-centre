@@ -1420,7 +1420,7 @@ class Handler(BaseHTTPRequestHandler):
         if self._is_tunnel_request():
             _req_path = urlparse(self.path).path
             # Block all POST/PUT/DELETE except whitelisted
-            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay"}
+            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay", "/api/portal/update"}
             if self.command in ("POST", "PUT", "DELETE") and _req_path not in _TUNNEL_ALLOWED_POSTS:
                 self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
                 return
@@ -2735,12 +2735,18 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"ok": True, "message": "Subscribed successfully"}); return
 
         elif path == "/api/reserve":
-            # Unified reservation system — customers, investors, affiliates, installers
+            # Unified reservation system with account creation
             _email = body.get("email", "").strip().lower()
             _name = body.get("name", "").strip()
-            _type = body.get("type", "customer").strip().lower()  # customer|investor|affiliate|installer
+            _type = body.get("type", "customer").strip().lower()
             _tier = body.get("tier", "").strip()
             _message = body.get("message", "").strip()
+            # Installer extra fields
+            _location = body.get("location", "").strip()
+            _bank_name = body.get("bank_name", "").strip()
+            _bank_bsb = body.get("bank_bsb", "").strip()
+            _bank_account = body.get("bank_account", "").strip()
+            _skills = body.get("skills", "").strip()
             if not _email or "@" not in _email:
                 self._json({"ok": False, "error": "Valid email required"}, 400); return
             if _type not in ("customer", "investor", "affiliate", "installer"):
@@ -2751,19 +2757,65 @@ class Handler(BaseHTTPRequestHandler):
                 with open(_rf) as _f: _reservations = json.load(_f)
             except Exception:
                 _reservations = []
-            # Check for duplicate
-            if any(r.get("email") == _email and r.get("type") == _type for r in _reservations):
-                self._json({"ok": True, "message": "You're already registered! We'll be in touch."}); return
-            _reservations.append({
+            # Check for duplicate — return existing token
+            _existing = next((r for r in _reservations if r.get("email") == _email and r.get("type") == _type), None)
+            if _existing:
+                self._json({"ok": True, "message": "You're already registered!",
+                            "token": _existing.get("token", ""), "portal_url": f"/portal?token={_existing.get('token','')}"}); return
+            # Generate unique access token
+            _token = uuid.uuid4().hex[:16]
+            # Generate affiliate referral code
+            _ref_code = f"ref-{_name.split()[0].lower() if _name else 'user'}-{_token[:6]}" if _type == "affiliate" else ""
+            _entry = {
                 "email": _email, "name": _name, "type": _type,
                 "tier": _tier, "message": _message,
-                "reserved_at": _ts, "status": "pending",
-            })
+                "token": _token, "ref_code": _ref_code,
+                "reserved_at": _ts, "status": "active",
+            }
+            # Installer-specific fields
+            if _type == "installer":
+                _entry.update({
+                    "location": _location,
+                    "bank_name": _bank_name,
+                    "bank_bsb": _bank_bsb,
+                    "bank_account": _bank_account,
+                    "skills": _skills,
+                    "installs_completed": 0,
+                    "earnings": 0,
+                    "available": True,
+                })
+            if _type == "affiliate":
+                _entry.update({
+                    "referrals": 0,
+                    "earnings": 0,
+                    "ref_code": _ref_code,
+                })
+            _reservations.append(_entry)
             with open(_rf, "w") as _f: json.dump(_reservations, _f, indent=2)
-            add_log("system", f"New {_type} reservation: {_email}", "ok")
-            _labels = {"customer": "Your spot is reserved!", "investor": "We'll send you the full investor package.",
-                        "affiliate": "Welcome to the affiliate program!", "installer": "You're on the installer team list!"}
-            self._json({"ok": True, "message": _labels.get(_type, "Registered!")}); return
+            add_log("system", f"New {_type} account: {_email} (token: {_token[:8]}…)", "ok")
+            self._json({"ok": True, "token": _token,
+                         "portal_url": f"/portal?token={_token}",
+                         "message": f"Account created! Your portal: /portal?token={_token}"}); return
+
+        elif path == "/api/portal/update":
+            _token = body.get("token", "").strip()
+            if not _token:
+                self._json({"ok": False, "error": "token required"}, 400); return
+            _rf = os.path.join(CWD, "data", "reservations.json")
+            try:
+                with open(_rf) as _f: _all = json.load(_f)
+            except Exception: _all = []
+            _user = next((r for r in _all if r.get("token") == _token), None)
+            if not _user:
+                self._json({"ok": False, "error": "invalid token"}, 404); return
+            # Update allowed fields
+            for _field in ("location", "skills", "bank_name", "bank_bsb", "bank_account", "available"):
+                if _field in body:
+                    _user[_field] = body[_field]
+            _user["updated_at"] = datetime.now().isoformat()
+            with open(_rf, "w") as _f: json.dump(_all, _f, indent=2)
+            add_log("system", f"Portal profile updated: {_user.get('email','')}", "ok")
+            self._json({"ok": True, "message": "Profile saved!"}); return
 
         elif path == "/api/premarket/subscribe":
             _email = body.get("email", "").strip().lower()
@@ -3671,6 +3723,203 @@ class Handler(BaseHTTPRequestHandler):
                 self.end_headers(); self.wfile.write(content)
             except FileNotFoundError:
                 self.send_response(404); self._cors(); self.end_headers()
+
+        elif path == "/portal":
+            # User portal — personalized dashboard based on token
+            from urllib.parse import parse_qs
+            _qs = parse_qs(urlparse(self.path).query)
+            _token = _qs.get("token", [""])[0].strip()
+            if not _token:
+                self.send_response(302); self._cors()
+                self.send_header("Location", "/#reserve"); self.end_headers(); return
+            # Find user by token
+            _rf = os.path.join(CWD, "data", "reservations.json")
+            try:
+                with open(_rf) as _f: _all = json.load(_f)
+            except Exception: _all = []
+            _user = next((r for r in _all if r.get("token") == _token), None)
+            if not _user:
+                self.send_response(302); self._cors()
+                self.send_header("Location", "/#reserve"); self.end_headers(); return
+            _esc = lambda s: str(s).replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+            _utype = _user.get("type", "customer")
+            _uname = _user.get("name", "User")
+            _uemail = _user.get("email", "")
+
+            # Type-specific content
+            if _utype == "customer":
+                _content = f"""
+                <div class="card" style="border-color:rgba(167,139,250,0.3)">
+                  <h2 style="color:#a78bfa">Getting Started</h2>
+                  <div class="steps">
+                    <div class="step"><span class="sn">1</span><div><strong>Choose your platform</strong><br>Mac (recommended), Linux, or cloud VPS</div></div>
+                    <div class="step"><span class="sn">2</span><div><strong>Get a Claude API key</strong><br>Sign up at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> — you'll need your own key for agent operations</div></div>
+                    <div class="step"><span class="sn">3</span><div><strong>Clone the repository</strong><br><code>git clone https://github.com/secondminddev-max/command-centre.git</code></div></div>
+                    <div class="step"><span class="sn">4</span><div><strong>Configure environment</strong><br><code>cp .env.example .env</code> — add your API keys</div></div>
+                    <div class="step"><span class="sn">5</span><div><strong>Install dependencies</strong><br><code>pip install requests psutil python-dotenv</code></div></div>
+                    <div class="step"><span class="sn">6</span><div><strong>Launch</strong><br><code>python3 agent_server.py</code> — open <code>http://localhost:5050</code></div></div>
+                  </div>
+                </div>
+                <div class="card" style="border-color:rgba(34,197,94,0.3);margin-top:16px">
+                  <h2 style="color:#22c55e">Your Plan</h2>
+                  <p>Tier: <strong>{_esc(_user.get('tier','Not selected'))}</strong></p>
+                  <p>Status: <strong style="color:#22c55e">Reserved</strong> — we'll notify you when access opens</p>
+                </div>
+                <div class="card" style="border-color:rgba(6,182,212,0.3);margin-top:16px">
+                  <h2 style="color:#06b6d4">Need Help?</h2>
+                  <p>Book an installation service ($399) and we'll set everything up for you.</p>
+                  <p>Or join our community for support.</p>
+                  <p style="margin-top:8px">Contact: <a href="mailto:hello@secondmindlabs.com">hello@secondmindlabs.com</a></p>
+                </div>"""
+            elif _utype == "investor":
+                _content = f"""
+                <div class="card" style="border-color:rgba(245,158,11,0.3)">
+                  <h2 style="color:#f59e0b">Investor Package</h2>
+                  <p style="margin-bottom:16px">Thank you for your interest. Here's your full investor package:</p>
+                  <div class="doc-grid">
+                    <a href="/reports/pitch_deck.html" target="_blank" class="doc">📊 Pitch Deck<span>10-slide presentation</span></a>
+                    <a href="/whitepaper.html" target="_blank" class="doc">📄 Technical Whitepaper<span>14,000-word deep dive</span></a>
+                    <a href="/reports/investor_brief.html" target="_blank" class="doc">💰 Investor Brief<span>Revenue model & metrics</span></a>
+                    <a href="https://secondmindhq.com" target="_blank" class="doc">🏢 Live System Demo<span>Watch 27 agents in real-time</span></a>
+                  </div>
+                </div>
+                <div class="card" style="border-color:rgba(245,158,11,0.2);margin-top:16px">
+                  <h2 style="color:#f59e0b">Key Numbers</h2>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+                    <div style="text-align:center"><div style="font-size:1.5rem;font-weight:800">$500K</div><div style="font-size:.72rem;color:#94a3b8">Seed Ask</div></div>
+                    <div style="text-align:center"><div style="font-size:1.5rem;font-weight:800;color:#22c55e">$2.39M</div><div style="font-size:.72rem;color:#94a3b8">Target ARR</div></div>
+                    <div style="text-align:center"><div style="font-size:1.5rem;font-weight:800;color:#a78bfa">90%+</div><div style="font-size:.72rem;color:#94a3b8">Gross Margin</div></div>
+                  </div>
+                </div>
+                <div class="card" style="border-color:rgba(245,158,11,0.2);margin-top:16px">
+                  <h2 style="color:#f59e0b">Next Steps</h2>
+                  <p>Contact us to schedule a call or request additional materials.</p>
+                  <p style="margin-top:8px"><a href="mailto:hello@secondmindlabs.com">hello@secondmindlabs.com</a></p>
+                </div>"""
+            elif _utype == "affiliate":
+                _ref = _user.get("ref_code", "")
+                _referrals = _user.get("referrals", 0)
+                _earnings = _user.get("earnings", 0)
+                _content = f"""
+                <div class="card" style="border-color:rgba(34,197,94,0.3)">
+                  <h2 style="color:#22c55e">Your Affiliate Dashboard</h2>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0">
+                    <div style="text-align:center;padding:16px;background:rgba(34,197,94,0.06);border-radius:12px"><div style="font-size:1.5rem;font-weight:800;color:#22c55e">{_referrals}</div><div style="font-size:.72rem;color:#94a3b8">Referrals</div></div>
+                    <div style="text-align:center;padding:16px;background:rgba(34,197,94,0.06);border-radius:12px"><div style="font-size:1.5rem;font-weight:800;color:#22c55e">${_earnings}</div><div style="font-size:.72rem;color:#94a3b8">Earnings</div></div>
+                    <div style="text-align:center;padding:16px;background:rgba(34,197,94,0.06);border-radius:12px"><div style="font-size:1.5rem;font-weight:800">20%</div><div style="font-size:.72rem;color:#94a3b8">Commission Rate</div></div>
+                  </div>
+                </div>
+                <div class="card" style="border-color:rgba(34,197,94,0.2);margin-top:16px">
+                  <h2 style="color:#22c55e">Your Referral Link</h2>
+                  <div style="background:rgba(0,0,0,0.3);padding:14px;border-radius:8px;font-family:monospace;font-size:.85rem;word-break:break-all;margin:8px 0">https://secondmindlabs.com/?ref={_esc(_ref)}</div>
+                  <p style="font-size:.8rem;color:#94a3b8">Share this link. When someone signs up and subscribes, you earn 20% recurring commission on their monthly payment. No cap, paid monthly.</p>
+                </div>
+                <div class="card" style="border-color:rgba(34,197,94,0.2);margin-top:16px">
+                  <h2 style="color:#22c55e">How It Works</h2>
+                  <div class="steps">
+                    <div class="step"><span class="sn">1</span><div><strong>Share your link</strong> — social media, email, communities, word of mouth</div></div>
+                    <div class="step"><span class="sn">2</span><div><strong>They sign up</strong> — your referral code is tracked automatically</div></div>
+                    <div class="step"><span class="sn">3</span><div><strong>They subscribe</strong> — Solo $79, Team $199, or Enterprise $699/mo</div></div>
+                    <div class="step"><span class="sn">4</span><div><strong>You earn 20%</strong> — $15.80 to $139.80/mo per customer, recurring</div></div>
+                  </div>
+                </div>"""
+            elif _utype == "installer":
+                _installs = _user.get("installs_completed", 0)
+                _earnings = _user.get("earnings", 0)
+                _location = _user.get("location", "Not set")
+                _available = _user.get("available", True)
+                _has_bank = bool(_user.get("bank_account"))
+                _avail_icon = "🟢" if _available else "🔴"
+                _avail_text = "Available" if _available else "Busy"
+                _loc_display = _esc(_location) or '<span style="color:#ef4444">Not set</span>'
+                _bank_display = "Configured" if _has_bank else '<span style="color:#ef4444">Not set</span>'
+                _skills_display = _esc(_user.get("skills", "")) or "Not specified"
+                _bank_name_val = _esc(_user.get("bank_name", ""))
+                _bank_bsb_val = _esc(_user.get("bank_bsb", ""))
+                _bank_acc_val = _esc(_user.get("bank_account", ""))
+                _content = (
+                    '<div class="card" style="border-color:rgba(6,182,212,0.3)">'
+                    '<h2 style="color:#06b6d4">Installer Dashboard</h2>'
+                    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0">'
+                    '<div style="text-align:center;padding:14px;background:rgba(6,182,212,0.06);border-radius:12px"><div style="font-size:1.3rem;font-weight:800;color:#06b6d4">' + str(_installs) + '</div><div style="font-size:.68rem;color:#94a3b8">Installs Done</div></div>'
+                    '<div style="text-align:center;padding:14px;background:rgba(6,182,212,0.06);border-radius:12px"><div style="font-size:1.3rem;font-weight:800;color:#22c55e">$' + str(_earnings) + '</div><div style="font-size:.68rem;color:#94a3b8">Earnings</div></div>'
+                    '<div style="text-align:center;padding:14px;background:rgba(6,182,212,0.06);border-radius:12px"><div style="font-size:1.3rem;font-weight:800">$200</div><div style="font-size:.68rem;color:#94a3b8">Per Install</div></div>'
+                    '<div style="text-align:center;padding:14px;background:rgba(6,182,212,0.06);border-radius:12px"><div style="font-size:1.3rem;font-weight:800">' + _avail_icon + '</div><div style="font-size:.68rem;color:#94a3b8">' + _avail_text + '</div></div>'
+                    '</div></div>'
+                    '<div class="card" style="border-color:rgba(6,182,212,0.2);margin-top:16px"><h2 style="color:#06b6d4">Your Profile</h2>'
+                    '<table style="width:100%;font-size:.85rem"><tbody>'
+                    '<tr><td style="padding:8px;color:#94a3b8;width:120px">Location</td><td style="padding:8px">' + _loc_display + '</td></tr>'
+                    '<tr><td style="padding:8px;color:#94a3b8">Bank Details</td><td style="padding:8px">' + _bank_display + '</td></tr>'
+                    '<tr><td style="padding:8px;color:#94a3b8">Skills</td><td style="padding:8px">' + _skills_display + '</td></tr>'
+                    '</tbody></table></div>'
+                    '<div class="card" style="border-color:rgba(6,182,212,0.2);margin-top:16px"><h2 style="color:#06b6d4">Update Profile</h2>'
+                    '<form id="installer-form" style="display:grid;gap:10px;margin-top:10px">'
+                    '<input name="location" placeholder="City, State, Country" value="' + _esc(_location) + '" class="inp">'
+                    '<input name="skills" placeholder="Skills (Mac, Linux, cloud, Docker, etc)" value="' + _skills_display + '" class="inp">'
+                    '<div style="font-size:.8rem;color:#94a3b8;margin-top:4px">Bank details (for install payment — AUD)</div>'
+                    '<input name="bank_name" placeholder="Bank name (e.g. CommBank, ANZ)" value="' + _bank_name_val + '" class="inp">'
+                    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+                    '<input name="bank_bsb" placeholder="BSB" value="' + _bank_bsb_val + '" class="inp">'
+                    '<input name="bank_account" placeholder="Account number" value="' + _bank_acc_val + '" class="inp">'
+                    '</div><button type="submit" class="btn-submit">Save Profile</button></form>'
+                    '<div id="save-msg" style="margin-top:8px;font-size:.78rem;display:none"></div></div>'
+                    '<div class="card" style="border-color:rgba(6,182,212,0.2);margin-top:16px"><h2 style="color:#06b6d4">Installation Guide</h2>'
+                    '<div class="steps">'
+                    '<div class="step"><span class="sn">1</span><div><strong>Customer requests install</strong> — we match by location and notify you</div></div>'
+                    '<div class="step"><span class="sn">2</span><div><strong>Contact the customer</strong> — arrange remote or on-site session</div></div>'
+                    '<div class="step"><span class="sn">3</span><div><strong>Clone &amp; configure</strong> — <code>git clone</code> the repo, set up <code>.env</code> with their API keys</div></div>'
+                    '<div class="step"><span class="sn">4</span><div><strong>Install dependencies</strong> — <code>pip install requests psutil python-dotenv</code></div></div>'
+                    '<div class="step"><span class="sn">5</span><div><strong>Launch &amp; verify</strong> — <code>python3 agent_server.py</code>, confirm all 27 agents online</div></div>'
+                    '<div class="step"><span class="sn">6</span><div><strong>Mark complete</strong> — report back, earn $200 per install</div></div>'
+                    '</div></div>'
+                    '<script id="installer-script" data-token="' + _token + '"></script>'
+                )
+                _content += '<script>document.getElementById("installer-form").addEventListener("submit",async function(e){e.preventDefault();var fd=new FormData(this);var data=Object.fromEntries(fd.entries());data.token=document.getElementById("installer-script").dataset.token;var msg=document.getElementById("save-msg");msg.style.display="block";msg.style.color="#94a3b8";msg.textContent="Saving...";try{var r=await fetch("/api/portal/update",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});var d=await r.json();msg.style.color=d.ok?"#22c55e":"#ef4444";msg.textContent=d.ok?"Profile saved!":(d.error||"Error");}catch(err){msg.style.color="#ef4444";msg.textContent="Network error";}});</script>'
+            else:
+                _content = "<p>Unknown account type.</p>"
+
+            _portal_html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Portal — Second Mind Labs</title>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:'Inter',-apple-system,sans-serif;background:#06080f;color:#e2e8f0;padding:24px;max-width:800px;margin:0 auto}}
+h1{{font-size:1.6rem;font-weight:900;margin-bottom:4px;background:linear-gradient(135deg,#fff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}}
+.welcome{{color:#94a3b8;font-size:.85rem;margin-bottom:28px}}
+.card{{background:rgba(15,23,42,0.6);border:1px solid rgba(148,163,184,0.08);border-radius:16px;padding:24px}}
+.card h2{{font-size:1rem;font-weight:700;margin-bottom:12px}}
+.card p{{font-size:.85rem;color:#94a3b8;line-height:1.6;margin-bottom:6px}}
+a{{color:#a78bfa;text-decoration:none}}
+code{{background:rgba(167,139,250,0.1);padding:2px 8px;border-radius:4px;font-size:.8rem;color:#c084fc}}
+.steps{{display:grid;gap:12px;margin-top:12px}}
+.step{{display:flex;gap:14px;align-items:flex-start;font-size:.85rem;line-height:1.5}}
+.sn{{width:28px;height:28px;border-radius:50%;background:rgba(167,139,250,0.1);color:#a78bfa;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}}
+.doc-grid{{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
+.doc{{display:block;padding:16px;background:rgba(0,0,0,0.2);border-radius:10px;border:1px solid rgba(148,163,184,0.06);text-decoration:none;font-size:.9rem;font-weight:600;color:#e2e8f0;transition:all .2s}}
+.doc:hover{{border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.04)}}
+.doc span{{display:block;font-size:.72rem;color:#94a3b8;font-weight:400;margin-top:4px}}
+.inp{{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(6,182,212,0.2);background:rgba(0,0,0,0.3);color:#e2e8f0;font-family:inherit;font-size:.85rem}}
+.inp:focus{{border-color:rgba(6,182,212,0.5);outline:none}}
+.btn-submit{{padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem}}
+.badge{{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}}
+</style></head><body>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+  <h1>Welcome, {_esc(_uname)}</h1>
+  <a href="https://secondmindlabs.com" style="font-size:.82rem;color:#94a3b8">&larr; secondmindlabs.com</a>
+</div>
+<div class="welcome">
+  <span class="badge" style="background:rgba({'167,139,250' if _utype=='customer' else '245,158,11' if _utype=='investor' else '34,197,94' if _utype=='affiliate' else '6,182,212'},0.15);color:{'#a78bfa' if _utype=='customer' else '#f59e0b' if _utype=='investor' else '#22c55e' if _utype=='affiliate' else '#06b6d4'}">{_utype}</span>
+  &nbsp; {_esc(_uemail)} &middot; Joined {_esc(_user.get('reserved_at','')[:10])}
+</div>
+{_content}
+<div style="text-align:center;margin-top:32px;color:rgba(148,163,184,0.3);font-size:.7rem">
+  Second Mind Labs Pty Ltd &middot; Bookmark this page — your token: {_token[:8]}…
+</div>
+</body></html>"""
+            body = _portal_html.encode()
+            self.send_response(200); self._cors()
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
 
         elif path == "/founder":
             # Founder-only data dashboard — blocked on tunnel
