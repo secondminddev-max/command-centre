@@ -16,7 +16,7 @@ Team — $149/mo
 Enterprise — $499/mo
 → Unlimited seats, priority support, custom agents
 
-Lifetime Pro — $299 (one-time)
+Lifetime Pro — $499 (one-time)
 → Everything in Solo, forever. No recurring fees.
 
 Mac Mini Bundle — $1,499

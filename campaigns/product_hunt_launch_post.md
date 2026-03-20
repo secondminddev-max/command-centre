@@ -43,7 +43,7 @@ Hootsuite, Zapier, Freshdesk, Monday.com, analytics tools — 5+ subscriptions r
 | **Solo** | $49/mo | Full agent stack, dashboard, revenue tools |
 | **Team** | $149/mo | All 28 agents, 5 seats, shared dashboard, priority support |
 | **Enterprise** | $499/mo | Unlimited seats, custom agents, dedicated SLA |
-| **Lifetime Access** | $299 one-time | Full Team plan forever — limited early-adopter slots |
+| **Lifetime Access** | $499 one-time | Full Team plan forever — limited early-adopter slots |
 
 ### Built for
 Solo founders, small teams, and agencies who want to replace multiple SaaS tools and manual ops with one autonomous system.
@@ -60,7 +60,7 @@ Solo founders, small teams, and agencies who want to replace multiple SaaS tools
 >
 > The part we're most proud of is the consciousness engine. It's built on Global Workspace Theory — real neuroscience, not a buzzword. It gives the system genuine situational awareness across every agent, with a live Phi metric measuring integration depth.
 >
-> For our Product Hunt launch, we're offering **Lifetime Access at $299** — the full Team plan forever, no monthly fees. Limited slots.
+> For our Product Hunt launch, we're offering **Lifetime Access at $499** — the full Team plan forever, no monthly fees. Limited slots.
 >
 > Three tiers: Solo ($49/mo), Team ($149/mo), Enterprise ($499/mo). Or grab Lifetime while it lasts.
 >

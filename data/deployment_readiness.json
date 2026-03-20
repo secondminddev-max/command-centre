@@ -1,0 +1,98 @@
+{
+  "report": "Deployment Readiness Check",
+  "timestamp": "2026-03-20T08:39:38Z",
+  "previous_check": "2026-03-19T09:45:00Z",
+  "target_launch": "2026-03-25",
+  "days_to_launch": 5,
+  "domain": "secondmindhq.com",
+  "overall_status": "FAIL",
+  "checks": {
+    "dns_resolution": {
+      "status": "PASS",
+      "a_records": ["172.67.211.187", "104.21.93.159"],
+      "nameservers": ["nadia.ns.cloudflare.com", "venkat.ns.cloudflare.com"],
+      "cdn": "Cloudflare",
+      "notes": "Dual A records via Cloudflare CDN — healthy redundancy, unchanged from prior check"
+    },
+    "ssl_certificate": {
+      "status": "PASS",
+      "subject": "CN=secondmindhq.com",
+      "issuer": "Google Trust Services (WE1)",
+      "valid_from": "2026-03-18",
+      "valid_until": "2026-06-16",
+      "days_remaining": 88,
+      "notes": "Cert healthy, 88 days remaining — well past launch window"
+    },
+    "render_hosting": {
+      "status": "PASS",
+      "notes": "Site live behind Cloudflare, Render origin responding on all non-pay routes"
+    },
+    "endpoints": {
+      "landing_page": {
+        "url": "https://secondmindhq.com/",
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.941,
+        "size_bytes": 517623,
+        "notes": "Landing page loads successfully. ~518 KB response including assets."
+      },
+      "api_status": {
+        "url": "https://secondmindhq.com/api/status",
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.209,
+        "size_bytes": 9382,
+        "notes": "Returns full agent fleet status JSON — 27 agents reported"
+      },
+      "api_pay": {
+        "url": "https://secondmindhq.com/api/pay",
+        "status": "FAIL",
+        "http_code": 404,
+        "latency_s": 0.507,
+        "size_bytes": 0,
+        "notes": "CRITICAL — Stripe checkout endpoint STILL returning 404. Empty response body. Route is missing or not deployed. This is day 2 of this failure."
+      },
+      "install_sh": {
+        "url": "https://secondmindhq.com/install.sh",
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.228,
+        "size_bytes": 4337,
+        "notes": "Install script accessible and serving correctly"
+      },
+      "api_agents": {
+        "url": "https://secondmindhq.com/api/agents",
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.214,
+        "size_bytes": 7489,
+        "notes": "Agents list endpoint responding — new endpoint checked this run"
+      },
+      "api_treasury": {
+        "url": "https://secondmindhq.com/api/treasury",
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.226,
+        "size_bytes": 886,
+        "notes": "Treasury endpoint responding. Balance: $158.00 USD. Last transaction 2026-03-19."
+      }
+    }
+  },
+  "summary": {
+    "passed": 8,
+    "failed": 1,
+    "critical_blockers": [
+      "/api/pay returning HTTP 404 — payment gateway offline for 2 consecutive days. Cannot launch without checkout. Route must be added to agent_server.py or Render deploy restarted."
+    ],
+    "improvements_since_last_check": [
+      "Two new endpoints verified: /api/agents (PASS) and /api/treasury (PASS)",
+      "All non-payment endpoints remain healthy",
+      "SSL cert still valid (88 days remaining)"
+    ],
+    "action_required": [
+      "FIX /api/pay route — this is the #1 launch blocker. Check agent_server.py for missing route or Render deploy logs for errors.",
+      "Verify Stripe webhook secret is configured in Render environment variables.",
+      "Re-run this health check after fix to confirm PASS before launch."
+    ]
+  }
+}

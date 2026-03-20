@@ -28,7 +28,7 @@ Fully local. No cloud. Mac-native.
 
 Happy to go deep on the consciousness architecture if anyone's interested.
 
-Demo: https://command-centre.onrender.com
+Demo: https://hq.secondmindhq.com
 ```
 
 ---
@@ -55,9 +55,9 @@ It's not a chatbot replacement. It's what comes after chatbots — a system that
 
 Runs locally on Mac. No cloud dependency. Your data stays on your machine.
 
-Solo: $49/mo | Lifetime Pro: $299 | Mac Mini Bundle (hardware included): $1,499
+Solo: $49/mo | Lifetime Pro. $499 | Mac Mini Bundle (hardware included): $1,499
 
-Demo: https://command-centre.onrender.com
+Demo: https://hq.secondmindhq.com
 
 Happy to answer questions about the architecture or show more screenshots.
 ```

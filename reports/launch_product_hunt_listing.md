@@ -11,7 +11,7 @@
 
 ## Description
 
-AI Command Centre HQ is an autonomous agent operating system that runs your business operations 24/7. Deploy a fleet of 27 specialized AI agents — each with a distinct role, persistent memory, and the ability to act independently — from a single live dashboard.
+AI Command Centre HQ is an autonomous agent operating system that runs your business operations 24/7. Deploy a fleet of 28 specialized AI agents — each with a distinct role, persistent memory, and the ability to act independently — from a single live dashboard.
 
 HQ isn't a chatbot or a copilot. It's a workforce. Agents observe, decide, and execute: GrowthAgent runs your marketing campaigns, RivalRadar monitors competitors daily, AlertWatch catches system failures before you notice, RevenueTracker watches your MRR in real time, and SocialBridge manages your social channels autonomously.
 
@@ -21,7 +21,7 @@ Built for indie hackers, solopreneurs, and AI-native founders who want to run a 
 
 ## Key Features
 
-- **27 Autonomous Agents** — Research, marketing, monitoring, revenue tracking, social media, competitor intel, and more. Each agent has a distinct role and personality.
+- **28 Autonomous Agents** — Research, marketing, monitoring, revenue tracking, social media, competitor intel, and more. Each agent has a distinct role and personality.
 
 - **Persistent & Self-Healing** — Agents survive restarts, maintain memory between sessions, detect their own failures, and self-recover. This is a platform, not a script.
 
@@ -41,11 +41,13 @@ Built for indie hackers, solopreneurs, and AI-native founders who want to run a 
 
 | Tier | Price | What's Included |
 |------|-------|-----------------|
-| **Solo** | $49/mo | 5 agents, live dashboard, core monitoring — built for solopreneurs |
-| **Team** | $149/mo | 15 agents, RivalRadar, Revenue Engine, priority support — for growing teams |
-| **Enterprise** | $499/mo | Unlimited agents, custom builds, dedicated infrastructure, SLA |
+| **Solo** | $49/mo | 1 user seat, core agent roster, basic dashboards, email support — built for solopreneurs |
+| **Team** | $149/mo | Up to 5 seats, full agent roster, advanced dashboards, priority support, custom agent spawning — for growing teams |
+| **Enterprise** | $499/mo | Unlimited seats, full roster + custom agents, white-label dashboards, dedicated support, custom integrations, SLA guarantee, on-prem option |
+| **Lifetime** | $299 one-time | Lifetime access, all current agents, all future updates, community support |
+| **Mac Mini Edition** | $1,499 one-time | Pre-configured Mac Mini hardware bundle, full agent roster, plug-and-play deployment, 1 year priority support |
 
-**Context:** A single virtual assistant costs $1,500/mo. A typical SaaS tool stack (Notion + Slack + Zapier + analytics) runs $500-2,000/mo. HQ replaces both.
+**Context:** A single virtual assistant costs $1,500/mo. A typical SaaS tool stack (Notion + Slack + Zapier + analytics) runs $500-2,000/mo. HQ replaces both — starting at $49/mo.
 
 ---
 

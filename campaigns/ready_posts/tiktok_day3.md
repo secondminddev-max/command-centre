@@ -14,7 +14,7 @@
 ```
 I have 7 AI employees. They work 24/7. They don't need salaries. This is Command Centre.
 
-Solo: $49/mo | Lifetime: $299 | Mac Mini: $1,499
+Solo: $49/mo | Lifetime: $499 | Mac Mini: $1,499
 
 Link in bio.
 

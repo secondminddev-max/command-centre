@@ -6,7 +6,7 @@
 set -euo pipefail
 
 RENDER_SERVICE="command-centre"
-RENDER_URL="https://command-centre.onrender.com"
+RENDER_URL="https://hq.secondmindhq.com"
 CUSTOM_DOMAIN="https://secondmindhq.com"
 BRANCH="main"
 HEALTH_ENDPOINT="/api/health"
@@ -123,6 +123,14 @@ verify() {
         ok "Dashboard (/hq) returns 200"
     else
         warn "Dashboard (/hq) returned HTTP $hq_status"
+    fi
+
+    # Stripe checkout endpoint (revenue-critical)
+    pay_status=$(curl -s -o /dev/null -w "%{http_code}" "$RENDER_URL/api/pay" 2>/dev/null || echo "000")
+    if [[ "$pay_status" == "200" ]]; then
+        ok "Stripe checkout (GET /api/pay) returns 200"
+    else
+        warn "REVENUE BLOCKER: GET /api/pay returned HTTP $pay_status (expected 200)"
     fi
 
     # Custom domain (if DNS configured)

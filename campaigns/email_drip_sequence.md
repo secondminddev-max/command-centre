@@ -169,14 +169,14 @@ You've had 28 agents working for a week. You've seen what autonomous ops looks l
 
 | Plan | Launch Price | After This Week |
 |---|---|---|
-| Solo | $49/mo | $79/mo |
-| Team | $149/mo | $249/mo |
-| Enterprise | $499/mo | $799/mo |
-| Lifetime Access | $299 one-time | Removed permanently |
+| Solo | $49/mo | $119/mo |
+| Team | $149/mo | $499/mo |
+| Enterprise | $499/mo | $999/mo |
+| Lifetime Access | $499 one-time | Removed permanently |
 
 [Start Solo — $49/mo →](https://secondmindhq.com/#pricing)
 [Go Team — $149/mo →](https://secondmindhq.com/#pricing)
-[Get Lifetime — $299 →](https://secondmindhq.com/#pricing)
+[Get Lifetime — $499 →](https://secondmindhq.com/#pricing)
 
 Not sure which plan fits? Reply to this email — a real human will help you choose.
 

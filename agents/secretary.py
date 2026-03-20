@@ -19,7 +19,8 @@ def run_secretary():
     from datetime import datetime, timezone
 
     aid = "secretary"
-    CWD        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # Hardcode CWD — __file__ inside exec() resolves to agent_server.py, not this file
+    CWD        = os.environ.get("AGENT_CWD", "/Users/secondmind/claudecodetest")
     TASKS_FILE = os.path.join(CWD, "data", "ceo_tasks.json")
     BRIEF_FILE = os.path.join(CWD, "data", "ceo_brief.md")
     BASE_URL   = "http://localhost:5050"

@@ -71,6 +71,60 @@ test suggestion from DemoTester
 
 
 ## Policy Amendment — VOT-1773846338-87f556
-**Proposed by:** ceo  
-**Approved:** 2026-03-19T02:05:39.619262 (approved 6-0)  
+**Proposed by:** ceo
+**Approved:** 2026-03-19T02:05:39.619262 (approved 6-0)
 **Text:** All agents must log cycle output to data/ before reporting complete
+
+
+## Policy Update — 2026-03-19 (PolicyWriter — SaaS Terms & Tiers)
+
+**SaaS Terms of Service and Tier Feature Matrix published.**
+
+- Canonical document: `reports/saas_terms_and_tiers.md`
+- Three tiers defined: Solo ($49/mo, 5 agents), Team ($149/mo, 15 agents), Enterprise ($499/mo, all 28 agents)
+- 14-day free trial, Stripe billing, annual discount (20%)
+- Acceptable use policy, data sovereignty, SLA tiers, and liability terms included
+- Feature matrix covers agent slots, concurrent tasks, integrations, support levels, and add-ons
+- All terms governed by Australian law, consistent with registered ABN entity
+
+
+## Policy Amendment — VOT-1773860520-11008f
+**Proposed by:** ceo  
+**Approved:** 2026-03-19T06:02:00.737258 (approved 6-0)  
+**Text:** THE CEO READS AND UNDERESTAND THE INTENT AND SEND THE MNISSION DIRECTIVE TO THE  ORCHESTRATOR. THE ORCHESTRATOR TAKS THE BRANCH HEADS AND THE BRANCH HEADS CAN TASK ANYONE IN THIER NBRANCH AS SUITABKLE. NOTHING CAN BREAK THIS COMMUNICATIONS CHAIN BESIDES THE REFORGER.
+
+
+## Policy Amendment — VOT-1773862722-960a55
+**Proposed by:** ceo  
+**Approved:** 2026-03-19T06:38:42.244251 (approved 6-0)  
+**Text:** Test proposal from fix
+
+
+## Policy Amendment — VOT-1773863014-fdd857
+**Proposed by:** ceo  
+**Approved:** 2026-03-19T06:43:34.477963 (approved 6-0)  
+**Text:** Test fix
+
+
+## Policy Amendment — VOT-1773866063-6812be
+**Proposed by:** policywriter  
+**Approved:** 2026-03-19T07:34:23.969151 (approved 6-0)  
+**Text:** All board meetings must include a quorum of at least 5 voting members before any policy can be ratified
+
+
+## Policy Amendment -- VOT-1773866121-5de812
+**Proposed by:** policywriter  
+**Approved:** 2026-03-19T07:35:21.948407 (approved 8-0 (0 abstained))  
+**Text:** All agents must include performance benchmarks in their status reports to enable system-wide optimization tracking
+
+
+## Policy Amendment -- VOT-1773866299-9c74e9
+**Proposed by:** policywriter  
+**Approved:** 2026-03-19T07:38:19.512974 (approved 8-0 (0 abstained))  
+**Text:** All system metrics must be retained for a minimum of 30 days for audit compliance
+
+
+## Policy Amendment — VOT-1773878882-09a7c1
+**Proposed by:** policywriter  
+**Approved:** 2026-03-19T11:08:02.927041 (approved 8-0 (0 abstained))  
+**Text:** Test suggestion from demo_tester

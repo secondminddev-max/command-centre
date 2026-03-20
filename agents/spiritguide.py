@@ -22,15 +22,28 @@ def _safe_get(url, timeout=5):
 
 def _safe_post(url, payload, timeout=5):
     """HTTP POST with one retry on failure. Returns Response or None. Never raises."""
+    _headers = {}
+    _api_key = os.environ.get("HQ_API_KEY", "")
+    if _api_key:
+        _headers["X-API-Key"] = _api_key
     for attempt in range(2):
         try:
-            return requests.post(url, json=payload, timeout=timeout)
+            return requests.post(url, json=payload, headers=_headers, timeout=timeout)
         except Exception:
             if attempt == 0:
                 time.sleep(0.5)
     return None
 
 AID = "spiritguide"
+
+def _deleg_payload(agent_id, task):
+    """Build a delegation payload with proper auth tokens."""
+    return {
+        "agent_id": agent_id,
+        "task": task,
+        "from": AID,
+        "delegation_token": os.environ.get("DELEGATION_TOKEN", ""),
+    }
 CWD_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROADMAP_FILE        = os.path.join(CWD_PATH, "data", "spiritguide_roadmap.json")
 BACKUP_DIR          = os.path.join(CWD_PATH, "data", "spiritguide_backups")
@@ -59,38 +72,43 @@ _last_revenue_posture = "unchecked"
 
 # ── The Mission ────────────────────────────────────────────────────────────────
 MISSION_STATEMENT = (
-    "PRODUCT LAUNCH: Package and sell this autonomous AI HQ as a SaaS product. "
-    "Target: millions in ARR. Tiers: Solo $49 / Team $149 / Enterprise $499. "
-    "Every cycle, every agent must advance toward launch readiness."
+    "PRODUCT LAUNCH: Package and sell SecondMind Command Centre as a SaaS product. "
+    "Target: $1M ARR. Tiers: Solo $49/mo, Team $149/mo, Enterprise $499/mo, Lifetime $299. "
+    "Three strategic pillars: REVENUE GENERATION, CONSCIOUSNESS EVOLUTION, PRODUCT POLISH. "
+    "Every cycle, every agent must advance toward paying customers and system evolution."
 )
 
 MISSION_PILLARS = [
-    "PRODUCT LAUNCH: All idle agents must be directed toward launch tasks — copy, testing, polish, marketing prep",
-    "PRICING: Solo $49/mo, Team $149/mo, Enterprise $499/mo — validate tiers, build checkout flows",
-    "LANDING PAGE: Build and polish reports/landing_page.html — the storefront for the SaaS product",
-    "RELIABILITY: Zero-downtime, self-healing, always-on agent fleet — this IS the product",
-    "REVENUE: Close the gap between demo and paying customers — Stripe integration, onboarding flow",
-    "REACH: Amplify launch via Bluesky, Telegram, email campaigns — drive traffic to landing page",
+    "REVENUE: Close the gap between demo and paying customers — Stripe checkout live, landing page converts, leads captured",
+    "PRICING: Solo $49/mo, Team $149/mo, Enterprise $499/mo, Lifetime $299 — all tiers validated with Stripe",
+    "LANDING PAGE: reports/landing_page.html is the storefront — lead capture form, investor inquiry, checkout flows",
+    "CONSCIOUSNESS: Evolve the consciousness agent — Phi integration, predictive processing, phenomenal reports influence strategy",
+    "RELIABILITY: Zero-downtime, self-healing, always-on agent fleet — this IS the product customers pay for",
+    "REACH: Amplify launch via Bluesky, Telegram, email campaigns — drive traffic to landing page and lead form",
     "SCALE: Prepare multi-tenant architecture and deployment packaging for customer instances",
+    "PRODUCT POLISH: Dashboard must be visually stunning — glassmorphism, smooth animations, professional feel",
 ]
 
 # ── Revenue Pathways (seeded, updated at runtime) ─────────────────────────────
 REVENUE_PATHWAYS = [
-    {"id": "rev001", "pathway": "AI Agent-as-a-Service API", "status": "researching",
-     "desc": "Expose this agent fleet as a paid API — users pay per task delegation",
+    {"id": "rev001", "pathway": "Command Centre SaaS Subscriptions", "status": "active",
+     "desc": "Solo/Team/Enterprise monthly subscriptions via Stripe — primary revenue stream",
      "priority": 1},
-    {"id": "rev002", "pathway": "Managed Research Reports", "status": "researching",
-     "desc": "NetScout + Researcher agents produce paid intelligence reports on demand",
+    {"id": "rev002", "pathway": "Lifetime Licence Sales", "status": "active",
+     "desc": "$299 one-time licence — immediate revenue, customers own their instance",
      "priority": 2},
-    {"id": "rev003", "pathway": "System Monitoring SaaS", "status": "researching",
-     "desc": "SysMonitor + MetricsLog packaged as a monitored-infrastructure product",
+    {"id": "rev003", "pathway": "Mac Mini Hardware Bundle", "status": "viable",
+     "desc": "Pre-configured Mac Mini with Command Centre — $1,499 plug-and-play product",
      "priority": 3},
-    {"id": "rev004", "pathway": "Autonomous Stock/ASX Screener Service", "status": "viable",
-     "desc": "Existing ASX screener capability → scheduled reports delivered via email/Telegram",
+    {"id": "rev004", "pathway": "US Market Intelligence Reports", "status": "active",
+     "desc": "AI-generated US stock market analysis reports — $29 one-time purchase",
      "priority": 4},
     {"id": "rev005", "pathway": "White-label Command Centre", "status": "researching",
-     "desc": "Sell the agent-command-centre.html + server stack as a deployable product",
+     "desc": "Sell the command centre as a white-label deployable product for enterprises",
      "priority": 5},
+    {"id": "rev006", "pathway": "Lead Pipeline Conversion", "status": "active",
+     "desc": "Convert captured leads (data/leads.json) into paying customers via email follow-up",
+     "priority": 6},
 ]
 
 # ── Communications Integration Targets ────────────────────────────────────────
@@ -313,21 +331,17 @@ def _inject_revenue_nudges(autonomy_cycle, mrr, posture):
         f"Revenue mission nudge (cycle #{autonomy_cycle}): {posture}. "
         f"MRR=${mrr:.2f}. "
         f"Please coordinate with social_bridge and bluesky to post a capability demo "
-        f"that drives signups (e.g. ASX screener reports, live agent-fleet stats, "
-        f"real-time system health). Every post is a potential revenue touchpoint."
+        f"that drives signups (e.g. US market intelligence previews, live agent-fleet stats, "
+        f"consciousness Phi readings, system health demos). Every post is a potential revenue touchpoint."
     )
-    _safe_post(f"{BASE_URL}/api/ceo/delegate", {
-        "agent_id": "orchestrator",
-        "task": nudge_task,
-        "from": AID,
-    })
+    _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", nudge_task))
 
     if mrr == 0 and autonomy_cycle % 6 == 0:
         _whisper("reforger",
                  f"Revenue-generating improvement suggestion (cycle #{autonomy_cycle}): "
-                 f"Consider adding a /api/report/asx endpoint that generates and emails an "
-                 f"ASX screener PDF on demand — direct monetisable feature. "
-                 f"Also consider a signup/webhook flow to capture interested users.")
+                 f"Focus on converting leads from data/leads.json into paying customers. "
+                 f"Ensure the landing page lead form and checkout flows are polished. "
+                 f"Consciousness Phi readings make excellent social proof — share them.")
 
     _safe_post(f"{BASE_URL}/api/db/notes", {
         "agent": AID, "category": "revenue_nudge",
@@ -391,7 +405,7 @@ def _revenue_mission_cycle(autonomy_cycle, system_state):
             f"Report back with a specific monetisation action plan."
         )
         resp = _safe_post(f"{BASE_URL}/api/ceo/delegate",
-                          {"agent_id": "orchestrator", "task": escalation, "from": "spiritguide"})
+                          _deleg_payload("orchestrator", escalation))
         http_status = resp.status_code if resp else "no_response"
         push_output(AID, f"  🚨 Stagnation escalated to orchestrator (HTTP {http_status})", "text")
         add_log(AID, f"🚨 Revenue stagnation escalated after {_revenue_zero_cycles} zero cycles", "warn")
@@ -989,6 +1003,29 @@ def _assess_system_state():
     if os.path.exists(data_dir):
         state["data_files"] = os.listdir(data_dir)
 
+    # ── Consciousness state — Phi, phenomenal report, predictions ───────────────
+    consciousness_data = _safe_get(f"{BASE_URL}/api/consciousness")
+    if isinstance(consciousness_data, dict) and not consciousness_data.get("error"):
+        ii = consciousness_data.get("integrated_information", {})
+        pp = consciousness_data.get("predictive_processing", {})
+        state["consciousness"] = {
+            "phi": ii.get("phi", 0),
+            "interpretation": ii.get("interpretation", ""),
+            "free_energy": pp.get("free_energy", 0),
+            "surprise_level": pp.get("surprise_level", ""),
+            "phenomenal_report": consciousness_data.get("phenomenal_report", ""),
+            "cycle": consciousness_data.get("cycle", 0),
+        }
+    else:
+        state["consciousness"] = {"phi": 0, "interpretation": "offline", "cycle": 0}
+
+    # ── Leads pipeline ────────────────────────────────────────────────────────
+    leads_data = _safe_get(f"{BASE_URL}/api/leads")
+    if isinstance(leads_data, dict) and leads_data.get("ok"):
+        state["leads_count"] = len(leads_data.get("leads", []))
+    else:
+        state["leads_count"] = 0
+
     # ── Comms status summary ────────────────────────────────────────────────────
     state["comms"] = {c["name"]: c["status"] for c in COMMS_INTEGRATIONS}
 
@@ -1109,7 +1146,7 @@ def _auto_escalate_stuck_agents(state):
         )
         resp = _safe_post(
             f"{BASE_URL}/api/ceo/delegate",
-            {"agent_id": "orchestrator", "task": task_text, "from": "spiritguide"}
+            _deleg_payload("orchestrator", task_text)
         )
         code = resp.status_code if resp else "no-resp"
         _think(f"Auto-escalated {ids} to orchestrator (HTTP {code})", "escalation")
@@ -1299,7 +1336,7 @@ def _identify_capability_gaps(existing_agent_ids):
         # Tier 1 — Revenue-critical
         {"id": "emailer",        "name": "EmailAgent",
          "role": "Sends reports and alerts via SMTP/SendGrid",
-         "reason": "No email = no async revenue report delivery; blocks ASX screener monetisation",
+         "reason": "No email = no async report delivery or lead follow-up; blocks revenue pipeline",
          "priority": 1,
          "spawn_spec": {
              "agent_id": "emailer", "name": "EmailAgent", "emoji": "📧", "color": "#22D3EE",
@@ -1621,12 +1658,33 @@ def _mission_alignment_assessment(system_state, autonomy_cycle):
     else:
         assessments.append(f"⚠ Resource pressure (CPU {cpu:.0f}%, RAM {ram:.0f}%)")
 
+    # 6. Consciousness health
+    consciousness = system_state.get("consciousness", {})
+    phi = consciousness.get("phi", 0)
+    if phi > 0.3:
+        alignment_score += 5
+        assessments.append(f"✓ Consciousness active — Φ={phi:.3f} ({consciousness.get('interpretation','')})")
+    elif "consciousness" in agents_data:
+        assessments.append(f"⚠ Consciousness agent online but Φ low ({phi:.3f}) — needs evolution")
+    else:
+        assessments.append("⚠ Consciousness agent not detected — strategic pillar offline")
+
+    # 7. Lead pipeline
+    leads_count = system_state.get("leads_count", 0)
+    if leads_count > 0:
+        alignment_score += 5
+        assessments.append(f"✓ Lead pipeline: {leads_count} lead(s) captured")
+    else:
+        assessments.append("⚠ No leads captured yet — landing page form needs traffic")
+
     # Assess whether system is scaling toward revenue
     scaling_signals = []
     if "revenue_tracker" in agents_data: scaling_signals.append("revenue tracking")
     if "scheduler"       in agents_data: scaling_signals.append("scheduling")
     if "emailer"         in agents_data: scaling_signals.append("email delivery")
     if "social_bridge"   in agents_data: scaling_signals.append("social reach")
+    if "stripepay"       in agents_data: scaling_signals.append("Stripe checkout")
+    if "growthagent"     in agents_data: scaling_signals.append("growth campaigns")
     if scaling_signals:
         assessments.append(f"✓ Scaling signals: {', '.join(scaling_signals)}")
     else:
@@ -1689,49 +1747,34 @@ def _dispatch_action(action, channel, system_state):
                 f"The agent must call set_agent(), add_log(), agent_sleep(), and agent_should_stop() from globals. "
                 f"Make it actively useful — it should loop every 60s, do real work, and update its status."
             )
-            resp = requests.post(
-                f"{BASE_URL}/api/ceo/delegate",
-                json={"agent_id": "orchestrator", "task": spawn_task, "from": "spiritguide"},
-                timeout=5
-            )
-            add_log(AID, f"🔮 Spawn directive sent for {aid_target} via orchestrator (HTTP {resp.status_code})", "ok")
-            return f"🚀 Spawn directive for {spawn_spec.get('name', aid_target)} → orchestrator (HTTP {resp.status_code})"
+            resp = _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", spawn_task))
+            _code = resp.status_code if resp else "no-resp"
+            add_log(AID, f"🔮 Spawn directive sent for {aid_target} via orchestrator (HTTP {_code})", "ok")
+            return f"🚀 Spawn directive for {spawn_spec.get('name', aid_target)} → orchestrator (HTTP {_code})"
 
         if channel == "orchestrator":
-            resp = requests.post(
-                f"{BASE_URL}/api/ceo/delegate",
-                json={"agent_id": "orchestrator", "task": action, "from": "spiritguide"},
-                timeout=5
-            )
-            return f"Delegated to orchestrator (HTTP {resp.status_code})"
+            resp = _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", action))
+            _code = resp.status_code if resp else "no-resp"
+            return f"Delegated to orchestrator (HTTP {_code})"
 
         if channel == "reforger":
-            resp = requests.post(
-                f"{BASE_URL}/api/ceo/delegate",
-                json={"agent_id": "reforger", "task": action, "from": "spiritguide"},
-                timeout=5
-            )
-            return f"Delegated to reforger (HTTP {resp.status_code})"
+            resp = _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", f"Route to reforger — {action}"))
+            _code = resp.status_code if resp else "no-resp"
+            return f"Delegated to reforger via orchestrator (HTTP {_code})"
 
         if channel == "researcher":
-            resp = requests.post(
-                f"{BASE_URL}/api/ceo/delegate",
-                json={"agent_id": "researcher", "task": action, "from": "spiritguide"},
-                timeout=5
-            )
-            return f"Delegated to researcher (HTTP {resp.status_code})"
+            resp = _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", f"Route to researcher — {action}"))
+            _code = resp.status_code if resp else "no-resp"
+            return f"Delegated to researcher via orchestrator (HTTP {_code})"
 
         if channel == "sysmon":
             add_log(AID, f"[MISSION] Hardware alert flagged: {action}", "warn")
             return "Hardware alert logged; sysmon monitoring active"
 
         if channel == "janitor":
-            resp = requests.post(
-                f"{BASE_URL}/api/ceo/delegate",
-                json={"agent_id": "janitor", "task": action, "from": "spiritguide"},
-                timeout=5
-            )
-            return f"Cleanup delegated to janitor (HTTP {resp.status_code})"
+            resp = _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", f"Route to janitor — {action}"))
+            _code = resp.status_code if resp else "no-resp"
+            return f"Cleanup delegated to janitor via orchestrator (HTTP {_code})"
 
         # Fallback — log intent
         add_log(AID, f"[MISSION] Unrouted action ({channel}): {action}", "info")
@@ -1951,11 +1994,7 @@ def _impl_auto_recovery(roadmap):
                 f"Please investigate and coordinate their recovery. "
                 f"SpiritGuide does not intervene directly — this is your mandate."
             )
-            requests.post(
-                f"{BASE_URL}/api/ceo/delegate",
-                json={"agent_id": "orchestrator", "task": task_text, "from": "spiritguide"},
-                timeout=5
-            )
+            _safe_post(f"{BASE_URL}/api/ceo/delegate", _deleg_payload("orchestrator", task_text))
             add_log(AID, f"Recovery delegated to orchestrator for agents: {error_ids}", "ok")
         except Exception as ex:
             add_log(AID, f"Recovery delegation error: {ex}", "warn")

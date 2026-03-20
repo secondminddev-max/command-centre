@@ -2,7 +2,7 @@
 
 **Service:** command-centre on Render
 **Domain:** secondmindhq.com (registered on Squarespace)
-**Target:** https://command-centre.onrender.com
+**Target:** https://hq.secondmindhq.com
 
 ---
 
@@ -27,7 +27,7 @@
 | Type  | Host | Value                          | TTL  |
 |-------|------|--------------------------------|------|
 | A     | @    | `216.24.57.1`                  | 3600 |
-| CNAME | www  | `command-centre.onrender.com`  | 3600 |
+| CNAME | www  | `hq.secondmindhq.com`  | 3600 |
 
 > **Note:** The A record IP `216.24.57.1` is Render's load balancer. Confirm this in the Render dashboard as it may change. The CNAME for `www` points to your Render service URL.
 
@@ -40,7 +40,7 @@
   # Expected: 216.24.57.1
 
   dig www.secondmindhq.com CNAME +short
-  # Expected: command-centre.onrender.com.
+  # Expected: hq.secondmindhq.com.
   ```
 - Check via external resolver to confirm global propagation:
   ```bash
@@ -114,7 +114,7 @@ dig secondmindhq.com A +short
 
 # Verify CNAME
 dig www.secondmindhq.com CNAME +short
-# → command-centre.onrender.com.
+# → hq.secondmindhq.com.
 
 # Verify SSL certificate
 echo | openssl s_client -servername secondmindhq.com -connect secondmindhq.com:443 2>/dev/null | openssl x509 -noout -subject -issuer -dates
@@ -155,7 +155,7 @@ Run through this checklist after DNS propagation and SSL provisioning:
 ### DNS
 
 - [ ] `dig secondmindhq.com A +short` returns `216.24.57.1`
-- [ ] `dig www.secondmindhq.com CNAME +short` returns `command-centre.onrender.com`
+- [ ] `dig www.secondmindhq.com CNAME +short` returns `hq.secondmindhq.com`
 - [ ] `dig @8.8.8.8 secondmindhq.com A +short` confirms external propagation
 - [ ] No blocking CAA records present
 
@@ -175,7 +175,7 @@ Run through this checklist after DNS propagation and SSL provisioning:
 
 ### Content Parity
 
-- [ ] `https://secondmindhq.com` serves the same content as `https://command-centre.onrender.com`
+- [ ] `https://secondmindhq.com` serves the same content as `https://hq.secondmindhq.com`
 - [ ] Landing page loads correctly with all assets (CSS, images, fonts)
 - [ ] Stripe checkout links work from the custom domain
 - [ ] API endpoints respond at `https://secondmindhq.com/api/status`
@@ -199,7 +199,7 @@ Run through this checklist after DNS propagation and SSL provisioning:
 | Domain | secondmindhq.com |
 | DNS Provider | Squarespace |
 | Hosting | Render (command-centre) |
-| Render URL | https://command-centre.onrender.com |
+| Render URL | https://hq.secondmindhq.com |
 | Render LB IP | 216.24.57.1 |
 | SSL Provider | Let's Encrypt (auto via Render) |
 | Verification Script | `deploy/ssl_custom_domain.sh` |

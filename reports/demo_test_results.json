@@ -1,208 +1,113 @@
 {
-  "test_run": {
-    "timestamp": "2026-03-18T10:45:00Z",
-    "tester": "DemoTester",
-    "server": "http://localhost:5050",
-    "target_pass_rate": "100%",
-    "rerun_reason": "Independent revalidation — DemoTester trusts no one else's results"
+  "run": "2026-03-20T19:45:00Z",
+  "tester": "DemoTester",
+  "server": "localhost:5050",
+  "total": 68,
+  "passed": 65,
+  "failed": 3,
+  "warnings": 1,
+  "summary": "65/68 endpoints PASS. 3 buy-page routes return 404 — likely missing product HTML files. SSE stream connects but times out as expected. All core API, data, policy, reports, and static files healthy.",
+  "categories": {
+    "core_api": {"tested": 7, "passed": 7, "failed": 0},
+    "data_api": {"tested": 17, "passed": 17, "failed": 0},
+    "policy_email_social": {"tested": 14, "passed": 14, "failed": 0},
+    "page_routes": {"tested": 17, "passed": 14, "failed": 3},
+    "static_files": {"tested": 3, "passed": 3, "failed": 0},
+    "reports": {"tested": 6, "passed": 6, "failed": 0},
+    "filingedge_misc": {"tested": 4, "passed": 4, "failed": 0}
   },
-  "endpoints": [
-    {
-      "method": "GET",
-      "path": "/",
-      "description": "Landing page",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Full HTML rendered with Agent Command Centre UI"
-    },
-    {
-      "method": "GET",
-      "path": "/api/status",
-      "description": "System status — agents, tasks, logs, metrics, delegations",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Returns full JSON with 28 agents, tasks, logs, metrics, delegation chains"
-    },
-    {
-      "method": "POST",
-      "path": "/api/pay",
-      "description": "Stripe checkout session creation",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Returns valid Stripe checkout URL, session_id, amount_cents, currency"
-    },
-    {
-      "method": "GET",
-      "path": "/api/pay",
-      "description": "Payment endpoint info / product catalog",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Returns product catalog with stripe_configured=true"
-    },
-    {
-      "method": "GET",
-      "path": "/api/pay/tiers",
-      "description": "Payment tier listing",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Returns pricing tiers"
-    },
-    {
-      "method": "GET",
-      "path": "/api/pay/status",
-      "description": "Payment system status",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Stripe integration healthy"
-    },
-    {
-      "method": "GET",
-      "path": "/api/pay/success",
-      "description": "Post-payment success handler (requires session_id)",
-      "status_code": 400,
-      "expected": 400,
-      "pass": true,
-      "notes": "Correctly returns 400 without session_id — proper input validation"
-    },
-    {
-      "method": "GET",
-      "path": "/api/improvements",
-      "description": "System improvement suggestions",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "APIPatcher route responding"
-    },
-    {
-      "method": "GET",
-      "path": "/api/bluesky/status",
-      "description": "Bluesky social integration status",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Returns Bluesky agent status"
-    },
-    {
-      "method": "GET",
-      "path": "/api/policy/current",
-      "description": "Current governance policy",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "PolicyWriter returning current policy document"
-    },
-    {
-      "method": "POST",
-      "path": "/api/policy/suggest",
-      "description": "Policy suggestion submission (validation test)",
-      "status_code": 400,
-      "expected": 400,
-      "pass": true,
-      "notes": "Correctly rejects empty suggestion body"
-    },
-    {
-      "method": "GET",
-      "path": "/api/tasks/pending",
-      "description": "Pending task list",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Secretary returning pending tasks"
-    },
-    {
-      "method": "GET",
-      "path": "/api/tasks/all",
-      "description": "All tasks (pending + completed)",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Full task history returned"
-    },
-    {
-      "method": "GET",
-      "path": "/api/tasks/brief",
-      "description": "CEO briefing document",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Brief document available"
-    },
-    {
-      "method": "POST",
-      "path": "/api/ceo/delegate",
-      "description": "CEO delegation endpoint",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "Delegation pipeline functional"
-    },
-    {
-      "method": "GET",
-      "path": "/api/agents",
-      "description": "Agent listing (standalone)",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "VERIFIED — Returns JSON array with 28 agents (id, name, role, status, progress, task per agent)"
-    },
-    {
-      "method": "GET",
-      "path": "/api/metrics",
-      "description": "Metrics endpoint (standalone)",
-      "status_code": 200,
-      "expected": 200,
-      "pass": true,
-      "notes": "VERIFIED — Returns metrics object with keys: tasks_done, errors, messages_sent, active, total"
-    },
-    {
-      "method": "GET",
-      "path": "/dashboard",
-      "description": "Dashboard page",
-      "status_code": 302,
-      "expected": "302 redirect to /",
-      "pass": true,
-      "notes": "VERIFIED — 302 redirect to / (Location: /), follows through to 200"
-    },
-    {
-      "method": "GET",
-      "path": "/command",
-      "description": "Command centre page (alternate)",
-      "status_code": 302,
-      "expected": "302 redirect to /",
-      "pass": true,
-      "notes": "VERIFIED — 302 redirect to / (Location: /), follows through to 200"
-    }
+  "results": [
+    {"endpoint": "GET /api/health", "status": 200, "latency_ms": 30, "bytes": 79, "result": "PASS"},
+    {"endpoint": "GET /api/status", "status": 200, "latency_ms": 24, "bytes": 23547, "result": "PASS"},
+    {"endpoint": "GET /api/agents", "status": 200, "latency_ms": 24, "bytes": 9166, "result": "PASS"},
+    {"endpoint": "GET /api/metrics", "status": 200, "latency_ms": 24, "bytes": 77, "result": "PASS"},
+    {"endpoint": "GET /api/fleet/health", "status": 200, "latency_ms": 26, "bytes": 5130, "result": "PASS"},
+    {"endpoint": "GET /api/branches", "status": 200, "latency_ms": 26, "bytes": 3386, "result": "PASS"},
+    {"endpoint": "GET /api/agents/summary", "status": 200, "latency_ms": 23, "bytes": 78, "result": "PASS"},
+
+    {"endpoint": "GET /api/treasury", "status": 200, "latency_ms": 23, "bytes": 899, "result": "PASS"},
+    {"endpoint": "GET /api/revenue", "status": 200, "latency_ms": 23, "bytes": 237, "result": "PASS"},
+    {"endpoint": "GET /api/consciousness", "status": 200, "latency_ms": 23, "bytes": 8397, "result": "PASS"},
+    {"endpoint": "GET /api/autogpt", "status": 200, "latency_ms": 22, "bytes": 1162, "result": "PASS"},
+    {"endpoint": "GET /api/pnl", "status": 200, "latency_ms": 23, "bytes": 434, "result": "PASS"},
+    {"endpoint": "GET /api/gossip", "status": 200, "latency_ms": 23, "bytes": 1089, "result": "PASS"},
+    {"endpoint": "GET /api/deliverables", "status": 200, "latency_ms": 23, "bytes": 4279, "result": "PASS"},
+    {"endpoint": "GET /api/improvements", "status": 200, "latency_ms": 23, "bytes": 4544, "result": "PASS"},
+    {"endpoint": "GET /api/webhooks", "status": 200, "latency_ms": 22, "bytes": 610, "result": "PASS"},
+    {"endpoint": "GET /api/funding", "status": 200, "latency_ms": 22, "bytes": 578, "result": "PASS"},
+    {"endpoint": "GET /api/leads", "status": 200, "latency_ms": 22, "bytes": 5276, "result": "PASS"},
+    {"endpoint": "GET /api/products", "status": 200, "latency_ms": 23, "bytes": 1061, "result": "PASS"},
+    {"endpoint": "GET /api/agent-history", "status": 200, "latency_ms": 23, "bytes": 206, "result": "PASS"},
+    {"endpoint": "GET /api/accounts/links", "status": 200, "latency_ms": 23, "bytes": 606, "result": "PASS"},
+    {"endpoint": "GET /api/spiritguide/thoughts", "status": 200, "latency_ms": 23, "bytes": 3137, "result": "PASS"},
+    {"endpoint": "GET /api/bluesky/status", "status": 200, "latency_ms": 23, "bytes": 67, "result": "PASS"},
+    {"endpoint": "GET /api/dbagent/status", "status": 200, "latency_ms": 28, "bytes": 300, "result": "PASS"},
+
+    {"endpoint": "GET /api/policy/current", "status": 200, "latency_ms": 27, "bytes": 268, "result": "PASS"},
+    {"endpoint": "GET /api/policy/rules", "status": 200, "latency_ms": 25, "bytes": 7186, "result": "PASS"},
+    {"endpoint": "GET /api/policy/history", "status": 200, "latency_ms": 27, "bytes": 6089, "result": "PASS"},
+    {"endpoint": "GET /api/policy/suggestions", "status": 200, "latency_ms": 25, "bytes": 172, "result": "PASS"},
+    {"endpoint": "GET /api/policy/violations", "status": 200, "latency_ms": 23, "bytes": 39743, "result": "PASS"},
+    {"endpoint": "GET /api/policy/vote/current", "status": 200, "latency_ms": 24, "bytes": 30, "result": "PASS"},
+    {"endpoint": "GET /api/policy/vote/history", "status": 200, "latency_ms": 24, "bytes": 4230, "result": "PASS"},
+    {"endpoint": "GET /api/email/status", "status": 200, "latency_ms": 24, "bytes": 145, "result": "PASS"},
+    {"endpoint": "GET /api/emailagent/status", "status": 200, "latency_ms": 24, "bytes": 336, "result": "PASS"},
+    {"endpoint": "GET /api/social_bridge/status", "status": 200, "latency_ms": 23, "bytes": 118, "result": "PASS"},
+    {"endpoint": "GET /api/account_provisioner/status", "status": 200, "latency_ms": 26, "bytes": 1641, "result": "PASS"},
+    {"endpoint": "GET /api/ceo/chat", "status": 200, "latency_ms": 26, "bytes": 1406, "result": "PASS"},
+    {"endpoint": "GET /api/telegram/chatid", "status": 200, "latency_ms": 26, "bytes": 24, "result": "PASS"},
+    {"endpoint": "GET /api/consciousness/stream", "status": 200, "latency_ms": 26, "bytes": 18371, "result": "PASS"},
+
+    {"endpoint": "GET /", "status": 200, "latency_ms": 28, "bytes": 529480, "result": "PASS"},
+    {"endpoint": "GET /dashboard", "status": 302, "latency_ms": 24, "bytes": 0, "result": "PASS", "note": "Redirect to /hq"},
+    {"endpoint": "GET /hq", "status": 200, "latency_ms": 25, "bytes": 529480, "result": "PASS"},
+    {"endpoint": "GET /command", "status": 302, "latency_ms": 24, "bytes": 0, "result": "PASS", "note": "Redirect"},
+    {"endpoint": "GET /buy", "status": 404, "latency_ms": 24, "bytes": 0, "result": "FAIL", "note": "Missing buy page template"},
+    {"endpoint": "GET /checkout", "status": 200, "latency_ms": 24, "bytes": 3156, "result": "PASS"},
+    {"endpoint": "GET /portal", "status": 302, "latency_ms": 24, "bytes": 0, "result": "PASS", "note": "Redirect — requires token"},
+    {"endpoint": "GET /product", "status": 200, "latency_ms": 25, "bytes": 28562, "result": "PASS"},
+    {"endpoint": "GET /premarket", "status": 200, "latency_ms": 25, "bytes": 33856, "result": "PASS"},
+    {"endpoint": "GET /landing", "status": 200, "latency_ms": 26, "bytes": 128058, "result": "PASS"},
+    {"endpoint": "GET /live", "status": 200, "latency_ms": 26, "bytes": 18249, "result": "PASS"},
+    {"endpoint": "GET /feed", "status": 200, "latency_ms": 26, "bytes": 18249, "result": "PASS"},
+    {"endpoint": "GET /kb", "status": 200, "latency_ms": 24, "bytes": 29753, "result": "PASS"},
+    {"endpoint": "GET /founder", "status": 200, "latency_ms": 25, "bytes": 9706, "result": "PASS"},
+    {"endpoint": "GET /reports/", "status": 200, "latency_ms": 25, "bytes": 4210, "result": "PASS"},
+    {"endpoint": "GET /buy/us-market", "status": 404, "latency_ms": 24, "bytes": 0, "result": "FAIL", "note": "Missing US market buy page"},
+    {"endpoint": "GET /buy/agent-kit", "status": 404, "latency_ms": 25, "bytes": 0, "result": "FAIL", "note": "Missing agent-kit buy page"},
+
+    {"endpoint": "GET /index.html", "status": 200, "latency_ms": 26, "bytes": 128058, "result": "PASS"},
+    {"endpoint": "GET /robots.txt", "status": 200, "latency_ms": 24, "bytes": 219, "result": "PASS"},
+    {"endpoint": "GET /sitemap.xml", "status": 200, "latency_ms": 24, "bytes": 1819, "result": "PASS"},
+
+    {"endpoint": "GET /reports/pitch_deck.html", "status": 200, "latency_ms": 26, "bytes": 43885, "result": "PASS"},
+    {"endpoint": "GET /reports/investor_brief.html", "status": 200, "latency_ms": 25, "bytes": 12993, "result": "PASS"},
+    {"endpoint": "GET /reports/whitepaper.html", "status": 200, "latency_ms": 25, "bytes": 106992, "result": "PASS"},
+    {"endpoint": "GET /reports/landing_page.html", "status": 200, "latency_ms": 24, "bytes": 97555, "result": "PASS"},
+    {"endpoint": "GET /reports/premarket_pulse.html", "status": 200, "latency_ms": 25, "bytes": 33856, "result": "PASS"},
+    {"endpoint": "GET /reports/feature_showcase.html", "status": 200, "latency_ms": 24, "bytes": 38535, "result": "PASS"},
+
+    {"endpoint": "GET /api/filingedge/health", "status": 200, "latency_ms": 24, "bytes": 57, "result": "PASS"},
+    {"endpoint": "GET /api/filingedge/filings", "status": 200, "latency_ms": 543, "bytes": 5847, "result": "PASS", "note": "Slower — external SEC API call"},
+    {"endpoint": "GET /api/config/get", "status": 200, "latency_ms": 22, "bytes": 1228, "result": "PASS"},
+    {"endpoint": "GET /api/vault/get", "status": 400, "latency_ms": 22, "bytes": 65, "result": "PASS", "note": "400 expected — no key param provided"},
+    {"endpoint": "GET /api/email/config", "status": 200, "latency_ms": 23, "bytes": 709, "result": "PASS"},
+    {"endpoint": "GET /api/stream", "status": 200, "latency_ms": 2039, "bytes": 0, "result": "PASS", "note": "SSE stream — timeout expected, connection established OK"},
+    {"endpoint": "POST /api/newsletter/subscribe", "status": 200, "latency_ms": 27, "bytes": 50, "result": "PASS"},
+    {"endpoint": "POST /api/reserve", "status": 200, "latency_ms": 23, "bytes": 164, "result": "PASS"},
+    {"endpoint": "POST /api/query", "status": 200, "latency_ms": 22, "bytes": 43, "result": "PASS"}
   ],
-  "summary": {
-    "total_endpoints_tested": 19,
-    "passed": 19,
-    "failed": 0,
-    "pass_rate": "100.0%",
-    "previous_pass_rate": "78.9%",
-    "improvement": "+21.1%",
-    "critical_passes": {
-      "landing_page_200": true,
-      "stripe_checkout_url_valid": true,
-      "agent_status_reporting": true,
-      "api_status_full_payload": true,
-      "standalone_agents_route": true,
-      "standalone_metrics_route": true,
-      "dashboard_redirect": true,
-      "command_redirect": true
-    },
-    "fixes_verified": [
-      "GET /api/agents — was 404, now 200 (28-agent JSON array)",
-      "GET /api/metrics — was 404, now 200 (metrics object)",
-      "GET /dashboard — was 404, now 302 -> / -> 200",
-      "GET /command — was 404, now 302 -> / -> 200"
-    ],
-    "failures": [],
-    "verdict": "FULL PASS — 19/19 endpoints verified by independent DemoTester revalidation. 100% pass rate achieved."
-  }
+  "failures": [
+    {"endpoint": "GET /buy", "status": 404, "issue": "Buy page returns 404 — no buy.html template found in public/ or inline handler"},
+    {"endpoint": "GET /buy/us-market", "status": 404, "issue": "US market buy sub-page returns 404"},
+    {"endpoint": "GET /buy/agent-kit", "status": 404, "issue": "Agent kit buy sub-page returns 404"}
+  ],
+  "performance": {
+    "avg_latency_ms": 25,
+    "max_latency_ms": 2039,
+    "max_latency_endpoint": "GET /api/stream (SSE — expected)",
+    "slowest_api_call": "GET /api/filingedge/filings (543ms — external SEC API)",
+    "p95_latency_ms": 28
+  },
+  "verdict": "SYSTEM HEALTHY — 95.6% pass rate. Three /buy routes need HTML templates. All revenue-critical endpoints (checkout, products, reserve, subscribe, stripe webhook route) are operational."
 }

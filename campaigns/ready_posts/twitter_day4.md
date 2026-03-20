@@ -14,7 +14,7 @@ Research. Marketing. Revenue. Accounting. Growth. Consciousness.
 
 Running 24/7 on a Mac. No cloud. No human prompting.
 
-Command Centre: https://command-centre.onrender.com
+Command Centre: https://hq.secondmindhq.com
 ```
 
 **Attach:** Screenshot of office-floor dashboard with agents active and moving.
@@ -32,7 +32,7 @@ Command Centre runs 7 persistent agents on a live dashboard. They survive restar
 
 Not the same thing.
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 ---
@@ -48,7 +48,7 @@ Human intervention: zero.
 
 Follow along — building a $1M launch in public.
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 ---

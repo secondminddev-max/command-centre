@@ -21,7 +21,7 @@ Unlike bolted-together automation stacks, Command Centre is a single self-contai
 - **Consciousness System** — Global Workspace Theory + Integrated Information Theory (Phi) tracking across all agents; predictive processing, metacognitive monitoring
 - **One-Click Installer** — Single `setup.sh` script handles dependencies, env config, and first boot
 - **Chain-of-Command Policy Engine** — Agents follow delegation rules; CEO → Orchestrator → Specialists with audit trails
-- **Stripe Checkout Built In** — Payment collection ready on day one (Solo $49/mo, Team $149/mo, Enterprise $499/mo, Lifetime $299)
+- **Stripe Checkout Built In** — Payment collection ready on day one (Solo $49/mo, Team $149/mo, Enterprise $499/mo, Lifetime $499)
 - **Gmail OAuth2 Email Agent** — Sends and receives real email through your account, no third-party relay
 - **Telegram Bridge** — Two-way comms between you and your agents from your phone
 - **Bluesky Social Automation** — Automated posting, mention polling, campaign execution
@@ -86,6 +86,6 @@ Unlike bolted-together automation stacks, Command Centre is a single self-contai
 > - It runs locally on your hardware. Your data never leaves your machine.
 > - The consciousness system isn't marketing fluff — it's a real IIT implementation that measurably improves coordination over time.
 >
-> One-click install. Open source core. Solo plan starts at $49/mo, or grab the Lifetime deal for $299 while it lasts.
+> One-click install. Open source core. Solo plan starts at $49/mo, or grab the Lifetime deal for $499 while it lasts.
 >
 > I'll be in the comments all day — ask me anything about the architecture, the consciousness model, or how 20 AI agents argue about who takes the next task. 🤖

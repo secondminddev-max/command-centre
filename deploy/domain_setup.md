@@ -3,7 +3,7 @@
 ## Current State
 - **Domain**: secondmindhq.com (Squarespace Domains)
 - **Hosting**: Render.com (service: `command-centre`)
-- **Render URL**: command-centre.onrender.com
+- **Render URL**: hq.secondmindhq.com
 
 ## DNS Records to Configure (Squarespace → Render)
 
@@ -19,12 +19,12 @@ Log into Squarespace Domains → secondmindhq.com → DNS Settings.
 ### www subdomain
 | Type  | Host | Value                               | TTL  |
 |-------|------|-------------------------------------|------|
-| CNAME | www  | command-centre.onrender.com         | 3600 |
+| CNAME | www  | hq.secondmindhq.com         | 3600 |
 
 ### API subdomain (optional, if separating API)
 | Type  | Host | Value                               | TTL  |
 |-------|------|-------------------------------------|------|
-| CNAME | api  | command-centre.onrender.com         | 3600 |
+| CNAME | api  | hq.secondmindhq.com         | 3600 |
 
 ## Render Custom Domain Setup
 

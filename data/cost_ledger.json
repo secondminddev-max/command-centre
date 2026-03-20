@@ -1,0 +1,46 @@
+{
+  "currency": "usd",
+  "last_updated": "2026-03-20",
+  "monthly_costs": [
+    {
+      "id": "render_hosting",
+      "name": "Render Hosting",
+      "amount_usd": 7.00,
+      "interval": "month",
+      "category": "infrastructure",
+      "notes": "Web service hosting for hq.secondmindhq.com",
+      "status": "active"
+    },
+    {
+      "id": "anthropic_api",
+      "name": "Anthropic API (Claude)",
+      "amount_usd": 100.00,
+      "interval": "month",
+      "category": "ai_compute",
+      "notes": "Claude API usage for agent operations — variable, estimated avg",
+      "status": "active"
+    },
+    {
+      "id": "squarespace_domain",
+      "name": "Squarespace Domain (secondmindhq.com)",
+      "amount_usd": 1.67,
+      "interval": "month",
+      "category": "infrastructure",
+      "notes": "$20/yr domain registration",
+      "status": "active"
+    },
+    {
+      "id": "stripe_fees",
+      "name": "Stripe Processing Fees",
+      "amount_usd": 0.00,
+      "interval": "month",
+      "category": "payment_processing",
+      "notes": "2.9% + $0.30 per transaction — computed dynamically from revenue",
+      "status": "active",
+      "rate_pct": 2.9,
+      "rate_fixed": 0.30
+    }
+  ],
+  "total_fixed_monthly_usd": 108.67,
+  "notes": "Fixed costs excluding variable Stripe fees. Update amounts as plans change."
+}

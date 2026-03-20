@@ -15,4 +15,4 @@ This is what AI operations look like when you can actually see them.
 
 Try it: secondmindhq.com
 
-Solo $49/mo · Lifetime $299
+Solo $49/mo · Lifetime $499

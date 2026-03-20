@@ -101,8 +101,10 @@
       "role": "CEO Clerk \u2014 collects and delivers reports and documents to the customer mailbox",
       "emoji": "\ud83d\udcec",
       "color": "#f5c842"
-    }
+    },
+    "filingedge": {}
   },
-  "saved_at": 1773843707.8437362,
-  "ceo_policy_violations": 7
+  "saved_at": 1773996798.554413,
+  "ceo_policy_violations": 1,
+  "build_mode": false
 }

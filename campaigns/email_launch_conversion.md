@@ -40,10 +40,10 @@ Today we're launching Command Centre — and I wanted you to be the first to kno
 
 | Plan | Launch Price | After This Week |
 |------|-------------|-----------------|
-| **Solo** | $49/mo | $79/mo |
-| **Team** | $149/mo | $249/mo |
-| **Enterprise** | $499/mo | $799/mo |
-| **Lifetime Access** | $299 one-time | Gone forever |
+| **Solo** | $49/mo | $119/mo |
+| **Team** | $149/mo | $499/mo |
+| **Enterprise** | $499/mo | $999/mo |
+| **Lifetime Access** | $499 one-time | Gone forever |
 
 Launch pricing locks in your rate permanently. After this week, prices increase and lifetime access disappears.
 
@@ -51,7 +51,7 @@ Launch pricing locks in your rate permanently. After this week, prices increase 
 
 — The SecondMind Team
 
-P.S. The Lifetime Access tier ($299, everything forever) has a cap. Once it's gone, it's subscription-only.
+P.S. The Lifetime Access tier ($499, everything forever) has a cap. Once it's gone, it's subscription-only.
 
 ---
 
@@ -85,7 +85,7 @@ Hiring a single VA to do half of this costs $2,000+/mo. Command Centre does all 
 | Virtual assistant | $2,000+ |
 | 5 SaaS tools (Hootsuite, Zapier, Freshdesk, Monday, analytics) | $500+ |
 | Part-time ops hire | $3,000+ |
-| **Command Centre** | **$49** |
+| **Command Centre** | **$79** |
 
 [Start Your Solo Plan — $49/mo →](https://secondmindhq.com/#pricing)
 
@@ -121,7 +121,7 @@ Command Centre launched 3 days ago. Here's the early signal:
 | Solo | $49/mo (locks in forever) |
 | Team | $149/mo (locks in forever) |
 | Enterprise | $499/mo (locks in forever) |
-| Lifetime | $299 once (disappears Friday) |
+| Lifetime | $499 once (disappears Friday) |
 
 After Friday, prices go up across every tier and lifetime access is permanently removed.
 
@@ -129,13 +129,13 @@ After Friday, prices go up across every tier and lifetime access is permanently 
 
 — The SecondMind Team
 
-P.S. Lifetime Access ($299) has limited slots. When they're gone, they're gone.
+P.S. Lifetime Access ($499) has limited slots. When they're gone, they're gone.
 
 ---
 
 ## Email 4: Last Call
 **Subject:** Final hours — Command Centre launch pricing ends tonight
-**Preview text:** $49/mo becomes $79/mo at midnight.
+**Preview text:** $49/mo becomes $119/mo at midnight.
 **Send:** Launch day + 6 (2026-03-31)
 
 ---
@@ -145,10 +145,10 @@ Hi {{first_name}},
 This is the last email about launch pricing.
 
 **Tonight at midnight, prices increase:**
-- Solo: $49 → $79/mo
-- Team: $149 → $249/mo
-- Enterprise: $499 → $799/mo
-- Lifetime Access: $299 → **removed permanently**
+- Solo: $79 → $119/mo
+- Team: $199 → $499/mo
+- Enterprise: $699 → $999/mo
+- Lifetime Access: $499 → **removed permanently**
 
 If you've been considering Command Centre, this is the moment. Lock in the launch rate now and it stays yours for as long as you're subscribed.
 

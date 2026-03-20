@@ -127,12 +127,38 @@ footer p{margin-bottom:.4rem}
 /* ── CHECKOUT SUCCESS BANNER ── */
 .success-banner{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--green),#00b86e);color:#000;padding:14px 28px;border-radius:12px;font-weight:700;font-size:1rem;z-index:200;box-shadow:0 8px 32px rgba(0,232,143,0.3);display:none}
 
+/* ── LAUNCH BANNER ── */
+.launch-banner{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(90deg,#7b61ff,#00d4ff);padding:10px 0;text-align:center;font-size:.85rem;font-weight:600;color:#fff;letter-spacing:.3px}
+.launch-banner .countdown{font-weight:800;font-variant-numeric:tabular-nums;display:inline-block;min-width:80px}
+.launch-banner a{color:#fff;text-decoration:underline;font-weight:700}
+nav{top:40px !important}
+
+/* ── LAUNCH BADGE ON PRICING ── */
+.launch-price{text-decoration:line-through;color:var(--muted);font-size:1.4rem;font-weight:400}
+.launch-save{display:inline-block;margin-top:6px;padding:4px 12px;border-radius:99px;font-size:.72rem;font-weight:700;background:rgba(0,232,143,0.15);color:var(--green);letter-spacing:.5px;text-transform:uppercase}
+.pulse-urgency{text-align:center;margin-top:1.5rem;padding:12px;border-radius:10px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);font-size:.85rem;color:var(--orange)}
+.pulse-urgency strong{color:#fff}
+
+/* ── HAMBURGER ── */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.mobile-menu{position:fixed;top:90px;left:0;right:0;z-index:99;background:rgba(10,14,23,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 24px 24px;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform .3s ease,opacity .25s ease}
+.mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-menu a{display:block;padding:12px 0;color:var(--text);text-decoration:none;font-size:1rem;font-weight:500;border-bottom:1px solid var(--border)}
+.mobile-menu a:last-child{border-bottom:none}
+.mobile-menu .nav-cta{display:block;text-align:center;margin-top:16px;padding:12px;border-radius:10px}
+
 /* ── RESPONSIVE ── */
 @media(max-width:960px){.pricing-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.comp-table{font-size:.8rem}}
-@media(max-width:640px){.pricing-grid{grid-template-columns:1fr}.hero h1{font-size:2.4rem}.nav-links{display:none}.signup-row{flex-direction:column}.signup-row input{min-width:auto}}
+@media(max-width:640px){.pricing-grid{grid-template-columns:1fr}.hero h1{font-size:2.4rem}.nav-links{display:none}.hamburger{display:flex}.signup-row{flex-direction:column}.signup-row input{min-width:auto}.proof-bar{gap:1.5rem}.proof-value{font-size:1.5rem}}
 </style>
 </head>
 <body>
+
+<!-- Launch Countdown Banner -->
+<div class="launch-banner" id="launchBanner">
+  Launch Week Pricing — <strong>50% off all plans</strong> ends in <span class="countdown" id="launchCountdown">--:--:--</span> &nbsp;|&nbsp; <a href="#pricing">Lock in your rate now</a>
+</div>
 
 <!-- Success Banner -->
 <div class="success-banner" id="successBanner">Payment successful! Check your email for your first briefing.</div>
@@ -149,17 +175,28 @@ footer p{margin-bottom:.4rem}
       <a href="#faq">FAQ</a>
       <a href="#pricing" class="nav-cta">Get Started</a>
     </div>
+    <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu">
+  <a href="#preview" onclick="this.parentElement.classList.remove('open')">Sample</a>
+  <a href="#features" onclick="this.parentElement.classList.remove('open')">Features</a>
+  <a href="#compare" onclick="this.parentElement.classList.remove('open')">Compare</a>
+  <a href="#pricing" onclick="this.parentElement.classList.remove('open')">Pricing</a>
+  <a href="#faq" onclick="this.parentElement.classList.remove('open')">FAQ</a>
+  <a href="#pricing" class="nav-cta" onclick="this.parentElement.classList.remove('open')">Get Started</a>
+</div>
 
 <!-- Hero -->
 <header class="hero">
   <div class="hero-badge">Live Pre-Market Intelligence</div>
-  <h1>Your Edge Before<br>the Opening Bell</h1>
-  <p class="subtitle">AI-powered pre-market briefings — unusual options flow, earnings catalysts, key support/resistance, and actionable trade ideas — delivered to your inbox at 5:30 AM ET.</p>
-  <p class="price-hook">Starting at $19/mo — 10x cheaper than alternatives</p>
+  <h1>Know What Wall Street<br>Knows — Before They Trade</h1>
+  <p class="subtitle">Unusual options flow. Earnings whispers. Key levels. AI-synthesized into a 3-minute briefing — in your inbox at 5:30 AM ET, every trading day.</p>
+  <p class="price-hook">Launch Week: <span class="launch-price">$19/mo</span> just $9.50/mo — same intel, 15x cheaper than Unusual Whales</p>
   <div class="hero-cta">
-    <a href="#pricing" class="btn btn-primary">Start Free Trial</a>
+    <a href="#pricing" class="btn btn-primary">Lock In 50% Off</a>
     <a href="#preview" class="btn btn-outline">See Sample Briefing</a>
   </div>
 </header>
@@ -382,10 +419,11 @@ footer p{margin-bottom:.4rem}
       </div>
       <!-- Trader -->
       <div class="glass price-card pop">
-        <div class="pop-badge">Most Popular</div>
+        <div class="pop-badge">Most Popular — 50% Off</div>
         <h3>Trader</h3>
-        <div class="price">$19<span>/mo</span></div>
-        <div class="period">Cancel anytime</div>
+        <div class="price"><span class="launch-price">$19</span> $9.50<span>/mo</span></div>
+        <div class="period">Cancel anytime &middot; Launch price locked forever</div>
+        <div class="launch-save">Save $114/year</div>
         <ul>
           <li>Daily briefing at 5:30 AM ET</li>
           <li>Full options flow (top 10)</li>
@@ -395,13 +433,15 @@ footer p{margin-bottom:.4rem}
           <li>Sector rotation heatmap</li>
           <li>30-day briefing archive</li>
         </ul>
-        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_trader',this)">Subscribe — $19/mo</button>
+        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_trader',this)">Lock In $9.50/mo</button>
+        <div class="pulse-urgency"><strong>23 spots left</strong> at launch pricing</div>
       </div>
       <!-- Pro -->
       <div class="glass price-card">
         <h3>Pro</h3>
-        <div class="price">$49<span>/mo</span></div>
-        <div class="period">Cancel anytime</div>
+        <div class="price"><span class="launch-price">$49</span> $24.50<span>/mo</span></div>
+        <div class="period">Cancel anytime &middot; Launch price locked forever</div>
+        <div class="launch-save">Save $294/year</div>
         <ul>
           <li>Everything in Trader</li>
           <li>Real-time options alerts (20/day)</li>
@@ -411,13 +451,15 @@ footer p{margin-bottom:.4rem}
           <li>After-hours reaction alerts</li>
           <li>Priority email delivery</li>
         </ul>
-        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_pro',this)">Subscribe — $49/mo</button>
+        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_pro',this)">Lock In $24.50/mo</button>
+        <div class="pulse-urgency"><strong>11 spots left</strong> at launch pricing</div>
       </div>
       <!-- Institutional -->
       <div class="glass price-card">
         <h3>Institutional</h3>
-        <div class="price">$99<span>/mo</span></div>
-        <div class="period">Cancel anytime</div>
+        <div class="price"><span class="launch-price">$99</span> $49.50<span>/mo</span></div>
+        <div class="period">Cancel anytime &middot; Launch price locked forever</div>
+        <div class="launch-save">Save $594/year</div>
         <ul>
           <li>Everything in Pro</li>
           <li>API access (JSON endpoint)</li>
@@ -427,7 +469,8 @@ footer p{margin-bottom:.4rem}
           <li>Monthly macro outlook</li>
           <li>Priority support</li>
         </ul>
-        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_institutional',this)">Subscribe — $99/mo</button>
+        <button class="btn btn-primary btn-sm" onclick="checkout('premarket_pulse_institutional',this)">Lock In $49.50/mo</button>
+        <div class="pulse-urgency"><strong>5 spots left</strong> at launch pricing</div>
       </div>
     </div>
   </div>
@@ -493,13 +536,14 @@ footer p{margin-bottom:.4rem}
 
 <!-- Final CTA / Signup -->
 <section id="signup" class="final-cta">
-  <h2>Get Your Free Briefing</h2>
-  <p>Join now. Your first PreMarket Pulse arrives tomorrow at 5:30 AM ET.</p>
+  <h2>Start With a Free Briefing — Upgrade Anytime</h2>
+  <p>Join now and get your first PreMarket Pulse tomorrow at 5:30 AM ET. Launch pricing ends soon.</p>
   <div class="signup-row">
     <input type="email" id="emailInput" placeholder="Enter your email address" autocomplete="email">
     <button class="btn btn-primary btn-sm" id="signupBtn" onclick="submitEmail()">Subscribe Free</button>
   </div>
   <div id="signupMsg"></div>
+  <p style="margin-top:1.5rem;font-size:.9rem;color:var(--muted)">Or skip free and <a href="#pricing" style="color:var(--accent);font-weight:600">lock in 50% off Trader for $9.50/mo</a> before launch week ends.</p>
 </section>
 
 <!-- Footer -->
@@ -561,6 +605,24 @@ async function submitEmail() {
   }
   msg.style.display = 'block';
 }
+
+/* ── Launch Countdown Timer ── */
+(function() {
+  const end = new Date('2026-03-25T23:59:59Z').getTime();
+  const el = document.getElementById('launchCountdown');
+  function tick() {
+    const now = Date.now();
+    const diff = Math.max(0, end - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    el.textContent = d > 0 ? d + 'd ' + h + 'h ' + m + 'm' : h + 'h ' + m + 'm ' + s + 's';
+    if (diff <= 0) { el.textContent = 'EXPIRED'; document.getElementById('launchBanner').style.display='none'; }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
 
 /* ── Checkout success banner ── */
 if (window.location.search.includes('checkout=success')) {

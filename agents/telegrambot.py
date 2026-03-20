@@ -9,8 +9,8 @@ def run_telegrambot():
     from datetime import datetime
 
     aid = "telegrambot"
-    TOKEN_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".telegram_token"
-    CHATID_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".telegram_chatid"
+    TOKEN_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".telegram_token")
+    CHATID_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".telegram_chatid")
     BASE_API = "http://localhost:5050"
 
     set_agent(aid,

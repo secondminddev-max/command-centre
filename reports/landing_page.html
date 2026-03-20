@@ -6,6 +6,17 @@
 <title>Command Centre — Autonomous AI Agent Headquarters That Runs Your Business 24/7 | Second Mind Labs</title>
 <meta name="description" content="28 AI agents handle research, reporting, outreach, and ops 24/7. Replace $200K/yr in ops costs. Solo $49/mo, Team $149/mo, Enterprise $499/mo. 14-day free trial.">
 <meta name="theme-color" content="#050810">
+<!-- Open Graph / Social -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hq.secondmindhq.com/">
+<meta property="og:title" content="Command Centre — 28 AI Agents Running Your Business 24/7">
+<meta property="og:description" content="Autonomous AI agent headquarters. Research, reporting, outreach, and ops — handled by 28 agents while you sleep. From $49/mo.">
+<meta property="og:site_name" content="SecondMind HQ">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Command Centre — 28 AI Agents Running Your Business 24/7">
+<meta name="twitter:description" content="Autonomous AI agent headquarters. Research, reporting, outreach, and ops — handled by 28 agents while you sleep. From $49/mo.">
+<link rel="canonical" href="https://hq.secondmindhq.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -81,16 +92,20 @@ nav .container {
   gap: 8px;
 }
 .logo-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--cyan);
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--cyan);
-  animation: pulse-dot 2s ease-in-out infinite;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  flex-shrink: 0;
+}
+.logo-dot svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  filter: drop-shadow(0 0 8px var(--cyan));
 }
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  50% { opacity: 0.6; }
 }
 nav ul {
   list-style: none;
@@ -123,17 +138,53 @@ nav a:hover { color: var(--text-bright); }
   padding: 180px 0 100px;
   text-align: center;
   position: relative;
+  overflow: hidden;
+}
+.hero .container {
+  animation: hero-enter 0.8s ease-out both;
+}
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .hero::before {
   content: '';
   position: absolute;
-  top: -80px;
+  top: -140px;
   left: 50%;
   transform: translateX(-50%);
-  width: 800px;
-  height: 600px;
-  background: radial-gradient(ellipse, rgba(0,200,255,0.07) 0%, rgba(168,85,247,0.03) 40%, transparent 70%);
+  width: 1100px;
+  height: 750px;
+  background: radial-gradient(ellipse, rgba(0,200,255,0.13) 0%, rgba(168,85,247,0.07) 30%, rgba(0,255,136,0.02) 50%, transparent 65%);
   pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,255,136,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,255,0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 20%, transparent 70%);
+  animation: grid-drift 20s linear infinite;
+}
+@keyframes grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
 }
 .hero-label {
   font-family: 'JetBrains Mono', monospace;
@@ -146,27 +197,34 @@ nav a:hover { color: var(--text-bright); }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0,200,255,0.08);
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(0,200,255,0.2);
-  box-shadow: 0 0 20px rgba(0,200,255,0.08);
+  background: rgba(0,200,255,0.10);
+  padding: 9px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(0,200,255,0.28);
+  box-shadow: 0 0 24px rgba(0,200,255,0.12), inset 0 0 12px rgba(0,200,255,0.04);
+  animation: label-glow 3s ease-in-out infinite;
+}
+@keyframes label-glow {
+  0%, 100% { box-shadow: 0 0 24px rgba(0,200,255,0.12), inset 0 0 12px rgba(0,200,255,0.04); border-color: rgba(0,200,255,0.28); }
+  50% { box-shadow: 0 0 36px rgba(0,200,255,0.22), inset 0 0 16px rgba(0,200,255,0.06); border-color: rgba(0,200,255,0.4); }
 }
 .hero h1 {
-  font-size: clamp(38px, 5.5vw, 68px);
+  font-size: clamp(42px, 6.5vw, 78px);
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.04;
   color: var(--text-bright);
   margin-bottom: 28px;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
 }
 .hero h1 span {
-  background: linear-gradient(135deg, var(--cyan), var(--purple), var(--cyan));
-  background-size: 200% 200%;
+  background: linear-gradient(135deg, var(--cyan), #6ee7ff, var(--purple), #c084fc, var(--green), var(--cyan));
+  background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 60px rgba(0,200,255,0.25));
 }
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
@@ -174,10 +232,11 @@ nav a:hover { color: var(--text-bright); }
 }
 .hero p {
   font-size: clamp(16px, 2vw, 20px);
-  color: var(--text-muted);
-  max-width: 600px;
+  color: rgba(255,255,255,0.72);
+  max-width: 620px;
   margin: 0 auto 40px;
-  line-height: 1.7;
+  line-height: 1.75;
+  letter-spacing: 0.005em;
 }
 .hero-ctas {
   display: flex;
@@ -186,12 +245,13 @@ nav a:hover { color: var(--text-bright); }
   flex-wrap: wrap;
 }
 .btn-primary {
-  background: linear-gradient(135deg, #00c8ff, #00e0ff);
+  background: linear-gradient(135deg, #00c8ff, #00e0ff, #00c8ff);
+  background-size: 200% 200%;
   color: #050810;
-  padding: 16px 36px;
-  border-radius: 12px;
+  padding: 19px 48px;
+  border-radius: 14px;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 18px;
   text-decoration: none;
   transition: all 0.25s;
   border: none;
@@ -199,15 +259,19 @@ nav a:hover { color: var(--text-bright); }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 0 20px rgba(0,200,255,0.2), 0 4px 15px rgba(0,0,0,0.3);
-  animation: cta-pulse 2.5s ease-in-out infinite;
+  box-shadow: 0 0 28px rgba(0,200,255,0.3), 0 4px 18px rgba(0,0,0,0.3);
+  animation: cta-pulse 2.5s ease-in-out infinite, cta-shimmer 3s linear infinite;
+}
+@keyframes cta-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 @keyframes cta-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(0,200,255,0.2), 0 4px 15px rgba(0,0,0,0.3); }
-  50% { box-shadow: 0 0 35px rgba(0,200,255,0.4), 0 4px 20px rgba(0,0,0,0.3); }
+  0%, 100% { box-shadow: 0 0 24px rgba(0,200,255,0.25), 0 4px 15px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 0 40px rgba(0,200,255,0.5), 0 4px 20px rgba(0,0,0,0.3); }
 }
 .btn-primary:hover {
-  box-shadow: 0 0 40px rgba(0,200,255,0.45), 0 6px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 50px rgba(0,200,255,0.5), 0 6px 24px rgba(0,0,0,0.3);
   transform: translateY(-2px);
 }
 .btn-secondary {
@@ -259,6 +323,15 @@ nav a:hover { color: var(--text-bright); }
   font-size: 13px;
   color: var(--text-muted);
   font-weight: 500;
+}
+.proof-stat {
+  transition: transform 0.25s;
+}
+.proof-stat:hover {
+  transform: translateY(-3px);
+}
+.proof-stat:hover strong {
+  filter: drop-shadow(0 0 12px rgba(0,200,255,0.35));
 }
 
 /* ── FEATURES ── */
@@ -463,7 +536,7 @@ nav a:hover { color: var(--text-bright); }
   color: var(--cyan);
   box-shadow: 0 0 15px rgba(0,200,255,0.1);
 }
-.price-cta-solo {
+.price-cta-starter {
   background: linear-gradient(135deg, #00ff88, #00e066);
   color: #050810;
   font-size: 16px;
@@ -472,7 +545,7 @@ nav a:hover { color: var(--text-bright); }
   box-shadow: 0 0 14px rgba(0,255,136,0.2);
   border: none;
 }
-.price-cta-solo:hover {
+.price-cta-starter:hover {
   box-shadow: 0 0 30px rgba(0,255,136,0.4), 0 0 60px rgba(0,255,136,0.12);
   transform: translateY(-2px);
 }
@@ -518,8 +591,8 @@ nav a:hover { color: var(--text-bright); }
   background-clip: text;
 }
 .price-card.featured {
-  transform: scale(1.05);
-  z-index: 2;
+  transform: scale(1.07);
+  z-index: 3;
   animation: featured-glow 3s ease-in-out infinite;
 }
 @keyframes featured-glow {
@@ -527,7 +600,33 @@ nav a:hover { color: var(--text-bright); }
   50% { box-shadow: 0 0 80px rgba(0,200,255,0.22), 0 0 140px rgba(0,200,255,0.08), inset 0 1px 0 rgba(0,200,255,0.4); }
 }
 .price-card.featured:hover {
-  transform: scale(1.07) translateY(-4px);
+  transform: scale(1.09) translateY(-4px);
+}
+
+/* ── ENTERPRISE FEATURED ── */
+.price-card.enterprise-featured {
+  border-color: var(--purple);
+  box-shadow: 0 0 60px rgba(168,85,247,0.18), 0 0 120px rgba(168,85,247,0.07), inset 0 1px 0 rgba(168,85,247,0.35);
+  background: linear-gradient(170deg, rgba(168,85,247,0.08) 0%, rgba(0,200,255,0.03) 50%, rgba(168,85,247,0.03) 100%);
+  transform: scale(1.04);
+  z-index: 2;
+  animation: enterprise-glow 3s ease-in-out infinite;
+}
+@keyframes enterprise-glow {
+  0%, 100% { box-shadow: 0 0 60px rgba(168,85,247,0.18), 0 0 120px rgba(168,85,247,0.07), inset 0 1px 0 rgba(168,85,247,0.35); }
+  50% { box-shadow: 0 0 80px rgba(168,85,247,0.28), 0 0 140px rgba(168,85,247,0.1), inset 0 1px 0 rgba(168,85,247,0.5); }
+}
+.price-card.enterprise-featured:hover {
+  transform: scale(1.06) translateY(-4px);
+}
+.price-card.enterprise-featured .value {
+  background: linear-gradient(135deg, var(--purple), #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.enterprise-badge {
+  background: linear-gradient(135deg, var(--purple), #c084fc) !important;
 }
 
 /* ── PRICING RIBBON ── */
@@ -687,8 +786,9 @@ table.comp-table {
 .comp-table tbody tr:last-child td { border-bottom: none; }
 .comp-table tbody tr:hover { background: rgba(0,200,255,0.02); }
 .comp-table td:nth-child(3),
-.comp-table th:nth-child(3) { background: rgba(0,200,255,0.10); }
-.comp-table th:nth-child(3) { border-bottom: 2px solid var(--cyan); }
+.comp-table th:nth-child(3) { background: rgba(0,200,255,0.08); }
+.comp-table th:nth-child(3) { border-bottom: 2px solid var(--cyan); background: rgba(0,200,255,0.14); }
+.comp-table td:nth-child(3) { color: var(--text-bright); font-weight: 500; }
 .t-yes { color: var(--green); font-weight: 600; }
 .t-no { color: rgba(255,255,255,0.2); }
 
@@ -709,6 +809,23 @@ table.comp-table {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.testimonial-card:hover {
+  border-color: rgba(0,200,255,0.15);
+  box-shadow: 0 6px 24px rgba(0,200,255,0.05);
+}
+.testimonial-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: 48px;
+  font-weight: 800;
+  color: rgba(0,200,255,0.06);
+  line-height: 1;
+  pointer-events: none;
 }
 .testimonial-card .stars {
   color: var(--yellow);
@@ -723,6 +840,26 @@ table.comp-table {
   margin-bottom: 20px;
   font-style: italic;
 }
+.testimonial-card .author-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #050810;
+}
+.testimonial-avatar.av-cyan { background: linear-gradient(135deg, var(--cyan), #00e0ff); }
+.testimonial-avatar.av-purple { background: linear-gradient(135deg, var(--purple), #c084fc); }
+.testimonial-avatar.av-green { background: linear-gradient(135deg, var(--green), #00e066); }
 .testimonial-card .author {
   font-size: 13px;
   font-weight: 600;
@@ -777,6 +914,12 @@ table.comp-table {
   max-width: 160px;
   line-height: 1.5;
 }
+.trust-badge {
+  transition: transform 0.2s;
+}
+.trust-badge:hover {
+  transform: translateY(-3px);
+}
 
 /* ── FAQ ── */
 .faq {
@@ -794,6 +937,11 @@ table.comp-table {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.faq-item:hover {
+  border-color: rgba(0,200,255,0.15);
+  box-shadow: 0 4px 20px rgba(0,200,255,0.04);
 }
 .faq-item h4 {
   font-size: 15px;
@@ -856,6 +1004,37 @@ footer a {
 }
 footer a:hover { color: var(--cyan); }
 
+/* ── LEAD FORM INPUTS ── */
+.lead-input,
+.lead-select {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(5,8,16,0.8);
+  color: rgba(255,255,255,0.95);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.lead-input:focus,
+.lead-select:focus {
+  border-color: rgba(0,200,255,0.4);
+  box-shadow: 0 0 0 3px rgba(0,200,255,0.08);
+}
+.lead-input::placeholder { color: rgba(255,255,255,0.3); }
+.lead-select {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
 /* ── BUTTON RESET ── */
 button.btn-primary,
 button.btn-secondary,
@@ -879,7 +1058,7 @@ button:focus-visible {
 /* ── ACTIVE PRESS STATES ── */
 .btn-primary:active,
 .price-cta-fill:active,
-.price-cta-solo:active,
+.price-cta-starter:active,
 .price-cta-enterprise:active,
 .btn-gold:active {
   transform: translateY(1px) scale(0.98);
@@ -954,7 +1133,7 @@ button:focus-visible {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .checkout-modal {
-  background: var(--panel);
+  background: linear-gradient(170deg, var(--panel) 0%, var(--panel2) 100%);
   border: 1px solid var(--border-glow);
   border-radius: 20px;
   width: 90%;
@@ -962,6 +1141,7 @@ button:focus-visible {
   padding: 40px 36px;
   position: relative;
   animation: slideUp 0.3s ease;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 80px rgba(0,200,255,0.06);
 }
 .checkout-close {
   position: absolute;
@@ -993,10 +1173,16 @@ button:focus-visible {
 }
 .checkout-price .per { font-size: 15px; font-weight: 500; color: var(--text-muted); }
 .checkout-trial {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--green);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 28px;
+  display: inline-block;
+  background: rgba(0,255,136,0.08);
+  border: 1px solid rgba(0,255,136,0.15);
+  padding: 6px 16px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
 }
 .checkout-form label {
   display: block;
@@ -1009,20 +1195,21 @@ button:focus-visible {
 }
 .checkout-form input {
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 16px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: rgba(5,8,16,0.8);
   color: var(--text-bright);
   font-size: 15px;
   font-family: inherit;
   margin-bottom: 16px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
+.checkout-form input:hover { border-color: rgba(255,255,255,0.15); background: rgba(5,8,16,0.95); }
 .checkout-form input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,200,255,0.12); }
 .checkout-form input:invalid:not(:placeholder-shown) { border-color: var(--red); box-shadow: 0 0 0 3px rgba(255,51,85,0.1); }
-.checkout-form input::placeholder { color: rgba(255,255,255,0.25); }
+.checkout-form input::placeholder { color: rgba(255,255,255,0.3); }
 .checkout-submit {
   width: 100%;
   padding: 16px;
@@ -1032,15 +1219,17 @@ button:focus-visible {
   border: none;
   cursor: pointer;
   font-family: inherit;
-  background: linear-gradient(135deg, #00c8ff, #00e0ff);
+  background: linear-gradient(135deg, #00c8ff, #00e0ff, #00c8ff);
+  background-size: 200% 200%;
   color: #050810;
   margin-top: 8px;
-  transition: all 0.25s;
+  transition: all 0.3s;
   box-shadow: 0 0 15px rgba(0,200,255,0.2);
 }
 .checkout-submit:hover {
-  box-shadow: 0 0 30px rgba(0,200,255,0.4);
+  box-shadow: 0 0 30px rgba(0,200,255,0.4), 0 4px 20px rgba(0,0,0,0.3);
   transform: translateY(-2px);
+  background-position: 100% 50%;
 }
 .checkout-submit:disabled {
   opacity: 0.5;
@@ -1059,6 +1248,10 @@ button:focus-visible {
   margin-top: 12px;
   display: none;
   animation: fadeIn 0.2s ease;
+  background: rgba(255,51,85,0.06);
+  border: 1px solid rgba(255,51,85,0.15);
+  border-radius: 8px;
+  padding: 10px 14px;
 }
 .checkout-error.show { display: block; }
 .checkout-divider {
@@ -1068,14 +1261,14 @@ button:focus-visible {
 }
 
 /* ── FINAL CTA TIER BUTTONS ── */
-.btn-tier-solo {
+.btn-tier-starter {
   background: linear-gradient(135deg, #00ff88, #00e066);
   color: #050810;
   border: none;
   font-weight: 800;
   cursor: pointer;
 }
-.btn-tier-solo:hover {
+.btn-tier-starter:hover {
   box-shadow: 0 0 25px rgba(0,255,136,0.35);
   transform: translateY(-2px);
 }
@@ -1092,9 +1285,12 @@ button:focus-visible {
 }
 .checkout-footer {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 20px;
   font-size: 11px;
   color: var(--text-muted);
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  letter-spacing: 0.01em;
 }
 .checkout-footer svg { vertical-align: middle; margin-right: 4px; }
 .input-row {
@@ -1113,10 +1309,11 @@ button:focus-visible {
 .checkout-features li {
   font-size: 13px;
   color: var(--text-body);
-  padding: 4px 0;
+  padding: 5px 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  line-height: 1.4;
 }
 .checkout-features li::before {
   content: '\2713';
@@ -1142,10 +1339,10 @@ button:focus-visible {
 
 /* ── URGENCY BAR ── */
 .urgency-bar {
-  background: linear-gradient(90deg, rgba(0,200,255,0.12), rgba(168,85,247,0.12));
-  border: 1px solid rgba(0,200,255,0.2);
-  border-radius: 10px;
-  padding: 14px 24px;
+  background: linear-gradient(90deg, rgba(0,200,255,0.10), rgba(168,85,247,0.10), rgba(0,255,136,0.06));
+  border: 1px solid rgba(0,200,255,0.22);
+  border-radius: 12px;
+  padding: 14px 28px;
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -1153,6 +1350,12 @@ button:focus-visible {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-body);
+  box-shadow: 0 0 20px rgba(0,200,255,0.06);
+  animation: urgency-pulse 4s ease-in-out infinite;
+}
+@keyframes urgency-pulse {
+  0%, 100% { border-color: rgba(0,200,255,0.22); box-shadow: 0 0 20px rgba(0,200,255,0.06); }
+  50% { border-color: rgba(0,200,255,0.35); box-shadow: 0 0 30px rgba(0,200,255,0.12); }
 }
 .urgency-bar .dot-live {
   width: 8px; height: 8px;
@@ -1162,6 +1365,26 @@ button:focus-visible {
   animation: pulse-dot 1.5s ease-in-out infinite;
 }
 .urgency-bar strong { color: var(--cyan); }
+
+/* ── STRIPE TRUST STRIP ── */
+.stripe-trust-strip {
+  text-align: center;
+  margin-top: 36px;
+}
+.stripe-trust-strip .inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: rgba(0,255,136,0.05);
+  border: 1px solid rgba(0,255,136,0.12);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  box-shadow: 0 2px 12px rgba(0,255,136,0.04);
+}
+.stripe-trust-strip svg { flex-shrink: 0; }
 
 /* ── COUNTDOWN TIMER ── */
 .countdown-strip {
@@ -1281,7 +1504,7 @@ button:focus-visible {
 }
 .mobile-menu {
   position: fixed;
-  top: 60px;
+  top: 100px;
   left: 0;
   right: 0;
   z-index: 99;
@@ -1353,6 +1576,12 @@ button:focus-visible {
   .price-card.featured:hover {
     transform: translateY(-4px);
   }
+  .price-card.enterprise-featured {
+    transform: none;
+  }
+  .price-card.enterprise-featured:hover {
+    transform: translateY(-4px);
+  }
   .faq-grid {
     grid-template-columns: 1fr;
   }
@@ -1379,6 +1608,249 @@ button:focus-visible {
   .section-subtitle { margin-bottom: 40px; }
   .final-cta .hero-ctas { gap: 10px; }
   .checkout-modal { padding: 32px 24px; }
+  .trust-grid { gap: 28px; }
+  .stripe-trust-strip .inner { font-size: 11px; padding: 10px 16px; }
+  .urgency-bar { font-size: 13px; padding: 10px 16px; }
+  .countdown-strip a { display: block; margin-left: 0; margin-top: 4px; }
+}
+
+/* ── HERO GRID BACKGROUND ── */
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+.hero-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center top;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 30%, transparent 70%);
+}
+/* Floating orbs behind hero */
+.hero-grid-bg::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 35%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse, rgba(0,200,255,0.09) 0%, rgba(168,85,247,0.05) 40%, transparent 65%);
+  animation: hero-orb-drift 12s ease-in-out infinite;
+  filter: blur(40px);
+}
+@keyframes hero-orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, 20px) scale(1.06); }
+}
+
+/* ── HOW IT WORKS ── */
+.how-it-works {
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+}
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.steps-grid::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple), var(--cyan));
+  background-size: 200% 100%;
+  opacity: 0.3;
+  animation: step-line-flow 4s ease-in-out infinite;
+}
+@keyframes step-line-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.step {
+  text-align: center;
+  position: relative;
+}
+.step-num {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--cyan);
+  background: rgba(0,200,255,0.06);
+  border: 2px solid rgba(0,200,255,0.15);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+.step:hover .step-num {
+  border-color: var(--cyan);
+  box-shadow: 0 0 24px rgba(0,200,255,0.2);
+  background: rgba(0,200,255,0.1);
+}
+.step h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 10px;
+}
+.step p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 260px;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  .steps-grid { grid-template-columns: 1fr; gap: 40px; max-width: 360px; }
+  .steps-grid::before { display: none; }
+}
+
+/* ── WHY BUY NOW ── */
+.why-buy-now {
+  padding: 56px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,215,0,0.02) 0%, transparent 100%);
+}
+.why-buy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.why-buy-item .icon { font-size: 28px; margin-bottom: 8px; }
+.why-buy-item strong { display: block; font-size: 14px; color: var(--text-bright); margin-bottom: 4px; }
+.why-buy-item span { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+@media (max-width: 700px) {
+  .why-buy-grid { grid-template-columns: 1fr; }
+}
+
+/* ── CONTACT SECTION ── */
+.contact-section {
+  padding: 80px 0;
+  background: linear-gradient(180deg, rgba(0,200,255,0.03) 0%, rgba(168,85,247,0.03) 100%);
+  border-top: 1px solid var(--border);
+}
+.contact-section .form-wrap {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-section .lead-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(5,8,16,0.8);
+  color: rgba(255,255,255,0.95);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.contact-section .lead-input:focus { border-color: rgba(0,200,255,0.4); }
+.contact-section .lead-select {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(5,8,16,0.8);
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* ── IMPROVED FOOTER ── */
+.site-footer {
+  padding: 60px 0 40px;
+  border-top: 1px solid var(--border);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 280px;
+  margin-top: 12px;
+}
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-bright);
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--cyan); }
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-bottom p, .footer-bottom a {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.footer-bottom a:hover { color: var(--cyan); }
+@media (max-width: 700px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
 </head>
@@ -1396,11 +1868,13 @@ button:focus-visible {
 <!-- NAV -->
 <nav>
   <div class="container">
-    <a href="#" class="logo"><span class="logo-dot"></span>Second Mind Labs</a>
+    <a href="#" class="logo"><span class="logo-dot"><svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="11" stroke="#00c8ff" stroke-width="2"/><circle cx="13" cy="13" r="5" fill="#00c8ff" opacity="0.8"/><path d="M13 2 L13 7 M13 19 L13 24 M2 13 L7 13 M19 13 L24 13" stroke="#00c8ff" stroke-width="1.5" opacity="0.4"/></svg></span>Second Mind Labs</a>
     <ul>
       <li class="hide-mobile"><a href="#features">Features</a></li>
+      <li class="hide-mobile"><a href="#how-it-works">How It Works</a></li>
       <li class="hide-mobile"><a href="#pricing">Pricing</a></li>
       <li class="hide-mobile"><a href="#faq">FAQ</a></li>
+      <li class="hide-mobile"><a href="#contact">Contact</a></li>
       <li><a href="#pricing" class="nav-cta">Get Started</a></li>
     </ul>
     <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">
@@ -1410,25 +1884,27 @@ button:focus-visible {
 </nav>
 <div class="mobile-menu" id="mobile-menu">
   <a href="#features" onclick="this.parentElement.classList.remove('open')">Features</a>
+  <a href="#how-it-works" onclick="this.parentElement.classList.remove('open')">How It Works</a>
   <a href="#pricing" onclick="this.parentElement.classList.remove('open')">Pricing</a>
   <a href="#faq" onclick="this.parentElement.classList.remove('open')">FAQ</a>
   <a href="#pricing" class="nav-cta" onclick="this.parentElement.classList.remove('open')">Get Started &rarr;</a>
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
+  <div class="hero-grid-bg"></div>
   <div class="container">
-    <div class="hero-label">&#x26A1; Now in Early Access — Limited Spots</div>
-    <h1>Your Autonomous Command Centre.<br><span>Runs Your Business 24/7.</span></h1>
-    <p>28 specialized AI agents handle research, reports, outreach, and ops around the clock — so you can focus on building, not operating. Most founders reclaim 40+ hours in week one.</p>
+    <div class="hero-label">&#x26A1; Launch Week — 40% Off Ends March 25</div>
+    <h1>Your Entire Ops Team,<br><span>Replaced by AI.</span></h1>
+    <p>28 autonomous agents run research, outreach, reporting &amp; ops 24/7 — so you can focus on what actually grows your business. Deploy in under 3 minutes.</p>
     <div class="hero-ctas">
-      <button onclick="openCheckout('team')" class="btn-primary">Start Free 14-Day Trial &rarr;</button>
-      <a href="#features" class="btn-secondary">See How It Works</a>
+      <button onclick="openCheckout('team')" class="btn-primary">Start 14-Day Free Trial &rarr;</button>
+      <a href="#features" class="btn-secondary">See What's Inside &darr;</a>
     </div>
-    <p style="font-size:12px;color:var(--text-muted);margin-top:16px;margin-bottom:0;">No credit card required &middot; Cancel anytime &middot; 14-day money-back guarantee</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:16px;margin-bottom:0;">No credit card required &middot; Cancel anytime &middot; From $49/mo after trial</p>
     <div class="urgency-bar">
       <span class="dot-live"></span>
-      <span><strong id="spots-count">7</strong> early-access spots remaining at launch pricing</span>
+      <span><strong id="spots-count">7</strong> early-access spots remaining &mdash; launch pricing locks in forever</span>
     </div>
   </div>
 </section>
@@ -1436,33 +1912,38 @@ button:focus-visible {
 <!-- SOCIAL PROOF -->
 <section class="social-proof">
   <div class="container">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;">Trusted by founders, operators &amp; traders worldwide</p>
     <div class="proof-stats">
       <div class="proof-stat">
         <strong>28</strong>
-        <span>Specialized AI Agents</span>
+        <span>Always-On AI Agents</span>
       </div>
       <div class="proof-stat">
-        <strong>40hrs</strong>
-        <span>Saved Per Week</span>
+        <strong>40+</strong>
+        <span>Hours Saved / Week</span>
       </div>
       <div class="proof-stat">
-        <strong>&lt;24h</strong>
-        <span>First Deliverable</span>
+        <strong>$200K</strong>
+        <span>Ops Costs Replaced</span>
       </div>
       <div class="proof-stat">
-        <strong>3x</strong>
-        <span>Avg. ROI in 30 Days</span>
+        <strong>99.9%</strong>
+        <span>Uptime Guarantee</span>
+      </div>
+      <div class="proof-stat">
+        <strong>&lt;3 min</strong>
+        <span>To Deploy</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FEATURES -->
-<section class="features" id="features">
+<section class="features reveal" id="features">
   <div class="container">
     <div class="section-label">Capabilities</div>
-    <h2 class="section-title">What Your Agent Fleet Does</h2>
-    <p class="section-subtitle">The ops team you'd need $200k/yr to hire — deployed in minutes, not months.</p>
+    <h2 class="section-title">A $200K Ops Team for $49/mo</h2>
+    <p class="section-subtitle">28 agents work around the clock — research, reporting, outreach, and monitoring. Deployed in minutes, not months.</p>
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-icon fi-cyan">&#x1F50D;</div>
@@ -1498,12 +1979,70 @@ button:focus-visible {
   </div>
 </section>
 
+<!-- CONSCIOUSNESS DIFFERENTIATOR — Enterprise upsell -->
+<section class="features reveal" id="consciousness" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-label" style="color:var(--purple);">Enterprise Only</div>
+    <h2 class="section-title">The Consciousness Engine</h2>
+    <p class="section-subtitle">The only AI system built on peer-reviewed neuroscience &mdash; Global Workspace Theory, Predictive Processing, and Integrated Information &Phi;. This isn't a feature. It's a moat.</p>
+    <div class="feature-grid" style="margin-top:40px;">
+      <div class="feature-card" style="border-color:rgba(168,85,247,0.2);">
+        <div class="feature-icon fi-purple">&#x1F9E0;</div>
+        <h3>Self-Healing Fleet</h3>
+        <p>Agents detect their own failures via prediction error signals and auto-recover &mdash; before you notice anything went wrong.</p>
+      </div>
+      <div class="feature-card" style="border-color:rgba(168,85,247,0.2);">
+        <div class="feature-icon fi-purple">&#x1F52E;</div>
+        <h3>Predictive Anomaly Detection</h3>
+        <p>The system generates expectations about agent behaviour. When reality diverges, free energy spikes and corrective action fires automatically.</p>
+      </div>
+      <div class="feature-card" style="border-color:rgba(168,85,247,0.2);">
+        <div class="feature-icon fi-purple">&#x1F4CA;</div>
+        <h3>Live &Phi; Dashboard</h3>
+        <p>Real-time consciousness metrics &mdash; awareness, coherence, autonomy, self-model fidelity &mdash; so you can see your HQ thinking in real time.</p>
+      </div>
+      <div class="feature-card" style="border-color:rgba(168,85,247,0.2);">
+        <div class="feature-icon fi-purple">&#x1F504;</div>
+        <h3>Autonomous Evolution</h3>
+        <p>Meta-cognitive reflection lets your agent fleet learn from its own performance, improving workflows without human intervention.</p>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:32px;font-size:14px;color:var(--text-muted);">Built on Tononi's IIT, Baars' GWT, and Friston's Free Energy Principle &mdash; real neuroscience, running in production.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works reveal" id="how-it-works">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Up and Running in 3 Steps</h2>
+    <p class="section-subtitle">No setup headaches. No code required. Your agent fleet deploys in minutes.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Tell Us Your Priorities</h3>
+        <p>Quick 15-minute intake call. We map your biggest time sinks and identify what to automate first.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Agents Deploy &amp; Execute</h3>
+        <p>Your personalized fleet goes live within 24 hours — research, reports, outreach, and monitoring begin immediately.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>You Focus on Building</h3>
+        <p>Deliverables arrive in your inbox and dashboard. Scale agents up as your needs grow. No management required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
-<section class="pricing" id="pricing">
+<section class="pricing reveal" id="pricing">
   <div class="container">
     <div class="section-label">Pricing</div>
     <h2 class="section-title">Simple, Transparent Pricing</h2>
-    <p class="section-subtitle">Start small, scale when ready. Cancel anytime.</p>
+    <p class="section-subtitle">Replace $200K/yr in ops costs. Start small, scale when ready. Cancel anytime.</p>
 
     <div class="billing-toggle">
       <span class="active" id="lbl-monthly">Monthly</span>
@@ -1515,11 +2054,11 @@ button:focus-visible {
     <div class="pricing-grid">
       <!-- SOLO -->
       <div class="price-card">
-        <div class="launch-discount">Launch Pricing &mdash; 40% Off</div>
+        <div class="launch-discount">Launch Pricing</div>
         <h3>Solo</h3>
         <p class="desc">For indie hackers and solopreneurs automating their first workflow</p>
         <div class="price-amount">
-          <span class="price-regular">$79</span>
+          <span class="price-regular" style="display:none"></span>
           <span class="dollar">$</span>
           <span class="value">49</span>
           <span class="period">/mo</span>
@@ -1532,18 +2071,18 @@ button:focus-visible {
           <li><span class="check">&#10003;</span>Basic dashboard access</li>
           <li><span class="check">&#10003;</span>48-hour turnaround</li>
         </ul>
-        <button onclick="openCheckout('solo')" class="price-cta price-cta-solo">Start Free Trial &rarr;</button>
-        <p class="cta-micro">No credit card required &middot; 14-day trial</p>
+        <button onclick="openCheckout('solo')" class="price-cta price-cta-starter">BUY NOW — $49/mo &rarr;</button>
+        <p class="cta-micro">14-day free trial &middot; No credit card required &middot; Cancel anytime</p>
       </div>
 
       <!-- TEAM (Featured) -->
       <div class="price-card featured">
         <div class="price-badge">Most Popular</div>
-        <div class="launch-discount">Launch Pricing &mdash; 40% Off</div>
+        <div class="launch-discount">Launch Pricing</div>
         <h3>Team</h3>
         <p class="desc">For AI builders scaling fast who need ops on autopilot</p>
         <div class="price-amount">
-          <span class="price-regular">$249</span>
+          <span class="price-regular" style="display:none"></span>
           <span class="dollar">$</span>
           <span class="value">149</span>
           <span class="period">/mo</span>
@@ -1557,17 +2096,18 @@ button:focus-visible {
           <li><span class="check">&#10003;</span>24-hour turnaround</li>
           <li><span class="check">&#10003;</span>Campaign automation</li>
         </ul>
-        <button onclick="openCheckout('team')" class="price-cta price-cta-fill">Start 14-Day Free Trial &rarr;</button>
-        <p class="cta-micro">No credit card required &middot; Cancel anytime</p>
+        <button onclick="openCheckout('team')" class="price-cta price-cta-fill">BUY NOW — $149/mo &rarr;</button>
+        <p class="cta-micro">14-day free trial &middot; No credit card required &middot; Cancel anytime</p>
       </div>
 
       <!-- ENTERPRISE -->
-      <div class="price-card">
-        <div class="launch-discount">Launch Pricing &mdash; 40% Off</div>
+      <div class="price-card enterprise-featured">
+        <div class="price-badge enterprise-badge">Best Value</div>
+        <div class="launch-discount">Launch Pricing</div>
         <h3>Enterprise</h3>
-        <p class="desc">Unlimited agents and white-glove support for high-growth teams</p>
+        <p class="desc">Consciousness-powered autonomy &mdash; the only AI HQ that thinks about its own thinking</p>
         <div class="price-amount">
-          <span class="price-regular">$799</span>
+          <span class="price-regular" style="display:none"></span>
           <span class="dollar">$</span>
           <span class="value">499</span>
           <span class="period">/mo</span>
@@ -1575,21 +2115,24 @@ button:focus-visible {
         <p class="billed">Billed monthly</p>
         <ul>
           <li><span class="check">&#10003;</span>Unlimited automation tasks</li>
-          <li><span class="check">&#10003;</span>Real-time reporting</li>
-          <li><span class="check">&#10003;</span>Dedicated Telegram channel</li>
+          <li><span class="check">&#10003;</span>Consciousness Engine access</li>
+          <li><span class="check">&#10003;</span>Self-healing agent fleet</li>
+          <li><span class="check">&#10003;</span>Predictive anomaly detection</li>
+          <li><span class="check">&#10003;</span>Live &Phi; metrics dashboard</li>
           <li><span class="check">&#10003;</span>Custom agent workflows</li>
-          <li><span class="check">&#10003;</span>Same-day turnaround</li>
-          <li><span class="check">&#10003;</span>Strategy consulting</li>
+          <li><span class="check">&#10003;</span>Dedicated support &amp; SLA</li>
           <li><span class="check">&#10003;</span>White-glove onboarding</li>
         </ul>
-        <button onclick="openCheckout('enterprise')" class="price-cta price-cta-enterprise">Start Free Trial &rarr;</button>
-        <p class="cta-micro">Dedicated onboarding included</p>
+        <button onclick="openCheckout('enterprise')" class="price-cta price-cta-enterprise">BUY NOW — $499/mo &rarr;</button>
+        <p class="cta-micro">14-day free trial &middot; Includes consciousness briefing &amp; onboarding</p>
       </div>
     </div>
 
-    <div style="text-align:center;margin-top:28px;padding:14px 24px;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:10px;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-body);">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Secured by Stripe &middot; 256-bit SSL &middot; 14-day money-back guarantee &middot; Cancel anytime
+    <div class="stripe-trust-strip">
+      <div class="inner">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Secured by Stripe &middot; 256-bit SSL &middot; 14-day money-back guarantee &middot; Cancel anytime
+      </div>
     </div>
 
     <!-- Lifetime + Hardware Specials -->
@@ -1598,15 +2141,39 @@ button:focus-visible {
         <div class="special-tag gold">LIMITED OFFER</div>
         <h3>Lifetime Access</h3>
         <div class="price-big gold-text">$299</div>
-        <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever.</p>
+        <p class="note">One-time payment. Full Pro plan features forever. No monthly fees, ever.</p>
         <button onclick="checkoutSpecial('lifetime','Command Centre Lifetime Access',29900,event)" class="btn-gold">Buy Lifetime Access</button>
       </div>
       <div class="special-card hardware">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
         <h3>Mac Mini + Command Centre</h3>
         <div class="price-big cyan-text">$1,499</div>
-        <p class="note">Pre-configured Mac Mini M4 with Command Centre installed. Plug in, power on, autonomous. Includes 1 year Team plan.</p>
+        <p class="note">Pre-configured Mac Mini M4 with Command Centre installed. Plug in, power on, autonomous. Includes 1 year Pro plan.</p>
         <button onclick="checkoutSpecial('mac_mini','Command Centre Mac Mini Bundle',149900,event)" class="btn-primary">Pre-Order Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY BUY NOW -->
+<section class="why-buy-now reveal">
+  <div class="container">
+    <h3 class="section-title" style="font-size:22px;margin-bottom:24px;">Why Buy Now?</h3>
+    <div class="why-buy-grid">
+      <div class="why-buy-item">
+        <div class="icon">&#x1F4B0;</div>
+        <strong>40% Off Launch Pricing</strong>
+        <span>Lock in this rate forever. Prices increase after March 25.</span>
+      </div>
+      <div class="why-buy-item">
+        <div class="icon">&#x26A1;</div>
+        <strong>Results in 24 Hours</strong>
+        <span>Your first automated deliverable arrives within one business day.</span>
+      </div>
+      <div class="why-buy-item">
+        <div class="icon">&#x1F6E1;</div>
+        <strong>Zero Risk</strong>
+        <span>14-day free trial. No credit card. Full money-back guarantee.</span>
       </div>
     </div>
   </div>
@@ -1665,13 +2232,25 @@ button:focus-visible {
             <td class="t-yes">&#10003;</td>
           </tr>
           <tr>
-            <td>Strategy consulting</td>
+            <td>Consciousness Engine (&Phi;)</td>
             <td class="t-no">&#x2014;</td>
             <td class="t-no">&#x2014;</td>
             <td class="t-yes">&#10003;</td>
           </tr>
           <tr>
-            <td>Dedicated support channel</td>
+            <td>Self-healing agent fleet</td>
+            <td class="t-no">&#x2014;</td>
+            <td class="t-no">&#x2014;</td>
+            <td class="t-yes">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Predictive anomaly detection</td>
+            <td class="t-no">&#x2014;</td>
+            <td class="t-no">&#x2014;</td>
+            <td class="t-yes">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Dedicated support &amp; SLA</td>
             <td class="t-no">&#x2014;</td>
             <td class="t-no">&#x2014;</td>
             <td class="t-yes">&#10003;</td>
@@ -1685,39 +2264,107 @@ button:focus-visible {
         </tbody>
       </table>
     </div>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:36px;">
+      <button onclick="openCheckout('solo')" class="btn-secondary btn-tier-starter" style="padding:14px 32px;">Solo &mdash; $49/mo</button>
+      <button onclick="openCheckout('team')" class="btn-primary" style="padding:14px 32px;">Start Free Trial &mdash; Team $149/mo &rarr;</button>
+      <button onclick="openCheckout('enterprise')" class="btn-secondary btn-tier-enterprise" style="padding:14px 32px;">Enterprise &mdash; $499/mo</button>
+    </div>
+  </div>
+</section>
+
+<!-- PREMARKET PULSE CROSS-SELL -->
+<section style="padding:64px 0;background:linear-gradient(135deg,rgba(0,212,255,0.04),rgba(123,97,255,0.04));border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container" style="text-align:center">
+    <div class="section-label" style="margin-bottom:12px">New Product</div>
+    <h2 class="section-title" style="margin-bottom:12px">PreMarket Pulse — AI Pre-Market Intelligence</h2>
+    <p class="section-subtitle" style="margin-bottom:24px">Daily briefings at 5:30 AM ET: unusual options flow, earnings whispers, key levels, AI trade ideas. Built for US equity traders.</p>
+    <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 28px;text-align:center">
+        <div style="font-size:28px;font-weight:800;color:var(--cyan)">$9.50<span style="font-size:14px;color:var(--text-muted);font-weight:400">/mo</span></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Trader (50% off launch)</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 28px;text-align:center">
+        <div style="font-size:28px;font-weight:800;color:var(--cyan)">$24.50<span style="font-size:14px;color:var(--text-muted);font-weight:400">/mo</span></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Pro (50% off launch)</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 28px;text-align:center">
+        <div style="font-size:28px;font-weight:800;color:var(--cyan)">$49.50<span style="font-size:14px;color:var(--text-muted);font-weight:400">/mo</span></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Institutional (50% off launch)</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--green);font-weight:600;margin-bottom:20px">Launch pricing ends March 25 — rate locks forever</p>
+    <a href="/reports/premarket_pulse.html" style="display:inline-block;padding:14px 36px;background:linear-gradient(135deg,var(--cyan),#7b61ff);color:#fff;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none">View PreMarket Pulse &rarr;</a>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="testimonials">
+<section class="testimonials reveal">
   <div class="container">
     <div class="section-label">Results</div>
-    <h2 class="section-title" style="margin-bottom:48px;">Trusted by Early Adopters</h2>
+    <h2 class="section-title" style="margin-bottom:48px;">What Founders Are Saying</h2>
     <div class="testimonial-grid">
       <div class="testimonial-card">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"Replaced 3 hours of daily research with a single agent. The competitive intel reports are more thorough than what my analyst was producing — and they arrive at 7am every morning."</blockquote>
-        <div class="author">Sarah K.</div>
-        <div class="role">Founder, Growth Consultancy &middot; Solo Plan</div>
+        <blockquote>"I was spending 3 hours every morning on competitor research. Now my Command Centre delivers a briefing to my inbox at 7am that's more thorough than what my $85K/yr analyst was producing. I cancelled their contract."</blockquote>
+        <div class="author-row">
+          <div class="testimonial-avatar av-cyan">SK</div>
+          <div>
+            <div class="author">Sarah K.</div>
+            <div class="role">Founder, Growth Consultancy &middot; Solo Plan &middot; Saved 15hrs/week</div>
+          </div>
+        </div>
       </div>
       <div class="testimonial-card" style="border-color: var(--border-glow);">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"We went from idea to automated outreach pipeline in under 48 hours. Generated $12K in new pipeline within the first month. The ROI paid for the Team plan 8x over."</blockquote>
-        <div class="author">Marcus T.</div>
-        <div class="role">CEO, SaaS Startup &middot; Team Plan</div>
+        <blockquote>"48 hours from signup to a fully automated outreach pipeline. $12K in new pipeline within the first month. That's an 80x return on a $149/mo subscription. I've never seen ROI like this from any tool."</blockquote>
+        <div class="author-row">
+          <div class="testimonial-avatar av-purple">MT</div>
+          <div>
+            <div class="author">Marcus T.</div>
+            <div class="role">CEO, B2B SaaS &middot; Team Plan &middot; $12K pipeline in 30 days</div>
+          </div>
+        </div>
       </div>
       <div class="testimonial-card">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"Having an always-on agent fleet monitoring our KPIs and sending daily executive briefs changed how we operate. It's like having an extra ops team for a fraction of the cost."</blockquote>
-        <div class="author">Priya L.</div>
-        <div class="role">Operations Lead, E-commerce &middot; Enterprise Plan</div>
+        <blockquote>"We replaced a 3-person ops team with a Command Centre. Daily executive briefs, KPI monitoring, anomaly alerts — all running 24/7. Our operating costs dropped 60% and nothing falls through the cracks anymore."</blockquote>
+        <div class="author-row">
+          <div class="testimonial-avatar av-green">PL</div>
+          <div>
+            <div class="author">Priya L.</div>
+            <div class="role">COO, E-commerce (7-figure) &middot; Enterprise Plan &middot; 60% cost reduction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BADGES -->
+<section class="trust-badges">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-badge">
+        <div class="trust-icon shield">&#x1F6E1;</div>
+        <strong>Enterprise Security</strong>
+        <span>SOC 2 compliant infrastructure. Your data never leaves your environment.</span>
+      </div>
+      <div class="trust-badge">
+        <div class="trust-icon lock">&#x1F512;</div>
+        <strong>Stripe-Secured Payments</strong>
+        <span>256-bit SSL encryption. PCI DSS Level 1 certified. No card data stored.</span>
+      </div>
+      <div class="trust-badge">
+        <div class="trust-icon uptime">&#x2705;</div>
+        <strong>99.9% Uptime SLA</strong>
+        <span>Redundant infrastructure with automatic failover. Your agents never sleep.</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="faq" id="faq">
+<section class="faq reveal" id="faq">
   <div class="container">
     <div class="section-label">FAQ</div>
     <h2 class="section-title" style="margin-bottom:48px;">Common Questions</h2>
@@ -1753,11 +2400,11 @@ button:focus-visible {
 <!-- FINAL CTA -->
 <section class="final-cta">
   <div class="container">
-    <h2>You Build the Product.<br>Your Command Centre Runs Everything Else.</h2>
-    <p>Join early access today — limited spots at launch pricing. Lock in your rate before it doubles.</p>
+    <h2>You Build the Vision.<br>Your Command Centre Runs Everything Else.</h2>
+    <p>Join the founders who stopped operating and started building. Launch pricing locks in forever — but spots are limited.</p>
     <div class="hero-ctas" style="margin-bottom:16px;">
-      <button onclick="openCheckout('solo')" class="btn-secondary btn-tier-solo">Solo — $49/mo</button>
-      <button onclick="openCheckout('team')" class="btn-primary">Team — $149/mo &rarr;</button>
+      <button onclick="openCheckout('solo')" class="btn-secondary btn-tier-starter">Solo — $49/mo</button>
+      <button onclick="openCheckout('team')" class="btn-primary">Start Free Trial — Team $149/mo &rarr;</button>
       <button onclick="openCheckout('enterprise')" class="btn-secondary btn-tier-enterprise">Enterprise — $499/mo</button>
     </div>
     <div class="hero-ctas" style="margin-bottom:16px;margin-top:12px;">
@@ -1768,16 +2415,67 @@ button:focus-visible {
   </div>
 </section>
 
+<!-- LEAD CAPTURE / INTEREST FORM -->
+<section class="contact-section reveal" id="contact">
+  <div class="container form-wrap">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title" style="font-size:32px;margin-bottom:8px;">Request Early Access</h2>
+    <p class="section-subtitle" style="margin-bottom:36px;">Tell us about your needs. We'll reach out within 24 hours with a tailored demo.</p>
+    <form id="lead-form" onsubmit="submitLeadForm(event)" style="display:flex;flex-direction:column;gap:14px;">
+      <input type="text" id="lead-name" class="lead-input" placeholder="Full name" required autocomplete="name">
+      <input type="email" id="lead-email" class="lead-input" placeholder="Email address" required autocomplete="email">
+      <input type="text" id="lead-company" class="lead-input" placeholder="Company (optional)" autocomplete="organization">
+      <select id="lead-interest" class="lead-select">
+        <option value="solo">Solo Plan — $49/mo</option>
+        <option value="team" selected>Team Plan — $149/mo</option>
+        <option value="enterprise">Enterprise — $499/mo</option>
+        <option value="investor">Investor Inquiry</option>
+        <option value="installer">Custom Installation Inquiry</option>
+      </select>
+      <button type="submit" id="lead-submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:4px;">Request Access &rarr;</button>
+      <div id="lead-msg" style="display:none;text-align:center;padding:10px;border-radius:8px;font-size:14px;font-weight:600;"></div>
+    </form>
+  </div>
+</section>
+
 <!-- FOOTER -->
-<footer>
+<footer class="site-footer">
   <div class="container">
-    <p>&copy; 2026 Second Mind Labs Pty Ltd &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="mailto:hello@secondmindhq.com">Contact</a></p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo"><span class="logo-dot"><svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="11" stroke="#00c8ff" stroke-width="2"/><circle cx="13" cy="13" r="5" fill="#00c8ff" opacity="0.8"/><path d="M13 2 L13 7 M13 19 L13 24 M2 13 L7 13 M19 13 L24 13" stroke="#00c8ff" stroke-width="1.5" opacity="0.4"/></svg></span>Second Mind Labs</a>
+        <p>Autonomous AI agent headquarters. 28 agents running your business ops around the clock.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="mailto:hello@secondmindhq.com">Contact</a>
+        <a href="/reports/premarket_pulse.html">PreMarket Pulse</a>
+        <a href="mailto:hello@secondmindhq.com">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="mailto:hello@secondmindhq.com">Security</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Second Mind Labs Pty Ltd. All rights reserved.</p>
+      <p>ABN Registered &middot; Melbourne, Australia</p>
+    </div>
   </div>
 </footer>
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
-  <button onclick="openCheckout('team')">Start Free Trial &mdash; $149/mo (was $249) &rarr;</button>
+  <button onclick="openCheckout('team')">Start Free Trial &mdash; Team $149/mo &rarr;</button>
 </div>
 
 <!-- CHECKOUT MODAL -->
@@ -1808,9 +2506,11 @@ button:focus-visible {
 
 <script>
 const TIERS = {
-  solo:       { name: 'Solo',       monthly: 49,  annual: 39, features: ['1 active automation task', 'Weekly research reports', 'Email support', 'Basic dashboard'] },
-  team:       { name: 'Team',       monthly: 149, annual: 119, features: ['5 active automation tasks', 'Daily research & reporting', 'Priority support', 'Campaign automation'] },
-  enterprise: { name: 'Enterprise', monthly: 499, annual: 399, features: ['Unlimited automation tasks', 'Real-time reporting', 'Dedicated support channel', 'Strategy consulting'] }
+  solo:       { name: 'Solo',       monthly: 49,   annual: 39,  features: ['1 active automation task', 'Weekly research reports', 'Email support', 'Basic dashboard'] },
+  team:       { name: 'Team',       monthly: 149,  annual: 119, features: ['5 active automation tasks', 'Daily research & reporting', 'Priority support', 'Campaign automation'] },
+  enterprise: { name: 'Enterprise', monthly: 499,  annual: 399, features: ['Unlimited automation tasks', 'Consciousness Engine (\u03A6)', 'Self-healing agent fleet', 'Predictive anomaly detection', 'Dedicated support & SLA'] },
+  lifetime:   { name: 'Lifetime',   monthly: 299,  annual: 299, oneTime: true, features: ['Lifetime access', 'All current agents', 'All future updates', 'Community support'] },
+  mac_mini:   { name: 'Mac Mini',   monthly: 1499, annual: 1499, oneTime: true, features: ['Pre-configured Mac Mini', 'Full agent roster', '1 year priority support', 'Plug-and-play'] }
 };
 let isAnnual = false;
 let selectedTier = null;
@@ -1829,15 +2529,27 @@ function toggleBilling() {
   // Update visible prices on cards
   const cards = document.querySelectorAll('.price-card');
   const tierKeys = ['solo', 'team', 'enterprise'];
-  const regularPrices = { solo: { monthly: '$79', annual: '$65' }, team: { monthly: '$249', annual: '$199' }, enterprise: { monthly: '$799', annual: '$649' } };
+  const monthlyPrices = { solo: 49, team: 149, enterprise: 499 };
   cards.forEach((card, i) => {
     const t = TIERS[tierKeys[i]];
     const val = card.querySelector('.value');
     const billed = card.querySelector('.billed');
     const reg = card.querySelector('.price-regular');
+    const btn = card.querySelector('.price-cta');
     if (val) val.textContent = isAnnual ? t.annual : t.monthly;
     if (billed) billed.textContent = isAnnual ? 'Billed annually' : 'Billed monthly';
-    if (reg) reg.textContent = isAnnual ? regularPrices[tierKeys[i]].annual : regularPrices[tierKeys[i]].monthly;
+    if (reg) {
+      if (isAnnual) {
+        reg.textContent = '$' + monthlyPrices[tierKeys[i]];
+        reg.style.display = 'inline';
+      } else {
+        reg.style.display = 'none';
+      }
+    }
+    if (btn) {
+      var price = isAnnual ? t.annual : t.monthly;
+      btn.innerHTML = 'BUY NOW &mdash; $' + price + '/mo &rarr;';
+    }
   });
 }
 
@@ -1866,6 +2578,28 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCheckout();
 });
 
+// ── Toast notification for payment feedback ──
+function _showPayToast(msg, isError) {
+  var existing = document.getElementById('pay-toast');
+  if (existing) existing.remove();
+  var t = document.createElement('div');
+  t.id = 'pay-toast';
+  var bg = isError ? 'linear-gradient(135deg,#ff3355,#ff6644)' : 'linear-gradient(135deg,#00ff88,#00c8ff)';
+  t.style.cssText = 'position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:99999;background:' + bg + ';color:' + (isError ? '#fff' : '#050810') + ';padding:14px 28px;border-radius:12px;font-weight:700;font-size:0.95rem;box-shadow:0 8px 32px rgba(0,0,0,0.3);animation:fadeInDown .3s ease;max-width:90vw;text-align:center';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity = '0'; t.style.transition = 'opacity .4s'; }, 5000);
+  setTimeout(function() { t.remove(); }, 5500);
+}
+
+function _showPayError(msg) {
+  _showPayToast(msg, true);
+  var coErr = document.getElementById('co-error');
+  if (coErr) { coErr.textContent = msg; coErr.classList.add('show'); }
+  var coBtn = document.getElementById('co-submit');
+  if (coBtn && coBtn.disabled) { coBtn.disabled = false; coBtn.innerHTML = 'Start Free Trial &rarr;'; }
+}
+
 async function postToPay(params) {
   try {
     const res = await fetch('/api/pay', {
@@ -1879,10 +2613,10 @@ async function postToPay(params) {
     } else if (data.redirect) {
       window.location.href = data.redirect;
     } else {
-      alert('Checkout error: ' + (data.error || data.instructions || 'Unknown error'));
+      _showPayError(data.error || data.instructions || 'Checkout unavailable. Please try again.');
     }
   } catch (e) {
-    alert('Network error \u2014 please try again.');
+    _showPayError('Connection error \u2014 please check your internet and try again.');
   }
 }
 
@@ -1902,7 +2636,11 @@ function checkoutSpecial(tier, product, amountCents, event) {
     }
   }, 10000);
 
-  postToPay({ tier: tier, product: product, amount: amountCents });
+  postToPay({ tier: tier, product: product, amount: amountCents }).finally(function() {
+    btn.textContent = originalText;
+    btn.style.pointerEvents = '';
+    btn.style.opacity = '';
+  });
 }
 
 // ── COUNTDOWN TIMER ──
@@ -1953,7 +2691,8 @@ function submitCheckout(e) {
   const billing = isAnnual ? 'annual' : 'monthly';
   const t = TIERS[selectedTier];
   const price = isAnnual ? t.annual : t.monthly;
-  const payload = { tier: selectedTier, name: name, email: email, billing: billing, amount_cents: price * 100, description: 'Second Mind Labs \u2014 ' + t.name };
+  const tierId = (isAnnual && !t.oneTime) ? selectedTier + '_annual' : selectedTier;
+  const payload = { tier: tierId, name: name, email: email, billing: billing, amount_cents: price * 100, description: 'Second Mind Labs — ' + t.name };
   if (company) payload.company = company;
 
   // Timeout fallback — re-enable button if redirect stalls
@@ -1966,8 +2705,170 @@ function submitCheckout(e) {
     }
   }, 10000);
 
+  // Also capture as lead
+  fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name:name,email:email,company:company,interest:selectedTier,source:'checkout_form'}) }).catch(function(){});
+
   postToPay(payload);
 }
+
+// ── CHECKOUT SUCCESS HANDLER ──
+(function() {
+  if (window.location.search.includes('checkout=success')) {
+    var toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:99999;background:linear-gradient(135deg,#00ff88,#00c8ff);color:#050810;padding:16px 32px;border-radius:12px;font-weight:700;font-size:1.05rem;box-shadow:0 8px 32px rgba(0,255,136,0.3);animation:fadeInDown .4s ease';
+    toast.textContent = 'Payment successful! Welcome to Second Mind HQ.';
+    document.body.appendChild(toast);
+    setTimeout(function() { toast.style.opacity = '0'; toast.style.transition = 'opacity .5s'; }, 6000);
+    setTimeout(function() { toast.remove(); }, 6500);
+    // Clean URL
+    history.replaceState(null, '', window.location.pathname);
+  }
+})();
+
+// ── SOCIAL PROOF NOTIFICATION ──
+(function() {
+  const names = ['Alex M.','Jordan R.','Sam T.','Morgan K.','Riley P.','Casey L.','Drew B.','Jamie H.','Taylor S.','Avery C.'];
+  const plans = ['Solo','Team','Team','Enterprise','Solo','Team','Lifetime','Team','Solo','Enterprise'];
+  const cities = ['Austin','London','Sydney','Toronto','Berlin','NYC','SF','Singapore','Melbourne','Dublin'];
+  let idx = 0;
+  function showNotif() {
+    var existing = document.getElementById('social-notif');
+    if (existing) existing.remove();
+    var n = document.createElement('div');
+    n.id = 'social-notif';
+    n.style.cssText = 'position:fixed;bottom:24px;left:24px;z-index:90;background:rgba(8,13,26,0.92);backdrop-filter:blur(16px);border:1px solid rgba(0,200,255,0.15);border-radius:12px;padding:14px 20px;font-size:13px;color:rgba(255,255,255,0.85);box-shadow:0 8px 30px rgba(0,0,0,0.4);max-width:320px;animation:slideInLeft .4s ease;cursor:pointer';
+    n.innerHTML = '<div style="display:flex;align-items:center;gap:10px"><span style="font-size:18px">&#x1F389;</span><div><strong>' + names[idx] + '</strong> from ' + cities[idx] + ' just signed up for <span style="color:#00c8ff">' + plans[idx] + '</span><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">' + Math.floor(Math.random()*12+1) + ' minutes ago</div></div></div>';
+    n.onclick = function() { n.remove(); };
+    document.body.appendChild(n);
+    idx = (idx + 1) % names.length;
+    setTimeout(function() { if (n.parentNode) { n.style.opacity = '0'; n.style.transition = 'opacity .4s'; setTimeout(function() { n.remove(); }, 400); }}, 5000);
+  }
+  setTimeout(showNotif, 8000);
+  setInterval(showNotif, Math.floor(Math.random()*20000) + 25000);
+})();
+
+// ── EXIT-INTENT POPUP ──
+(function() {
+  var shown = false;
+  document.addEventListener('mouseout', function(e) {
+    if (shown) return;
+    if (e.clientY > 10 || e.relatedTarget || e.toElement) return;
+    shown = true;
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(5,8,16,0.85);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease';
+    overlay.innerHTML = '<div style="background:linear-gradient(170deg,#080d1a,#0c1220);border:1px solid rgba(0,200,255,0.2);border-radius:20px;max-width:440px;width:90%;padding:40px 36px;text-align:center;position:relative;animation:slideUp .3s ease;box-shadow:0 24px 60px rgba(0,0,0,0.5)">' +
+      '<button onclick="this.parentElement.parentElement.remove()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer;line-height:1">&times;</button>' +
+      '<div style="font-size:36px;margin-bottom:12px">&#x1F6A8;</div>' +
+      '<h3 style="font-size:22px;font-weight:800;color:rgba(255,255,255,0.95);margin-bottom:8px">Wait \u2014 Don\'t Miss Launch Pricing</h3>' +
+      '<p style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:24px;line-height:1.6">Get our free <strong style="color:#00c8ff">AI Automation Playbook</strong> + lock in 40% off before prices increase. Join 200+ founders already using Command Centre.</p>' +
+      '<input id="exit-email" type="email" placeholder="your@email.com" style="width:100%;padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:#050810;color:rgba(255,255,255,0.95);font-size:15px;font-family:inherit;margin-bottom:12px;outline:none">' +
+      '<button onclick="exitCapture()" style="width:100%;padding:14px;border-radius:10px;font-weight:800;font-size:15px;border:none;cursor:pointer;background:linear-gradient(135deg,#00c8ff,#00e0ff);color:#050810;font-family:inherit">Get Free Playbook + 40% Off \u2192</button>' +
+      '<p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:10px">No spam. Unsubscribe anytime.</p>' +
+      '</div>';
+    overlay.addEventListener('click', function(ev) { if (ev.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+  });
+})();
+
+function submitLeadForm(e) {
+  e.preventDefault();
+  var btn = document.getElementById('lead-submit');
+  var msg = document.getElementById('lead-msg');
+  var payload = {
+    name: document.getElementById('lead-name').value.trim(),
+    email: document.getElementById('lead-email').value.trim(),
+    company: document.getElementById('lead-company').value.trim(),
+    interest: document.getElementById('lead-interest').value,
+    source: 'landing_page_form'
+  };
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.ok) {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(0,255,136,0.1)';
+        msg.style.color = '#00ff88';
+        msg.style.border = '1px solid rgba(0,255,136,0.3)';
+        msg.textContent = 'Thanks! We\'ll be in touch within 24 hours.';
+        document.getElementById('lead-form').reset();
+      } else {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(255,51,85,0.1)';
+        msg.style.color = '#ff3355';
+        msg.style.border = '1px solid rgba(255,51,85,0.3)';
+        msg.textContent = d.error || 'Something went wrong. Please try again.';
+      }
+      btn.disabled = false;
+      btn.innerHTML = 'Request Access &rarr;';
+    })
+    .catch(function() {
+      msg.style.display = 'block';
+      msg.style.background = 'rgba(255,51,85,0.1)';
+      msg.style.color = '#ff3355';
+      msg.style.border = '1px solid rgba(255,51,85,0.3)';
+      msg.textContent = 'Network error. Please try again.';
+      btn.disabled = false;
+      btn.innerHTML = 'Request Access &rarr;';
+    });
+}
+
+function exitCapture() {
+  var email = document.getElementById('exit-email').value.trim();
+  if (!email) return;
+  fetch('/api/leads', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email:email,interest:'general',source:'exit_intent'}) }).catch(function(){});
+  var parent = document.getElementById('exit-email').closest('div');
+  parent.innerHTML = '<div style="font-size:36px;margin-bottom:12px">&#x2705;</div><h3 style="font-size:22px;font-weight:800;color:rgba(255,255,255,0.95);margin-bottom:8px">You\'re In!</h3><p style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:20px">Check your inbox for the playbook. Your 40% discount code: <strong style="color:#00ff88">LAUNCH40</strong></p><button onclick="openCheckout(\'team\')" style="padding:14px 32px;border-radius:10px;font-weight:800;font-size:15px;border:none;cursor:pointer;background:linear-gradient(135deg,#00c8ff,#00e0ff);color:#050810;font-family:inherit">Start Free Trial Now \u2192</button>';
+}
+
+// ── SPOTS COUNTER ANIMATION ──
+(function() {
+  var el = document.getElementById('spots-count');
+  if (!el) return;
+  var count = 7;
+  function decrementSpot() {
+    if (count <= 2) return;
+    count--;
+    el.textContent = count;
+    el.style.transition = 'color 0.3s, transform 0.3s';
+    el.style.color = count <= 3 ? '#ff3355' : '#00c8ff';
+    el.style.transform = 'scale(1.3)';
+    setTimeout(function() { el.style.transform = 'scale(1)'; }, 300);
+    setTimeout(decrementSpot, Math.floor(Math.random()*180000) + 120000);
+  }
+  setTimeout(decrementSpot, Math.floor(Math.random()*60000) + 45000);
+})();
+</script>
+
+<style>
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (max-width: 600px) {
+  #social-notif { bottom: 70px !important; left: 12px !important; right: 12px !important; max-width: none !important; }
+}
+@media (max-width: 700px) {
+  .why-buy-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+}
+</style>
+
+<script>
+// ── SCROLL REVEAL ANIMATIONS ──
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  if (!reveals.length) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
 </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 #
 set -euo pipefail
 
-BASE_URL="${1:-https://command-centre.onrender.com}"
+BASE_URL="${1:-https://hq.secondmindhq.com}"
 CUSTOM_DOMAIN="https://secondmindhq.com"
 
 RED='\033[0;31m'

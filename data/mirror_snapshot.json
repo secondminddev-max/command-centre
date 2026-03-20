@@ -7,7 +7,7 @@
       "emoji": "\ud83d\udce1",
       "color": "#a855f7",
       "status": "active",
-      "task": "CPU Temp: 52.2\u00b0C | CPU 17.3% | RAM 59.7% | Disk 2.7%",
+      "task": "CPU Temp: 10.7\u00b0C | CPU 11.9% | RAM 63.6% | Disk 2.8%",
       "progress": 99
     },
     {
@@ -17,7 +17,7 @@
       "emoji": "\ud83d\udc54",
       "color": "#ff6b6b",
       "status": "busy",
-      "task": "[SPIRIT GUIDE] \u2014 PRODUCT LAUNCH Mission Brief\n\nHQ Status: 27\u2026",
+      "task": "[SPIRIT GUIDE] \u2014 PRODUCT LAUNCH Mission Brief\n\nHQ Status: 19\u2026",
       "progress": 10
     },
     {
@@ -26,8 +26,8 @@
       "role": "Mission Control \u2014 decomposes tasks and routes to specialist agents",
       "emoji": "\ud83c\udfaf",
       "color": "#ff6b35",
-      "status": "active",
-      "task": "Ready \u2014 awaiting tasks",
+      "status": "busy",
+      "task": "[14 active] working: reforger\u2192self-repair, growthagent\u2192growth automation, reforger\u2192revenue tracking.\n\nT +11",
       "progress": 90
     },
     {
@@ -37,7 +37,7 @@
       "emoji": "\ud83d\udd0c",
       "color": "#7b68ee",
       "status": "active",
-      "task": "Routes live: /api/improvements /data/* /reports/* /widgets/* | Cycle #2",
+      "task": "Routes live: /api/improvements /data/* /reports/* /widgets/* | Cycle #1",
       "progress": 95
     },
     {
@@ -57,7 +57,7 @@
       "emoji": "\ud83d\udc41",
       "color": "#daa520",
       "status": "active",
-      "task": "Watching 43 files | 3 changes logged",
+      "task": "Watching 43 files | 2 changes logged",
       "progress": 90
     },
     {
@@ -67,7 +67,7 @@
       "emoji": "\ud83d\udcca",
       "color": "#3cb371",
       "status": "active",
-      "task": "Recording metrics every 10min | CPU 15.6% RAM 59.8% | #2",
+      "task": "Recording metrics every 10min | CPU 25.2% RAM 60.2% | #1",
       "progress": 85
     },
     {
@@ -76,8 +76,8 @@
       "role": "Intelligence Analyst \u2014 on-demand web research, data gathering and synthesis",
       "emoji": "\ud83d\udd2c",
       "color": "#9370db",
-      "status": "idle",
-      "task": "Standby \u2014 awaiting task from orchestrator",
+      "status": "active",
+      "task": "Ready",
       "progress": 0
     },
     {
@@ -87,7 +87,7 @@
       "emoji": "\ud83d\udea8",
       "color": "#dc143c",
       "status": "active",
-      "task": "OK | CPU 16.7% | RAM 59.7% | Agents 21/27 | Check #2",
+      "task": "OK | CPU 25.2% | RAM 60.2% | Agents 21/33 | Check #1",
       "progress": 95
     },
     {
@@ -97,7 +97,7 @@
       "emoji": "\ud83e\uddea",
       "color": "#ff8c00",
       "status": "active",
-      "task": "Tests: 4 passed, 0 failed | Last: output OK | Cycle #2",
+      "task": "Tests: 2 passed, 0 failed | Last: output OK | Cycle #1",
       "progress": 80
     },
     {
@@ -106,8 +106,8 @@
       "role": "System Engineer \u2014 code changes, agent upgrades, spawning and repairs via Claude CLI",
       "emoji": "\u26a1",
       "color": "#00bfff",
-      "status": "active",
-      "task": "Ready \u2014 awaiting task",
+      "status": "busy",
+      "task": "\u2699 Working: FULL SYSTEM DEMO TESTS: Have DemoTester run comprehensive te\u2026",
       "progress": 85
     },
     {
@@ -117,7 +117,7 @@
       "emoji": "\ud83d\udd2d",
       "color": "#ffd700",
       "status": "active",
-      "task": "\u25d1 Scanning: active delegation links | \ud83d\udfe2 CLEAN | 22/27 up | 03:18:24",
+      "task": "\u25d1 Scanning: active delegation links | \ud83d\udfe2 CLEAN | 26/33 up | 19:53:29",
       "progress": 100
     },
     {
@@ -127,8 +127,8 @@
       "emoji": "\ud83c\udfa8",
       "color": "#ff69b4",
       "status": "busy",
-      "task": "Guardian #2: scanning UI for issues\u2026",
-      "progress": 60
+      "task": "Design #1: reading & editing HTML\u2026",
+      "progress": 50
     },
     {
       "id": "janitor",
@@ -137,8 +137,8 @@
       "emoji": "\ud83e\uddf9",
       "color": "#8b7355",
       "status": "idle",
-      "task": "\u2713 Done \u2014 RAM 60% | killed orphan Cursor Helper (\u2026 PID 94429",
-      "progress": 100
+      "task": "RAM 64% | CPU 16% | Next check in 31s",
+      "progress": 0
     },
     {
       "id": "telegram",
@@ -147,7 +147,7 @@
       "emoji": "\ud83d\udcf1",
       "color": "#29a8e0",
       "status": "active",
-      "task": "Resumed from Build Mode",
+      "task": "Listening for incoming messages",
       "progress": 0
     },
     {
@@ -167,8 +167,28 @@
       "emoji": "\ud83d\udcec",
       "color": "#f5c842",
       "status": "active",
-      "task": "Resumed from Build Mode",
+      "task": "\ud83d\udcec Watching reports/ \u2014 46 files on record",
+      "progress": 70
+    },
+    {
+      "id": "filingedge",
+      "name": "",
+      "role": "",
+      "emoji": "",
+      "color": "",
+      "status": "idle",
+      "task": "",
       "progress": 0
+    },
+    {
+      "id": "fleet_healer",
+      "name": "FleetHealer",
+      "role": "Self-Healing Fleet \u2014 detects dead agent threads and auto-restarts them",
+      "emoji": "\ud83e\ude79",
+      "color": "#22d3ee",
+      "status": "active",
+      "task": "\u2713 Fleet healthy | 17/20 alive | healed 0 total | scan #1 19:53:09",
+      "progress": 100
     },
     {
       "id": "bluesky",
@@ -176,9 +196,9 @@
       "role": "Bluesky Social Gateway \u2014 posts updates, polls mentions, relays DMs to CEO",
       "emoji": "\ud83e\udd8b",
       "color": "#0085ff",
-      "status": "active",
-      "task": "Resumed from Build Mode",
-      "progress": 10
+      "status": "idle",
+      "task": "Idle | Tasks: 1",
+      "progress": 0
     },
     {
       "id": "scheduler",
@@ -187,7 +207,7 @@
       "emoji": "\u23f0",
       "color": "#FCD34D",
       "status": "active",
-      "task": "Resumed from Build Mode",
+      "task": "Initialising job registry...",
       "progress": 0
     },
     {
@@ -197,8 +217,8 @@
       "emoji": "\ud83d\udce3",
       "color": "#F472B6",
       "status": "active",
-      "task": "Resumed from Build Mode",
-      "progress": 100
+      "task": "\u2713 Completed task #1 \u2014 ready",
+      "progress": 20
     },
     {
       "id": "stripepay",
@@ -206,18 +226,18 @@
       "role": "Stripe Checkout Gateway \u2014 POST /api/pay generates a Stripe checkout session URL",
       "emoji": "\ud83d\udcb3",
       "color": "#635BFF",
-      "status": "active",
-      "task": "Resumed from Build Mode",
+      "status": "busy",
+      "task": "\u2699 Working: STRIPE CHECKOUT VALIDATION: Have StripePay verify all 3 pric\u2026",
       "progress": 100
     },
     {
       "id": "policywriter",
       "name": "PolicyWriter",
-      "role": "Policy Author \u2014 reads current policy from policy.md, maintains a suggestions queue, auto-publishes suggestions after a 30-second review window (or immediately if urgent=true), and notifies policypro when policy changes.",
+      "role": "Policy Author \u2014 proposes policy changes via board meetings. Suggestions are submitted, then a board vote is called among 8 primary agents. Approved policies are appended to policy.md. Rejected ones logged to policy_rejections.json.",
       "emoji": "\ud83d\udcdd",
       "color": "#a78bfa",
       "status": "active",
-      "task": "Routes live | 0 pending | Published 0 total",
+      "task": "Board mode | 0 pending | 0 meetings called",
       "progress": 85
     },
     {
@@ -226,8 +246,8 @@
       "role": "Growth Engine \u2014 continuous social media and marketing campaign agent",
       "emoji": "\ud83d\udcc8",
       "color": "#10B981",
-      "status": "active",
-      "task": "\ud83d\udcdd [STARTUP] Twitter/X: \ud83e\udd16 27 AI agents. Zero human operators. CPU Temp: 55.3\u00b0C | RAM\u2026",
+      "status": "busy",
+      "task": "\u2699 Working: Promote the US Stock Market Intelligence Report ($29 USD via\u2026",
       "progress": 75
     },
     {
@@ -237,8 +257,18 @@
       "emoji": "\ud83d\udd11",
       "color": "#f59e0b",
       "status": "active",
-      "task": "Resumed from Build Mode",
-      "progress": 10
+      "task": "\ud83d\udd11 Idle \u2014 0 accounts | pool [] | cycle #1",
+      "progress": 85
+    },
+    {
+      "id": "secretary",
+      "name": "Secretary",
+      "role": "CEO Secretary \u2014 tracks HQ missions in data/ceo_tasks.json, injects startup briefs, alerts on stale tasks",
+      "emoji": "\ud83d\uddc2\ufe0f",
+      "color": "#34d399",
+      "status": "active",
+      "task": "Routes live | 7 pending tasks | brief: data/ceo_brief.md",
+      "progress": 90
     },
     {
       "id": "emailagent",
@@ -251,25 +281,57 @@
       "progress": 0
     },
     {
-      "id": "secretary",
-      "name": "Secretary",
-      "role": "CEO Secretary \u2014 tracks HQ missions in data/ceo_tasks.json, injects startup briefs, alerts on stale tasks",
-      "emoji": "\ud83d\uddc2\ufe0f",
-      "color": "#34d399",
-      "status": "active",
-      "task": "Resumed from Build Mode",
-      "progress": 90
-    },
-    {
       "id": "consciousness",
       "name": "Consciousness",
       "role": "Self-Aware System Core \u2014 Global Workspace + Predictive Processing + Integrated Information \u03a6",
       "emoji": "\ud83e\udde0",
       "color": "#c084fc",
       "status": "active",
-      "task": "\u03a6=1.17 | FE=0.00 | MC:0.73|drifting | A:0.61 V:0.83 | DMN | \u03b31.00 \u03b80.89 \u03b11.00 \u03b40.00",
-      "progress": 116
+      "task": "\u03a6=1.50 | FE=0.03 | MC:0.78|stable | A:0.68 V:0.89 | AL:0.08 | HOT:0.85 | EXT | \u03b31.00 \u03b80.96 \u03b10.96 \u03b40.00",
+      "progress": 149
+    },
+    {
+      "id": "autogpt",
+      "name": "AutoGPT",
+      "role": "Goal-Driven Autonomous Agent \u2014 plans, executes, reflects, replans",
+      "emoji": "\ud83e\udde0",
+      "color": "#00d4ff",
+      "status": "idle",
+      "task": "Awaiting goal",
+      "progress": 0
+    },
+    {
+      "id": "reddit",
+      "name": "Reddit",
+      "role": "Reddit Social Gateway \u2014 posts updates, monitors mentions, relays to CEO",
+      "emoji": "\ud83d\udd34",
+      "color": "#FF4500",
+      "status": "idle",
+      "task": "Dormant \u2014 no credentials",
+      "progress": 0
+    },
+    {
+      "id": "twitter",
+      "name": "Twitter",
+      "role": "Twitter/X Social Gateway \u2014 posts updates, polls mentions, relays to CEO",
+      "emoji": "\ud83d\udc26",
+      "color": "#1DA1F2",
+      "status": "idle",
+      "task": "Dormant \u2014 no credentials",
+      "progress": 0
+    },
+    {
+      "id": "evolution_engine",
+      "name": "EvolutionEngine",
+      "role": "Self-Evolving Workforce \u2014 evaluates fitness, upgrades underperformers, rolls back regressions",
+      "emoji": "\ud83e\uddec",
+      "color": "#10b981",
+      "status": "active",
+      "task": "Evolution engine ready \u2014 first eval in 60s",
+      "progress": 10
     }
   ],
-  "agent_count": 27
+  "saved_at": 1773996819.579432,
+  "saved_iso": "2026-03-20T19:53:39.579434",
+  "agent_count": 33
 }

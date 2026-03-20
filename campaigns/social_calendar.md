@@ -92,7 +92,7 @@
 | 3pm | X/Twitter | Share best HN/Reddit comments. "The response has been incredible..." | Screenshot of comments | Link |
 | 5pm | X/Twitter | "Setup takes 2 minutes. No terminal. No Docker unless you want it." + screen recording GIF | GIF | Link |
 | All day | Bluesky | Automated — engagement + CTAs | Auto | Links |
-| 10am | Email | Email 2: "An AI agent made a sale at 3am" | HTML email | Get Lifetime Pro — $299 |
+| 10am | Email | Email 2: "An AI agent made a sale at 3am" | HTML email | Get Lifetime Pro — $499 |
 | — | Product Hunt | Submit listing, set launch for Day 5 or 6 | Screenshots + video | — |
 
 ---
@@ -132,7 +132,7 @@
 | 11am | Instagram Feed | Revenue milestone post or "Behind the build" carousel | Carousel/screenshot | Link in bio |
 | 12pm | Facebook | Post 4: "How do I install it? Download. Drag. Launch. 2 minutes." | Install screenshot | Link |
 | 1pm | LinkedIn | Revenue update + build-in-public reflection | Text | Link |
-| 2pm | X/Twitter | "Lifetime Pro ($299 — everything, forever) closes tomorrow night. X spots left." | Pricing graphic | Checkout link |
+| 2pm | X/Twitter | "Lifetime Pro ($499 — everything, forever) closes tomorrow night. X spots left." | Pricing graphic | Checkout link |
 | 3pm | Indie Hackers | Day 6 revenue update thread | Revenue screenshot | Link |
 | 5pm | X/Twitter | "We pitched to AI newsletters today — Ben's Bites, The Rundown, TLDR AI. Fingers crossed." | Text | Follow for updates |
 | 9pm | X/Twitter | "24 hours left on Lifetime Pro. After that, it's $49/month." | Text | Checkout link |
@@ -148,7 +148,7 @@
 | Time | Platform | Content | Asset | CTA |
 |---|---|---|---|---|
 | 8am | LinkedIn | "7 days ago I launched Command Centre. Here's what happened..." — reflection thread | Revenue chart | Link |
-| 9am | X/Twitter | "LAST DAY — Lifetime Pro closes at midnight. $299. Everything. Forever." | Pricing graphic | Checkout link |
+| 9am | X/Twitter | "LAST DAY — Lifetime Pro closes at midnight. $499. Everything. Forever." | Pricing graphic | Checkout link |
 | 9am | Facebook | Post 5: Feature comparison post + "Last call for Lifetime Pro" | Comparison table | Checkout link |
 | 10am | TikTok | Repost best-performing clip from the week | Top clip | Link in bio |
 | 10am | Instagram Reels | Repost best-performing Reel | Top reel | Link in bio |
@@ -157,11 +157,11 @@
 | 12pm | Indie Hackers | Final revenue thread: "7-day launch results" | Full breakdown | Link |
 | 2pm | Reddit | Revenue recap post in r/SideProject: "I launched an AI agent OS — 7-day results" | Screenshots | Link |
 | 3pm | X/Twitter | "Thank you to everyone who tried Command Centre this week. The agents don't stop. Neither do we." | Text | Link |
-| 5pm | X/Twitter | "6 hours left. Lifetime Pro. $299. Then it's gone." | Text | Checkout link |
+| 5pm | X/Twitter | "6 hours left. Lifetime Pro. $499. Then it's gone." | Text | Checkout link |
 | 9pm | X/Twitter | "2 hours left." | Text | Checkout link |
 | 11pm | X/Twitter | "1 hour left. Last call." | Text | Checkout link |
 | All day | Bluesky | Automated — final urgency CTAs | Auto | Links |
-| 10am | Email | Email 5: "Last call — Lifetime Pro closes tonight" | HTML email | Lock in Lifetime Pro — $299 |
+| 10am | Email | Email 5: "Last call — Lifetime Pro closes tonight" | HTML email | Lock in Lifetime Pro — $499 |
 
 ---
 

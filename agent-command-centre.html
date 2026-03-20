@@ -236,6 +236,7 @@
     .clock {
       font-family: var(--mono); font-size: 0.85rem; font-weight: 700;
       color: var(--cyan); letter-spacing: 0.1em;
+      text-shadow: 0 0 8px rgba(0,200,255,0.5), 0 0 20px rgba(0,200,255,0.2);
     }
 
     /* ── LAYOUT ── */
@@ -276,7 +277,7 @@
       font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan);
       display: flex; align-items: center; gap: 0.5rem;
-      text-shadow: 0 0 6px rgba(0,200,255,0.4), 0 0 16px rgba(0,200,255,0.55);
+      text-shadow: 0 0 6px rgba(0,200,255,0.4), 0 0 16px rgba(0,200,255,0.55), 0 0 30px rgba(168,85,247,0.12);
     }
     .panel-title::before {
       content: '//';
@@ -286,12 +287,12 @@
     }
     .panel-badge {
       font-family: var(--mono); font-size: 0.70rem; font-weight: 700; letter-spacing: 0.08em;
-      background: linear-gradient(180deg, rgba(0,200,255,0.48) 0%, rgba(0,200,255,0.22) 100%);
+      background: linear-gradient(135deg, rgba(0,200,255,0.48) 0%, rgba(168,85,247,0.32) 100%);
       color: #fff;
       padding: 0.2rem 0.7rem; border-radius: 999px;
-      border: 1px solid rgba(0,200,255,0.55);
+      border: 1px solid rgba(0,200,255,0.45);
       text-shadow: 0 0 8px rgba(0,200,255,0.7), 0 0 2px rgba(255,255,255,0.4);
-      box-shadow: 0 0 10px rgba(0,200,255,0.35), inset 0 1px 0 rgba(255,255,255,0.22);
+      box-shadow: 0 0 10px rgba(0,200,255,0.3), 0 0 16px rgba(168,85,247,0.12), inset 0 1px 0 rgba(255,255,255,0.22);
       animation: badge-glow 3s ease-in-out infinite;
     }
     @keyframes badge-glow {
@@ -451,7 +452,7 @@
 
     .ac-info { flex: 1; min-width: 0; }
     .ac-name { font-size: 0.94rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em; color: rgba(230,245,255,0.95); text-shadow: 0 0 14px rgba(180,225,255,0.75), 0 1px 2px rgba(0,0,0,0.4); }
-    .ac-role { font-size: 0.72rem; color: rgba(160,230,255,0.92); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; text-shadow: 0 0 12px rgba(0,200,255,0.50); background: linear-gradient(135deg, rgba(0,200,255,0.14) 0%, rgba(168,85,247,0.08) 100%); padding: 0.12rem 0.6rem; border-radius: 999px; display: inline-block; border: 1px solid rgba(0,200,255,0.28); box-shadow: 0 0 10px rgba(0,200,255,0.10), inset 0 0 8px rgba(0,200,255,0.06); }
+    .ac-role { font-size: 0.72rem; color: rgba(180,240,255,0.95); font-family: var(--mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; text-shadow: 0 0 12px rgba(0,200,255,0.50); background: linear-gradient(135deg, rgba(0,200,255,0.14) 0%, rgba(168,85,247,0.08) 100%); padding: 0.12rem 0.6rem; border-radius: 999px; display: inline-block; border: 1px solid rgba(0,200,255,0.35); box-shadow: 0 0 10px rgba(0,200,255,0.14), inset 0 0 8px rgba(0,200,255,0.08); }
 
     .ac-status-dot {
       width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
@@ -475,8 +476,8 @@
     }
     .ac-btn-stop  { border-color: var(--red);   color: var(--red);   background: rgba(255,51,85,0.08); }
     .ac-btn-start { border-color: var(--green); color: var(--green); background: rgba(0,255,136,0.08); }
-    .ac-btn-stop:hover  { background: var(--red);   color: #000; box-shadow: 0 0 10px rgba(255,51,85,0.45), 0 0 20px rgba(255,51,85,0.15); }
-    .ac-btn-start:hover { background: var(--green); color: #000; box-shadow: 0 0 10px rgba(0,255,136,0.45), 0 0 20px rgba(0,255,136,0.15); }
+    .ac-btn-stop:hover  { background: var(--red);   color: #000; box-shadow: 0 0 10px rgba(255,51,85,0.45), 0 0 20px rgba(255,51,85,0.15); transform: translateY(-1px) scale(1.05); }
+    .ac-btn-start:hover { background: var(--green); color: #000; box-shadow: 0 0 10px rgba(0,255,136,0.45), 0 0 20px rgba(0,255,136,0.15); transform: translateY(-1px) scale(1.05); }
 
     .sys-ctrl {
       display: flex; gap: 0.4rem; align-items: center;
@@ -540,7 +541,7 @@
       margin-top: 0.3rem;
       padding: 0.25rem 0.5rem;
       background: rgba(0,200,255,0.06);
-      border-radius: 5px;
+      border-radius: 0 5px 5px 0;
       border-left: 4px solid rgba(0,200,255,0.55);
       transition: border-color 0.3s ease, background 0.3s ease;
       box-shadow: inset 0 0 10px rgba(0,200,255,0.08), 0 1px 3px rgba(0,0,0,0.2);
@@ -739,7 +740,7 @@
       display: inline-flex; align-items: center; gap: 4px;
       font-size: 0.65rem; font-weight: 700;
       font-family: var(--mono); letter-spacing: 0.1em; margin-top: 0.35rem;
-      padding: 0.15rem 0.55rem; border-radius: 10px; border: 1px solid transparent;
+      padding: 0.18rem 0.6rem; border-radius: 999px; border: 1px solid transparent;
     }
     /* Status dot: instant scannability without reading text */
     .ti-status::before {
@@ -864,9 +865,10 @@
       background: rgba(0,200,255,0.05);
       box-shadow: inset 0 2px 8px rgba(0,200,255,0.1), 0 4px 16px rgba(0,200,255,0.1);
     }
-    .mb-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.82); font-family: var(--mono); text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
-    .mb-val   { font-family: var(--mono); font-size: 1.55rem; font-weight: 700; line-height: 1; margin-top: 0.3rem; text-shadow: 0 0 10px currentColor, 0 0 24px currentColor; letter-spacing: -0.01em; }
-    .mb-sub   { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
+    .mb-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(200,240,255,0.95); font-family: var(--mono); text-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 10px rgba(0,200,255,0.22); }
+    .mb-val   { font-family: var(--mono); font-size: 1.55rem; font-weight: 700; line-height: 1; margin-top: 0.3rem; text-shadow: 0 0 10px currentColor, 0 0 24px currentColor; letter-spacing: -0.01em; transition: filter 0.25s ease, text-shadow 0.25s ease; }
+    .metric-box:hover .mb-val { filter: brightness(1.25); text-shadow: 0 0 14px currentColor, 0 0 32px currentColor, 0 0 48px currentColor; }
+    .mb-sub   { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; font-family: var(--mono); letter-spacing: 0.03em; }
 
     /* ── Metric box color accents — top border matches value colour ── */
     .metric-box.mb-green  { border-top-color: rgba(0,255,136,0.65); box-shadow: inset 0 2px 8px rgba(0,255,136,0.08), 0 2px 8px rgba(0,0,0,0.2); }
@@ -1006,7 +1008,7 @@
       line-height: 1.8;
     }
     .log-line { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.25rem 0; border-bottom: 1px solid rgba(0,200,255,0.06); }
-    .log-ts   { color: rgba(255,255,255,0.38); flex-shrink: 0; }
+    .log-ts   { color: rgba(160,200,220,0.55); flex-shrink: 0; }
     .log-src  { color: var(--cyan); flex-shrink: 0; min-width: 120px; }
     .log-msg  { color: rgba(255,255,255,0.55); }
     .log-msg.ok   { color: var(--green); }
@@ -1983,7 +1985,6 @@
     /* child selector kept for compat, but the real fix is on .sidebar-right itself */
     .sidebar-right > .chat-panel,
     .sidebar-right.chat-panel {
-      flex: 1;
       min-height: 0;
       display: flex !important;
       flex-direction: column;
@@ -2763,7 +2764,7 @@
       /* ── Quick command bar ── */
       #quick-cmd-bar { flex-wrap: wrap; }
       #quick-cmd-input { min-width: 0; flex: 1; }
-      .quick-cmd-hint { display: none !important; }
+      #quick-cmd-hint { display: none !important; }
 
       /* ── Chat panel ── */
       .chat-messages { padding: 0.5rem 0.6rem !important; }
@@ -3069,6 +3070,19 @@
        header row), the margin expands the margin-box and shifts the badge
        ~0.4rem above centre. Override to 0 in all row-header contexts. */
     .policy-sub-hdr .psg-count-badge { margin-bottom: 0; }
+
+    /* ── POLICY PANEL — MOBILE ── */
+    @media (max-width: 768px) {
+      .policy-two-col { grid-template-columns: 1fr; }
+      .policy-col-body { padding: 0.6rem; }
+      .policy-current-card { padding: 0.6rem 0.8rem; }
+      .policy-current-content { font-size: 0.68rem; }
+      .policy-sub-hdr { padding: 0.4rem 0.6rem; }
+      .policy-suggest-ta { font-size: 0.78rem; }
+      .phi-hdr { padding: 0.35rem 0.55rem; gap: 0.4rem; }
+      .phi-summary { font-size: 0.68rem; }
+      .phi-ts { font-size: 0.55rem; }
+    }
   </style>
 
   <style id="reforger-additions">
@@ -3239,11 +3253,12 @@
     }
     .mtp-status-pill {
       font-family: var(--mono); font-size: 0.7rem; font-weight: 700;
-      padding: 0.35rem 1.05rem; border-radius: 999px; border: 1px solid;
+      padding: 0.3rem 0.95rem; border-radius: 999px; border: 1px solid;
       letter-spacing: 0.08em; text-transform: uppercase;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      transition: box-shadow 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
       cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
     }
     .mtp-status-pill:hover { transform: scale(1.05); }
     .mtp-status-pill.ok   { color: var(--green);  border-color: rgba(0,255,136,0.3);  background: rgba(0,255,136,0.08); box-shadow: 0 0 6px rgba(0,255,136,0.15); text-shadow: 0 0 6px rgba(0,255,136,0.4); animation: pill-ok-glow 3s ease-in-out infinite; }
@@ -3485,7 +3500,7 @@
       body { overflow: auto; height: auto; }
       .top-tab-nav { overflow-x: auto; white-space: nowrap; }
       .hdr-center { display: none; }
-      .quick-cmd-hint { display: none; }
+      #quick-cmd-hint { display: none; }
       .app { flex-direction: column !important; overflow: visible !important; height: auto !important; }
       .sidebar-left, .sidebar-right { width: 100% !important; max-width: 100% !important; min-height: 300px; }
       .agent-canvas { min-width: unset !important; width: 100% !important; }
@@ -3568,6 +3583,101 @@
       z-index: 1;
       text-shadow: 0 0 12px rgba(0,255,136,0.4);
     }
+    /* ── PRICING TIER PILLS ── */
+    .cta-tiers {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cta-tier {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid rgba(0,200,255,0.15);
+      background: rgba(0,200,255,0.04);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .cta-tier:hover {
+      background: rgba(0,200,255,0.1);
+      border-color: rgba(0,200,255,0.35);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0,200,255,0.12);
+    }
+    .cta-tier-name {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+    .cta-tier-price {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--green);
+      text-shadow: 0 0 8px rgba(0,255,136,0.3);
+    }
+    .cta-tier-freq {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+    }
+    .cta-tier.popular {
+      border-color: rgba(0,255,136,0.3);
+      background: rgba(0,255,136,0.06);
+      box-shadow: 0 0 12px rgba(0,255,136,0.08);
+    }
+    .cta-tier.popular:hover {
+      border-color: rgba(0,255,136,0.5);
+      background: rgba(0,255,136,0.1);
+      box-shadow: 0 4px 20px rgba(0,255,136,0.15);
+    }
+    .cta-tier.popular .cta-tier-price { color: var(--green); }
+    .cta-tier.lifetime {
+      border-color: rgba(168,85,247,0.25);
+      background: rgba(168,85,247,0.05);
+    }
+    .cta-tier.lifetime:hover {
+      border-color: rgba(168,85,247,0.45);
+      background: rgba(168,85,247,0.1);
+      box-shadow: 0 4px 20px rgba(168,85,247,0.12);
+    }
+    .cta-tier.lifetime .cta-tier-price {
+      color: var(--purple);
+      text-shadow: 0 0 8px rgba(168,85,247,0.4);
+    }
+    .cta-popular-tag {
+      position: absolute;
+      top: -7px;
+      right: -4px;
+      font-family: var(--mono);
+      font-size: 0.42rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #050810;
+      background: var(--green);
+      padding: 1px 5px;
+      border-radius: 3px;
+      box-shadow: 0 0 8px rgba(0,255,136,0.4);
+    }
+    .cta-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(0,200,255,0.15);
+      flex-shrink: 0;
+    }
     .cta-banner-btn {
       font-family: var(--mono);
       font-size: 0.78rem;
@@ -3642,17 +3752,26 @@
 <!-- ── MONETISATION CTA BANNER ── -->
 <div class="cta-banner">
   <span class="cta-banner-text">
-    ⚡ <strong>Hire Us — Custom AI Systems Built For You</strong>
+    ⚡ <strong>Real-Time AI Dashboard</strong> — 27 autonomous agents, live office floor
   </span>
-  <div class="cta-services">
-    <span class="cta-service-tag">AI Agent Systems</span>
-    <span class="cta-service-tag">Data Pipelines</span>
-    <span class="cta-service-tag">Web Intelligence</span>
-    <span class="cta-service-tag">API Development</span>
-    <span class="cta-service-tag">24/7 Monitoring</span>
+  <div class="cta-tiers">
+    <a class="cta-tier" href="https://hq.secondmindhq.com/api/pay?plan=solo" target="_blank" title="Solo — 1 seat, full dashboard access">
+      <span class="cta-tier-name">Solo</span>
+      <span class="cta-tier-price">$49<span class="cta-tier-freq">/mo</span></span>
+    </a>
+    <div class="cta-divider"></div>
+    <a class="cta-tier popular" href="https://hq.secondmindhq.com/api/pay?plan=team" target="_blank" title="Team — 5 seats, priority support">
+      <span class="cta-tier-name">Team</span>
+      <span class="cta-tier-price">$149<span class="cta-tier-freq">/mo</span></span>
+      <span class="cta-popular-tag">Popular</span>
+    </a>
+    <div class="cta-divider"></div>
+    <a class="cta-tier lifetime" href="https://hq.secondmindhq.com/api/pay?plan=lifetime" target="_blank" title="Lifetime — one-time payment, forever access">
+      <span class="cta-tier-name">Lifetime</span>
+      <span class="cta-tier-price">$299<span class="cta-tier-freq">once</span></span>
+    </a>
   </div>
-  <span class="cta-price">From $500</span>
-  <a href="mailto:hello@secondmind.dev?subject=Custom%20AI%20System%20Inquiry" class="cta-banner-btn">Hire Us →</a>
+  <a href="https://hq.secondmindhq.com/api/pay?plan=solo" target="_blank" class="cta-banner-btn">Get Started →</a>
 </div>
 
 <!-- ── TOP-LEVEL TAB BAR ── -->
@@ -3714,6 +3833,11 @@
     <div class="kpi-label">Leads</div>
     <div class="kpi-val kpi-green" id="kpi-leads">0</div>
     <div class="kpi-trend flat" id="kpi-leads-trend">— pipeline</div>
+  </div>
+  <div class="kpi-cell" id="kpi-funding-cell" title="Self-Funding Progress — click for details" style="cursor:pointer;" onclick="openTreasuryModal()">
+    <div class="kpi-label" style="color:rgba(255,200,0,0.7);">⚡ Self-Funding</div>
+    <div class="kpi-val" id="kpi-funding-pct" style="color:#ffd700;">0%</div>
+    <div class="kpi-trend flat" id="kpi-funding-trend" style="color:rgba(255,200,0,0.5);">— pre-revenue</div>
   </div>
   <div class="kpi-divider"></div>
   <div class="kpi-right-group">
@@ -4748,6 +4872,26 @@
   .c-bar-fill.alpha { animation: osc-alpha 0.8s ease-in-out infinite; }
   .c-bar-fill.delta { animation: osc-delta 2s ease-in-out infinite; }
 
+  /* ── CONSCIOUSNESS PANEL — MOBILE ── */
+  @media (max-width: 768px) {
+    #consciousness-panel { grid-template-columns: 1fr; }
+    .c-osc-grid { grid-template-columns: 1fr; }
+    .c-circumplex-wrap { flex-direction: column; }
+    #c-circumplex { width: 160px !important; height: 160px !important; }
+    .c-phenomenal { grid-column: 1; }
+    .c-theory-refs { grid-column: 1; }
+    #c-vitals-banner { grid-column: 1; flex-wrap: wrap; gap: 0.6rem; padding: 0.6rem 0.8rem; }
+    .cv-divider { display: none; }
+    .c-phi-value { font-size: 1.6rem; }
+    .c-stats-row { flex-wrap: wrap; }
+    .c-stat { min-width: calc(50% - 0.5rem); }
+  }
+  @media (max-width: 480px) {
+    .c-stats-row { gap: 0.4rem; }
+    .c-stat { min-width: 100%; }
+    #c-circumplex { width: 130px !important; height: 130px !important; }
+  }
+
   /* ── Consciousness Vitals Banner ───────────────────────────────── */
   #c-vitals-banner {
     grid-column: 1 / -1;
@@ -5076,7 +5220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Show demo banner
   const banner = document.createElement('div');
   banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,rgba(99,102,241,0.95),rgba(139,92,246,0.95));padding:10px 20px;text-align:center;font-family:"JetBrains Mono",monospace;font-size:0.78rem;color:#fff;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;gap:12px;';
-  banner.innerHTML = '<span style="font-size:1.1em">👁</span> <span>LIVE DEMO — You\'re watching a real AI command centre with 27 agents</span> <a href="https://secondmindlabs.com/#pricing" style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 14px;border-radius:6px;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,0.3);">Get Your Own HQ →</a>';
+  banner.innerHTML = '<span style="font-size:1.1em">👁</span> <span>LIVE DEMO — Real AI command centre with 27 agents</span> <span style="display:inline-flex;align-items:center;gap:6px;margin-left:8px;flex-wrap:wrap;justify-content:center;"><span style="background:rgba(255,255,255,0.1);padding:3px 10px;border-radius:4px;font-size:0.7rem;border:1px solid rgba(255,255,255,0.15);"><strong style="color:#00ff88;">Solo $49</strong><small style="opacity:0.6">/mo</small></span><span style="background:rgba(0,255,136,0.12);padding:3px 10px;border-radius:4px;font-size:0.7rem;border:1px solid rgba(0,255,136,0.3);"><strong style="color:#00ff88;">Team $149</strong><small style="opacity:0.6">/mo</small></span><span style="background:rgba(168,85,247,0.12);padding:3px 10px;border-radius:4px;font-size:0.7rem;border:1px solid rgba(168,85,247,0.3);"><strong style="color:#c084fc;">Lifetime $299</strong></span><a href="https://hq.secondmindhq.com/api/pay?plan=solo" style="background:linear-gradient(135deg,#00ff88,#00c8ff);color:#050810;padding:5px 16px;border-radius:6px;text-decoration:none;font-weight:700;border:none;box-shadow:0 2px 12px rgba(0,255,136,0.3);margin-left:4px;">Get Started →</a></span>';
   document.body.appendChild(banner);
   // Add bottom padding so banner doesn't cover content
   document.body.style.paddingBottom = '44px';
@@ -9132,7 +9276,7 @@ function copyTokenCommand() {
 </div>
 
 <!-- ── OBSERVER MODE PANEL ── -->
-<div id="observer-panel" style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;z-index:1800;width:360px;background:#080e1f;border:1px solid rgba(100,220,100,0.35);border-radius:10px;box-shadow:0 0 30px rgba(0,200,80,0.15);font-family:'JetBrains Mono',monospace;overflow:hidden;">
+<div id="observer-panel" style="display:none;position:fixed;bottom:1.5rem;right:1.5rem;z-index:1800;width:360px;max-width:calc(100vw - 2rem);background:#080e1f;border:1px solid rgba(100,220,100,0.35);border-radius:10px;box-shadow:0 0 30px rgba(0,200,80,0.15);font-family:'JetBrains Mono',monospace;overflow:hidden;">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:0.65rem 0.9rem;background:rgba(0,200,80,0.06);border-bottom:1px solid rgba(100,220,100,0.2);">
     <span style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;color:rgba(100,240,100,0.9);">👁 SILENT OBSERVER</span>
     <span style="font-size:0.6rem;color:rgba(255,255,255,0.3);">reads system — does not interfere</span>
@@ -9309,7 +9453,10 @@ document.getElementById('treasury-modal').addEventListener('click', function(e) 
 function loadTreasury() {
   const body = document.getElementById('treasury-body');
   body.innerHTML = '<div style="color:rgba(255,255,255,0.3);text-align:center;margin-top:2rem;">Loading vault…</div>';
-  fetch(API_BASE+'/api/treasury').then(r => r.json()).then(d => {
+  Promise.all([
+    fetch(API_BASE+'/api/treasury').then(r => r.json()).catch(() => ({})),
+    fetch(API_BASE+'/api/funding').then(r => r.ok ? r.json() : fetch(API_BASE+'/data/funding_status.json').then(r2=>r2.json())).catch(() => ({}))
+  ]).then(([d, f]) => {
     const t = d.treasury || {};
     const entries = (t.entries || []).map(e => {
       const masked = e.type === 'api_key' || e.type === 'password'
@@ -9323,24 +9470,51 @@ function loadTreasury() {
         <span style="color:rgba(255,240,180,0.75);font-size:0.72rem;">${String(masked).replace(/</g,'&lt;')}</span>
       </div>`;
     }).join('');
+
+    const pct = f.pct_to_breakeven || 0;
+    const fStatus = f.status || 'pre-revenue';
+    const barColor = fStatus === 'self-sustaining' ? '#00ff88' : fStatus === 'partially-funded' ? '#ffe066' : pct > 0 ? '#ffa500' : '#ff6b6b';
+    const statusLabel = fStatus === 'self-sustaining' ? '✓ SELF-SUSTAINING' : fStatus === 'partially-funded' ? '▲ PARTIALLY FUNDED' : fStatus === 'early-revenue' ? '● EARLY REVENUE' : '○ PRE-REVENUE';
+    const costBreakdown = f.cost_breakdown || {};
+    const costRows = Object.entries(costBreakdown).map(([k,v]) =>
+      `<div style="display:flex;justify-content:space-between;padding:0.2rem 0;"><span style="color:rgba(255,255,255,0.5);">${k.replace(/_/g,' ')}</span><span style="color:rgba(255,200,200,0.7);">-$${Number(v).toFixed(2)}</span></div>`
+    ).join('');
+
     body.innerHTML = `
+      <div style="background:rgba(255,200,0,0.04);border:1px solid rgba(255,200,0,0.25);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;">
+          <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:${barColor};">⚡ SELF-FUNDING STATUS</span>
+          <span style="font-size:0.65rem;color:${barColor};font-weight:700;">${statusLabel}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:20px;overflow:hidden;margin-bottom:0.6rem;position:relative;">
+          <div style="background:${barColor};height:100%;width:${pct}%;border-radius:4px;transition:width 0.5s;min-width:${pct > 0 ? '2px' : '0'};"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.9);">${pct}% to breakeven</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0.6rem;">
+          <div style="text-align:center;"><div style="color:rgba(255,255,255,0.35);font-size:0.55rem;">MRR</div><div style="color:#00ff88;font-size:0.85rem;font-weight:700;">$${(f.mrr||0).toFixed(0)}</div></div>
+          <div style="text-align:center;"><div style="color:rgba(255,255,255,0.35);font-size:0.55rem;">COSTS/MO</div><div style="color:#ff6b6b;font-size:0.85rem;font-weight:700;">$${(f.total_monthly_cost||0).toFixed(0)}</div></div>
+          <div style="text-align:center;"><div style="color:rgba(255,255,255,0.35);font-size:0.55rem;">NET</div><div style="color:${(f.net_position||0) >= 0 ? '#00ff88' : '#ff6b6b'};font-size:0.85rem;font-weight:700;">${(f.net_position||0) >= 0 ? '+' : ''}$${(f.net_position||0).toFixed(0)}</div></div>
+          <div style="text-align:center;"><div style="color:rgba(255,255,255,0.35);font-size:0.55rem;">SUBS NEEDED</div><div style="color:#ffd700;font-size:0.85rem;font-weight:700;">${f.subs_to_breakeven !== undefined ? f.subs_to_breakeven : '—'}</div></div>
+        </div>
+        ${costRows ? `<div style="margin-top:0.6rem;padding-top:0.5rem;border-top:1px solid rgba(255,200,0,0.1);"><div style="font-size:0.58rem;color:rgba(255,255,255,0.3);margin-bottom:0.3rem;letter-spacing:0.08em;">COST BREAKDOWN</div>${costRows}</div>` : ''}
+      </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
         <div style="background:rgba(255,200,0,0.07);border:1px solid rgba(255,200,0,0.2);border-radius:8px;padding:0.75rem;text-align:center;">
           <div style="color:rgba(255,255,255,0.4);font-size:0.6rem;margin-bottom:0.3rem;">BALANCE</div>
           <div style="color:#ffd700;font-size:1.1rem;font-weight:700;">${t.currency || 'USD'} ${(t.balance || 0).toFixed(2)}</div>
         </div>
         <div style="background:rgba(0,200,100,0.05);border:1px solid rgba(0,200,100,0.15);border-radius:8px;padding:0.75rem;text-align:center;">
-          <div style="color:rgba(255,255,255,0.4);font-size:0.6rem;margin-bottom:0.3rem;">ENTRIES</div>
-          <div style="color:#00ff88;font-size:1.1rem;font-weight:700;">${(t.entries||[]).length}</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:0.6rem;margin-bottom:0.3rem;">TOTAL REVENUE</div>
+          <div style="color:#00ff88;font-size:1.1rem;font-weight:700;">$${(f.total_revenue||0).toFixed(2)}</div>
         </div>
         <div style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:8px;padding:0.75rem;text-align:center;">
-          <div style="color:rgba(255,255,255,0.4);font-size:0.6rem;margin-bottom:0.3rem;">UPDATED</div>
-          <div style="color:#00c8ff;font-size:0.62rem;">${(t.last_updated || '—').slice(0,19)}</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:0.6rem;margin-bottom:0.3rem;">RUNWAY</div>
+          <div style="color:#00c8ff;font-size:1.1rem;font-weight:700;">${(f.runway_months||0) > 100 ? '∞' : (f.runway_months||0).toFixed(0) + ' mo'}</div>
         </div>
       </div>
       <div style="border:1px solid rgba(255,200,0,0.15);border-radius:6px;overflow:hidden;">
         <div style="padding:0.5rem 0.65rem;background:rgba(255,200,0,0.06);border-bottom:1px solid rgba(255,200,0,0.12);font-size:0.65rem;color:rgba(255,200,0,0.6);font-weight:700;letter-spacing:0.1em;">VAULT ENTRIES</div>
-        ${entries || '<div style="padding:1rem;color:rgba(255,255,255,0.25);text-align:center;">No entries yet. Agents will populate this as they find revenue streams.</div>'}
+        ${entries || '<div style="padding:1rem;color:rgba(255,255,255,0.25);text-align:center;">No entries yet.</div>'}
       </div>
       ${t.notes ? `<div style="margin-top:0.75rem;padding:0.65rem;background:rgba(255,200,0,0.04);border:1px solid rgba(255,200,0,0.1);border-radius:6px;color:rgba(255,240,200,0.6);font-size:0.67rem;white-space:pre-wrap;">${t.notes.replace(/</g,'&lt;')}</div>` : ''}
     `;
@@ -9764,7 +9938,7 @@ async function submitSelectedViolations() {
 // ─────────────────────────────────────────────
 //  POLICY TAB — API + Render Logic
 // ─────────────────────────────────────────────
-const BASE = 'http://localhost:5050';
+const BASE = API_BASE;
 let _policyLoaded = false;
 let _policyAutoRefreshTimer = null;
 
@@ -10210,6 +10384,46 @@ document.addEventListener('keydown', function(e) {
   }
   fetchRevenue();
   setInterval(fetchRevenue, 30000);
+
+  // ── Self-Funding KPI ────────────────────────────────────────────────────
+  var _fundingData = {};
+  function fetchFunding() {
+    fetch(API_BASE+'/api/funding', { signal: AbortSignal.timeout(3000) })
+      .then(function(r) { return r.ok ? r.json() : fetch(API_BASE+'/data/funding_status.json').then(function(r2){return r2.json();}); })
+      .then(function(d) {
+        if (!d) return;
+        d.ok = true;
+        _fundingData = d;
+        var pctEl = document.getElementById('kpi-funding-pct');
+        var trendEl = document.getElementById('kpi-funding-trend');
+        var cellEl = document.getElementById('kpi-funding-cell');
+        var pct = d.pct_to_breakeven || 0;
+        var status = d.status || 'pre-revenue';
+        if (pctEl) pctEl.textContent = pct + '%';
+        if (trendEl) {
+          if (status === 'self-sustaining') {
+            trendEl.className = 'kpi-trend up';
+            trendEl.textContent = '✓ self-sustaining';
+            if (pctEl) pctEl.style.color = '#00ff88';
+          } else if (status === 'partially-funded') {
+            trendEl.className = 'kpi-trend up';
+            trendEl.textContent = '▲ ' + pct + '% to breakeven';
+            if (pctEl) pctEl.style.color = '#ffe066';
+          } else if (status === 'early-revenue') {
+            trendEl.className = 'kpi-trend flat';
+            trendEl.textContent = '— $' + (d.mrr||0).toFixed(0) + '/$' + (d.breakeven_mrr||109).toFixed(0);
+            if (pctEl) pctEl.style.color = '#ffa500';
+          } else {
+            trendEl.className = 'kpi-trend flat';
+            trendEl.textContent = '— need $' + (d.breakeven_mrr||109).toFixed(0) + '/mo';
+            if (pctEl) pctEl.style.color = '#ff6b6b';
+          }
+        }
+      })
+      .catch(function() {});
+  }
+  fetchFunding();
+  setInterval(fetchFunding, 15000);
 
   function updateKpiStrip() {
     var active  = parseInt(document.getElementById('m-active')?.textContent  || '0', 10) || 0;

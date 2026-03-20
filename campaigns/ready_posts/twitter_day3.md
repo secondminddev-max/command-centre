@@ -15,10 +15,10 @@ An autonomous AI operating system for Mac.
 No cloud. No chatbot. A real workforce.
 
 Solo: $49/mo
-Lifetime: $299
+Lifetime: $499
 Mac Mini bundle: $1,499
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 **Attach:** Screenshot of office-floor dashboard with agents active.
@@ -34,7 +34,7 @@ The Growth Agent wrote a post. Published it to Bluesky. Someone clicked. Stripe 
 
 Zero human involvement.
 
-This is Command Centre. https://command-centre.onrender.com
+This is Command Centre. https://hq.secondmindhq.com
 ```
 
 ---
@@ -48,7 +48,7 @@ Not a gimmick. Agents monitor their own confidence. They learn from predictions.
 
 No other agent framework does this.
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 ---
@@ -64,7 +64,7 @@ AgentGPT: cloud-only, no local option
 
 Command Centre: persistent agents, live dashboard, Stripe + Bluesky + email built in, fully local on Mac.
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 ---
@@ -82,7 +82,7 @@ Setup in 2 minutes:
 
 No terminal. No Docker (unless you want it). Mac-native.
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 **Attach:** Screen recording GIF of install process.

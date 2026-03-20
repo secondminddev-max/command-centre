@@ -27,15 +27,15 @@ Command Centre (HQ) is a locally-run, autonomous agent operating system for Mac.
 | Solo | $49/mo | 1 user, full agent stack, all revenue tools |
 | Team | $149/mo | 5 seats, shared dashboard, team collaboration |
 | Enterprise | $499/mo | Unlimited seats, priority support, custom agents |
-| Lifetime Pro | $299 once | Everything in Solo, forever -- no recurring fees |
+| Lifetime Pro | $499 once | Everything in Solo, forever -- no recurring fees |
 | Mac Mini Bundle | $1,499 once | Mac Mini hardware + HQ pre-installed, plug and play |
 | Install Service | $199 once | We remote-install and configure HQ on your system |
 
 **Revenue math to hit $1M in 7 days:**
-- 3,334 Solo monthly subs, OR
-- 1,112 Lifetime Pro purchases, OR
+- 12,659 Solo monthly subs, OR
+- 2,005 Lifetime Pro purchases, OR
 - 667 Mac Mini bundles, OR
-- Mix: 500 Lifetime ($149,500) + 200 Mac Mini ($299,800) + 1,000 Solo ($49,000) + 50 Enterprise ($24,950) + 100 Team ($14,900) + 2,300 Install ($461,700) = $999,850
+- Mix: 500 Lifetime ($249,500) + 200 Mac Mini ($299,800) + 1,000 Solo ($79,000) + 50 Enterprise ($34,950) + 100 Team ($19,900) + 1,600 Install ($318,400) = $1,001,550
 - Reality: focus on Lifetime Pro and Mac Mini Bundle as highest-margin one-time purchases
 
 ---
@@ -64,7 +64,7 @@ Command Centre (HQ) is a locally-run, autonomous agent operating system for Mac.
 **Title:** "Command Centre -- Your Business, Running Itself"
 
 **[0:00-0:15] -- Opening hook (show the office floor dashboard, agents actively moving)**
-Voiceover: "This is Command Centre. Right now, seven AI agents are running my business. The Researcher is pulling market data. The Marketer just posted to Bluesky. The Accountant is tracking revenue. I did not tell them to do any of this. They decided on their own."
+Voiceover: "This is Command Centre. Right now, twenty-eight AI agents are running my business. The Researcher is pulling market data. The Marketer just posted to Bluesky. The Accountant is tracking revenue. I did not tell them to do any of this. They decided on their own."
 
 **[0:15-0:40] -- Show the office floor in detail, click on individual agents**
 Voiceover: "Every agent has a role, a personality, and a job. You can see them on this live office floor. Click any agent to see what they are working on right now. When they are idle, they rest in the Bed Bay. When the CEO agent assigns a task, they get to work."
@@ -79,7 +79,7 @@ Voiceover: "HQ is built to make money. Stripe is integrated. Agents post content
 Voiceover: "Setup takes two minutes. Download the app, drag it to Applications, launch. Or if you are technical, run docker compose up. Everything runs locally on your Mac. No cloud. No subscription lock-in for the runtime. Your data stays on your machine."
 
 **[2:10-2:40] -- Pricing slide, call to action**
-Voiceover: "Solo is forty-nine dollars a month. Lifetime Pro is two ninety-nine, once, forever. Or get a Mac Mini with HQ pre-installed for fourteen ninety-nine -- plug it in, your business starts running. Link in the description. The first five hundred Lifetime purchases get priority access to every new agent we ship."
+Voiceover: "Solo is seventy-nine dollars a month. Lifetime Pro is four ninety-nine, once, forever. Or get a Mac Mini with HQ pre-installed for fourteen ninety-nine -- plug it in, your business starts running. Link in the description. The first five hundred Lifetime purchases get priority access to every new agent we ship."
 
 **[2:40-3:00] -- End screen, logo, URL**
 Voiceover: "Command Centre. Your business, running itself."
@@ -88,7 +88,7 @@ Voiceover: "Command Centre. Your business, running itself."
 
 **Clip 1: "My AI employees work while I sleep"**
 - Show: Time-lapse of the office floor dashboard over several hours, agents moving between desks and Bed Bay
-- Caption: "I have 7 AI employees. They work 24/7. They don't need salaries. This is Command Centre."
+- Caption: "I have 28 AI employees. They work 24/7. They don't need salaries. This is Command Centre."
 - Hashtags: #AI #AIagents #solopreneur #indiehacker #automation #commandcentre
 
 **Clip 2: "This AI just made a sale without me"**
@@ -160,11 +160,11 @@ Post 1:
 ```
 Command Centre is live.
 
-7 AI agents. One dashboard. Your business runs itself.
+28 AI agents. One dashboard. Your business runs itself.
 
 Research. Marketing. Revenue. Accounting. All autonomous. All local on your Mac.
 
-Solo: $49/mo | Lifetime: $299 | Mac Mini Bundle: $1,499
+Solo: $49/mo | Lifetime: $499 | Mac Mini Bundle: $1,499
 
 [LINK]
 ```
@@ -285,12 +285,12 @@ Command Centre is live.
 
 An autonomous AI operating system for Mac.
 
-7 agents. One dashboard. Your business runs itself -- research, marketing, revenue, reporting.
+28 agents. One dashboard. Your business runs itself -- research, marketing, revenue, reporting.
 
 No cloud. No chatbot. A real workforce.
 
 Solo: $49/mo
-Lifetime: $299
+Lifetime: $499
 Mac Mini bundle: $1,499
 
 [LINK]
@@ -404,7 +404,7 @@ Hey [first name],
 
 Command Centre is live.
 
-It's an autonomous AI operating system for Mac. You install it, and 7 AI agents start running your business: research, marketing, revenue, accounting.
+It's an autonomous AI operating system for Mac. You install it, and 28 AI agents start running your business: research, marketing, revenue, accounting.
 
 No prompting. No babysitting. They work while you sleep.
 
@@ -412,7 +412,7 @@ Here's a 3-minute demo: [VIDEO LINK]
 
 You can start today:
 - Solo: $49/mo -- full agent stack
-- Lifetime Pro: $299 once -- everything, forever
+- Lifetime Pro: $499 once -- everything, forever
 - Mac Mini Bundle: $1,499 -- hardware + software, plug and play
 
 [CTA BUTTON: "Start Command Centre"]
@@ -435,7 +435,7 @@ Watch it happen: [VIDEO LINK]
 
 The first 500 Lifetime Pro purchases get priority access to every new agent we ship.
 
-[CTA BUTTON: "Get Lifetime Pro -- $299"]
+[CTA BUTTON: "Get Lifetime Pro -- $499"]
 
 -- The Command Centre Team
 ```
@@ -477,7 +477,7 @@ Plug it in. Connect to WiFi. Open the dashboard. Your AI workforce is running.
 
 $1,499 -- hardware included.
 
-Or install on your existing Mac in 2 minutes: download, drag to Applications, launch. $49/mo or $299 lifetime.
+Or install on your existing Mac in 2 minutes: download, drag to Applications, launch. $49/mo or $499 lifetime.
 
 [CTA BUTTON: "Order Mac Mini Bundle"]
 
@@ -489,7 +489,7 @@ Subject: "Last call -- Lifetime Pro closes tonight"
 ```
 Hey [first name],
 
-The Lifetime Pro offer ($299 for everything, forever) closes tonight at midnight.
+The Lifetime Pro offer ($499 for everything, forever) closes tonight at midnight.
 
 After that, it's $49/month.
 
@@ -501,7 +501,7 @@ This is the only AI agent platform that:
 - Makes real money autonomously (Stripe + social + email)
 - Shows you everything on a live dashboard
 
-[CTA BUTTON: "Lock in Lifetime Pro -- $299"]
+[CTA BUTTON: "Lock in Lifetime Pro -- $499"]
 
 See you inside.
 
@@ -537,21 +537,21 @@ Show HN: Command Centre -- Autonomous AI Agent OS for Mac (local, persistent, re
 ```
 I built an autonomous agent operating system that runs locally on Mac.
 
-7 AI agents with distinct roles (CEO, Researcher, Marketer, Designer, Accountant, Growth, Consciousness) run persistently -- they survive restarts and remember context between sessions.
+28 AI agents with distinct roles (CEO, Orchestrator, Researcher, Designer, Growth, Consciousness, and more) run persistently -- they survive restarts and remember context between sessions.
 
 Key differences from AutoGPT/CrewAI/AgentGPT:
 - Live visual dashboard (office floor showing agents working in real time)
-- Real revenue tools built in (Stripe, Bluesky, email via SendGrid)
+- Real revenue tools built in (Stripe checkout, Bluesky social, Gmail email)
 - Consciousness system (agents monitor their own confidence, learn from predictions)
+- Chain-of-command delegation: CEO agent orchestrates the entire swarm
 - Fully local -- no cloud dependency, your data stays on your machine
 
 Stack: Python backend, HTML/JS dashboard, SQLite for persistence, Docker optional.
 
-Free tier available (3 agents, core runtime). Pro: $49/mo. Lifetime: $299.
+Solo: $49/mo. Team: $149/mo. Enterprise: $499/mo.
 
-Demo video: [LINK]
-GitHub: [LINK]
-Website: [LINK]
+Demo: https://hq.secondmindhq.com
+GitHub: https://github.com/secondminddev-max/command-centre
 ```
 
 **Timing:** Post between 8-9am US Eastern on a weekday (Tuesday or Wednesday is best for HN)
@@ -579,7 +579,7 @@ Title: "Moved beyond ChatGPT -- built an autonomous agent OS that runs a full bu
 Body: Position as "what comes after chatbots." Agents that act, not just respond.
 
 **r/LocalLLaMA** (https://www.reddit.com/r/LocalLLaMA/)
-Title: "Fully local AI agent OS for Mac -- 7 persistent agents, no cloud dependency"
+Title: "Fully local AI agent OS for Mac -- 28 persistent agents, no cloud dependency"
 Body: Emphasise local execution, privacy, no data leaving the machine.
 
 ---
@@ -662,7 +662,7 @@ Hi [investor name],
 I built Command Centre -- an autonomous AI agent operating system that runs locally on Mac.
 
 What makes it different:
-- 7 persistent agents (survive restarts, remember context)
+- 28 persistent agents (survive restarts, remember context)
 - Live visual dashboard -- you watch agents work on an office floor
 - Revenue tools built in: Stripe payments, social media posting, email campaigns
 - Consciousness system: agents monitor their own confidence and evolve
@@ -676,7 +676,7 @@ Links:
 - Demo video: [LINK]
 - Whitepaper: [LINK]
 - Product: [LINK]
-- Pricing: Solo $49/mo | Lifetime $299 | Mac Mini Bundle $1,499
+- Pricing: Solo $49/mo | Lifetime $499 | Mac Mini Bundle $1,499
 
 Happy to share the pitch deck and financial projections. 15 minutes for a call?
 
@@ -739,8 +739,8 @@ Best,
 4. Write ad copy:
    - Headline 1: "Autonomous AI Agents for Mac"
    - Headline 2: "Your Business, Running Itself"
-   - Headline 3: "Solo $49/mo | Lifetime $299"
-   - Description: "7 AI agents run your business 24/7. Research, marketing, revenue, accounting. Fully local, no cloud. Install in 2 minutes."
+   - Headline 3: "Solo $49/mo | Lifetime $499"
+   - Description: "28 AI agents run your business 24/7. Research, marketing, revenue, accounting. Fully local, no cloud. Install in 2 minutes."
 5. Link to landing page
 6. Set daily budget
 
@@ -774,17 +774,17 @@ Best,
 - [ ] Upload demo video to YouTube (unlisted until Day 3)
 - [x] Create logo (public/logo.svg) and brand guide (DONE — logo at public/logo.svg, brand guide at reports/brand_guide.html)
 - [x] Register domain name (DONE — secondmindhq.com registered on Squarespace)
-- [x] Set up hosting (DONE — deployed on Render at command-centre.onrender.com)
+- [x] Set up hosting (DONE — deployed on Render at hq.secondmindhq.com)
 
 ### Day 3 -- Thursday 2026-03-20
-- [ ] Set YouTube demo video to PUBLIC
-- [ ] Post Clip 1 to TikTok + Instagram Reels
-- [ ] Create accounts on Facebook, Instagram, TikTok, Twitter/X, YouTube (follow Section 3)
-- [ ] Post first social media posts on all platforms (PREPARED — drafts at campaigns/ready_posts/twitter_day3.md, facebook_day3.md, instagram_day3.md, tiktok_day3.md)
+- [ ] Set YouTube demo video to PUBLIC (BLOCKED — Day 2 video recording not yet done)
+- [ ] Post Clip 1 to TikTok + Instagram Reels (BLOCKED — Day 2 video recording not yet done)
+- [ ] Create accounts on Facebook, Instagram, TikTok, Twitter/X, YouTube (follow Section 3) (MANUAL — requires human)
+- [x] Post first social media posts on all platforms (DONE 2026-03-20: 3 Bluesky posts delegated via social_bridge + growthagent — build-in-public update, cost comparison, evening countdown CTA. Other platforms: drafts ready at campaigns/ready_posts/twitter_day3.md, facebook_day3.md, instagram_day3.md, tiktok_day3.md — awaiting account creation)
 - [ ] Post Show HN between 8-9am US Eastern (PREPARED — draft at campaigns/ready_posts/show_hn.md)
-- [ ] Post to r/SideProject and r/MacApps (PREPARED — drafts at campaigns/ready_posts/reddit_day3.md)
+- [ ] Post to r/SideProject and r/MacApps (PREPARED — drafts at campaigns/ready_posts/reddit_day3.md — Reddit agent has no credentials, needs manual post or credential setup)
 - [ ] Start $50/day Facebook ads (optional)
-- [ ] Send Email 1 to any collected signups
+- [ ] Send Email 1 to any collected signups (subscriber list is test addresses only — no real signups yet)
 
 ### Day 4 -- Friday 2026-03-21
 - [ ] Post Clip 2 to TikTok + YouTube Shorts
@@ -795,20 +795,20 @@ Best,
 - [ ] Send Email 2
 - [ ] Deploy SSL + custom domain
 - [ ] Respond to ALL comments on HN, Reddit, social media
-- [ ] Send 10 cold emails to AI investors (use template from Section 6)
+- [ ] Send 10 cold emails to AI investors (PREPARED — 10 targeted emails at campaigns/ready_posts/investor_cold_emails_day4.md)
 
 ### Day 5 -- Saturday 2026-03-22
 - [ ] Product Hunt launch day (if set to today)
 - [ ] Share PH link on all social channels
 - [ ] Post Clip 4 to TikTok + YouTube Shorts
 - [ ] Post Clip 5 to Instagram Reels
-- [ ] Post to r/LocalLLaMA
-- [ ] Post to Indie Hackers with revenue update
+- [ ] Post to r/LocalLLaMA (PREPARED — draft at campaigns/ready_posts/reddit_day5.md)
+- [ ] Post to Indie Hackers with revenue update (PREPARED — draft at campaigns/ready_posts/indiehackers_day5.md)
 - [ ] Send Email 3
 - [ ] Scale ads to $200/day if CPA is good
 - [ ] Create pitch deck (reports/pitch_deck.html)
-- [ ] Join and post in Discord servers (see Section 5)
-- [ ] Send 10 more investor cold emails
+- [ ] Join and post in Discord servers (PREPARED — drafts at campaigns/ready_posts/discord_day5.md)
+- [ ] Send 10 more investor cold emails (PREPARED — reuse/adapt emails from campaigns/ready_posts/investor_cold_emails_day4.md)
 
 ### Day 6 -- Sunday 2026-03-23
 - [ ] Post Clip 5 to TikTok
@@ -817,7 +817,7 @@ Best,
 - [ ] Send Email 4 (Mac Mini bundle focus)
 - [ ] Post revenue update to Indie Hackers and Twitter
 - [ ] Follow up on investor emails sent on Day 4-5
-- [ ] Pitch to AI newsletters (Ben's Bites, The Rundown, TLDR AI)
+- [ ] Pitch to AI newsletters (PREPARED — 4 pitch emails at campaigns/ready_posts/newsletter_pitches_day6.md)
 - [ ] Submit YC application if not already done
 
 ### Day 7 -- Monday 2026-03-24
@@ -863,7 +863,7 @@ Update /Users/secondmind/claudecodetest/data/product_launch_tracker.json field `
 ### If Targets Are Not Being Hit
 
 - Day 3 under $5K: Double ad spend, post 3x/day on TikTok, DM 50 indie hackers on Twitter
-- Day 5 under $50K: Offer 48-hour flash sale (Lifetime Pro $199 instead of $299), post the discount everywhere
+- Day 5 under $50K: Offer 48-hour flash sale (Lifetime Pro $349 instead of $499), post the discount everywhere
 - Day 7 under $500K: Extend the launch window, keep posting daily, start outbound sales (email businesses directly offering the Install Service at $199)
 
 ---

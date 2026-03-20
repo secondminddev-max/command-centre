@@ -22,7 +22,7 @@ Command Centre is live. 🚀
 
 All autonomous. All local on your Mac. No cloud.
 
-Solo: $49/mo | Lifetime: $299 once | Mac Mini Bundle: $1,499
+Solo: $49/mo | Lifetime: $499 once | Mac Mini Bundle: $1,499
 
 Link in bio.
 

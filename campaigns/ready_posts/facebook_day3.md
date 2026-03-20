@@ -12,9 +12,9 @@ Command Centre is live.
 
 Research. Marketing. Revenue. Accounting. All autonomous. All local on your Mac.
 
-Solo: $49/mo | Lifetime: $299 | Mac Mini Bundle: $1,499
+Solo: $49/mo | Lifetime: $499 | Mac Mini Bundle: $1,499
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 **Attach:** Screenshot of office-floor dashboard with agents active.

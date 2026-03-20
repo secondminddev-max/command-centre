@@ -16,5 +16,5 @@ This isn't AutoGPT. It isn't CrewAI. These agents remember. They adapt. They get
 
 No other platform has this.
 
-$49/mo Solo · $299 Lifetime Pro
+$49/mo Solo · $499 Lifetime Pro
 secondmindhq.com

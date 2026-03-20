@@ -1,0 +1,11 @@
+# Command Centre — secondmindhq.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /data/
+Disallow: /agents/
+Disallow: /scripts/
+Disallow: /deploy/
+Disallow: /install/
+
+Sitemap: https://secondmindhq.com/sitemap.xml

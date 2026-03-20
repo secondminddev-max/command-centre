@@ -10,7 +10,7 @@
         "Finviz (free screener → Elite at $24.96–$39.50/mo)",
         "TIKR Terminal (free US data → Plus $19.95/mo → Pro $39.95/mo)",
         "ChartMill (free charts → $25/mo annual / $34.97/mo monthly)",
-        "Koyfin (free tier → Plus $39/mo → Premium $79/mo)"
+        "Koyfin (free tier → Plus $39/mo → Premium $49/mo)"
       ],
       "conversion_tactics": [
         "Require credit card at trial start (opt-out) — converts at ~50% vs 18% opt-in, vs 3–4% pure freemium",
@@ -20,7 +20,7 @@
         "Surface upgrade prompt at the moment of highest intent (e.g. user tries to export or set an alert)",
         "Use 7-day trial — data shows 40.4% conversion rate vs 30.6% for 60+ day trials"
       ],
-      "typical_price_points": "$19–$79/month; annual plans at 35–40% discount (e.g. $25/mo billed annually) to boost LTV",
+      "typical_price_points": "$19–$49/month; annual plans at 35–40% discount (e.g. $25/mo billed annually) to boost LTV",
       "why_it_works": "Financial tool users have high intent — they are researching where to put real money. Once they find a workflow that works, switching cost is high. The free tier builds habit and trust; the paywall captures willingness-to-pay at peak engagement. Opt-out trials pre-qualify users with payment intent, cutting churn from the start."
     },
     {

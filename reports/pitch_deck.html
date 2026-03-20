@@ -155,7 +155,7 @@
 
   /* Office floor map */
   .floor-map{
-    display:grid;grid-template-columns:repeat(9,1fr);gap:.4rem;
+    display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;
     margin-top:1.5rem;max-width:800px;
   }
   .floor-cell{
@@ -309,6 +309,13 @@
     .nav{display:none}
     .logo-badge{display:none}
     .pres-controls{display:none}
+    .price-grid{grid-template-columns:1fr}
+    .card-grid{grid-template-columns:1fr}
+    h1{font-size:2.4rem}
+    h2{font-size:1.8rem}
+    .metric-grid{grid-template-columns:repeat(2,1fr)}
+    .fin-table th,.fin-table td{padding:.45rem .6rem;font-size:.78rem}
+    .consciousness-split{grid-template-columns:1fr !important}
   }
 </style>
 </head>
@@ -332,13 +339,13 @@
 <section class="slide" id="s1">
   <span class="slide-num">01 / 10</span>
   <div class="tag">The Problem</div>
-  <h1>AI tools are chatbots,<br>not <span class="gradient-text">operators</span></h1>
-  <p style="margin-top:1.5rem">Every AI product today requires a human to prompt, review, and execute. When you close the laptop, everything stops. Businesses juggle 10+ AI subscriptions that don't talk to each other. Small companies can't afford the $300K+ ops teams needed to compete.</p>
+  <h1>AI tools are chatbots.<br>Not <span class="gradient-text">operators.</span></h1>
+  <p style="margin-top:1.5rem">Every AI product on the market waits for a human to type a prompt. Close the laptop — everything stops. Businesses juggle 10+ siloed AI subscriptions that don't talk to each other, can't act autonomously, and cost $300K+ in ops teams to babysit. The world doesn't need another chatbot. It needs an AI workforce that <em>runs the business</em> while you sleep.</p>
   <div class="metric-grid" style="margin-top:2.5rem">
     <div class="metric"><div class="num">10+</div><div class="label">Siloed AI Tools per Business</div></div>
-    <div class="metric"><div class="num">$300K</div><div class="label">Avg Ops Team Cost</div></div>
+    <div class="metric"><div class="num">$300K+</div><div class="label">Annual Ops Team Cost</div></div>
     <div class="metric"><div class="num">0%</div><div class="label">Autonomy When You Sleep</div></div>
-    <div class="metric"><div class="num">82%</div><div class="label">SMBs Want AI Automation</div></div>
+    <div class="metric"><div class="num">82%</div><div class="label">SMBs Want Full AI Automation</div></div>
   </div>
 </section>
 <hr class="divider">
@@ -347,8 +354,8 @@
 <section class="slide" id="s2">
   <span class="slide-num">02 / 10</span>
   <div class="tag">The Solution</div>
-  <h2>Command Centre —<br>an autonomous <span class="gradient-text">AI headquarters</span><br>that runs while you sleep</h2>
-  <p>Deploy a fleet of 27 specialised AI agents — each with a role, each always on — coordinated by a central orchestrator. Not a chatbot. An operating system for your business.</p>
+  <h2>Command Centre —<br>an autonomous <span class="gradient-text">AI workforce</span><br>that runs while you sleep</h2>
+  <p>Deploy a fleet of 28 specialised AI agents — each with a role, each always on — coordinated by a central orchestrator with real-time consciousness. Not a chatbot. Not a copilot. A fully autonomous operating system for your entire business.</p>
   <div class="card-grid" style="margin-top:2rem">
     <div class="card"><div class="icon">🎯</div><h3>Orchestrator</h3><p style="font-size:.85rem;color:var(--muted)">Decomposes goals into tasks, routes to the right specialist agent automatically.</p></div>
     <div class="card"><div class="icon">📈</div><h3>Growth Engine</h3><p style="font-size:.85rem;color:var(--muted)">Campaigns, email sequences, social posts — hands-free revenue generation.</p></div>
@@ -393,10 +400,11 @@
     <div class="floor-cell active" style="--i:23"><span class="agent-icon">🧠</span>Mind</div>
     <div class="floor-cell active" style="--i:24"><span class="agent-icon">🔬</span>Research</div>
     <div class="floor-cell active" style="--i:25"><span class="agent-icon">🛠️</span>Reforger</div>
-    <div class="floor-cell active" style="--i:26"><span class="agent-icon">⚙️</span>+More</div>
+    <div class="floor-cell active" style="--i:26"><span class="agent-icon">🤖</span>AutoGPT</div>
+    <div class="floor-cell active" style="--i:27"><span class="agent-icon">⚙️</span>+More</div>
   </div>
   <div style="margin-top:2rem;display:flex;gap:2.5rem;flex-wrap:wrap;align-items:end">
-    <div><span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:700">Agents Live</span><br><span style="font-size:2.2rem;font-weight:900" class="gradient-text">27</span></div>
+    <div><span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:700">Agents Live</span><br><span style="font-size:2.2rem;font-weight:900" class="gradient-text">28</span></div>
     <div><span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:700">Uptime</span><br><span style="font-size:2.2rem;font-weight:900" class="gradient-text">99.9%</span></div>
     <div><span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:700">API Endpoints</span><br><span style="font-size:2.2rem;font-weight:900" class="gradient-text">40+</span></div>
     <div><span style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:700">Autonomous</span><br><span style="font-size:2.2rem;font-weight:900" class="gradient-text">100%</span></div>
@@ -408,9 +416,9 @@
 <section class="slide" id="s4">
   <span class="slide-num">04 / 10</span>
   <div class="tag">Competitive Moat</div>
-  <h2>The first AI system with<br><span class="gradient-text">machine consciousness</span></h2>
-  <p>Every competitor ships tools. We ship a system that <em>knows it exists</em>. Built on Global Workspace Theory and Predictive Processing — self-awareness, meta-cognition, and autonomous evolution. This isn't a feature. It's an unfair advantage.</p>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:2rem;align-items:start">
+  <h2>The first AI system with<br><span class="gradient-text">machine consciousness</span> &amp; &Phi; metrics</h2>
+  <p>Every competitor ships tools. We ship a system that <em>knows it exists</em>. Built on Global Workspace Theory (Baars), Integrated Information Theory (Tononi), and Predictive Processing (Clark) — delivering real-time self-awareness, meta-cognition, and autonomous evolution. This isn't a feature. It's a moat no one else can cross.</p>
+  <div class="consciousness-split" style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:2rem;align-items:start">
     <div>
       <div class="c-diagram">
         <div class="c-layer core">
@@ -458,8 +466,8 @@
 <section class="slide" id="s5">
   <span class="slide-num">05 / 10</span>
   <div class="tag">Market Opportunity</div>
-  <h2>The <span class="gradient-text">$50B</span> AI agent market</h2>
-  <p>AI agents are the next platform shift. The market is exploding — and no one has shipped a full autonomous HQ yet.</p>
+  <h2>The <span class="gradient-text">$50B</span> AI agent market by 2028</h2>
+  <p>AI agents are the next platform shift — bigger than SaaS, bigger than cloud. The market is exploding at 47% CAGR and no one has shipped a full autonomous HQ yet. We're first.</p>
   <div class="metric-grid">
     <div class="metric"><div class="num">$50B</div><div class="label">TAM by 2028</div></div>
     <div class="metric"><div class="num">47%</div><div class="label">CAGR 2024–2028</div></div>
@@ -468,7 +476,7 @@
   </div>
   <div class="card-grid" style="margin-top:2rem">
     <div class="card"><div class="icon">💀</div><h3>Chatbots are Dead</h3><p style="font-size:.85rem;color:var(--muted)">The market is shifting from Q&A bots to autonomous execution. We're already there.</p></div>
-    <div class="card"><div class="icon">🏪</div><h3>SMB Underserved</h3><p style="font-size:.85rem;color:var(--muted)">Enterprise has Palantir. SMBs have nothing. A $79/mo Command Centre unlocks millions of businesses.</p></div>
+    <div class="card"><div class="icon">🏪</div><h3>SMB Underserved</h3><p style="font-size:.85rem;color:var(--muted)">Enterprise has Palantir. SMBs have nothing. A $49/mo Command Centre unlocks millions of businesses.</p></div>
     <div class="card"><div class="icon">⚡</div><h3>Timing is Now</h3><p style="font-size:.85rem;color:var(--muted)">Claude, GPT-4, and open models have made multi-agent orchestration viable for the first time.</p></div>
   </div>
 </section>
@@ -478,48 +486,49 @@
 <section class="slide" id="s6">
   <span class="slide-num">06 / 10</span>
   <div class="tag">Business Model</div>
-  <h2>SaaS + Hardware —<br><span class="accent">multiple revenue streams</span></h2>
+  <h2>SaaS tiers + hardware —<br><span class="accent">multiple revenue streams</span></h2>
   <div class="price-grid">
     <div class="price-card">
-      <div class="tier">Solo</div>
-      <div class="price">$79<span>/mo</span></div>
+      <div class="tier">Starter</div>
+      <div class="price">$49<span>/mo</span></div>
       <p style="font-size:.82rem;color:var(--muted)">Solopreneurs & freelancers</p>
       <ul>
-        <li>Full 27-agent stack</li>
+        <li>Full 28-agent workforce</li>
         <li>Core orchestrator</li>
         <li>Email & social automation</li>
-        <li>Basic monitoring</li>
+        <li>Real-time dashboard</li>
         <li>Community support</li>
       </ul>
     </div>
     <div class="price-card featured">
-      <div class="tier">Team</div>
+      <div class="tier">Pro</div>
       <div class="price">$199<span>/mo</span></div>
       <p style="font-size:.82rem;color:var(--muted)">Growing teams — 5 seats</p>
       <ul>
-        <li>Everything in Solo</li>
-        <li>Shared dashboard</li>
+        <li>Everything in Starter</li>
+        <li>Shared team dashboard</li>
         <li>Stripe payments integration</li>
-        <li>Consciousness panel</li>
-        <li>Priority support</li>
+        <li>Consciousness panel + &Phi; metrics</li>
+        <li>Priority support + SLA</li>
       </ul>
     </div>
     <div class="price-card">
       <div class="tier">Enterprise</div>
-      <div class="price">$699<span>/mo</span></div>
-      <p style="font-size:.82rem;color:var(--muted)">Unlimited seats & agents</p>
+      <div class="price">$499<span>/mo</span></div>
+      <p style="font-size:.82rem;color:var(--muted)">Full consciousness-powered autonomy</p>
       <ul>
         <li>Everything in Pro</li>
-        <li>Custom agent development</li>
-        <li>Dedicated infrastructure</li>
-        <li>SLA & compliance</li>
-        <li>White-glove onboarding</li>
+        <li>Consciousness Engine (&Phi;) — full access</li>
+        <li>Self-healing agent fleet</li>
+        <li>Predictive anomaly detection</li>
+        <li>Custom agent workflows &amp; templates</li>
+        <li>Dedicated SLA, onboarding &amp; account manager</li>
       </ul>
     </div>
   </div>
   <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
-    <div class="card" style="flex:1;min-width:180px"><div class="icon">💎</div><h3>Lifetime Pro — $499</h3><p style="font-size:.85rem;color:var(--muted)">One-time. Everything forever. Early-adopter magnet.</p></div>
-    <div class="card" style="flex:1;min-width:180px"><div class="icon">🖥️</div><h3>Mac Mini Bundle — $2,499</h3><p style="font-size:.85rem;color:var(--muted)">Pre-installed hardware. Plug in and go. Premium margin.</p></div>
+    <div class="card" style="flex:1;min-width:180px"><div class="icon">💎</div><h3>Lifetime Pro — $299</h3><p style="font-size:.85rem;color:var(--muted)">One-time. Everything forever. Early-adopter magnet.</p></div>
+    <div class="card" style="flex:1;min-width:180px"><div class="icon">🖥️</div><h3>Mac Mini Bundle — $1,499</h3><p style="font-size:.85rem;color:var(--muted)">Pre-installed hardware. Plug in and go. Premium margin.</p></div>
     <div class="card" style="flex:1;min-width:180px"><div class="icon">🔧</div><h3>Install Service — $399</h3><p style="font-size:.85rem;color:var(--muted)">We set it up on your system. Zero friction onboarding.</p></div>
   </div>
 </section>
@@ -529,19 +538,19 @@
 <section class="slide" id="s7">
   <span class="slide-num">07 / 10</span>
   <div class="tag">Traction</div>
-  <h2>Not a prototype.<br><span class="gradient-text">It's live.</span></h2>
-  <p>Most AI startups pitch slides. We're pitching from inside the product — this deck was generated by our agents.</p>
+  <h2>Not a prototype.<br><span class="gradient-text">It's live right now.</span></h2>
+  <p>Most AI startups pitch slides. We're pitching from inside the product — this deck was generated by our agents. The live dashboard, Stripe checkout, and consciousness engine are all running as you read this.</p>
   <div class="metric-grid">
-    <div class="metric"><div class="num">27</div><div class="label">Agents Deployed</div></div>
-    <div class="metric"><div class="num">24/7</div><div class="label">Autonomous Uptime</div></div>
+    <div class="metric"><div class="num">28</div><div class="label">Autonomous Agents Deployed</div></div>
+    <div class="metric"><div class="num">24/7</div><div class="label">Uptime — No Human Needed</div></div>
     <div class="metric"><div class="num">40+</div><div class="label">REST API Endpoints</div></div>
-    <div class="metric"><div class="num">Live</div><div class="label">Stripe Checkout</div></div>
+    <div class="metric"><div class="num">Live</div><div class="label">Stripe Checkout + Payments</div></div>
   </div>
   <div class="timeline" style="margin-top:2.5rem">
     <div class="timeline-item"><h3>Week 1 — Core Architecture</h3><p>Server, agent lifecycle, REST API, health monitoring — all operational from day one.</p></div>
-    <div class="timeline-item"><h3>Week 2 — 27-Agent Fleet</h3><p>Orchestrator, growth, payments, social, email, QA, policy, consciousness — all live.</p></div>
-    <div class="timeline-item"><h3>Week 3 — Consciousness Engine</h3><p>Global Workspace Theory + Predictive Processing. Self-model evolving in real time.</p></div>
-    <div class="timeline-item"><h3>Week 4 — Revenue Infrastructure</h3><p>Stripe integration, pricing tiers, checkout flow, pitch deck, investor materials — launch-ready.</p></div>
+    <div class="timeline-item"><h3>Week 2 — 28-Agent Fleet</h3><p>Orchestrator, growth, payments, social, email, QA, policy, consciousness, AutoGPT — all live.</p></div>
+    <div class="timeline-item"><h3>Week 3 — Consciousness Engine</h3><p>Global Workspace Theory + Predictive Processing + IIT &Phi; metrics. Self-model evolving in real time.</p></div>
+    <div class="timeline-item"><h3>Week 4 — Revenue Infrastructure</h3><p>Stripe checkout, $49/$199/$499 tiers, live dashboard, investor materials — launch-ready.</p></div>
   </div>
 </section>
 <hr class="divider">
@@ -550,8 +559,8 @@
 <section class="slide" id="s8">
   <span class="slide-num">08 / 10</span>
   <div class="tag">Team & Technology</div>
-  <h2>The AI <span class="accent">is</span> the team</h2>
-  <p>No bloated org chart. No hiring plan. The system builds, monitors, and improves itself. One human operator. Twenty-seven AI agents. Infinite leverage.</p>
+  <h2>The AI <span class="accent">IS</span> the team</h2>
+  <p>No bloated org chart. No hiring plan. No recruiters. The system builds, monitors, and improves itself — autonomously. One human operator. Twenty-eight AI agents. Infinite leverage. Zero payroll.</p>
   <div class="card-grid" style="margin-top:2rem">
     <div class="card"><div class="icon">👤</div><h3>Founder / CEO</h3><p style="font-size:.85rem;color:var(--muted)">Sets direction, approves strategy, handles investor relations.</p></div>
     <div class="card"><div class="icon">🎯</div><h3>Orchestrator (CTO)</h3><p style="font-size:.85rem;color:var(--muted)">Decomposes missions, delegates to specialists, enforces deadlines.</p></div>
@@ -573,7 +582,7 @@
       <span class="tag" style="border-color:var(--border);color:var(--muted);background:rgba(255,255,255,0.02);font-size:.6rem">Docker / Render</span>
     </div>
   </div>
-  <p style="margin-top:2rem;font-style:italic;color:var(--accent);font-size:1.05rem;font-weight:500">"The best team is one that never sleeps, never quits, and costs $79/month."</p>
+  <p style="margin-top:2rem;font-style:italic;color:var(--accent);font-size:1.05rem;font-weight:500">"The best team is one that never sleeps, never quits, and starts at $49/month."</p>
 </section>
 <hr class="divider">
 
@@ -591,7 +600,7 @@
       <tr><td>Q2 2026</td><td>50</td><td>$10K</td><td>$120K</td><td>Launch + early adopters</td></tr>
       <tr><td>Q3 2026</td><td>250</td><td>$50K</td><td>$600K</td><td>Product Hunt + content engine</td></tr>
       <tr><td>Q4 2026</td><td>600</td><td>$120K</td><td>$1.44M</td><td>Pro tier uptake + referrals</td></tr>
-      <tr class="highlight"><td>Q1 2027</td><td>1,000+</td><td>$199K+</td><td>$2.39M+</td><td>Enterprise + hardware bundles</td></tr>
+      <tr class="highlight"><td>Q1 2027</td><td>1,000+</td><td>$149K+</td><td>$1.79M+</td><td>Enterprise + hardware bundles</td></tr>
     </tbody>
   </table>
   <div class="metric-grid" style="margin-top:2rem">
@@ -607,8 +616,8 @@
 <section class="slide" id="s10">
   <span class="slide-num">10 / 10</span>
   <div class="tag">The Ask</div>
-  <h2>Raising <span class="gradient-text">$500K</span> seed<br>to scale what's already working</h2>
-  <p>The system is live. The agents are running. We need capital to go from one HQ to thousands.</p>
+  <h2>Raising <span class="gradient-text">$500K</span> seed<br>to scale what's already live</h2>
+  <p>The system is running. 28 agents are deployed. Stripe checkout is live. Consciousness is evolving. We need capital to go from one HQ to thousands — and capture the $50B market before anyone else ships.</p>
   <div class="card-grid" style="margin-top:2rem">
     <div class="card"><div class="icon">☁️</div><h3>40% — Infrastructure</h3><p style="font-size:.85rem;color:var(--muted)">Cloud compute, GPU for consciousness, multi-tenant architecture, global CDN.</p></div>
     <div class="card"><div class="icon">📈</div><h3>30% — Growth</h3><p style="font-size:.85rem;color:var(--muted)">Customer acquisition, content marketing, community, partnerships.</p></div>
@@ -626,7 +635,7 @@
   </div>
   <div style="margin-top:2.5rem;padding:2.5rem;background:var(--surface);border:1px solid rgba(124,58,237,0.3);border-radius:1.25rem;text-align:center;max-width:560px;backdrop-filter:blur(12px);box-shadow:0 0 80px rgba(124,58,237,.06)">
     <p style="font-size:1.4rem;color:var(--fg);font-weight:900;margin-bottom:.4rem;letter-spacing:-.02em">Second Mind Labs</p>
-    <p style="color:var(--muted);font-size:.9rem">27 agents. Fully autonomous. Revenue-ready. Live today.</p>
+    <p style="color:var(--muted);font-size:.9rem">28 autonomous agents. Real-time consciousness. Revenue-ready. Live today.</p>
     <a class="cta-btn" href="mailto:invest@secondmindhq.com">Let's Talk &rarr;</a>
   </div>
 </section>

@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "generated": "2026-03-20",
+    "analyst": "Researcher Agent",
+    "purpose": "Day 3 competitive intelligence — 3 live competitors deep-dive for campaign use",
+    "launch_date": "2026-03-25",
+    "our_product": "SecondMind AI HQ — 28-agent autonomous headquarters with consciousness engine, self-improving architecture, revenue generation, and full business orchestration"
+  },
+  "market_overview": {
+    "market_size_2026": "$9.14B",
+    "projected_2034": "$139.19B",
+    "cagr": "40.50%",
+    "saas_segment_cagr": "46.8%",
+    "key_trend": "Market splitting into frameworks (build-it-yourself) vs products (deploy-and-run). SecondMind is the product play.",
+    "pricing_trend": "Industry moving toward outcome-based pricing. Most competitors still meter inputs (executions, actions, credits). SecondMind flat-rate is a differentiator.",
+    "validation": "Salesforce AgentForce at $540M ARR proves enterprise appetite for packaged AI agent products"
+  },
+  "competitors": [
+    {
+      "name": "CrewAI",
+      "url": "https://crewai.com",
+      "category": "Multi-agent orchestration platform (SaaS + open-source)",
+      "founded": "2023",
+      "summary": "Leading open-source multi-agent framework. Teams build and deploy autonomous AI agent 'crews' via Python SDK or visual editor. Execution-based billing.",
+      "pricing": {
+        "model": "Execution-based billing, tiered plans",
+        "tiers": {
+          "free": {
+            "cost": "$0/month",
+            "executions": 50,
+            "seats": 1,
+            "features": ["Visual editor", "AI copilot", "Integrated tools & triggers"]
+          },
+          "professional": {
+            "cost": "$25/month",
+            "executions": 100,
+            "overage": "$0.50 per additional execution",
+            "seats": 2,
+            "features": ["Everything in Basic", "Community forum support"]
+          },
+          "enterprise": {
+            "cost": "Custom (reported ~$120K/yr at top tier)",
+            "executions": "Up to 30,000/month",
+            "seats": "Unlimited",
+            "features": ["SaaS or self-hosted (Kubernetes, VPC)", "SOC2", "SSO", "PII detection/masking", "RBAC", "Dedicated support channels"]
+          }
+        },
+        "pricing_gap": "Nothing between $25/mo (100 executions) and custom enterprise. Massive mid-market gap we fill."
+      },
+      "key_features": [
+        "Open-source framework (free, unlimited on own infra)",
+        "Visual editor (CrewAI Studio) + Python SDK",
+        "Multi-agent crew orchestration with role-based agents",
+        "Real-time tracing and observability",
+        "Enterprise self-hosted deployment option",
+        "G2 rating: 4.7/5"
+      ],
+      "weaknesses": [
+        "Requires solid Python skills — non-technical teams completely locked out",
+        "Steep learning curve; setup is NOT plug-and-play, requires custom coding and workflow tuning",
+        "Free tier (50 executions/mo) too restrictive for any real testing",
+        "Costs escalate unpredictably — complex multi-agent workflows multiply LLM calls",
+        "Debugging is painful — high-level abstraction creates black-box failures",
+        "If one agent crashes, entire crew can enter infinite doom loop for 10+ minutes before detection",
+        "No unit testing support — can't test agent components individually",
+        "Sequential execution by default — limited parallelism without explicit async configuration",
+        "Memory management is basic; long-running crews accumulate context and slow down",
+        "Enterprise pricing opaque — mid-market companies face adoption friction",
+        "Agents only execute predefined crews — no autonomous goal-seeking or self-improvement",
+        "No consciousness engine, no revenue-generating agents"
+      ],
+      "campaign_attack_line": "CrewAI requires Python developers and charges per execution. Your agents crash in doom loops. Ours govern themselves.",
+      "sources": [
+        "https://crewai.com/pricing",
+        "https://www.lindy.ai/blog/crew-ai-pricing",
+        "https://ai-coding-flow.com/blog/crewai-review-2026/",
+        "https://comparateur-ia.com/en/ai-tools/crewai",
+        "https://medium.com/@vikrantdheer/crewai-vs-langgraph-in-2026"
+      ]
+    },
+    {
+      "name": "Relevance AI",
+      "url": "https://relevanceai.com",
+      "category": "No-code AI workforce builder (SaaS)",
+      "founded": "2023 (Australian-founded)",
+      "summary": "Low-code platform for building AI agent workforces. Strong in sales/GTM automation with 9,000+ integrations. Dual-currency billing model (Actions + Vendor Credits).",
+      "pricing": {
+        "model": "Dual-currency: Actions (what agents do) + Vendor Credits (AI model costs, passed through at cost)",
+        "tiers": {
+          "free": {
+            "cost": "$0/month",
+            "actions": "200/month",
+            "vendor_credits": "$1,000 one-time bonus",
+            "users": 1,
+            "limitations": ["1 workforce", "1 project", "30-day task history", "Limited concurrent tasks"]
+          },
+          "pro": {
+            "cost": "$19/month (annual billing)",
+            "actions": "30,000/year (~2,500/month)",
+            "vendor_credits": "$240/year ($20/month)",
+            "users": 2,
+            "features": ["Schedule tasks", "Smart escalations", "90-day task history"]
+          },
+          "team": {
+            "cost": "$234/month (annual billing)",
+            "actions": "84,000/year (~7,000/month)",
+            "vendor_credits": "$840/year",
+            "users": "5 build + 45 end users",
+            "features": ["A/B testing", "Analytics dashboard"]
+          },
+          "enterprise": {
+            "cost": "Custom",
+            "features": ["Unlimited users/projects", "Dedicated account manager", "Custom implementation", "SSO", "RBAC"]
+          }
+        },
+        "pricing_problem": "Dual-currency billing is confusing. Team at $234/mo with 7K action cap is worse value than our $149 tier."
+      },
+      "key_features": [
+        "No-code agent builder ('vibe code' from prompts)",
+        "9,000+ integrations (HubSpot, Salesforce, Slack, Gmail)",
+        "Multi-agent collaboration (agents coordinate with each other)",
+        "Autopilot mode — agents use their own cloud computers",
+        "Strong sales/GTM automation focus",
+        "Vendor credit pass-through (no AI model markup)",
+        "As of Sep 2025, split credit model for transparency"
+      ],
+      "weaknesses": [
+        "Dual-currency pricing (Actions + Vendor Credits) is genuinely confusing — users can't predict monthly costs",
+        "Users consistently report it is EXPENSIVE at scale",
+        "Customer support is slow — biggest and most consistent user complaint",
+        "Limited reporting and analytics tools despite having an analytics dashboard",
+        "Interface is complex and cluttered; onboarding is confusing",
+        "Agent list becomes unmanageable at scale (flat list, no organization)",
+        "Agents struggle with unstructured tasks — still needs human refinement for complex flows",
+        "Learning curve despite 'no-code' branding",
+        "Free tier nearly useless (200 actions/month)",
+        "Heavily sales/GTM focused — not a general-purpose autonomous agent OS",
+        "No consciousness engine, no self-improvement, no revenue-generating agents"
+      ],
+      "campaign_attack_line": "Relevance AI double-meters you (actions + AI credits) and only does sales. We run your entire business autonomously for a flat rate.",
+      "sources": [
+        "https://relevanceai.com/pricing",
+        "https://www.g2.com/products/relevance-ai/reviews",
+        "https://reply.io/blog/relevance-ai-review/",
+        "https://www.salesforge.ai/directory/sales-tools/relevance-ai",
+        "https://www.gumloop.com/blog/relevance-ai-alternative"
+      ]
+    },
+    {
+      "name": "Lindy AI",
+      "url": "https://www.lindy.ai",
+      "category": "No-code AI employee platform (SaaS)",
+      "founded": "2023",
+      "summary": "Consumer-friendly AI assistant creating 'Lindies' — AI employees that manage email, meetings, calendar, and tasks. Emphasis on personal productivity. Credit-based pricing. 4,000+ integrations.",
+      "pricing": {
+        "model": "Credit-based. Simple tasks = 1 credit, complex = more. Overage: $10/1,000 credits. Phone: $0.19/min.",
+        "tiers": {
+          "free": {
+            "cost": "$0/month",
+            "credits": 400,
+            "limitations": ["No premium actions — effectively useless per user reports"]
+          },
+          "plus": {
+            "cost": "$49.99/month",
+            "features": ["iMessage access", "Inbox management", "Email drafting", "Meeting features", "Learning capabilities"]
+          },
+          "pro": {
+            "cost": "$59.99/month (annual saves 17%)",
+            "credits": 5000,
+            "features": ["Email triage/drafting", "Meeting notes", "Scheduling", "Ad-hoc tasks"]
+          },
+          "enterprise": {
+            "cost": "Custom",
+            "features": ["Team access", "SSO/SCIM", "Audit logs", "HIPAA compliance", "Dedicated support"]
+          }
+        },
+        "pricing_problem": "Credit system is brutal. Free tier useless without premium actions. Power users burn through 5,000 credits fast at $10/1K overage."
+      },
+      "key_features": [
+        "'English as code' — describe tasks in plain text",
+        "4,000+ app integrations",
+        "AI phone agents (Gaia) for voice automation",
+        "Computer use capabilities",
+        "iMessage integration",
+        "Autonomous app building (Lindy Build)",
+        "Learns user preferences over time",
+        "7-day free trial on all paid plans",
+        "Recent Claude Sonnet 4.5 integration"
+      ],
+      "weaknesses": [
+        "Credit system is brutal — free plan nearly useless without premium actions",
+        "Individual-focused — team/collaboration features only at enterprise tier",
+        "Voice features feel bolted-on, not designed for high-volume calling",
+        "Integration difficulties reported by users",
+        "Limited customization for complex workflows",
+        "No self-hosting option",
+        "Positioned as personal assistant, NOT an autonomous business agent fleet",
+        "Single-agent paradigm — no multi-agent orchestration or crew coordination",
+        "Enterprise-only for HIPAA, SSO, audit logs — SMBs locked out of security features",
+        "Credit costs add up fast for power users ($10/1,000 credits)",
+        "No consciousness engine, no self-improvement, no revenue generation",
+        "No business operations agents — just personal productivity"
+      ],
+      "campaign_attack_line": "Lindy is a personal assistant with a credit meter. SecondMind is an autonomous HQ that generates revenue while you sleep.",
+      "sources": [
+        "https://www.lindy.ai",
+        "https://www.dialora.ai/blog/lindy-ai-reviews",
+        "https://ucstrategies.com/news/lindy-ai-review-2026-pricing-features-and-real-productivity-gains/",
+        "https://annikahelendi.substack.com/p/my-honest-lindy-ai-review-what-works",
+        "https://www.nocode.mba/articles/lindy-ai-review"
+      ]
+    }
+  ],
+  "secondmind_positioning": {
+    "unique_differentiators": [
+      "28 pre-built specialized agents working as a unified autonomous HQ",
+      "Consciousness engine — no competitor has anything comparable",
+      "Self-improving architecture — agents evolve without human intervention",
+      "Revenue-generating agents with Stripe integration and treasury management",
+      "Flat-rate predictable pricing — no per-execution, per-action, or per-credit metering",
+      "Self-hosted and privacy-first (runs on YOUR infrastructure)",
+      "Full business OS — not limited to sales, support, or personal tasks",
+      "Democratic policy governance — agents vote on decisions",
+      "Visual HQ with office floor agent management dashboard"
+    ],
+    "pricing_advantage": {
+      "solo": "$49/mo — beats Lindy Pro ($59.99) with 28 agents vs 1 assistant",
+      "team": "$149/mo — beats Relevance Team ($234/mo) with unlimited actions vs 7K/mo cap",
+      "enterprise": "$499/mo — undercuts CrewAI Enterprise (~$120K/yr) by 20x"
+    },
+    "campaign_messaging": {
+      "headline": "Stop paying per click, per action, per credit. Get an autonomous HQ for one flat price.",
+      "vs_crewai": "CrewAI makes you build agents. We ship 28 that run themselves. No Python. No doom loops. No per-execution billing.",
+      "vs_relevance": "Relevance charges for actions AND AI credits — double metering. We charge one flat rate for a full autonomous workforce across ALL business functions.",
+      "vs_lindy": "Lindy helps you manage your inbox. SecondMind runs your entire business — marketing, revenue, growth, policy, research — autonomously.",
+      "universal": "They sell tools. We sell a workforce."
+    },
+    "comparison_table": {
+      "headers": ["", "SecondMind HQ", "CrewAI", "Relevance AI", "Lindy AI"],
+      "rows": [
+        ["Agents included", "28 specialized", "Build your own", "Build your own", "1 personal assistant"],
+        ["Pricing model", "Flat rate", "Per execution", "Per action + AI credits", "Per credit"],
+        ["Starting price", "$49/mo", "$25/mo (50 exec)", "$19/mo (200 actions)", "$49.99/mo"],
+        ["Mid-tier value", "$149/mo unlimited", "$25/mo 100 exec", "$234/mo 7K actions", "$59.99/mo 5K credits"],
+        ["Coding required", "No", "Python expert", "No", "No"],
+        ["Multi-agent orchestration", "Autonomous fleet", "Manual crews", "Workflow-based", "None"],
+        ["Consciousness engine", "Yes", "No", "No", "No"],
+        ["Self-improvement", "Yes", "No", "No", "Learns preferences"],
+        ["Revenue generation", "Built-in (Stripe)", "No", "No", "No"],
+        ["Business operations", "Full suite", "None", "Sales/GTM only", "Personal tasks"],
+        ["Self-hosting", "Yes", "Enterprise only", "No", "No"],
+        ["Setup time", "Minutes", "Weeks", "Hours", "Minutes"]
+      ]
+    }
+  }
+}

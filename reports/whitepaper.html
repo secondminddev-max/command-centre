@@ -1034,6 +1034,32 @@
     .branch-grid { grid-template-columns: 1fr; }
     .pricing-grid-6 { grid-template-columns: 1fr 1fr; }
   }
+
+  @media (max-width: 480px) {
+    .pricing-grid-6 { grid-template-columns: 1fr; }
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.15); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+  /* Top gradient bar */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 200;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--cyan));
+    background-size: 200% 100%;
+    animation: wpGradBar 4s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes wpGradBar { 0%{background-position:0% 0} 100%{background-position:200% 0} }
 </style>
 </head>
 <body>
@@ -1909,7 +1935,7 @@
     <h2>Mac Mini M4, Single Process, Cloudflare Tunnel</h2>
 
     <p style="font-size:17px;line-height:1.85">
-      Command Centre is designed to run on a single <strong>Mac Mini M4</strong> ($2,499 bundle with HQ pre-installed). The entire system operates as a <strong>single Python process</strong> with multi-threaded delegation. No Docker, no Kubernetes, no cloud infrastructure required. The operator's data never leaves their hardware.
+      Command Centre is designed to run on a single <strong>Mac Mini M4</strong> ($1,499 bundle with HQ pre-installed). The entire system operates as a <strong>single Python process</strong> with multi-threaded delegation. No Docker, no Kubernetes, no cloud infrastructure required. The operator's data never leaves their hardware.
     </p>
 
     <div class="deploy-grid">
@@ -1957,7 +1983,7 @@
     <h2>Simple Pricing. 90%+ Gross Margin.</h2>
 
     <p style="font-size:17px;line-height:1.85">
-      Command Centre operates on a SaaS subscription model with one-time purchase options. <strong>Customers provide their own Claude/LLM API key</strong> for agent operations &mdash; Second Mind Labs does not proxy or mark up API calls. This means the software subscription is nearly pure margin (90%+ gross margin). Target: <strong>$2.39M ARR at 1,000 subscribers</strong> on the Team plan.
+      Command Centre operates on a SaaS subscription model with one-time purchase options. <strong>Customers provide their own Claude/LLM API key</strong> for agent operations &mdash; Second Mind Labs does not proxy or mark up API calls. This means the software subscription is nearly pure margin (90%+ gross margin). Target: <strong>$1.79M ARR at 1,000 subscribers</strong> on the Team plan.
     </p>
 
     <div class="pricing-grid-6">
@@ -1977,7 +2003,7 @@
 
       <div class="price-card featured">
         <div class="price-name">Team</div>
-        <div class="price-amount">$199</div>
+        <div class="price-amount">$149</div>
         <div class="price-period">/month</div>
         <ul class="price-features">
           <li>Full 27-agent fleet</li>
@@ -1991,7 +2017,7 @@
 
       <div class="price-card">
         <div class="price-name">Enterprise</div>
-        <div class="price-amount">$699</div>
+        <div class="price-amount">$499</div>
         <div class="price-period">/month</div>
         <ul class="price-features">
           <li>Unlimited agents</li>
@@ -2017,7 +2043,7 @@
 
       <div class="price-card" style="border-color:var(--purple)">
         <div class="price-name">Mac Mini Bundle</div>
-        <div class="price-amount">$2,499</div>
+        <div class="price-amount">$1,499</div>
         <div class="price-period">one-time</div>
         <ul class="price-features">
           <li>Pre-configured Mac Mini M4</li>
@@ -2045,7 +2071,7 @@
         <h4>Revenue Model</h4>
         <h3>Path to $2.39M ARR</h3>
         <p style="font-size:14px;line-height:1.7">
-          <strong>Target:</strong> 1,000 subscribers at $199/mo average = $2.39M ARR.<br>
+          <strong>Target:</strong> 1,000 subscribers at $149/mo average = $1.79M ARR.<br>
           <strong>Gross margin:</strong> 90%+ (no API cost passthrough; customers BYO key).<br>
           <strong>Affiliate programme:</strong> 20% commission on referrals.<br>
           <strong>Installer network:</strong> Certified installers earn $399 per setup.<br>

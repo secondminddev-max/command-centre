@@ -79,7 +79,7 @@ Launch pricing still live → secondmindhq.com
 
 Launch pricing for AI Command Centre HQ closes tonight at midnight ET.
 
-$49/mo — full command centre, live office floor, 10 autonomous agents, revenue tools, consciousness system.
+$49/mo — full command centre, live office floor, 28 autonomous agents, revenue tools, consciousness system.
 
 After tonight, standard rates.
 

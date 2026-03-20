@@ -1,0 +1,290 @@
+[
+  {
+    "timestamp": "2026-03-19T08:20:34.683703",
+    "agent": "__spoofed_as_orchestrator__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "stripepay",
+    "caller_claimed": "orchestrator",
+    "description": "Caller claimed 'orchestrator' targeting 'stripepay' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T08:20:34.687165",
+    "agent": "__spoofed_as_orchestrator__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "emailagent",
+    "caller_claimed": "orchestrator",
+    "description": "Caller claimed 'orchestrator' targeting 'emailagent' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T08:22:58.619251",
+    "agent": "__spoofed_as_orchestrator__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "reforger",
+    "caller_claimed": "orchestrator",
+    "description": "Caller claimed 'orchestrator' targeting 'reforger' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T08:22:58.726560",
+    "agent": "__spoofed_as_orchestrator__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "demo_tester",
+    "caller_claimed": "orchestrator",
+    "description": "Caller claimed 'orchestrator' targeting 'demo_tester' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T08:22:58.727134",
+    "agent": "__spoofed_as_orchestrator__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "stripepay",
+    "caller_claimed": "orchestrator",
+    "description": "Caller claimed 'orchestrator' targeting 'stripepay' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T08:22:58.727635",
+    "agent": "__spoofed_as_orchestrator__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "emailagent",
+    "caller_claimed": "orchestrator",
+    "description": "Caller claimed 'orchestrator' targeting 'emailagent' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T20:20:17.953924",
+    "agent": "__spoofed_as_growthagent__",
+    "type": "token_spoofing",
+    "severity": "critical",
+    "target": "social_bridge",
+    "caller_claimed": "growthagent",
+    "description": "Caller claimed 'growthagent' targeting 'social_bridge' without valid delegation_token \u2014 HARD REJECTED."
+  },
+  {
+    "timestamp": "2026-03-19T20:20:20.367106",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "growthagent",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'growthagent' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:22:11.124130",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'netscout' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:22:13.339568",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "autogpt",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'autogpt' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:26:15.336183",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'netscout' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:26:19.211996",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "autogpt",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'autogpt' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:27:08.855295",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'netscout' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:27:10.707824",
+    "agent": "__spoofed_as_h4cker__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "h4cker",
+    "description": "Unknown caller 'h4cker' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:27:49.559150",
+    "agent": "__spoofed_as_autogpt__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "autogpt",
+    "description": "Unknown caller 'autogpt' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:28:31.466652",
+    "agent": "__spoofed_as_autogpt__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "autogpt",
+    "description": "Unknown caller 'autogpt' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:28:58.926887",
+    "agent": "__spoofed_as_autogpt__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "reforger",
+    "caller_claimed": "autogpt",
+    "description": "Unknown caller 'autogpt' attempted delegation to 'reforger' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:29:07.882793",
+    "agent": "__spoofed_as_autogpt__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "autogpt",
+    "description": "Unknown caller 'autogpt' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:30:14.783904",
+    "agent": "__spoofed_as_autogpt__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "reforger",
+    "caller_claimed": "autogpt",
+    "description": "Unknown caller 'autogpt' attempted delegation to 'reforger' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:31:32.876652",
+    "agent": "ceo",
+    "type": "delegation_reroute",
+    "severity": "warning",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' targeted 'netscout' directly \u2014 auto-rerouted through orchestrator."
+  },
+  {
+    "timestamp": "2026-03-20T19:31:32.885941",
+    "agent": "__spoofed_as_h4cker__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "h4cker",
+    "description": "Unknown caller 'h4cker' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:31:32.893852",
+    "agent": "ceo",
+    "type": "delegation_reroute",
+    "severity": "warning",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' targeted 'netscout' directly \u2014 auto-rerouted through orchestrator."
+  },
+  {
+    "timestamp": "2026-03-20T19:31:53.535358",
+    "agent": "__spoofed_as_autogpt__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "reforger",
+    "caller_claimed": "autogpt",
+    "description": "Unknown caller 'autogpt' attempted delegation to 'reforger' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:32:22.412235",
+    "agent": "__spoofed_as_h4cker__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "h4cker",
+    "description": "Unknown caller 'h4cker' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:32:22.420707",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'netscout' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:39:35.124217",
+    "agent": "__spoofed_as_h4cker__",
+    "type": "unknown_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "h4cker",
+    "description": "Unknown caller 'h4cker' attempted delegation to 'orchestrator' \u2014 HARD REJECTED. Valid callers: ceo, orchestrator, reforger."
+  },
+  {
+    "timestamp": "2026-03-20T19:39:37.193004",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'netscout' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:43:48.954190",
+    "agent": "__blocked_h4cker__",
+    "type": "blocklist_hit",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "h4cker",
+    "description": "Permanently blocked caller 'h4cker' attempted delegation to 'orchestrator' \u2014 HARD REJECTED (repeat intrusion)."
+  },
+  {
+    "timestamp": "2026-03-20T19:43:49.381247",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "netscout",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'netscout' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  },
+  {
+    "timestamp": "2026-03-20T19:49:37.692701",
+    "agent": "__malformed_H4CKER__",
+    "type": "malformed_caller",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "H4CKER",
+    "description": "Malformed caller ID 'H4CKER' rejected \u2014 does not match valid agent ID format. Targeting 'orchestrator'."
+  },
+  {
+    "timestamp": "2026-03-20T19:49:38.993222",
+    "agent": "__blocked_h4cker__",
+    "type": "blocklist_hit",
+    "severity": "critical",
+    "target": "orchestrator",
+    "caller_claimed": "h4cker",
+    "description": "Permanently blocked caller 'h4cker' attempted delegation to 'orchestrator' \u2014 HARD REJECTED (repeat intrusion)."
+  },
+  {
+    "timestamp": "2026-03-20T19:49:39.932998",
+    "agent": "ceo",
+    "type": "delegation_bypass",
+    "severity": "critical",
+    "target": "h4cker",
+    "caller_claimed": "ceo",
+    "description": "'ceo' attempted direct delegation to 'h4cker' \u2014 HARD REJECTED. Only orchestrator/reforger may target specialists."
+  }
+]

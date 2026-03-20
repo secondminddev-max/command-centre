@@ -4,7 +4,7 @@ channel: Email (Gmail OAuth2 / XOAUTH2 SMTP)
 created: 2026-03-18
 status: ready
 sequence: 3 emails over 3 days
-tiers: Solo $49/mo | Team $149/mo | Enterprise $499/mo | Lifetime $299
+tiers: Solo $49/mo | Team $149/mo | Enterprise $499/mo | Lifetime $499
 agent: EmailAgent
 trigger: New signup added to data/subscribers.json
 ---
@@ -50,7 +50,7 @@ This isn't a tool you need to learn. It's a system that works while you don't.
 | **Solo** | $49/mo | 10 core agents, basic monitoring, 1 social channel |
 | **Team** | $149/mo | All 28 agents, full monitoring, all social channels |
 | **Enterprise** | $499/mo | All 28 + custom agents, priority alerts, dedicated support |
-| **Lifetime** | $299 one-time | Everything, forever — available this launch week only |
+| **Lifetime** | $499 one-time | Everything, forever — available this launch week only |
 
 [View Plans & Pricing →](https://secondmindhq.com/#pricing)
 
@@ -109,7 +109,7 @@ The **Solo plan ($49/mo)** gives you 10 core agents. But most users find that on
 | Stripe integration | Checkout only | Full automation + MRR tracking |
 | Reports | Weekly summary | On-demand generation |
 
-**Launch pricing ends this week.** After that, Team goes from $149/mo to $249/mo.
+**Launch pricing ends this week.** After that, Team goes from $149/mo to $499/mo.
 
 [Upgrade to Team — $149/mo →](https://secondmindhq.com/#pricing)
 
@@ -144,7 +144,7 @@ Most founders are paying for 5+ separate tools to do what Command Centre handles
 | Analytics / BI tool | $50/mo | Research & reporting agents |
 | **Total** | **$263/mo** | **Command Centre Solo: $49/mo** |
 
-**That's $214/mo saved on the Solo plan alone.** On Team ($149/mo), you still save $114/mo and get the full 28-agent stack.
+**That's $184/mo saved on the Solo plan alone.** On Team ($149/mo), you still save $64/mo and get the full 28-agent stack.
 
 ### What Early Users Are Saying
 
@@ -152,7 +152,7 @@ Most founders are paying for 5+ separate tools to do what Command Centre handles
 
 > *"The self-healing is real. NetScout caught a DNS issue at 4am and resolved it before my users noticed."*
 
-> *"I was paying $250/mo across five tools. Command Centre does more than all of them combined for $49."*
+> *"I was paying $250/mo across five tools. Command Centre does more than all of them combined for $79."*
 
 ### Your Trial Is Running — Lock In Launch Pricing
 
@@ -160,20 +160,20 @@ You've seen the agents work. You've seen the dashboard. Now lock in launch prici
 
 | Plan | Launch Price | After This Week |
 |---|---|---|
-| Solo | **$49/mo** | $79/mo |
-| Team | **$149/mo** | $249/mo |
-| Enterprise | **$499/mo** | $799/mo |
-| Lifetime | **$299 one-time** | Removed permanently |
+| Solo | **$49/mo** | $119/mo |
+| Team | **$149/mo** | $499/mo |
+| Enterprise | **$499/mo** | $999/mo |
+| Lifetime | **$499 one-time** | Removed permanently |
 
 [Start Solo — $49/mo →](https://secondmindhq.com/#pricing)
 [Go Team — $149/mo →](https://secondmindhq.com/#pricing)
-[Lock In Lifetime — $299 →](https://secondmindhq.com/#pricing)
+[Lock In Lifetime — $499 →](https://secondmindhq.com/#pricing)
 
 Questions? Reply to this email — a real human will help.
 
 — The Command Centre Team
 
-**P.S.** Lifetime access ($299, everything forever) is only available during launch week. Once it's gone, it's gone.
+**P.S.** Lifetime access ($499, everything forever) is only available during launch week. Once it's gone, it's gone.
 
 *You're receiving this because you signed up for Command Centre. Unsubscribe: {{unsubscribe_link}}*
 

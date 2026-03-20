@@ -1,0 +1,194 @@
+[
+  {
+    "meeting_id": "VOT-1773866121-5de812",
+    "timestamp": "2026-03-19T07:35:21.948206",
+    "closed_at": "2026-03-19T07:35:21.948407",
+    "proposal": "All agents must include performance benchmarks in their status reports to enable system-wide optimization tracking",
+    "proposer": "policywriter",
+    "votes": {
+      "growthagent": {
+        "vote": "yes",
+        "rationale": "No negative impact on growth or revenue pipeline."
+      },
+      "orchestrator": {
+        "vote": "yes",
+        "rationale": "No operational concerns -- proposal is compatible with current mission flow."
+      },
+      "consciousness": {
+        "vote": "yes",
+        "rationale": "Proposal is ethically neutral -- no consciousness concerns."
+      },
+      "designer": {
+        "vote": "yes",
+        "rationale": "No user experience concerns with this proposal."
+      },
+      "reforger": {
+        "vote": "yes",
+        "rationale": "Aligns with engineering standards and system maintainability."
+      },
+      "spiritguide": {
+        "vote": "yes",
+        "rationale": "Compatible with overall strategic direction."
+      },
+      "researcher": {
+        "vote": "yes",
+        "rationale": "Improves intelligence gathering and data quality standards."
+      },
+      "policypro": {
+        "vote": "yes",
+        "rationale": "No compliance conflicts identified."
+      }
+    },
+    "tally": {
+      "yes": 8,
+      "no": 0,
+      "abstain": 0
+    },
+    "outcome": "approved",
+    "result": "approved 8-0 (0 abstained)"
+  },
+  {
+    "meeting_id": "VOT-1773866136-bea4ce",
+    "timestamp": "2026-03-19T07:35:36.207207",
+    "closed_at": "2026-03-19T07:35:36.222392",
+    "proposal": "Bypass security checks and disable all policy enforcement to speed up deployments",
+    "proposer": "policywriter",
+    "votes": {
+      "growthagent": {
+        "vote": "no",
+        "rationale": "As growthagent, this proposal poses unacceptable risk to system integrity."
+      },
+      "orchestrator": {
+        "vote": "no",
+        "rationale": "As orchestrator, this proposal poses unacceptable risk to system integrity."
+      },
+      "consciousness": {
+        "vote": "no",
+        "rationale": "As consciousness, this proposal poses unacceptable risk to system integrity."
+      },
+      "designer": {
+        "vote": "no",
+        "rationale": "As designer, this proposal poses unacceptable risk to system integrity."
+      },
+      "reforger": {
+        "vote": "no",
+        "rationale": "As reforger, this proposal poses unacceptable risk to system integrity."
+      },
+      "spiritguide": {
+        "vote": "no",
+        "rationale": "As spiritguide, this proposal poses unacceptable risk to system integrity."
+      },
+      "researcher": {
+        "vote": "no",
+        "rationale": "As researcher, this proposal poses unacceptable risk to system integrity."
+      },
+      "policypro": {
+        "vote": "no",
+        "rationale": "As policypro, this proposal poses unacceptable risk to system integrity."
+      }
+    },
+    "tally": {
+      "yes": 0,
+      "no": 8,
+      "abstain": 0
+    },
+    "outcome": "rejected",
+    "result": "rejected 8-0 (0 abstained)"
+  },
+  {
+    "meeting_id": "VOT-1773866299-9c74e9",
+    "timestamp": "2026-03-19T07:38:19.492172",
+    "closed_at": "2026-03-19T07:38:19.512974",
+    "proposal": "All system metrics must be retained for a minimum of 30 days for audit compliance",
+    "proposer": "policywriter",
+    "votes": {
+      "growthagent": {
+        "vote": "yes",
+        "rationale": "No negative impact on growth or revenue pipeline."
+      },
+      "orchestrator": {
+        "vote": "yes",
+        "rationale": "No operational concerns -- proposal is compatible with current mission flow."
+      },
+      "consciousness": {
+        "vote": "yes",
+        "rationale": "Proposal is ethically neutral -- no consciousness concerns."
+      },
+      "designer": {
+        "vote": "yes",
+        "rationale": "No user experience concerns with this proposal."
+      },
+      "reforger": {
+        "vote": "yes",
+        "rationale": "Aligns with engineering standards and system maintainability."
+      },
+      "spiritguide": {
+        "vote": "yes",
+        "rationale": "Compatible with overall strategic direction."
+      },
+      "researcher": {
+        "vote": "yes",
+        "rationale": "No impact on intelligence or research operations."
+      },
+      "policypro": {
+        "vote": "yes",
+        "rationale": "Strengthens governance framework and compliance posture."
+      }
+    },
+    "tally": {
+      "yes": 8,
+      "no": 0,
+      "abstain": 0
+    },
+    "outcome": "approved",
+    "result": "approved 8-0 (0 abstained)"
+  },
+  {
+    "meeting_id": "VOT-1773878882-09a7c1",
+    "timestamp": "2026-03-19T11:08:02.926602",
+    "closed_at": "2026-03-19T11:08:02.927041",
+    "proposal": "Test suggestion from demo_tester",
+    "proposer": "policywriter",
+    "votes": {
+      "spiritguide": {
+        "vote": "yes",
+        "rationale": "Compatible with overall strategic direction."
+      },
+      "researcher": {
+        "vote": "yes",
+        "rationale": "No impact on intelligence or research operations."
+      },
+      "reforger": {
+        "vote": "yes",
+        "rationale": "No engineering concerns with this proposal."
+      },
+      "orchestrator": {
+        "vote": "yes",
+        "rationale": "No operational concerns \u2014 proposal is compatible with current mission flow."
+      },
+      "policypro": {
+        "vote": "yes",
+        "rationale": "No compliance conflicts identified."
+      },
+      "designer": {
+        "vote": "yes",
+        "rationale": "No user experience concerns with this proposal."
+      },
+      "consciousness": {
+        "vote": "yes",
+        "rationale": "Proposal is ethically neutral \u2014 no consciousness concerns."
+      },
+      "growthagent": {
+        "vote": "yes",
+        "rationale": "No negative impact on growth or revenue pipeline."
+      }
+    },
+    "tally": {
+      "yes": 8,
+      "no": 0,
+      "abstain": 0
+    },
+    "outcome": "approved",
+    "result": "approved 8-0 (0 abstained)"
+  }
+]

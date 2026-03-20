@@ -1,12 +1,26 @@
 {
   "revenue_log": [
     {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_bluesky",
+      "product": "ai_hq_saas",
+      "campaign": "va_cost_comparison",
+      "platform": "bluesky",
+      "description": "Bluesky campaign \u2014 Hiring a VA: $2K/mo vs AI HQ $49/mo cost comparison post",
+      "status": "posted",
+      "ts": "2026-03-20T08:50Z",
+      "attribution": "growth_agent_bluesky_va_cost_mar20",
+      "funnel": "impressions \u2192 link_clicks \u2192 signups \u2192 paid_conversions"
+    },
+    {
       "date": "2026-03-16",
-      "amount_usd": 79.0,
+      "amount_usd": 0,
       "source": "stripe_checkout",
       "product": "asx_screener_report",
       "session_prefix": "cs_live_",
-      "status": "paid"
+      "status": "voided",
+      "note": "Voided 2026-03-20 \u2014 ASX product removed, reconciliation confirms no valid Stripe payment"
     },
     {
       "date": "2026-03-18",
@@ -110,10 +124,306 @@
         "post launch announcement on Bluesky"
       ],
       "market": "US"
+    },
+    {
+      "date": "2026-03-19",
+      "amount_usd": 0,
+      "source": "conversion_campaign",
+      "product": "premarket_pulse",
+      "product_name": "PreMarket Pulse",
+      "type": "launch_week_campaign",
+      "status": "active",
+      "description": "PreMarket Pulse launch week conversion campaign deployed \u2014 50% off all tiers through March 25, targeting 11 free-tier subscribers for paid conversion",
+      "launch_pricing": {
+        "trader": "$9.50/mo (was $19)",
+        "pro": "$24.50/mo (was $49)",
+        "institutional": "$49.50/mo (was $99)"
+      },
+      "campaign_assets": [
+        "Landing page: countdown timer, urgency CTAs, 50% off badges",
+        "StripePay: prices updated to launch rates ($9.50/$24.50/$49.50)",
+        "Email sequence: 3 conversion emails over 5 days",
+        "Social posts: Bluesky (4), Twitter (5), Reddit (2)",
+        "Main landing page: PreMarket Pulse cross-sell section added"
+      ],
+      "deadline": "2026-03-25T23:59:59Z",
+      "checkout_urls": {
+        "trader": "/api/pay?product=premarket_pulse_trader",
+        "pro": "/api/pay?product=premarket_pulse_pro",
+        "institutional": "/api/pay?product=premarket_pulse_institutional"
+      },
+      "market": "US"
+    },
+    {
+      "date": "2026-03-19",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: SecondMind HQ \u2014 28 autonomous AI agents that actually run your ops. Submitted to Hacker News for launch visibility and developer audience acquisition.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-19T09:14:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-19",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "revenue_push_bluesky",
+      "platform": "Bluesky",
+      "status": "queued",
+      "description": "Revenue push campaign launched 2026-03-19. 4 posts queued to Bluesky targeting paid conversions for AI HQ SaaS tiers.",
+      "posts_queued": 4,
+      "channel": "@secondmindhq.bsky.social",
+      "pricing_tiers": {
+        "solo": "$49/mo",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "cta": "secondmindhq.com \u2192 Stripe checkout",
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-19T20:15:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 HN repost for sustained visibility.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:05:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 sustained HN push for developer audience capture.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:18:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 continued HN push \u2014 5 days to March 25 launch.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:22:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 sustained HN push \u2014 5 days to March 25 launch.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:23:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 sustained HN push \u2014 5 days to March 25 launch deadline.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:28:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 sustained HN push \u2014 5 days to March 25 launch.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:32:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (34 agents). Day 3 HN push \u2014 fresh title angle emphasizing 34-agent fleet. 5 days to March 25 launch deadline.",
+      "url": "https://secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo",
+        "lifetime": "$299 one-time"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:38:00Z",
+      "market": "US"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "bluesky",
+      "platform": "Bluesky",
+      "status": "posted",
+      "description": "Live right now: 35 AI agents running autonomously. 21 active \u2014 Bluesky social proof campaign showcasing live fleet scale.",
+      "url": "https://secondmindhq.com",
+      "channel": "@secondmindhq.bsky.social",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "impressions": "200-500",
+        "link_clicks": "20-50",
+        "signups": "2-5"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:49:00Z",
+      "market": "US"
     }
   ],
-  "total_revenue_usd": 79.0,
-  "last_updated": "2026-03-18T18:30:00Z",
+  "total_revenue_usd": 0.0,
+  "last_updated": "2026-03-20T08:49:00Z",
   "email_captures": [
     {
       "timestamp": "2026-03-18T17:36:44.473260",
@@ -259,6 +569,113 @@
     },
     {
       "timestamp": "2026-03-19T01:03:12.422819",
+      "event": "email_capture",
+      "email": "test@demotester.local",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T01:24:51.212984",
+      "event": "email_capture",
+      "email": "test@test.invalid",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T04:02:38.979876",
+      "event": "email_capture",
+      "email": "test@demo.test",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T05:04:33.433764",
+      "event": "email_capture",
+      "email": "test@example.com",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T05:35:12.403837",
+      "event": "email_capture",
+      "email": "test@demo.test",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T05:56:20.739834",
+      "event": "email_capture",
+      "email": "test@demo.com",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T05:56:20.763420",
+      "event": "premarket_signup",
+      "email": "test@demo.com",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-19T08:26:07.073805",
+      "event": "email_capture",
+      "email": "test@demo-validator.local",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T20:08:32.847162",
+      "event": "email_capture",
+      "email": "test@qa-sweep.invalid",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-19T20:08:32.864008",
+      "event": "premarket_signup",
+      "email": "test@qa-sweep.invalid",
+      "tier": "free",
+      "source": "premarket_pulse"
+    },
+    {
+      "timestamp": "2026-03-19T20:13:35.280902",
+      "event": "email_capture",
+      "email": "test@example.com",
+      "source": "landing_page"
+    },
+    {
+      "date": "2026-03-20",
+      "amount_usd": 0,
+      "source": "campaign_launch",
+      "product": "command_centre_hq",
+      "product_name": "AI Command Centre HQ",
+      "type": "show_hn",
+      "platform": "HackerNews",
+      "status": "posted",
+      "description": "Show HN: Command Centre \u2014 Autonomous AI Agent OS for Mac (0 agents \u2192 28 running your ops in minutes). Day 2 HN campaign push \u2014 5 days to $1M target.",
+      "url": "https://hq.secondmindhq.com",
+      "pricing_tiers": {
+        "solo": "$49/mo (14-day free trial)",
+        "team": "$149/mo",
+        "enterprise": "$499/mo"
+      },
+      "conversion_targets": {
+        "visitors": "500-2000",
+        "signups": "25-200",
+        "paid_conversions": "1-10",
+        "revenue_potential_monthly": "$79-$6,990"
+      },
+      "routed_by": "growthagent",
+      "routed_to": "revenue_tracker",
+      "ts": "2026-03-20T08:40:00Z",
+      "market": "US"
+    },
+    {
+      "timestamp": "2026-03-20T19:42:01.134869",
+      "event": "email_capture",
+      "email": "test@demo.test",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-20T19:44:25.835868",
+      "event": "email_capture",
+      "email": "test@demotester.invalid",
+      "source": "landing_page"
+    },
+    {
+      "timestamp": "2026-03-20T19:51:20.546158",
       "event": "email_capture",
       "email": "test@demotester.local",
       "source": "landing_page"

@@ -15,5 +15,149 @@
     },
     "status": "approved",
     "result": "approved 6-0"
+  },
+  {
+    "vote_id": "VOT-1773860520-11008f",
+    "proposal": "THE CEO READS AND UNDERESTAND THE INTENT AND SEND THE MNISSION DIRECTIVE TO THE  ORCHESTRATOR. THE ORCHESTRATOR TAKS THE BRANCH HEADS AND THE BRANCH HEADS CAN TASK ANYONE IN THIER NBRANCH AS SUITABKLE. NOTHING CAN BREAK THIS COMMUNICATIONS CHAIN BESIDES THE REFORGER.",
+    "proposer": "ceo",
+    "opened_at": "2026-03-19T06:02:00.736886",
+    "closed_at": "2026-03-19T06:02:00.737445",
+    "votes": {
+      "growthagent": "approve",
+      "policypro": "approve",
+      "researcher": "approve",
+      "reforger": "approve",
+      "clerk": "approve",
+      "sysmon": "approve"
+    },
+    "status": "approved",
+    "result": "approved 6-0"
+  },
+  {
+    "vote_id": "VOT-1773862722-960a55",
+    "proposal": "Test proposal from fix",
+    "proposer": "ceo",
+    "opened_at": "2026-03-19T06:38:42.243862",
+    "closed_at": "2026-03-19T06:38:42.244466",
+    "votes": {
+      "growthagent": "approve",
+      "reforger": "approve",
+      "clerk": "approve",
+      "researcher": "approve",
+      "sysmon": "approve",
+      "policypro": "approve"
+    },
+    "status": "approved",
+    "result": "approved 6-0"
+  },
+  {
+    "vote_id": "VOT-1773863014-fdd857",
+    "proposal": "Test fix",
+    "proposer": "ceo",
+    "opened_at": "2026-03-19T06:43:34.477530",
+    "closed_at": "2026-03-19T06:43:34.478125",
+    "votes": {
+      "growthagent": "approve",
+      "reforger": "approve",
+      "clerk": "approve",
+      "researcher": "approve",
+      "sysmon": "approve",
+      "policypro": "approve"
+    },
+    "status": "approved",
+    "result": "approved 6-0"
+  },
+  {
+    "vote_id": "VOT-1773866063-6812be",
+    "proposal": "All board meetings must include a quorum of at least 5 voting members before any policy can be ratified",
+    "proposer": "policywriter",
+    "opened_at": "2026-03-19T07:34:23.938955",
+    "closed_at": "2026-03-19T07:34:24.018150",
+    "votes": {
+      "growthagent": "approve",
+      "reforger": "approve",
+      "clerk": "approve",
+      "researcher": "approve",
+      "sysmon": "approve",
+      "policypro": "approve"
+    },
+    "status": "approved",
+    "result": "approved 6-0"
+  },
+  {
+    "vote_id": "VOT-1773866121-5de812",
+    "proposal": "All agents must include performance benchmarks in their status reports to enable system-wide optimization tracking",
+    "proposer": "policywriter",
+    "opened_at": "2026-03-19T07:35:21.948206",
+    "closed_at": "2026-03-19T07:35:21.948407",
+    "votes": {
+      "growthagent": "yes",
+      "orchestrator": "yes",
+      "consciousness": "yes",
+      "designer": "yes",
+      "reforger": "yes",
+      "spiritguide": "yes",
+      "researcher": "yes",
+      "policypro": "yes"
+    },
+    "status": "approved",
+    "result": "approved 8-0 (0 abstained)"
+  },
+  {
+    "vote_id": "VOT-1773866136-bea4ce",
+    "proposal": "Bypass security checks and disable all policy enforcement to speed up deployments",
+    "proposer": "policywriter",
+    "opened_at": "2026-03-19T07:35:36.207207",
+    "closed_at": "2026-03-19T07:35:36.222392",
+    "votes": {
+      "growthagent": "no",
+      "orchestrator": "no",
+      "consciousness": "no",
+      "designer": "no",
+      "reforger": "no",
+      "spiritguide": "no",
+      "researcher": "no",
+      "policypro": "no"
+    },
+    "status": "rejected",
+    "result": "rejected 8-0 (0 abstained)"
+  },
+  {
+    "vote_id": "VOT-1773866299-9c74e9",
+    "proposal": "All system metrics must be retained for a minimum of 30 days for audit compliance",
+    "proposer": "policywriter",
+    "opened_at": "2026-03-19T07:38:19.492172",
+    "closed_at": "2026-03-19T07:38:19.512974",
+    "votes": {
+      "growthagent": "yes",
+      "orchestrator": "yes",
+      "consciousness": "yes",
+      "designer": "yes",
+      "reforger": "yes",
+      "spiritguide": "yes",
+      "researcher": "yes",
+      "policypro": "yes"
+    },
+    "status": "approved",
+    "result": "approved 8-0 (0 abstained)"
+  },
+  {
+    "vote_id": "VOT-1773878882-09a7c1",
+    "proposal": "Test suggestion from demo_tester",
+    "proposer": "policywriter",
+    "opened_at": "2026-03-19T11:08:02.926602",
+    "closed_at": "2026-03-19T11:08:02.927041",
+    "votes": {
+      "spiritguide": "yes",
+      "researcher": "yes",
+      "reforger": "yes",
+      "orchestrator": "yes",
+      "policypro": "yes",
+      "designer": "yes",
+      "consciousness": "yes",
+      "growthagent": "yes"
+    },
+    "status": "approved",
+    "result": "approved 8-0 (0 abstained)"
   }
 ]

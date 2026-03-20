@@ -120,6 +120,11 @@
     border: 1px solid rgba(255,255,255,.06);
     border-radius: 14px;
     padding: 28px 26px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .panel:hover {
+    border-color: rgba(0,200,255,0.12);
+    box-shadow: 0 4px 24px rgba(0,200,255,0.04);
   }
   .panel h2 {
     font-size: 13px;
@@ -258,14 +263,30 @@
   }
   .fund-item strong { color: #e2e6f0; display: block; font-size: 14px; }
 
+  /* ── Top gradient bar ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 200;
+    background: linear-gradient(90deg, #00c8ff, #a855f7, #00c8ff);
+    background-size: 200% 100%;
+    animation: gradBar 4s linear infinite;
+  }
+  @keyframes gradBar { 0%{background-position:0% 0} 100%{background-position:200% 0} }
+
   /* ── Footer ── */
   .footer {
     text-align: center;
-    padding: 24px;
+    padding: 28px;
     font-size: 12px;
-    color: #3d4455;
+    color: #6b7280;
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 0.5px;
+    border-top: 1px solid rgba(255,255,255,0.06);
   }
 
   /* ── Responsive ── */
@@ -354,16 +375,16 @@
       </div>
       <div class="tier featured">
         <div class="tier-name">Team</div>
-        <div class="tier-price">$199<span>/mo</span></div>
+        <div class="tier-price">$149<span>/mo</span></div>
       </div>
       <div class="tier">
         <div class="tier-name">Enterprise</div>
-        <div class="tier-price">$699<span>/mo</span></div>
+        <div class="tier-price">$499<span>/mo</span></div>
       </div>
     </div>
     <div class="grid-2" style="margin-top:20px;margin-bottom:0;">
       <div class="panel metric" style="padding:16px;">
-        <div class="number cyan" style="font-size:30px;">$199K</div>
+        <div class="number cyan" style="font-size:30px;">$149K</div>
         <div class="label">Target MRR (1,000 Subs)</div>
       </div>
       <div class="panel metric" style="padding:16px;">
@@ -390,6 +411,10 @@
         <strong>Go-to-Market Engine</strong>
         Build repeatable sales motion, onboarding automation, and expansion playbook
       </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="mailto:invest@secondmindhq.com" style="display:inline-flex;align-items:center;gap:8px;padding:14px 40px;border-radius:10px;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg,#7c3aed,#06b6d4);text-decoration:none;box-shadow:0 0 30px rgba(124,58,237,.25);transition:all .25s;">Let's Talk &rarr;</a>
+      <p style="margin-top:12px;font-size:13px;color:rgba(200,205,216,0.5);">invest@secondmindhq.com</p>
     </div>
   </div>
 

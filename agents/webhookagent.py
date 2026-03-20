@@ -26,7 +26,12 @@ def run_webhookagent():
     _events = []        # list of dicts
     _counts = {}        # source -> int
 
-    REVENUE_EVENTS_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data/revenue_events.json"
+    # Use CWD (set by agent_server) if available, otherwise derive from __file__
+    _base_dir = globals().get("CWD") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    DATA_DIR = os.path.join(_base_dir, "data")
+    REVENUE_EVENTS_FILE = os.path.join(DATA_DIR, "revenue_events.json")
+    TREASURY_FILE = os.path.join(DATA_DIR, "treasury.json")
+    SUBS_FILE     = os.path.join(DATA_DIR, "subscriptions.json")
     STRIPE_PAYMENT_TYPES = {
         "checkout.session.completed",
         "payment_intent.succeeded",
@@ -34,16 +39,28 @@ def run_webhookagent():
         "charge.succeeded",
     }
 
+    _TIER_MAP = {
+        4900: "solo", 47000: "solo_annual",
+        14900: "team", 143000: "team_annual",
+        49900: "enterprise", 479000: "enterprise_annual",
+        29900: "lifetime", 149900: "mac_mini",
+        2900: "product", 950: "premarket_trader",
+        2450: "premarket_pro", 4950: "premarket_institutional",
+    }
+    _RECURRING_TIERS = {"solo", "solo_annual", "team", "team_annual",
+                        "enterprise", "enterprise_annual",
+                        "premarket_trader", "premarket_pro", "premarket_institutional"}
+
     def _persist_stripe_revenue(event_type, payload_bytes, ts):
-        # Append a Stripe payment event to revenue_events.json for revenue_tracker.
+        # Append a Stripe payment event to revenue_events.json AND auto-provision
+        # subscription + treasury entries for immediate self-funding tracking.
         try:
             body = json.loads(payload_bytes) if payload_bytes else {}
             obj  = body.get("data", {}).get("object", {})
-            # Stripe amounts are in cents; fallback fields by event type
             raw_amount = (obj.get("amount_total") or
                           obj.get("amount_received") or
                           obj.get("amount") or 0)
-            amount = round(raw_amount / 100, 2)  # convert cents → dollars
+            amount = round(raw_amount / 100, 2)
 
             os.makedirs(os.path.dirname(REVENUE_EVENTS_FILE), exist_ok=True)
             try:
@@ -54,11 +71,13 @@ def run_webhookagent():
             except Exception:
                 rev_events = []
 
+            _session_id = obj.get("id", "")
             rev_events.append({
                 "ts":     ts,
                 "source": "stripe",
                 "type":   event_type,
                 "amount": amount,
+                "session_id": _session_id,
             })
             with open(REVENUE_EVENTS_FILE, "w") as f:
                 json.dump(rev_events, f, indent=2)
@@ -67,6 +86,54 @@ def run_webhookagent():
                     f"[REVENUE] Stripe {event_type} persisted — ${amount:.2f} | "
                     f"total revenue events: {len(rev_events)}",
                     "ok")
+
+            # ── Auto-provision: treasury + subscription on checkout.session.completed ──
+            if event_type == "checkout.session.completed" and amount > 0:
+                _email = (obj.get("customer_email") or
+                          obj.get("customer_details", {}).get("email", "")).strip().lower()
+                _tier = _TIER_MAP.get(raw_amount, "unknown")
+
+                # Update treasury
+                try:
+                    with open(TREASURY_FILE) as f:
+                        _treasury = json.load(f)
+                except Exception:
+                    _treasury = {"balance_usd": 0, "currency": "usd", "transactions": []}
+
+                _known = {tx.get("stripe_session_id") for tx in _treasury.get("transactions", []) if tx.get("stripe_session_id")}
+                if _session_id and _session_id not in _known:
+                    _treasury["balance_usd"] = round(_treasury.get("balance_usd", 0) + amount, 2)
+                    _treasury["last_updated"] = ts[:10]
+                    _treasury.setdefault("transactions", []).append({
+                        "date": ts[:10], "type": "income", "amount_usd": amount,
+                        "source": "stripe_webhook", "product": _tier,
+                        "customer_email": _email, "stripe_session_id": _session_id,
+                        "status": "settled",
+                    })
+                    with open(TREASURY_FILE, "w") as f:
+                        json.dump(_treasury, f, indent=2)
+                    add_log(aid, f"[TREASURY] +${amount:.2f} — balance now ${_treasury['balance_usd']:.2f}", "ok")
+
+                # Auto-create subscription for recurring tiers
+                if _tier in _RECURRING_TIERS:
+                    try:
+                        with open(SUBS_FILE) as f:
+                            _subs = json.load(f)
+                    except Exception:
+                        _subs = []
+                    if not any(s.get("session_id") == _session_id for s in _subs):
+                        _mrr = amount
+                        if _tier.endswith("_annual"):
+                            _mrr = round(amount / 12, 2)
+                        _subs.append({
+                            "email": _email, "tier": _tier, "status": "active",
+                            "mrr": _mrr, "amount": amount, "currency": "usd",
+                            "started_at": ts, "session_id": _session_id,
+                        })
+                        with open(SUBS_FILE, "w") as f:
+                            json.dump(_subs, f, indent=2)
+                        add_log(aid, f"[SUBSCRIPTION] Auto-provisioned {_tier} for {_email} — MRR ${_mrr:.2f}", "ok")
+
         except Exception as e:
             add_log(aid, f"[REVENUE] Failed to persist Stripe event: {e}", "warn")
 
@@ -147,6 +214,41 @@ def run_webhookagent():
                 counts = dict(_counts)
             self._json({"ok": True, "counts": counts,
                         "total": sum(counts.values())})
+            return
+
+        if path == "/api/webhooks":
+            # Unified webhook dashboard — in-memory live events + persisted revenue events
+            with _lock:
+                snapshot = list(_events[-50:])
+                counts   = dict(_counts)
+                total    = sum(counts.values())
+            # Also load persisted revenue events
+            _rev_events = []
+            try:
+                with open(REVENUE_EVENTS_FILE) as _rf:
+                    _rev_events = json.load(_rf)
+                if not isinstance(_rev_events, list):
+                    _rev_events = []
+            except Exception:
+                pass
+            _stripe_rev = [e for e in _rev_events if e.get("source") == "stripe"]
+            _total_rev = sum(e.get("amount", e.get("revenue_attributed_usd", 0)) for e in _rev_events)
+            self._json({
+                "ok": True,
+                "live": {
+                    "total_events": total,
+                    "counts_by_source": counts,
+                    "recent": snapshot,
+                },
+                "persisted": {
+                    "total_revenue_events": len(_rev_events),
+                    "stripe_payments": len(_stripe_rev),
+                    "total_revenue_usd": round(_total_rev, 2),
+                    "recent": _rev_events[-20:] if _rev_events else [],
+                },
+                "agent": "webhookagent",
+                "status": "active",
+            })
             return
 
         _orig_do_GET(self)

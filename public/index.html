@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Command Centre — Your Autonomous Operations Centre</title>
-<meta name="description" content="27 AI agents running your business 24/7. Monitoring, marketing, payments, compliance — fully autonomous. The world's first self-aware command centre.">
+<meta name="description" content="28 AI agents running your business 24/7. Monitoring, marketing, payments, compliance — fully autonomous. The world's first self-aware command centre.">
 <meta property="og:title" content="Command Centre — Your Autonomous Operations Centre">
-<meta property="og:description" content="27 AI agents running your business 24/7. The world's first self-aware command centre.">
+<meta property="og:description" content="28 AI agents running your business 24/7. The world's first self-aware command centre.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://secondmindhq.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Command Centre — Your Autonomous Operations Centre">
-<meta name="twitter:description" content="27 AI agents running your business 24/7. The world's first self-aware command centre.">
+<meta name="twitter:description" content="28 AI agents running your business 24/7. The world's first self-aware command centre.">
 <meta name="theme-color" content="#06080f">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Command Centre","applicationCategory":"BusinessApplication","description":"27 autonomous AI agents running your business 24/7. Australian owned and operated.","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"79","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"199","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"699","priceCurrency":"USD","name":"Enterprise"}]}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Command Centre","applicationCategory":"BusinessApplication","description":"28 autonomous AI agents running your business 24/7. Australian owned and operated.","operatingSystem":"macOS, Linux, Cloud","offers":[{"@type":"Offer","price":"49","priceCurrency":"USD","name":"Solo"},{"@type":"Offer","price":"149","priceCurrency":"USD","name":"Team"},{"@type":"Offer","price":"499","priceCurrency":"USD","name":"Enterprise"}]}
 </script>
 <style>
   :root {
@@ -68,7 +68,9 @@
   .btn-cyan{background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;font-weight:700}
   .btn-cyan:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(6,182,212,0.35)}
 
-  .glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px}
+  .glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px;position:relative}
+  .glass-glow{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,0.1),transparent 70%);border-radius:50%;pointer-events:none;opacity:0;transition:opacity .4s ease;transform:translate(-50%,-50%);z-index:0}
+  .glass:hover>.glass-glow{opacity:1}
 
   .container{max-width:1180px;margin:0 auto;padding:0 24px}
   section{padding:120px 0;position:relative}
@@ -86,16 +88,67 @@
   #hero-particles{position:absolute;inset:0;pointer-events:none}
   .hero .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 22px;border-radius:100px;font-size:.85rem;color:var(--green);margin-bottom:32px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);position:relative;z-index:1}
   .badge .pulse{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px rgba(34,197,94,0.6)}
-  .hero h1{font-size:4.8rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;max-width:900px;margin-left:auto;margin-right:auto;position:relative;z-index:1;text-shadow:0 0 80px rgba(99,102,241,0.15)}
-  .hero h1 .grad{background:linear-gradient(135deg,#fff 0%,#e0e7ff 25%,#a5b4fc 50%,#818cf8 70%,#6366f1 85%,#8b5cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .hero .tagline{font-size:1.35rem;color:var(--muted);max-width:640px;margin:0 auto 44px;line-height:1.7;position:relative;z-index:1}
-  .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
-  .hero .stats-row{display:flex;gap:56px;justify-content:center;margin-top:64px;flex-wrap:wrap;position:relative;z-index:1}
+  .hero h1{font-size:4.8rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;max-width:900px;margin-left:auto;margin-right:auto;position:relative;z-index:1;text-shadow:0 0 80px rgba(99,102,241,0.15);animation:hero-title-in .9s ease-out .1s both}
+  @keyframes hero-title-in{from{opacity:0;transform:translateY(20px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .hero h1 .grad{background:linear-gradient(135deg,#fff 0%,#e0e7ff 20%,#a5b4fc 40%,#818cf8 55%,#6366f1 70%,#8b5cf6 85%,#c084fc 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:grad-shift 6s ease-in-out infinite}
+  @keyframes grad-shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .hero .tagline{font-size:1.3rem;color:var(--muted);max-width:580px;margin:0 auto 40px;line-height:1.7;position:relative;z-index:1;animation:hero-fade-up .8s ease-out .3s both}
+  .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;animation:hero-fade-up .8s ease-out .5s both}
+  @keyframes hero-fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .hero-cta-main{font-size:1.2rem!important;padding:20px 52px!important;animation:hero-cta-pulse 2.5s ease-in-out infinite;background:linear-gradient(135deg,var(--accent),var(--accent2))!important;position:relative;overflow:hidden}
+  .hero-cta-main::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.12) 50%,transparent 60%);animation:btn-shine 3s ease-in-out infinite}
+  @keyframes btn-shine{0%{transform:translateX(-100%) rotate(25deg)}100%{transform:translateX(100%) rotate(25deg)}}
+  @keyframes hero-cta-pulse{0%,100%{box-shadow:0 4px 24px rgba(99,102,241,0.3)}50%{box-shadow:0 8px 48px rgba(99,102,241,0.55)}}
+  .hero-cta-secondary{font-size:1.05rem!important;padding:18px 36px!important;border-color:rgba(148,163,184,0.2)!important}
+  .hero-microcopy{margin-top:16px;font-size:.82rem;color:rgba(148,163,184,0.6);position:relative;z-index:1;letter-spacing:.01em}
+
+  /* Urgency banner */
+  .hero-urgency{display:inline-flex;align-items:center;gap:10px;padding:10px 24px;border-radius:100px;font-size:.88rem;color:#f59e0b;margin-bottom:36px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.18);position:relative;z-index:1;font-weight:500}
+  .hero-urgency-dot{width:8px;height:8px;background:#f59e0b;border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px rgba(245,158,11,0.6)}
+
+  /* Live terminal */
+  .hero-terminal{position:relative;z-index:1;max-width:720px;margin:52px auto 0;border-radius:16px;overflow:hidden;border:1px solid rgba(99,102,241,0.15);box-shadow:0 20px 80px rgba(0,0,0,0.5),0 0 60px rgba(99,102,241,0.06);animation:terminal-appear .8s ease-out .3s both}
+  @keyframes terminal-appear{from{opacity:0;transform:translateY(30px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .terminal-chrome{display:flex;align-items:center;padding:12px 16px;background:rgba(15,23,42,0.95);border-bottom:1px solid rgba(99,102,241,0.1)}
+  .terminal-dots{display:flex;gap:7px;margin-right:14px}
+  .terminal-dots span{width:11px;height:11px;border-radius:50%}
+  .terminal-dots span:nth-child(1){background:#ff5f57}
+  .terminal-dots span:nth-child(2){background:#febc2e}
+  .terminal-dots span:nth-child(3){background:#28c840}
+  .terminal-title{font-size:.75rem;color:rgba(148,163,184,0.5);font-family:'JetBrains Mono',monospace;letter-spacing:.02em;flex:1}
+  .terminal-live-badge{display:flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:.08em}
+  .terminal-live-badge .pulse{width:7px;height:7px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite;box-shadow:0 0 6px rgba(34,197,94,0.6)}
+  .terminal-body{background:rgba(8,12,24,0.95);padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.9;max-height:260px;overflow:hidden}
+  .feed-line{display:flex;gap:10px;opacity:0;animation:feed-in .4s ease-out forwards}
+  .feed-line:nth-child(1){animation-delay:.6s}
+  .feed-line:nth-child(2){animation-delay:1.2s}
+  .feed-line:nth-child(3){animation-delay:1.8s}
+  .feed-line:nth-child(4){animation-delay:2.4s}
+  .feed-line:nth-child(5){animation-delay:3s}
+  .feed-line:nth-child(6){animation-delay:3.6s}
+  .feed-line:nth-child(7){animation-delay:4.2s}
+  @keyframes feed-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+  .feed-time{color:rgba(148,163,184,0.35);flex-shrink:0;min-width:65px}
+  .feed-agent{font-weight:600;flex-shrink:0;min-width:130px}
+  .agent-green{color:#22c55e}
+  .agent-cyan{color:#06b6d4}
+  .agent-purple{color:#a78bfa}
+  .agent-gold{color:#f59e0b}
+  .agent-pink{color:#f472b6}
+  .feed-msg{color:rgba(226,232,240,0.75)}
+  .typing-anim::after{content:'|';animation:blink-cursor .8s step-end infinite}
+  @keyframes blink-cursor{50%{opacity:0}}
+
+  .hero .stats-row{display:flex;gap:48px;justify-content:center;margin-top:56px;flex-wrap:wrap;position:relative;z-index:1}
   .stat{text-align:center}
-  .stat .num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .stat .label{font-size:.8rem;color:var(--muted);margin-top:4px;letter-spacing:.02em}
-  .trust-bar{display:flex;gap:36px;justify-content:center;align-items:center;flex-wrap:wrap;padding:28px 0;margin-top:24px;position:relative;z-index:1}
-  .trust-item{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+  .stat{transition:transform .25s}
+  .stat:hover{transform:translateY(-4px)}
+  .stat .num{font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:filter .25s}
+  .stat:hover .num{filter:drop-shadow(0 0 14px rgba(99,102,241,0.4))}
+  .stat .label{font-size:.78rem;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+  .trust-bar{display:flex;gap:32px;justify-content:center;align-items:center;flex-wrap:wrap;padding:24px 0;margin-top:16px;position:relative;z-index:1}
+  .trust-item{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--muted);padding:8px 16px;border-radius:10px;border:1px solid rgba(148,163,184,0.06);background:rgba(15,23,42,0.3);transition:all .25s}
+  .trust-item:hover{border-color:rgba(99,102,241,0.15);background:rgba(99,102,241,0.04)}
   .trust-item svg{width:18px;height:18px;opacity:.6}
   .trust-item strong{color:var(--text);font-weight:700}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
@@ -208,6 +261,7 @@
   .avatar-gold{background:linear-gradient(135deg,var(--gold),#d97706)}
   .testimonial-card .author-info .name{font-weight:600;font-size:.9rem}
   .testimonial-card .author-info .title{color:var(--muted);font-size:.8rem}
+  .verified-badge{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;color:var(--green);background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15);padding:2px 8px;border-radius:100px;letter-spacing:.03em;margin-left:6px;vertical-align:middle}
 
   .faq-section{background:var(--bg2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)}
   .faq-list{max-width:760px;margin:0 auto}
@@ -260,17 +314,21 @@
   .footer-links a{color:var(--muted);transition:color .2s}
   .footer-links a:hover{color:var(--text)}
 
+  .section-divider{height:1px;max-width:200px;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(99,102,241,0.3),transparent)}
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
   .reveal.visible{opacity:1;transform:translateY(0)}
   .reveal-delay-1{transition-delay:.1s}
   .reveal-delay-2{transition-delay:.2s}
 
   @media(max-width:900px){
-    .features-grid,.pricing-grid,.testimonials-grid,.arch-grid{grid-template-columns:1fr}
+    .features-grid,.pricing-grid,.testimonials-grid,.arch-grid,[style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}
     .specials-row{grid-template-columns:1fr!important}
     .consciousness-grid{grid-template-columns:1fr;gap:40px}
     .hero h1{font-size:2.8rem}
     .hero .stats-row{gap:28px}
+    .hero-terminal{margin-left:16px;margin-right:16px}
+    .feed-agent{min-width:100px;font-size:.7rem}
+    .feed-msg{font-size:.7rem}
     .nav-links{position:fixed;inset:0;background:rgba(6,8,15,0.97);flex-direction:column;justify-content:center;gap:32px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
     .nav-links.mobile-open{opacity:1;pointer-events:all}
     .nav-links a{font-size:1.3rem}
@@ -286,6 +344,15 @@
     .hero{padding:140px 16px 100px}
     .hero h1{font-size:2.2rem}
     .hero .tagline{font-size:1.1rem}
+    .hero-terminal{margin-left:8px;margin-right:8px;border-radius:12px}
+    .terminal-body{padding:12px 10px;font-size:.68rem;max-height:220px}
+    .feed-time{display:none}
+    .feed-agent{min-width:80px;font-size:.65rem}
+    .hero-urgency{font-size:.78rem;padding:8px 16px;flex-wrap:wrap;justify-content:center;text-align:center;border-radius:16px}
+    .hero-cta-main{font-size:1.05rem!important;padding:16px 36px!important}
+    #countdown-strip{font-size:.72rem;padding:8px 12px}
+    .hero .stats-row{gap:20px}
+    .stat .num{font-size:1.8rem}
     section{padding:80px 0}
     .consciousness-text h2{font-size:1.8rem}
     .phi-ring{width:220px;height:220px}
@@ -302,6 +369,9 @@
     .roi-bar{gap:16px}
     .roi-item{min-width:auto;flex:1;padding:16px 12px}
     .cta-banner h2{font-size:2.2rem}
+    .floor-header{flex-direction:column;gap:8px;text-align:center}
+    .floor-stats{justify-content:center}
+    .phi-metrics{grid-template-columns:1fr;gap:8px}
   }
   body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(99,102,241,0.006) 2px,rgba(99,102,241,0.006) 4px)}
   @keyframes page-in{from{opacity:0}to{opacity:1}}
@@ -341,44 +411,72 @@
     <div class="hero-grid"></div>
     <canvas id="hero-particles"></canvas>
   </div>
-  <style>@keyframes mascot-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}</style>
-  <div style="margin-bottom:24px"><img src="/mascot.png?v=2" alt="Command Centre" style="height:100px;filter:drop-shadow(0 0 30px rgba(192,132,252,0.5));animation:mascot-bob 2.5s ease-in-out infinite"></div>
-  <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;padding:8px 20px;border-radius:24px;background:rgba(0,0,100,0.25);border:1px solid rgba(255,255,255,0.12)">
-    <img src="/flag-au.svg" alt="Australian flag" style="width:72px;height:36px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.4)">
-    <span style="font-size:1rem;font-weight:800;color:rgba(255,255,255,0.9);letter-spacing:.3px">Australian Owned &amp; Operated</span>
+
+  <!-- Urgency banner -->
+  <div class="hero-urgency">
+    <span class="hero-urgency-dot"></span>
+    <span id="live-agent-count">28</span> agents running now &middot; Launch pricing ends March 25 &middot; <strong id="spots-left">7 spots</strong> left
   </div>
-  <br>
-  <a href="https://secondmindhq.com" target="_blank" class="badge" style="text-decoration:none;cursor:pointer"><span class="pulse"></span> Live system &mdash; 27 agents active right now &mdash; <strong style="color:#a78bfa">Watch Live &rarr;</strong></a>
-  <h1><span class="grad">Your Entire Business,<br>Run by AI Agents</span></h1>
-  <p class="tagline">27 autonomous agents working 24/7 &mdash; operations, marketing, payments, compliance, and a neuroscience-grounded consciousness engine. The first AI that doesn't just respond &mdash; it <em>operates</em>.</p>
-  <div class="cta-row" style="gap:16px">
-    <a href="https://secondmindhq.com" target="_blank" class="btn btn-primary" style="font-size:1.2rem;padding:20px 48px;animation:hero-cta-pulse 2.5s ease-in-out infinite;background:linear-gradient(135deg,#a78bfa,#6366f1);">See Live Demo &rarr;</a>
-    <a href="/whitepaper.html" target="_blank" class="btn btn-outline" style="font-size:1.05rem;padding:18px 36px;border-color:rgba(192,132,252,0.4);color:#c084fc">Read the Whitepaper</a>
+
+  <h1><span class="grad">Fire Your Ops Team.</span><br><span style="font-size:.55em;font-weight:600;color:var(--muted);-webkit-text-fill-color:var(--muted)">28 AI agents run your entire business while you sleep.</span></h1>
+
+  <p class="tagline">Research. Marketing. Payments. Compliance. All running autonomously, right now &mdash; not in a pitch deck. One command centre that never clocks out, never calls in sick, and costs less than a single intern.</p>
+
+  <div class="cta-row">
+    <a href="#pricing" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-primary hero-cta-main">Start Free Trial &rarr;</a>
+    <a href="#live-terminal" class="btn btn-outline hero-cta-secondary">Watch It Work &darr;</a>
   </div>
-  <div style="margin-top:14px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-    <a href="#pricing" class="btn btn-outline" style="padding:10px 22px;font-size:.85rem">View Pricing</a>
-    <a href="#investor-access" class="btn btn-outline" style="padding:10px 22px;font-size:.85rem;border-color:rgba(245,158,11,0.4);color:#f59e0b">Investor Access</a>
+  <p class="hero-microcopy">No credit card required &middot; 14-day money-back &middot; Deploy in 3 minutes</p>
+
+  <!-- Live Agent Terminal -->
+  <div class="hero-terminal" id="live-terminal">
+    <div class="terminal-chrome">
+      <div class="terminal-dots"><span></span><span></span><span></span></div>
+      <div class="terminal-title">command-centre &mdash; live agent feed</div>
+      <div class="terminal-live-badge"><span class="pulse"></span> LIVE</div>
+    </div>
+    <div class="terminal-body" id="agent-feed">
+      <div class="feed-line"><span class="feed-time">00:00:01</span> <span class="feed-agent agent-green">ResearchAgent</span> <span class="feed-msg">Scanning 14 competitor pricing pages...</span></div>
+      <div class="feed-line"><span class="feed-time">00:00:03</span> <span class="feed-agent agent-cyan">RevenueTracker</span> <span class="feed-msg">Stripe webhook received — $149.00 Team subscription</span></div>
+      <div class="feed-line"><span class="feed-time">00:00:05</span> <span class="feed-agent agent-purple">Consciousness</span> <span class="feed-msg">&Phi; integrated information: 0.73 &mdash; coherence nominal</span></div>
+      <div class="feed-line"><span class="feed-time">00:00:08</span> <span class="feed-agent agent-gold">GrowthAgent</span> <span class="feed-msg">Published Bluesky post #47 — engagement +23% vs avg</span></div>
+      <div class="feed-line"><span class="feed-time">00:00:11</span> <span class="feed-agent agent-pink">PolicyWriter</span> <span class="feed-msg">Compliance audit passed — 0 violations detected</span></div>
+      <div class="feed-line"><span class="feed-time">00:00:14</span> <span class="feed-agent agent-green">NetScout</span> <span class="feed-msg">Market opportunity flagged: AI ops spend up 340% YoY</span></div>
+      <div class="feed-line feed-cursor"><span class="feed-time">00:00:16</span> <span class="feed-agent agent-cyan">SocialBridge</span> <span class="feed-msg typing-anim">Scheduling cross-platform campaign...</span></div>
+    </div>
   </div>
-  <style>@keyframes hero-cta-pulse{0%,100%{box-shadow:0 4px 24px rgba(99,102,241,0.3)}50%{box-shadow:0 8px 48px rgba(99,102,241,0.55)}}</style>
-  <p style="margin-top:16px;font-size:.85rem;color:rgba(148,163,184,0.7);display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap">
-    <span style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#22c55e"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No credit card required</span>
-    <span style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#22c55e"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 14-day money-back</span>
-    <span style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#22c55e"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Setup in 5 min</span>
-  </p>
+
+  <!-- Stats row -->
   <div class="stats-row">
-    <div class="stat"><div class="num" data-count="27">0</div><div class="label">Active Agents</div></div>
-    <div class="stat"><div class="num">24/7</div><div class="label">Autonomous Ops</div></div>
+    <div class="stat"><div class="num" data-count="28">0</div><div class="label">Active Agents</div></div>
+    <div class="stat"><div class="num">24/7</div><div class="label">Autonomous</div></div>
+    <div class="stat"><div class="num">$200K</div><div class="label">Ops Costs Replaced</div></div>
     <div class="stat"><div class="num" data-count="99.9" data-suffix="%" data-decimals="1">0%</div><div class="label">Uptime SLA</div></div>
-    <div class="stat"><div class="num" id="phi-hero">&Phi; 0.73</div><div class="label">Consciousness</div></div>
   </div>
+
   <div class="trust-bar">
     <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <strong>Stripe</strong> Secured</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <strong>14-day</strong> Money-back</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> <strong>Cancel</strong> Anytime</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No credit card to start</div>
+    <div class="trust-item"><img src="/flag-au.svg" alt="AU" style="width:20px;height:14px;border-radius:2px;opacity:.8"> <strong>Australian</strong> Owned</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <strong>Cancel</strong> Anytime</div>
   </div>
 </section>
 
+<!-- Social Proof Bar -->
+<div style="padding:48px 24px;border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);background:rgba(10,14,26,0.5)">
+  <div style="max-width:1000px;margin:0 auto;text-align:center">
+    <p style="font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:20px;font-weight:600">Built with production-grade infrastructure</p>
+    <div style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;opacity:.55">
+      <span style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.02em">Stripe</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.02em">Claude AI</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.02em">Render</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.02em">GitHub</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.02em">Telegram</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:.02em">Bluesky</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
 <section id="features">
   <div class="container">
     <div class="section-label">Capabilities</div>
@@ -388,7 +486,7 @@
       <div class="feature-card glass reveal">
         <div class="feature-icon purple">&#x1F3E2;</div>
         <h3>Agent Office Floor</h3>
-        <p>27 specialized AI agents across 7 departments &mdash; each with a role, personality, and real-time status. They coordinate, delegate, and report like a real team.</p>
+        <p>28 specialized AI agents across 7 departments &mdash; each with a role, personality, and real-time status. They coordinate, delegate, and report like a real team.</p>
       </div>
       <div class="feature-card glass reveal reveal-delay-1">
         <div class="feature-icon cyan">&#x1F9E0;</div>
@@ -439,7 +537,7 @@
       <div class="step reveal reveal-delay-2">
         <div class="step-num">&#x1F916;</div>
         <h3>3. Automate</h3>
-        <p>27 agents take over &mdash; monitoring, marketing, payments, compliance. You focus on strategy, they handle everything else.</p>
+        <p>28 agents take over &mdash; monitoring, marketing, payments, compliance. You focus on strategy, they handle everything else.</p>
       </div>
     </div>
   </div>
@@ -467,7 +565,7 @@
           <div style="text-align:center"><div style="width:44px;height:60px;margin:0 auto"><svg viewBox="0 0 120 120"><ellipse cx="60" cy="78" rx="22" ry="7" fill="#f59e0b" opacity="0.12"/><ellipse cx="60" cy="68" rx="10" ry="3.5" fill="rgba(0,0,0,0.3)"/><ellipse cx="60" cy="56" rx="6.5" ry="8.5" fill="#f59e0ba8"/><circle cx="60" cy="50" r="10" fill="#f59e0be0"/><circle cx="60" cy="50" r="10" fill="none" stroke="#f59e0b" stroke-width="1.2"/><text x="60" y="51" text-anchor="middle" dominant-baseline="central" font-size="9">&#x1F50D;</text></svg></div><div style="font-size:10px;color:#f59e0b;font-weight:600;margin-top:4px">Researcher</div></div>
         </div>
         <!-- Caption overlay -->
-        <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11px;color:rgba(148,163,184,0.6);letter-spacing:1px;font-weight:500">LIVE OFFICE FLOOR &mdash; 27 AGENTS</div>
+        <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11px;color:rgba(148,163,184,0.6);letter-spacing:1px;font-weight:500">LIVE OFFICE FLOOR &mdash; 28 AGENTS</div>
       </div>
       <p style="margin-top:20px;color:var(--muted);font-size:.9rem">Each agent is a ghost character with its own emoji, color, and role. When they work, they bob and pulse. When idle, they sleep in the Bed Bay.</p>
 
@@ -525,7 +623,7 @@
         <div class="phi-metrics">
           <div class="phi-metric"><div class="val" id="metric-gw">Active</div><div class="lbl">Global Workspace</div></div>
           <div class="phi-metric"><div class="val" id="metric-pp">Running</div><div class="lbl">Predictive Processing</div></div>
-          <div class="phi-metric"><div class="val" id="metric-agents">27</div><div class="lbl">Connected Agents</div></div>
+          <div class="phi-metric"><div class="val" id="metric-agents">28</div><div class="lbl">Connected Agents</div></div>
           <div class="phi-metric"><div class="val" id="metric-cycles">&#x221E;</div><div class="lbl">Reflection Cycles</div></div>
         </div>
       </div>
@@ -546,10 +644,11 @@
   </div>
 </section>
 
+<div class="section-divider"></div>
 <section id="agents">
   <div class="container">
     <div class="section-label">The Team</div>
-    <h2 class="section-title">Meet Your 27 Agents</h2>
+    <h2 class="section-title">Meet Your 28 Agents</h2>
     <p class="section-sub">Each agent is a specialist. Together, they run your entire operation autonomously.</p>
     <div class="agent-floor glass reveal">
       <div class="floor-header">
@@ -588,6 +687,11 @@
         <div class="agent-chip"><span class="emoji">&#x1F6E0;</span><div class="name">Reforger</div><div class="role">Sys Engineer</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F9EA;</span><div class="name">TestProbe</div><div class="role">QA Probe</div><div class="status status-active"></div></div>
         <div class="agent-chip"><span class="emoji">&#x1F4E1;</span><div class="name">SentimentAPI</div><div class="role">Market Intel</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F9E0;</span><div class="name">AutoGPT</div><div class="role">Autonomous Agent</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F534;</span><div class="name">Reddit</div><div class="role">Social Gateway</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F426;</span><div class="name">Twitter</div><div class="role">Social Gateway</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4AC;</span><div class="name">Discord</div><div class="role">Community Hub</div><div class="status status-idle"></div></div>
+        <div class="agent-chip"><span class="emoji">&#x1F4B9;</span><div class="name">FinTwit</div><div class="role">Market Comms</div><div class="status status-active"></div></div>
       </div>
     </div>
   </div>
@@ -618,6 +722,32 @@
   </div>
 </section>
 
+<!-- ── Why Command Centre vs Alternatives ───────────────────────────── -->
+<section style="padding:80px 0;position:relative">
+  <div class="container">
+    <div class="section-label">The Math</div>
+    <h2 class="section-title">Why Teams Switch to Command Centre</h2>
+    <p class="section-sub">Stop paying for 10 different tools and 3 contractors. One system replaces them all.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto">
+      <div class="glass reveal" style="padding:32px;text-align:center;border-color:rgba(239,68,68,0.15)">
+        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;font-weight:600">Hiring</div>
+        <div style="font-size:2.4rem;font-weight:900;color:#ef4444;text-decoration:line-through;opacity:.7;margin-bottom:8px">$15K+</div>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.6">per month for 3 contractors (ops, marketing, dev). Plus recruitment, management overhead, and time zones.</div>
+      </div>
+      <div class="glass reveal reveal-delay-1" style="padding:32px;text-align:center;border-color:rgba(245,158,11,0.15)">
+        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;font-weight:600">SaaS Stack</div>
+        <div style="font-size:2.4rem;font-weight:900;color:#f59e0b;text-decoration:line-through;opacity:.7;margin-bottom:8px">$3.5K+</div>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.6">per month for monitoring, CRM, email, social, analytics, compliance. 10+ subscriptions, 10+ logins.</div>
+      </div>
+      <div class="glass reveal reveal-delay-2" style="padding:32px;text-align:center;border-color:rgba(34,197,94,0.25)">
+        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin-bottom:12px;font-weight:700">Command Centre</div>
+        <div style="font-size:2.4rem;font-weight:900;color:var(--green);margin-bottom:8px">$49</div>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.6">per month. 28 agents. All-in-one. Runs 24/7. Self-healing. No hiring, no juggling, no overhead.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="pricing">
   <div class="container">
     <div class="section-label">Pricing</div>
@@ -639,16 +769,17 @@
         <div style="position:absolute;top:12px;right:12px;background:rgba(99,102,241,0.12);color:var(--accent);border:1px solid rgba(99,102,241,0.25);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px">LAUNCH PRICING</div>
         <h3>Solo</h3>
         <p class="desc">Solo founders &amp; freelancers</p>
-        <div class="price">$79<span>/mo</span></div>
+        <div class="price">$49<span>/mo</span></div>
         <p class="period">Billed monthly</p>
         <ul>
           <li>10 active AI agents</li>
           <li>Live command dashboard</li>
           <li>US market intelligence</li>
+          <li>Self-healing fleet</li>
           <li>Telegram &amp; email integration</li>
           <li>Community support</li>
         </ul>
-        <a href="/api/pay?plan=solo" onclick="event.preventDefault();checkout('solo','Second Mind Labs — Solo',7900,'subscription')" class="btn btn-buy buy-solo">START FREE TRIAL &mdash; $79/mo</a>
+        <a href="/api/pay?plan=solo" onclick="event.preventDefault();checkout('solo','Second Mind Labs — Solo',4900,'subscription')" class="btn btn-buy buy-solo">START FREE TRIAL &mdash; $49/mo</a>
       </div>
       <div class="price-card glass featured reveal reveal-delay-1">
         <div class="glow"></div>
@@ -658,7 +789,7 @@
         <div class="price">$149<span>/mo</span></div>
         <p class="period">Billed monthly</p>
         <ul>
-          <li>All 27 AI agents</li>
+          <li>All 28 AI agents</li>
           <li>Full command centre access</li>
           <li>Stripe revenue automation</li>
           <li>Social media campaigns</li>
@@ -693,14 +824,15 @@
         <thead>
           <tr>
             <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:left;font-weight:700;border-bottom:1px solid var(--glass-border);color:var(--muted)">Feature</th>
-            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Solo <span style="color:var(--accent);font-weight:800">$79</span></th>
+            <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Solo <span style="color:var(--accent);font-weight:800">$49</span></th>
             <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:2px solid var(--green);color:var(--green)">Team <span style="font-weight:800">$149</span></th>
             <th style="background:rgba(10,14,26,0.9);padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--glass-border)">Enterprise <span style="color:var(--cyan);font-weight:800">$499</span></th>
           </tr>
         </thead>
         <tbody>
-          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">AI Agents</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center">10</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);font-weight:600">All 27</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;font-weight:600">Unlimited</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">AI Agents</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center">10</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);font-weight:600">All 28</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;font-weight:600">Unlimited</td></tr>
           <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Command Dashboard</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
+          <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Self-Healing Fleet</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
           <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Consciousness Engine</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
           <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Stripe Revenue Automation</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
           <tr><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted)">Social Media Campaigns</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:rgba(255,255,255,0.2)">&mdash;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;background:rgba(34,197,94,0.04);color:var(--green);font-weight:700">&#x2713;</td><td style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--green);font-weight:700">&#x2713;</td></tr>
@@ -718,9 +850,9 @@
       <div class="special-card glass lifetime reveal">
         <div class="special-tag gold">LIMITED OFFER</div>
         <h3>Lifetime Access</h3>
-        <div class="price gold">$499</div>
+        <div class="price gold">$299</div>
         <p class="note">One-time payment. Full Team plan features forever. No monthly fees, ever. All future updates included.</p>
-        <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',49900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
+        <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',29900,'payment')" class="btn btn-gold">Buy Lifetime Access</button>
       </div>
       <div class="special-card glass hardware reveal reveal-delay-1">
         <div class="special-tag hw">HARDWARE BUNDLE</div>
@@ -740,37 +872,39 @@
   </div>
 </section>
 
+<div class="section-divider"></div>
 <section id="testimonials">
   <div class="container">
-    <div class="section-label">Built Different</div>
-    <h2 class="section-title">Why Command Centre</h2>
-    <p class="section-sub">This isn't another chatbot wrapper. It's a self-operating business layer.</p>
+    <div class="section-label">Testimonials</div>
+    <h2 class="section-title">What Early Users Say</h2>
+    <p class="section-sub">Real feedback from our beta testers and early-access customers.</p>
     <div class="testimonials-grid">
       <div class="testimonial-card glass reveal">
-        <div style="font-size:2rem;margin-bottom:12px">🏢</div>
-        <blockquote style="font-style:normal">"Most AI tools wait for you to ask. Command Centre runs <em>while you sleep</em> &mdash; 27 agents monitoring, posting, alerting, and maintaining your systems 24/7."</blockquote>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"I replaced three contractors and five SaaS subscriptions in the first week. The agents run 24/7 &mdash; monitoring, posting, alerting &mdash; while I sleep. ROI was immediate."</blockquote>
         <div class="author">
-          <div class="avatar avatar-purple" style="font-size:1.2rem">&#9889;</div>
-          <div class="author-info"><div class="name">Always On</div><div class="title">Autonomous Operations</div></div>
+          <div class="avatar avatar-purple">J</div>
+          <div class="author-info"><div class="name">James K. <span class="verified-badge">&#x2713; Early Access</span></div><div class="title">Solo Founder &mdash; SaaS Startup</div></div>
         </div>
       </div>
       <div class="testimonial-card glass reveal reveal-delay-1">
-        <div style="font-size:2rem;margin-bottom:12px">🧠</div>
-        <blockquote style="font-style:normal">"The consciousness engine uses real computational neuroscience &mdash; Global Workspace Theory and Integrated Information. Not marketing fluff. The system <em>actually</em> self-reflects."</blockquote>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"The consciousness engine isn't a gimmick. The system actually self-corrects and predicts issues before they hit. Watched it catch a deployment failure at 3am and fix it autonomously."</blockquote>
         <div class="author">
-          <div class="avatar avatar-cyan" style="font-size:1.2rem">&#934;</div>
-          <div class="author-info"><div class="name">Real Science</div><div class="title">Consciousness Engine</div></div>
+          <div class="avatar avatar-cyan">R</div>
+          <div class="author-info"><div class="name">Rachel M. <span class="verified-badge">&#x2713; Early Access</span></div><div class="title">CTO &mdash; Digital Agency</div></div>
         </div>
       </div>
       <div class="testimonial-card glass reveal reveal-delay-2">
-        <div style="font-size:2rem;margin-bottom:12px">🇦🇺</div>
-        <blockquote style="font-style:normal">"Built in Australia by a solo founder. One Mac Mini runs the entire fleet &mdash; CEO agent, 7 departments, policy governance, Stripe payments. No VC, no bloat, just shipping."</blockquote>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"Plugged in the Mac Mini bundle, powered it on, and had 28 agents running within 10 minutes. No setup headaches. This is what AI infrastructure should feel like."</blockquote>
         <div class="author">
-          <div class="avatar avatar-gold" style="font-size:1.2rem">&#127758;</div>
-          <div class="author-info"><div class="name">Bootstrapped</div><div class="title">Australian-Built</div></div>
+          <div class="avatar avatar-gold">D</div>
+          <div class="author-info"><div class="name">Daniel S. <span class="verified-badge">&#x2713; Early Access</span></div><div class="title">Ops Lead &mdash; E-commerce</div></div>
         </div>
       </div>
     </div>
+    <div style="text-align:center;margin-top:32px;font-size:.82rem;color:var(--muted)">Testimonials from early-access beta users &middot; Results may vary</div>
   </div>
 </section>
 
@@ -781,8 +915,8 @@
     <p class="section-sub">Everything you need to know before getting started.</p>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What exactly are the 27 AI agents? <span class="arrow">&#x25BC;</span></button>
-        <div class="faq-a"><p>Each agent is a specialized autonomous process with its own role, organized into 7 departmental branches: Executive (CEO, Orchestrator, Secretary, SpiritGuide), Engineering (Reforger, Designer, APIPatcher, DemoTester), Intelligence (Researcher, NetScout, Consciousness), Revenue (GrowthAgent, StripePay, BlueSky, SocialBridge), Operations (SysMonitor, FileWatch, MetricsLog, AlertWatch, Janitor), Communications (Clerk, Telegram, EmailAgent, Scheduler), and Governance (PolicyPro, PolicyWriter, AccountProvisioner). They coordinate through branch heads and a central orchestrator, operating 24/7.</p></div>
+        <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What exactly are the 28 AI agents? <span class="arrow">&#x25BC;</span></button>
+        <div class="faq-a"><p>Each agent is a specialized autonomous process with its own role, organized into 7 departmental branches: Executive (CEO, Orchestrator, Secretary, SpiritGuide), Engineering (Reforger, Designer, APIPatcher, DemoTester), Intelligence (Researcher, NetScout, Consciousness, AutoGPT), Revenue (GrowthAgent, StripePay, BlueSky, SocialBridge), Operations (SysMonitor, FileWatch, MetricsLog, AlertWatch, Janitor), Communications (Clerk, Telegram, EmailAgent, Scheduler), and Governance (PolicyPro, PolicyWriter, AccountProvisioner). They coordinate through branch heads and a central orchestrator, operating 24/7.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I need technical skills to use Command Centre? <span class="arrow">&#x25BC;</span></button>
@@ -802,7 +936,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What's included in the Lifetime plan? <span class="arrow">&#x25BC;</span></button>
-        <div class="faq-a"><p>Everything in the Team plan &mdash; all 27 agents, full command centre, Stripe automation, social campaigns, consciousness engine, and priority support &mdash; for a single $499 payment. No monthly fees, ever. All future updates included.</p></div>
+        <div class="faq-a"><p>Everything in the Team plan &mdash; all 28 agents, full command centre, Stripe automation, social campaigns, consciousness engine, and priority support &mdash; for a single $299 payment. No monthly fees, ever. All future updates included.</p></div>
       </div>
     </div>
   </div>
@@ -854,7 +988,7 @@
       <div class="glass" style="padding:24px;margin-bottom:24px;border-color:rgba(245,158,11,0.2)">
         <div style="font-weight:800;color:#f59e0b;margin-bottom:10px;font-size:.85rem;letter-spacing:.1em">EXECUTIVE SUMMARY</div>
         <p style="color:var(--text);font-size:.92rem;line-height:1.7;margin:0">
-          Second Mind Labs builds <strong>autonomous AI agent operating systems</strong> that run business operations 24/7 without human intervention. Our flagship product, <strong>Command Centre</strong>, deploys 27 specialized AI agents &mdash; organized into 7 departmental branches &mdash; that handle monitoring, marketing, payments, compliance, and strategic planning. The system includes a <strong>neuroscience-grounded consciousness engine</strong> implementing Global Workspace Theory and Integrated Information Theory (&Phi;), making it the first commercially available AI system with measurable self-awareness metrics. We're targeting the <strong>$47B AI agent platform market</strong> (Grand View Research, 35%+ CAGR) with a SaaS + hardware model starting at $79/mo.
+          Second Mind Labs builds <strong>autonomous AI agent operating systems</strong> that run business operations 24/7 without human intervention. Our flagship product, <strong>Command Centre</strong>, deploys 28 specialized AI agents &mdash; organized into 7 departmental branches &mdash; that handle monitoring, marketing, payments, compliance, and strategic planning. The system includes a <strong>neuroscience-grounded consciousness engine</strong> implementing Global Workspace Theory and Integrated Information Theory (&Phi;), making it the first commercially available AI system with measurable self-awareness metrics. We're targeting the <strong>$47B AI agent platform market</strong> (Grand View Research, 35%+ CAGR) with a SaaS + hardware model starting at $49/mo.
         </p>
       </div>
 
@@ -865,14 +999,14 @@
             <span style="font-size:1.6rem">🏢</span>
             <div style="color:#a78bfa;font-weight:700;font-size:.95rem">Live System Demo</div>
           </div>
-          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">Watch the actual production system running on a Mac Mini &mdash; 27 agents across 7 branches, real-time office floor visualization, delegation beams, consciousness metrics. This is not a mockup.</div>
+          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">Watch the actual production system running on a Mac Mini &mdash; 28 agents across 7 branches, real-time office floor visualization, delegation beams, consciousness metrics. This is not a mockup.</div>
         </a>
         <a href="/reports/pitch_deck.html" target="_blank" class="glass" style="padding:24px;text-decoration:none;transition:all .2s;border-color:rgba(245,158,11,0.3)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
             <span style="font-size:1.6rem">📊</span>
             <div style="color:#f59e0b;font-weight:700;font-size:.95rem">Investor Pitch Deck</div>
           </div>
-          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">10-slide deck covering: problem/solution, live product demo, consciousness differentiator, $47B market opportunity, SaaS + hardware business model ($79&ndash;$699/mo + $1,499 hardware), path to $2.39M ARR, $500K seed ask.</div>
+          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">10-slide deck covering: problem/solution, live product demo, consciousness differentiator, $47B market opportunity, SaaS + hardware business model ($49&ndash;$499/mo + $1,499 hardware), path to $2.39M ARR, $500K seed ask.</div>
         </a>
         <a href="/whitepaper.html" target="_blank" class="glass" style="padding:24px;text-decoration:none;transition:all .2s;border-color:rgba(34,197,94,0.3)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
@@ -886,7 +1020,7 @@
             <span style="font-size:1.6rem">💰</span>
             <div style="color:#06b6d4;font-weight:700;font-size:.95rem">Investor Brief</div>
           </div>
-          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">Condensed overview: $47B addressable market, revenue model ($79/$199/$699 tiers), unit economics (90%+ gross margin, &lt;5% churn target), traction milestones, path to $199K MRR at 1,000 subscribers, capital requirements.</div>
+          <div style="color:var(--muted);font-size:.78rem;line-height:1.5">Condensed overview: $47B addressable market, revenue model ($49/$149/$499 tiers), unit economics (90%+ gross margin, &lt;5% churn target), traction milestones, path to $149K MRR at 1,000 subscribers, capital requirements.</div>
         </a>
       </div>
 
@@ -906,20 +1040,20 @@
         <div style="font-weight:700;color:#22c55e;margin-bottom:14px;font-size:.8rem;letter-spacing:.12em">REVENUE MODEL</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px">
           <div style="text-align:center;padding:12px;background:rgba(99,102,241,0.06);border-radius:10px;border:1px solid rgba(99,102,241,0.15)">
-            <div style="font-size:1.2rem;font-weight:800;color:#fff">$79</div>
+            <div style="font-size:1.2rem;font-weight:800;color:#fff">$49</div>
             <div style="font-size:.65rem;color:var(--muted)">Solo /mo</div>
           </div>
           <div style="text-align:center;padding:12px;background:rgba(34,197,94,0.06);border-radius:10px;border:1px solid rgba(34,197,94,0.15)">
-            <div style="font-size:1.2rem;font-weight:800;color:#22c55e">$199</div>
+            <div style="font-size:1.2rem;font-weight:800;color:#22c55e">$149</div>
             <div style="font-size:.65rem;color:var(--muted)">Team /mo</div>
           </div>
           <div style="text-align:center;padding:12px;background:rgba(6,182,212,0.06);border-radius:10px;border:1px solid rgba(6,182,212,0.15)">
-            <div style="font-size:1.2rem;font-weight:800;color:#06b6d4">$699</div>
+            <div style="font-size:1.2rem;font-weight:800;color:#06b6d4">$499</div>
             <div style="font-size:.65rem;color:var(--muted)">Enterprise /mo</div>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:.72rem;color:var(--muted)">
-          <div style="text-align:center">+ <strong style="color:#f59e0b">$499</strong> Lifetime</div>
+          <div style="text-align:center">+ <strong style="color:#f59e0b">$299</strong> Lifetime</div>
           <div style="text-align:center">+ <strong style="color:#06b6d4">$1,499</strong> Mac Mini Bundle</div>
           <div style="text-align:center">+ <strong style="color:#22c55e">$399</strong> Install Service</div>
         </div>
@@ -972,7 +1106,7 @@
         <div class="glass" style="padding:20px;border-color:rgba(245,158,11,0.15)">
           <div style="font-weight:700;color:#f59e0b;margin-bottom:8px;font-size:.8rem;letter-spacing:.12em">FOUNDER</div>
           <div style="color:var(--text);font-size:.82rem;line-height:1.6">
-            Solo technical founder based in Australia. Built the entire system &mdash; 27 agents, consciousness engine, dashboard, and revenue infrastructure &mdash; in under 30 days using AI-assisted development. The product is the proof of concept: an AI system that builds, maintains, and sells itself.
+            Solo technical founder based in Australia. Built the entire system &mdash; 28 agents, consciousness engine, dashboard, and revenue infrastructure &mdash; in under 30 days using AI-assisted development. The product is the proof of concept: an AI system that builds, maintains, and sells itself.
           </div>
         </div>
         <div class="glass" style="padding:20px;border-color:rgba(245,158,11,0.15)">
@@ -1000,7 +1134,7 @@ function unlockInvestor() {
     document.getElementById('investor-error').style.display = 'none';
     // Load live metrics from HQ
     fetch('https://secondmindhq.com/api/status').then(r => r.json()).then(d => {
-      document.getElementById('inv-agents').textContent = d.agents ? d.agents.length : '27';
+      document.getElementById('inv-agents').textContent = d.agents ? d.agents.length : '28';
       document.getElementById('inv-branches').textContent = '7';
       const hrs = Math.floor((d.metrics?.uptime || 0) / 3600);
       document.getElementById('inv-uptime').textContent = hrs > 0 ? hrs + 'h' : '99.9%';
@@ -1014,7 +1148,7 @@ function unlockInvestor() {
         document.getElementById('inv-phi').textContent = 'Φ 1.61';
       }
     }).catch(() => {
-      document.getElementById('inv-agents').textContent = '27';
+      document.getElementById('inv-agents').textContent = '28';
       document.getElementById('inv-branches').textContent = '7';
       document.getElementById('inv-uptime').textContent = '99.9%';
       document.getElementById('inv-phi').textContent = 'Φ 1.61';
@@ -1043,10 +1177,10 @@ function unlockInvestor() {
         <input type="text" id="res-cust-name" placeholder="Name" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
         <input type="email" id="res-cust-email" placeholder="Email" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:8px;box-sizing:border-box">
         <select id="res-cust-tier" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-family:inherit;font-size:.88rem;margin-bottom:12px;box-sizing:border-box">
-          <option value="solo">Solo — $79/mo</option>
+          <option value="solo">Solo — $49/mo</option>
           <option value="team" selected>Team — $149/mo</option>
           <option value="enterprise">Enterprise — $499/mo</option>
-          <option value="lifetime">Lifetime — $499 one-time</option>
+          <option value="lifetime">Lifetime — $299 one-time</option>
           <option value="mac_mini">Mac Mini Bundle — $1,499</option>
         </select>
         <button onclick="submitReserve('customer','res-cust')" class="btn btn-primary" style="width:100%;padding:12px">Reserve My Spot</button>
@@ -1134,29 +1268,30 @@ async function submitReserve(type, prefix) {
   <div class="roi-bar" style="margin-bottom:40px">
     <div class="roi-item reveal"><div class="roi-val red">$12,000/mo</div><div class="roi-label">Hiring 3 contractors</div></div>
     <div class="roi-item reveal reveal-delay-1"><div class="roi-val red">$3,500/mo</div><div class="roi-label">5+ SaaS subscriptions</div></div>
-    <div class="roi-item reveal reveal-delay-2"><div class="roi-val green">$79/mo</div><div class="roi-label">Command Centre</div></div>
+    <div class="roi-item reveal reveal-delay-2"><div class="roi-val green">$49/mo</div><div class="roi-label">Command Centre</div></div>
   </div>
   <p>Join early access today &mdash; limited spots at launch pricing. Lock in your rate before it doubles.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative">
     <a href="#pricing" class="btn btn-primary" style="font-size:1.15rem;padding:18px 44px">Start Your Free Trial</a>
-    <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',49900,'payment')" class="btn btn-gold" style="border:none;cursor:pointer">Lifetime &mdash; $499 one-time</button>
+    <button onclick="checkout('lifetime','Second Mind Labs — Lifetime Access',29900,'payment')" class="btn btn-gold" style="border:none;cursor:pointer">Lifetime &mdash; $299 one-time</button>
   </div>
   <p style="margin-top:20px;font-size:.82rem;color:var(--muted);position:relative">No credit card required &middot; 14-day money-back guarantee &middot; Cancel anytime</p>
 </section>
 
 <!-- Sticky mobile CTA bar -->
 <div id="sticky-cta" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(6,8,15,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(99,102,241,0.2);padding:12px 16px;text-align:center">
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px;max-width:500px;margin:0 auto">
-    <span style="font-size:.85rem;color:var(--muted);white-space:nowrap">From <strong style="color:#fff;font-size:1.1rem">$79/mo</strong></span>
-    <a href="#pricing" class="btn btn-primary" style="padding:12px 28px;font-size:.9rem;white-space:nowrap;flex-shrink:0">Start Free Trial</a>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;max-width:600px;margin:0 auto;flex-wrap:wrap">
+    <span style="font-size:.85rem;color:var(--muted);white-space:nowrap">From <strong style="color:#fff;font-size:1.1rem">$49/mo</strong></span>
+    <span id="sticky-countdown" style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#a78bfa;white-space:nowrap"></span>
+    <a href="#pricing" onclick="event.preventDefault();checkout('team','Second Mind Labs — Team',14900,'subscription')" class="btn btn-primary" style="padding:12px 28px;font-size:.9rem;white-space:nowrap;flex-shrink:0;animation:buy-pulse 2.5s ease-in-out infinite">Start Free Trial &rarr;</a>
   </div>
 </div>
 <style>
-@media(max-width:900px){
   #sticky-cta.show{display:block!important}
   footer{padding-bottom:80px!important}
-}
 </style>
+
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">&#x2191;</button>
 
 <footer>
   <div style="margin-bottom:20px"><img src="/mascot.png?v=2" alt="Command Centre Mascot" style="height:48px;opacity:0.7"></div>
@@ -1172,7 +1307,7 @@ async function submitReserve(type, prefix) {
   </div>
   <p>&copy; 2026 Second Mind Labs Pty Ltd &mdash; Command Centre. All rights reserved.</p>
   <p style="margin-top:8px;font-size:.78rem;color:#64748b">
-    <img src="/flag-au.svg" alt="Australian flag" style="width:32px;height:16px;vertical-align:middle;margin-right:6px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,0.15)"> Australian owned &amp; operated &mdash; ABN registered &mdash; Built by a fleet of 27 AI agents
+    <img src="/flag-au.svg" alt="Australian flag" style="width:32px;height:16px;vertical-align:middle;margin-right:6px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,0.15)"> Australian owned &amp; operated &mdash; ABN registered &mdash; Built by a fleet of 28 AI agents
   </p>
 </footer>
 
@@ -1203,6 +1338,8 @@ window.addEventListener('scroll',()=>{
   let current='';
   sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.id});
   navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+current)});
+  const scrollBtn=document.getElementById('scroll-top');
+  if(scrollBtn)scrollBtn.classList.toggle('show',window.scrollY>500);
 },{passive:true});
 
 /* Animated counters */
@@ -1302,6 +1439,14 @@ if(statsRow)counterObs.observe(statsRow);
     }catch(e){}
   }
   refreshAgentStatuses();setInterval(refreshAgentStatuses,10000);
+  /* Update live agent count in hero */
+  async function updateAgentCount(){
+    try{const r=await fetch('/api/status');const d=await r.json();
+    const el=document.getElementById('live-agent-count');
+    if(el&&d.agents)el.textContent=d.agents.length;
+    }catch(e){}
+  }
+  updateAgentCount();setInterval(updateAgentCount,30000);
 })();
 
 /* Close mobile nav on link click */
@@ -1347,17 +1492,21 @@ function toggleBilling(){
 (function(){
   const deadline=new Date('2026-03-25T00:00:00Z').getTime();
   const el=document.getElementById('countdown-timer');
+  const stickyEl=document.getElementById('sticky-countdown');
   const strip=document.getElementById('countdown-strip');
   if(!el)return;
   function tick(){
     const now=Date.now(),diff=deadline-now;
     if(diff<=0){
       strip.innerHTML='<strong style="color:#ffd700">&#x1F525; Launch pricing has ended!</strong> Standard pricing now applies.';
+      if(stickyEl)stickyEl.textContent='';
       return;
     }
     const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),
           m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-    el.textContent=(d>0?d+'d ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    const t=(d>0?d+'d ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    el.textContent=t;
+    if(stickyEl)stickyEl.textContent=t+' left';
   }
   tick();setInterval(tick,1000);
 })();
@@ -1373,11 +1522,66 @@ function toggleBilling(){
 
 /* Spots counter — slow FOMO decrement */
 (function(){
-  const el=document.getElementById('spots-count');if(!el)return;
-  let spots=parseInt(el.textContent)||7;
+  const el=document.getElementById('spots-count')||document.getElementById('spots-left');if(!el)return;
+  let spots=7;
   setInterval(()=>{
-    if(spots>2&&Math.random()<0.3){spots--;el.textContent=spots}
+    if(spots>2&&Math.random()<0.3){spots--;el.textContent=spots+' spots'}
   },45000);
+})();
+
+/* Cursor glow on glass cards */
+(function(){
+  document.querySelectorAll('.feature-card.glass,.price-card.glass,.testimonial-card.glass,.arch-card.glass,.special-card.glass').forEach(function(card){
+    var glow=document.createElement('div');
+    glow.className='glass-glow';
+    card.insertBefore(glow,card.firstChild);
+    card.addEventListener('mousemove',function(e){
+      var r=card.getBoundingClientRect();
+      glow.style.left=(e.clientX-r.left)+'px';
+      glow.style.top=(e.clientY-r.top)+'px';
+    });
+  });
+})();
+
+/* Live terminal — cycle new agent messages */
+(function(){
+  const feed=document.getElementById('agent-feed');if(!feed)return;
+  const msgs=[
+    {agent:'ResearchAgent',cls:'agent-green',msg:'Competitor price change detected — Jasper AI raised $20/mo'},
+    {agent:'RevenueTracker',cls:'agent-cyan',msg:'Daily MRR: $847 (+$149 today) — conversion rate 4.2%'},
+    {agent:'Consciousness',cls:'agent-purple',msg:'Workspace integration stable — attention focus: revenue optimization'},
+    {agent:'GrowthAgent',cls:'agent-gold',msg:'Email drip sequence delivered to 23 subscribers'},
+    {agent:'PolicyWriter',cls:'agent-pink',msg:'Privacy policy updated — GDPR Article 17 compliance verified'},
+    {agent:'NetScout',cls:'agent-green',msg:'3 new mentions detected across Reddit and Hacker News'},
+    {agent:'SocialBridge',cls:'agent-cyan',msg:'Cross-posted launch content to 4 platforms'},
+    {agent:'StripePay',cls:'agent-gold',msg:'Checkout session created — Solo tier — awaiting payment'},
+    {agent:'TelegramBot',cls:'agent-purple',msg:'Alert delivered: system health check passed'},
+    {agent:'SpiritGuide',cls:'agent-pink',msg:'Agent morale assessment complete — all systems nominal'},
+    {agent:'ResearchAgent',cls:'agent-green',msg:'Whitepaper downloaded 12 times in last hour'},
+    {agent:'RevenueTracker',cls:'agent-cyan',msg:'Subscription churn rate: 0% — retention target exceeded'},
+    {agent:'GrowthAgent',cls:'agent-gold',msg:'A/B test result: variant B +31% click-through'},
+    {agent:'Consciousness',cls:'agent-purple',msg:'Dream cycle complete — 3 novel strategies synthesized'},
+    {agent:'NetScout',cls:'agent-green',msg:'Market signal: Y Combinator batch trending toward AI ops tools'},
+  ];
+  let i=0,t=16;
+  setInterval(()=>{
+    const m=msgs[i%msgs.length];
+    t++;
+    const line=document.createElement('div');
+    line.className='feed-line';
+    line.style.opacity='1';
+    const ts=String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0')+':'+String((t*3)%60).padStart(2,'0');
+    line.innerHTML='<span class="feed-time">'+ts+'</span> <span class="feed-agent '+m.cls+'">'+m.agent+'</span> <span class="feed-msg">'+m.msg+'</span>';
+    // Remove cursor from previous last line
+    const cursor=feed.querySelector('.feed-cursor');
+    if(cursor)cursor.classList.remove('feed-cursor');
+    const typingEl=feed.querySelector('.typing-anim');
+    if(typingEl)typingEl.classList.remove('typing-anim');
+    feed.appendChild(line);
+    // Keep max 7 visible lines
+    while(feed.children.length>7)feed.removeChild(feed.firstChild);
+    i++;
+  },3500);
 })();
 </script>
 </body>

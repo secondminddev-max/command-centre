@@ -69,64 +69,72 @@ def run_stripepay():
     TIERS = {
         "solo": {
             "name":        "SecondMind HQ Solo",
-            "price":       7900,
+            "price":       4900,
             "currency":    "usd",
-            "price_label": "$79/mo",
-            "features":    ["1 user seat", "10 active agents", "Command dashboard", "Email support"],
+            "price_label": "$49/mo",
+            "features":    ["1 active automation task", "Weekly research reports", "Email support", "Basic dashboard access"],
         },
         "solo_annual": {
             "name":        "SecondMind HQ Solo (Annual)",
-            "price":       75600,
+            "price":       47000,
             "currency":    "usd",
-            "price_label": "$756/yr ($63/mo)",
+            "price_label": "$470/yr (~$39/mo)",
             "annual":      True,
-            "features":    ["1 user seat", "10 active agents", "Command dashboard", "Email support", "Save 20%"],
+            "features":    ["1 active automation task", "Weekly research reports", "Email support", "Basic dashboard access", "Save 20%"],
         },
         "team": {
             "name":        "SecondMind HQ Team",
-            "price":       19900,
+            "price":       14900,
             "currency":    "usd",
-            "price_label": "$199/mo",
-            "features":    ["Up to 5 user seats", "All 27 agents", "Full command centre", "Stripe revenue automation", "Consciousness engine", "Priority support"],
+            "price_label": "$149/mo",
+            "features":    ["5 active automation tasks", "Daily research & reporting", "Priority support", "Full dashboard & analytics", "Campaign automation"],
         },
         "team_annual": {
             "name":        "SecondMind HQ Team (Annual)",
-            "price":       190800,
+            "price":       143000,
             "currency":    "usd",
-            "price_label": "$1,908/yr ($159/mo)",
+            "price_label": "$1,430/yr (~$119/mo)",
             "annual":      True,
-            "features":    ["Up to 5 user seats", "All 27 agents", "Full command centre", "Stripe revenue automation", "Consciousness engine", "Priority support", "Save 20%"],
+            "features":    ["5 active automation tasks", "Daily research & reporting", "Priority support", "Full dashboard & analytics", "Campaign automation", "Save 20%"],
         },
         "enterprise": {
             "name":        "SecondMind HQ Enterprise",
-            "price":       69900,
+            "price":       49900,
             "currency":    "usd",
-            "price_label": "$699/mo",
-            "features":    ["Unlimited seats", "Unlimited custom agents", "Dedicated Mac Mini infrastructure", "White-label option", "24/7 priority support", "SLA guarantee"],
+            "price_label": "$499/mo",
+            "features":    ["Unlimited automation tasks", "Consciousness Engine access", "Self-healing agent fleet", "Custom agent workflows", "Dedicated support & SLA", "White-glove onboarding"],
         },
         "enterprise_annual": {
             "name":        "SecondMind HQ Enterprise (Annual)",
-            "price":       670800,
+            "price":       479000,
             "currency":    "usd",
-            "price_label": "$6,708/yr ($559/mo)",
+            "price_label": "$4,790/yr (~$399/mo)",
             "annual":      True,
-            "features":    ["Unlimited seats", "Unlimited custom agents", "Dedicated infrastructure", "White-label option", "24/7 priority support", "SLA guarantee", "Save 20%"],
+            "features":    ["Unlimited automation tasks", "Consciousness Engine access", "Self-healing agent fleet", "Custom agent workflows", "Dedicated support & SLA", "White-glove onboarding", "Save 20%"],
         },
         "lifetime": {
             "name":        "SecondMind HQ Lifetime",
-            "price":       49900,
+            "price":       29900,
             "currency":    "usd",
-            "price_label": "$499 one-time",
+            "price_label": "$299 one-time",
             "one_time":    True,
             "features":    ["Lifetime access", "All current agents", "All future updates", "Community support"],
         },
         "mac_mini": {
             "name":        "SecondMind HQ Mac Mini Bundle",
-            "price":       249900,
+            "price":       149900,
             "currency":    "usd",
-            "price_label": "$2,499 one-time",
+            "price_label": "$1,499 one-time",
             "one_time":    True,
-            "features":    ["Pre-configured Mac Mini M4", "All 27 agents pre-installed", "1 year Team plan included", "Plug in and go"],
+            "features":    ["Pre-configured Mac Mini M4", "All 28 agents pre-installed", "1 year Team plan included", "Plug in and go"],
+        },
+        "install": {
+            "name":        "SecondMind HQ Install Service",
+            "price":       39900,
+            "currency":    "usd",
+            "price_label": "$399 one-time",
+            "one_time":    True,
+            "features":    ["We install on your Mac, Linux, or cloud", "Configured, tested, running in 24h", "All 28 agents set up", "30-day post-install support"],
         },
     }
 
@@ -144,8 +152,19 @@ def run_stripepay():
             },
             method="POST",
         )
-        resp = urllib.request.urlopen(req, timeout=15)
-        return json.loads(resp.read().decode())
+        try:
+            resp = urllib.request.urlopen(req, timeout=15)
+            raw = resp.read().decode()
+        except urllib.error.HTTPError:
+            raise  # let caller handle Stripe HTTP errors with detail
+        except urllib.error.URLError as e:
+            raise ConnectionError(f"Cannot reach Stripe API: {e.reason}") from e
+        except Exception as e:
+            raise ConnectionError(f"Stripe request failed: {e}") from e
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON from Stripe: {e}") from e
 
     # ── Monkey-patch Handler ──────────────────────────────────────────────────
     _orig_do_GET  = getattr(Handler, "_stripepay_orig_do_GET",  Handler.do_GET)
@@ -172,7 +191,7 @@ def run_stripepay():
                 _preset = PRODUCTS[_product_param]
                 _success_path = _preset.get("success_path", "/api/pay/success?session_id={CHECKOUT_SESSION_ID}")
                 _success = f"{_get_base}{_success_path}"
-                _cancel = f"{_get_base}/reports/landing_page.html"
+                _cancel = "https://secondmindhq.com"
 
                 if _secret_key:
                     try:
@@ -194,8 +213,16 @@ def run_stripepay():
                         self._cors()
                         self.send_header("Location", _checkout_url)
                         self.end_headers()
+                    except urllib.error.HTTPError as _e:
+                        _err_body = _e.read().decode("utf-8", errors="replace")[:200]
+                        add_log(aid, f"Stripe checkout error {_e.code} for {_product_param}: {_err_body}", "error")
+                        self._json({"ok": False, "error": f"Payment gateway error ({_e.code}). Please try again."}, 502)
+                    except urllib.error.URLError as _e:
+                        add_log(aid, f"Stripe network error for {_product_param}: {_e.reason}", "error")
+                        self._json({"ok": False, "error": "Payment gateway temporarily unavailable. Please try again."}, 503)
                     except Exception as _e:
-                        self._json({"ok": False, "error": str(_e)}, 500)
+                        add_log(aid, f"Checkout exception for {_product_param}: {type(_e).__name__}: {_e}", "error")
+                        self._json({"ok": False, "error": "An unexpected error occurred. Please try again or contact support."}, 500)
                 elif _payment_link:
                     self.send_response(302)
                     self._cors()
@@ -215,20 +242,26 @@ def run_stripepay():
                 _payment_link = os.environ.get("STRIPE_PAYMENT_LINK", "")
                 _tier = TIERS[_plan_param]
                 _success = f"{_get_base}/reports/landing_page.html?checkout=success"
-                _cancel  = f"{_get_base}/reports/landing_page.html"
+                _cancel  = "https://secondmindhq.com"
 
                 if _secret_key:
                     try:
+                        _is_one_time = _tier.get("one_time", False)
+                        _is_annual = _tier.get("annual", False)
+                        _mode = "payment" if _is_one_time else "subscription"
                         _params = {
-                            "mode": "subscription",
+                            "mode": _mode,
                             "line_items[0][price_data][currency]": _tier["currency"],
                             "line_items[0][price_data][unit_amount]": str(_tier["price"]),
                             "line_items[0][price_data][product_data][name]": _tier["name"],
-                            "line_items[0][price_data][recurring][interval]": "month",
                             "line_items[0][quantity]": "1",
                             "success_url": _success,
                             "cancel_url": _cancel,
                         }
+                        if _is_one_time:
+                            _params["customer_creation"] = "always"
+                        else:
+                            _params["line_items[0][price_data][recurring][interval]"] = "year" if _is_annual else "month"
                         _result = _stripe_post("/checkout/sessions", _params, _secret_key)
                         _checkout_url = _result.get("url", "")
                         _sess_id = _result.get("id", "")
@@ -237,8 +270,16 @@ def run_stripepay():
                         self._cors()
                         self.send_header("Location", _checkout_url)
                         self.end_headers()
+                    except urllib.error.HTTPError as _e:
+                        _err_body = _e.read().decode("utf-8", errors="replace")[:200]
+                        add_log(aid, f"Stripe tier error {_e.code} for {_plan_param}: {_err_body}", "error")
+                        self._json({"ok": False, "error": f"Payment gateway error ({_e.code}). Please try again."}, 502)
+                    except urllib.error.URLError as _e:
+                        add_log(aid, f"Stripe network error for tier {_plan_param}: {_e.reason}", "error")
+                        self._json({"ok": False, "error": "Payment gateway temporarily unavailable. Please try again."}, 503)
                     except Exception as _e:
-                        self._json({"ok": False, "error": str(_e)}, 500)
+                        add_log(aid, f"Tier checkout exception for {_plan_param}: {type(_e).__name__}: {_e}", "error")
+                        self._json({"ok": False, "error": "An unexpected error occurred. Please try again or contact support."}, 500)
                 elif _payment_link:
                     self.send_response(302)
                     self._cors()
@@ -362,7 +403,7 @@ def run_stripepay():
                     "amount_cents": 2900,
                     "currency": "usd",
                     "type": "one_time",
-                    "url": "/buy/us-market",
+                    "url": "/api/pay?product=us_market_intel_v1",
                     "available": True,
                 },
                 {
@@ -373,7 +414,7 @@ def run_stripepay():
                     "amount_cents": 4900,
                     "currency": "usd",
                     "type": "one_time",
-                    "url": "/buy/agent-kit",
+                    "url": "/api/pay?product=agent_kit_v1",
                     "available": True,
                 },
                 {
@@ -534,8 +575,8 @@ def run_stripepay():
             else:
                 _default_success = f"{_base}/api/pay/success?session_id={{CHECKOUT_SESSION_ID}}"
             success_url = body.get("success_url", _default_success)
-            # Cancel URL — always back to landing page
-            _default_cancel = f"{_base}/reports/landing_page.html"
+            # Cancel URL — always back to main site
+            _default_cancel = "https://secondmindhq.com"
             cancel_url  = body.get("cancel_url",  _default_cancel)
 
             # Prefill customer email on Stripe checkout if provided
@@ -648,8 +689,8 @@ def run_stripepay():
                 add_log(aid, f"Stripe API error {e.code}: {err_body[:200]}", "error")
                 self._json({"ok": False, "error": f"Stripe error {e.code}", "detail": err_body[:400]}, 502)
             except Exception as e:
-                add_log(aid, f"POST /api/pay exception: {e}", "error")
-                self._json({"ok": False, "error": str(e)}, 500)
+                add_log(aid, f"POST /api/pay exception: {type(e).__name__}: {e}", "error")
+                self._json({"ok": False, "error": "An unexpected error occurred processing your payment. Please try again or contact support."}, 500)
             return
 
         _orig_do_POST(self)

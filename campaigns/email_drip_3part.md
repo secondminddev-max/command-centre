@@ -154,9 +154,9 @@ If you're managing multiple products, need custom agents built for your workflow
 
 | Plan | Launch Price | Regular Price |
 |---|---|---|
-| Solo | $49/mo | $79/mo |
-| Team | **$149/mo** | $249/mo |
-| Enterprise | **$499/mo** | $799/mo |
+| Solo | $49/mo | $119/mo |
+| Team | **$149/mo** | $499/mo |
+| Enterprise | **$499/mo** | $999/mo |
 
 Lock in launch pricing now — it increases permanently after launch week.
 

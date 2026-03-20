@@ -162,5 +162,87 @@
     "name": "",
     "subscribed_at": "2026-03-19T01:03:12.422819",
     "source": "landing_page"
+  },
+  {
+    "email": "test@test.invalid",
+    "name": "",
+    "subscribed_at": "2026-03-19T01:24:51.212984",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.test",
+    "name": "",
+    "subscribed_at": "2026-03-19T04:02:38.979876",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@example.com",
+    "name": "",
+    "subscribed_at": "2026-03-19T05:04:33.433764",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.test",
+    "name": "",
+    "subscribed_at": "2026-03-19T05:35:12.403837",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.com",
+    "name": "",
+    "subscribed_at": "2026-03-19T05:56:20.739834",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.com",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-19T05:56:20.763420",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@demo-validator.local",
+    "name": "",
+    "subscribed_at": "2026-03-19T08:26:07.073805",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@qa-sweep.invalid",
+    "name": "",
+    "subscribed_at": "2026-03-19T20:08:32.847162",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@qa-sweep.invalid",
+    "tier": "free",
+    "product": "premarket_pulse",
+    "subscribed_at": "2026-03-19T20:08:32.864008",
+    "status": "active",
+    "source": "premarket_pulse_landing"
+  },
+  {
+    "email": "test@example.com",
+    "name": "",
+    "subscribed_at": "2026-03-19T20:13:35.280902",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demo.test",
+    "name": "",
+    "subscribed_at": "2026-03-20T19:42:01.134869",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demotester.invalid",
+    "name": "",
+    "subscribed_at": "2026-03-20T19:44:25.835868",
+    "source": "landing_page"
+  },
+  {
+    "email": "test@demotester.local",
+    "name": "",
+    "subscribed_at": "2026-03-20T19:51:20.546158",
+    "source": "landing_page"
   }
 ]

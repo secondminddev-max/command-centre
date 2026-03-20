@@ -21,6 +21,6 @@ Command Centre HQ →
 
 Same category. Different league.
 
-Solo $49/mo · Lifetime $299 · Mac Mini $1,499
+Solo $49/mo · Lifetime $499 · Mac Mini $1,499
 
 secondmindhq.com

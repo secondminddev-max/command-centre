@@ -60,7 +60,8 @@
         {"id": "ex-2", "title": "Landing page — hero, features, pricing, checkout", "status": "done", "deadline": "2026-03-20", "file": "public/index.html"},
         {"id": "ex-3", "title": "Stripe checkout integration for all tiers", "status": "done", "notes": "StripePay created live sessions for $49, $149, $499 tiers"},
         {"id": "ex-4", "title": "Deploy to hosting (Vercel/Netlify/VPS)", "status": "done", "deadline": "2026-03-21", "file": "deploy/deploy_render.sh", "notes": "Render deployment scripts created: deploy_render.sh (push + health-wait + verify) and verify_deploy.sh (standalone endpoint checker). render.yaml blueprint already configured. Run ./deploy/deploy_render.sh to push and verify."},
-        {"id": "ex-5", "title": "SSL + custom domain config", "status": "done", "deadline": "2026-03-21", "file": "deploy/ssl_domain_setup.md", "notes": "Comprehensive setup guide at deploy/ssl_domain_setup.md (DNS migration, auto-TLS, verification steps, testing checklist). Automated verification script at deploy/ssl_custom_domain.sh."}
+        {"id": "ex-5", "title": "SSL + custom domain config", "status": "done", "deadline": "2026-03-21", "file": "deploy/ssl_domain_setup.md", "notes": "Comprehensive setup guide at deploy/ssl_domain_setup.md (DNS migration, auto-TLS, verification steps, testing checklist). Automated verification script at deploy/ssl_custom_domain.sh."},
+        {"id": "ex-6", "title": "SEO essentials — robots.txt + sitemap.xml", "status": "done", "deadline": "2026-03-20", "file": "public/sitemap.xml", "notes": "robots.txt blocks /api/ /data/ /agents/ /scripts/ /deploy/ /install/ from crawlers. sitemap.xml lists all 10 public pages with priorities. Added .xml MIME type to server static map. Both verified serving at 200."}
       ]
     },
     "6_investors": {

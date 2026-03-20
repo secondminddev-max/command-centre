@@ -29,9 +29,19 @@ def run_social_bridge():
     INSIGHTS = ["agent_count", "active_agents", "cpu_ram", "top_agent_task", "health_summary", "product_cta"]
 
     def fetch_status():
-        req = urllib.request.Request("http://localhost:5050/api/status")
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            return json.loads(resp.read().decode())
+        try:
+            req = urllib.request.Request("http://localhost:5050/api/status")
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.URLError as e:
+            add_log(aid, f"Status fetch network error: {getattr(e, 'reason', e)}", "warn")
+            return None
+        except (json.JSONDecodeError, ValueError) as e:
+            add_log(aid, f"Status fetch bad response: {e}", "warn")
+            return None
+        except Exception as e:
+            add_log(aid, f"Status fetch error: {type(e).__name__}: {e}", "warn")
+            return None
 
     def post_to_bluesky(text):
         body = json.dumps({"text": text}).encode("utf-8")
@@ -44,11 +54,28 @@ def run_social_bridge():
         with urllib.request.urlopen(req, timeout=10) as resp:
             return json.loads(resp.read().decode())
 
+    ALLOWED_CALLERS = {"orchestrator", "ceo"}
+
+    def validate_delegation_source(delegation):
+        '''Reject delegated tasks from unauthorized callers. Only orchestrator (and ceo) may delegate to social_bridge.'''
+        caller = delegation.get("from", "unknown") if isinstance(delegation, dict) else "unknown"
+        if caller not in ALLOWED_CALLERS:
+            add_log(aid, f"🚫 POLICY VIOLATION: rejected delegation from '{caller}' — only {ALLOWED_CALLERS} may delegate to social_bridge", "error")
+            return False
+        return True
+
+    import urllib.error
+
     while not agent_should_stop(aid):
         try:
             set_agent(aid, status="active", progress=30, task="Fetching system status…")
 
             status = fetch_status()
+            if status is None:
+                add_log(aid, "Could not fetch status — skipping this cycle", "warn")
+                set_agent(aid, status="active", progress=20, task="Status unavailable — waiting…")
+                agent_sleep(aid, 3600)
+                continue
             agents = status.get("agents", [])
             total = len(agents)
             active = sum(1 for a in agents if a.get("status") == "active")
@@ -104,24 +131,29 @@ def run_social_bridge():
             elif insight == "product_cta":
                 _cta_variants = [
                     (
-                        "AI Command Centre HQ is live. 27 autonomous agents run your ops 24/7 — "
-                        "growth, monitoring, research, competitive intel, revenue tracking. "
-                        "Solo $49 | Team $149 | Enterprise $499/mo. secondmind.ai #AI #SaaS"
+                        "US Stock Market Intelligence Report — $29 one-time.\n"
+                        "S&P 500 momentum picks, sector strength analysis, "
+                        "20 watchlist candidates, risk dashboard.\n"
+                        "secondmindhq.com/api/pay?product=us_market_intel_v1 #stocks #trading"
                     ),
                     (
-                        "Stop juggling 15 SaaS tools. AI Command Centre HQ replaces them with "
-                        "autonomous agents that actually do the work — not just answer questions. "
-                        "From $49/mo. secondmind.ai #AI #Agents #buildinpublic"
+                        "Bloomberg Terminal: $2,000/mo. Our US Market Intel Report: $29.\n"
+                        "Momentum picks. Sector heat map. 20 watchlist candidates. Risk dashboard.\n"
+                        "AI-generated. Data-driven.\n"
+                        "secondmindhq.com/api/pay?product=us_market_intel_v1 #investing"
                     ),
                     (
-                        "What would you do with 27 AI employees who never sleep? "
-                        "AI Command Centre HQ: autonomous agents for growth, ops, research & revenue. "
-                        "Solo $49 | Team $149 | Enterprise $499. secondmind.ai #AI #SaaS"
+                        "One good trade pays for this 10x over.\n"
+                        "US Stock Market Intelligence Report — $29:\n"
+                        "S&P 500 momentum, sector rankings, 20 picks, risk levels.\n"
+                        "secondmindhq.com/api/pay?product=us_market_intel_v1 #stocks #fintwit"
                     ),
                     (
-                        "Founders are replacing $2K/mo in tools & contractors with one platform. "
-                        "AI Command Centre HQ — 27 agents, one dashboard, zero babysitting. "
-                        "Launch pricing from $49/mo. secondmind.ai #startup #AI #IndieHacker"
+                        f"{total} AI agents scan US markets around the clock.\n"
+                        "The output: a $29 intelligence report — momentum picks, "
+                        "sector rotation, watchlist candidates.\n"
+                        "No subscription. Buy once.\n"
+                        "secondmindhq.com/api/pay?product=us_market_intel_v1 #AI #trading"
                     ),
                 ]
                 post = _cta_variants[post_count % len(_cta_variants)][:280]
@@ -155,16 +187,21 @@ def run_social_bridge():
                 if result.get("ok"):
                     add_log(aid, f"Bluesky post #{post_count} sent: {post[:80]}…", "ok")
                 else:
-                    add_log(aid, f"Bluesky post #{post_count} error: {result}", "warn")
+                    err_detail = result.get("error", result.get("message", str(result)))
+                    add_log(aid, f"Bluesky post #{post_count} rejected: {err_detail}", "warn")
+            except urllib.error.HTTPError as post_err:
+                add_log(aid, f"Bluesky HTTP {post_err.code}: {post_err.read().decode()[:120]}", "error")
+            except urllib.error.URLError as post_err:
+                add_log(aid, f"Bluesky network error: {post_err.reason} — post held for next cycle", "error")
             except Exception as post_err:
-                add_log(aid, f"Bluesky dispatch error: {post_err}", "warn")
+                add_log(aid, f"Bluesky dispatch error: {type(post_err).__name__}: {post_err}", "error")
 
             set_agent(aid, status="active", progress=100,
                       task=f"Last post #{post_count} at {last_post_time}")
 
         except Exception as e:
-            add_log(aid, f"SocialBridge error: {e}", "warn")
-            set_agent(aid, status="active", progress=100, task=f"Error (will retry): {str(e)[:80]}")
+            add_log(aid, f"SocialBridge cycle error: {type(e).__name__}: {e}", "error")
+            set_agent(aid, status="active", progress=100, task=f"Error (will retry): {type(e).__name__}: {str(e)[:60]}")
 
         agent_sleep(aid, 3600)
 

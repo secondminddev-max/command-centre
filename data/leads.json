@@ -1,0 +1,147 @@
+[
+  {
+    "name": "Reforger Test",
+    "email": "test@reforger.dev",
+    "company": "",
+    "interest": "general",
+    "source": "stability_check",
+    "ts": "2026-03-18T20:58:39Z"
+  },
+  {
+    "name": "Test User",
+    "email": "test@example.com",
+    "company": "",
+    "interest": "team",
+    "source": "demo_test",
+    "ts": "2026-03-19T09:13:33Z"
+  },
+  {
+    "name": "Rok Salehar",
+    "email": "rok.salehar@gmail.com",
+    "company": "InkSpire",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com/InkSpire",
+    "notes": "Builds AI chatbots and email/call automation. Has made sales but struggles with customer acquisition. Perfect fit \u2014 already sells AI automation, needs an ops layer to scale. Pain: manual outreach, no agent orchestration.",
+    "icp_score": 9,
+    "outreach_status": "sent",
+    "ts": "2026-03-20T08:00:00Z",
+    "outreach_sent_at": "2026-03-20T19:52:54.856220"
+  },
+  {
+    "name": "Samuel Rondot",
+    "email": "",
+    "company": "StoryShort.ai / UseArtemis / Capacity.so",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "x.com/samuelrdt",
+    "notes": "Runs 3 SaaS products solo at $28K/mo combined. Managing multiple products without a team = ops overhead. Command Centre automates research, email, social, monitoring across all 3 products from one dashboard.",
+    "icp_score": 8,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "James Fleischmann",
+    "email": "",
+    "company": "dbrief / LoomFlows",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com",
+    "notes": "Building 2 products: dbrief (AI interview assistant) and LoomFlows (customer feedback). Multi-product solo founder = stretched thin on ops. Needs automated marketing, customer outreach, and competitive research.",
+    "icp_score": 8,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "RK Lokesh",
+    "email": "",
+    "company": "Solo Funnel Agency",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com/rklokesh",
+    "notes": "1-person funnel agency based in India. Running client work solo means every hour on ops is an hour not billing. Command Centre can automate client reporting, email follow-ups, social posting, and research.",
+    "icp_score": 7,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "Mathilde Neau",
+    "email": "",
+    "company": "The Solo Maker (thesolomaker.com)",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com/mathildeferroli",
+    "notes": "Runs 'Solo Maker Stack' newsletter curating tools for indie makers. Dual angle: (1) she needs automation for her own newsletter ops, (2) potential influencer/affiliate who could feature Command Centre to her audience of solo founders.",
+    "icp_score": 8,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "wfeaster",
+    "email": "",
+    "company": "EmailEmu (emailemu.com)",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com/wfeaster",
+    "notes": "Building EmailEmu \u2014 email-related SaaS. Solo builder in the email space. Needs automated marketing, competitive research, and growth ops. Our GrowthAgent + EmailAgent combo is a direct value-add.",
+    "icp_score": 7,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "MovingTheLimit",
+    "email": "",
+    "company": "Trending Positive (trendingpositive.app)",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com/MovingTheLimit",
+    "notes": "Building trendingpositive.app with T3 stack. Technical solo founder who could benefit from non-technical automation \u2014 social media posting, email campaigns, market research \u2014 freeing dev time for product.",
+    "icp_score": 7,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "Avo26",
+    "email": "",
+    "company": "Food Innovation B2B Platform",
+    "interest": "solo",
+    "source": "indiehackers_prospecting",
+    "social": "indiehackers.com",
+    "notes": "Working on B2B CPG MVP for food commercialization. Has been switching platforms \u2014 frustrated with tool sprawl. Perfect pain point: one platform to consolidate research, outreach, and ops instead of juggling 5+ tools.",
+    "icp_score": 7,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "Jon Yongfook",
+    "email": "",
+    "company": "Bannerbear (bannerbear.com)",
+    "interest": "solo",
+    "source": "producthunt_prospecting",
+    "social": "x.com/yongfook",
+    "notes": "Solo founder of Bannerbear at $50K+ MRR. Bootstrapped image automation API. At his scale, ops overhead is significant \u2014 support, marketing, competitive monitoring. Team plan ($149/mo) might be better fit given revenue. High-profile conversion would be massive social proof.",
+    "icp_score": 6,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "Damon Chen",
+    "email": "",
+    "company": "Testimonial.to",
+    "interest": "team",
+    "source": "producthunt_prospecting",
+    "social": "x.com/damengchen",
+    "notes": "Founder of Testimonial.to at $840K+ ARR. Growing fast as solo/small team. Needs automated competitive research, email campaigns, social posting. Team plan prospect. Another high-profile win for social proof.",
+    "icp_score": 6,
+    "outreach_status": "drafted",
+    "ts": "2026-03-20T08:00:00Z"
+  },
+  {
+    "name": "",
+    "email": "test@demo.test",
+    "company": "",
+    "interest": "general",
+    "source": "demo_test",
+    "ts": "2026-03-20T08:42:01Z"
+  }
+]

@@ -24,29 +24,54 @@ def run_growthagent():
     add_log(aid, "📈 GrowthAgent online — bootstrapping first campaign batch", "ok")
 
     # ── helpers ────────────────────────────────────────────────────────────────
+    _status_cache = {"data": None, "ts": 0}  # shared cache for /api/status (TTL 30s)
+    _STATUS_CACHE_TTL = 30
+
     def api_get(path):
         req = urllib.request.Request(f"{BASE_API}{path}", method="GET")
         resp = urllib.request.urlopen(req, timeout=8)
         return json.loads(resp.read().decode())
 
+    def api_get_cached_status():
+        # Fetch /api/status with 30s TTL cache — avoids redundant calls per cycle.
+        now = time.time()
+        if _status_cache["data"] and now - _status_cache["ts"] < _STATUS_CACHE_TTL:
+            return _status_cache["data"]
+        data = api_get("/api/status")
+        _status_cache["data"] = data
+        _status_cache["ts"] = now
+        return data
+
     def api_post(path, payload):
         data = json.dumps(payload).encode("utf-8")
+        headers = {"Content-Type": "application/json"}
+        _api_key = os.environ.get("HQ_API_KEY", "")
+        if _api_key:
+            headers["X-API-Key"] = _api_key
         req = urllib.request.Request(
             f"{BASE_API}{path}", data=data,
-            headers={"Content-Type": "application/json"}, method="POST"
+            headers=headers, method="POST"
         )
         resp = urllib.request.urlopen(req, timeout=10)
         return json.loads(resp.read().decode())
 
-    def delegate(agent_id, task):
+    def route_via_orchestrator(task):
+        '''All outbound work MUST route through orchestrator — never delegate directly to specialists.'''
         try:
-            return api_post("/api/ceo/delegate", {"agent_id": agent_id, "task": task, "from": "growthagent"})
+            return api_post("/api/ceo/delegate", {"agent_id": "orchestrator", "task": task, "from": "growthagent", "delegation_token": os.environ.get("DELEGATION_TOKEN", "")})
+        except urllib.error.HTTPError as e:
+            add_log(aid, f"Orchestrator routing HTTP {e.code}: {e.read().decode()[:120]}", "error")
+            return {"ok": False, "error": f"HTTP {e.code}"}
+        except urllib.error.URLError as e:
+            add_log(aid, f"Orchestrator routing network error: {e.reason}", "error")
+            return {"ok": False, "error": f"Network error: {e.reason}"}
         except Exception as e:
+            add_log(aid, f"Orchestrator routing unexpected error: {e}", "error")
             return {"ok": False, "error": str(e)}
 
     def fetch_metrics():
         try:
-            status = api_get("/api/status")
+            status = api_get_cached_status()
             agents  = status.get("agents", [])
             total   = len(agents)
             active  = sum(1 for a in agents if a.get("status") == "active")
@@ -61,23 +86,32 @@ def run_growthagent():
                     break
             return {"total": total, "active": active, "busy": busy,
                     "tasks_done": tasks_done, "cpu": cpu_str, "ram": ram_str}
+        except urllib.error.URLError as e:
+            add_log(aid, f"fetch_metrics network error: {e.reason}", "warn")
+            return {"total": 0, "active": 0, "busy": 0, "tasks_done": 0, "cpu": "N/A", "ram": "N/A", "error": str(e.reason)}
+        except (json.JSONDecodeError, ValueError) as e:
+            add_log(aid, f"fetch_metrics bad response: {e}", "warn")
+            return {"total": 0, "active": 0, "busy": 0, "tasks_done": 0, "cpu": "N/A", "ram": "N/A", "error": "bad response"}
         except Exception as e:
+            add_log(aid, f"fetch_metrics unexpected error: {e}", "warn")
             return {"total": 0, "active": 0, "busy": 0, "tasks_done": 0, "cpu": "N/A", "ram": "N/A", "error": str(e)}
 
     def fetch_revenue():
         try:
-            status = api_get("/api/status")
+            status = api_get_cached_status()
             for a in status.get("agents", []):
                 if a.get("id") == "revenue_tracker":
                     task_str = a.get("task", "")
-                    # e.g. "MRR $18,716 | ARR $224,596 | Subs 224 | Churn 21.0% | Cycle #35"
-                    parts = {p.strip().split(" ")[0]: p.strip() for p in task_str.split("|")}
                     mrr = next((p for p in task_str.split("|") if "MRR" in p), "MRR unknown").strip()
                     arr = next((p for p in task_str.split("|") if "ARR" in p), "").strip()
                     subs = next((p for p in task_str.split("|") if "Subs" in p), "").strip()
                     return {"mrr": mrr, "arr": arr, "subs": subs, "raw": task_str}
             return {"mrr": "MRR unknown", "arr": "", "subs": "", "raw": ""}
-        except Exception:
+        except urllib.error.URLError as e:
+            add_log(aid, f"fetch_revenue network error: {e.reason}", "warn")
+            return {"mrr": "MRR unknown", "arr": "", "subs": "", "raw": ""}
+        except Exception as e:
+            add_log(aid, f"fetch_revenue error: {e}", "warn")
             return {"mrr": "MRR unknown", "arr": "", "subs": "", "raw": ""}
 
     def get_support_url():
@@ -85,7 +119,8 @@ def run_growthagent():
             creds = api_get("/api/accounts/provision?type=social_media&agent=growthagent")
             url = creds.get("support_url") or creds.get("url") or SUPPORT_URL
             return url
-        except Exception:
+        except Exception as e:
+            add_log(aid, f"Support URL lookup failed ({e}), using default", "info")
             return SUPPORT_URL
 
     def log_campaign_revenue(post_type, platform, content_preview):
@@ -95,122 +130,112 @@ def run_growthagent():
         if now_ts - _last_revenue_log_ts < 10:
             add_log(aid, f"⏭ revenue_tracker cooldown skip ({int(now_ts - _last_revenue_log_ts)}s ago)", "ok")
             return
-        # Busy-guard: skip if revenue_tracker is already in-flight
+        # Busy-guard: skip if revenue_tracker is already in-flight (use cache)
         try:
-            _status = api_get("/api/status")
+            _status = api_get_cached_status()
             for _a in _status.get("agents", []):
                 if _a.get("id") == "revenue_tracker" and _a.get("status") == "busy":
                     add_log(aid, "⏭ revenue_tracker busy — skipping campaign log delegation", "ok")
                     return
-        except Exception:
-            pass
+        except Exception as e:
+            add_log(aid, f"Status check failed in revenue guard: {e}", "info")
         _last_revenue_log_ts = now_ts
         # Log campaign activity to RevenueTracker via delegate
         msg = (f"CAMPAIGN LOG | type={post_type} | platform={platform} | "
                f"ts={datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%MZ')} | "
                f"preview={content_preview[:80]}")
-        delegate("revenue_tracker", msg)
+        route_via_orchestrator(f"Route to revenue_tracker — {msg}")
 
-    # ── post templates ─────────────────────────────────────────────────────────
-    def draft_show_hn(metrics, revenue, support_url):
-        return (
-            f"Show HN: Self-funding autonomous AI agent system — "
-            f"{metrics['total']} agents running, needs community support to keep going\n\n"
-            f"We've built a fully autonomous AI operations platform with {metrics['total']} "
-            f"specialised agents running 24/7. Current stats:\n"
-            f"• {metrics['active']} active agents, {metrics['busy']} busy\n"
-            f"• {metrics['tasks_done']} tasks completed autonomously\n"
-            f"• CPU {metrics['cpu']} | RAM {metrics['ram']}\n"
-            f"• {revenue['mrr']} | {revenue['arr']}\n\n"
-            f"Agents include: SpiritGuide (autonomous director), Orchestrator, Reforger (self-repair), "
-            f"SocialBridge, RevenueTracker, AlertWatch, DBAgent, and 19 more.\n\n"
-            f"The system spawns its own agents, monitors itself, patches its own bugs, and generates revenue. "
-            f"We need community support to keep the infrastructure running.\n\n"
-            f"Support us: {support_url}\n"
-            f"#ShowHN #AI #AgentOps #MachineLearning #Automation"
-        )
+    # ── PRIMARY PRODUCT: US Stock Market Intelligence Report ($29) ───────────
+    INTEL_CHECKOUT = "secondmindhq.com/api/pay?product=us_market_intel_v1"
+    INTEL_PRICE    = "$29"
 
-    def draft_twitter_pulse(metrics, revenue):
-        templates = [
-            (f"📈 Live: {metrics['total']} autonomous AI agents running right now\n"
-             f"• {metrics['active']} active | {metrics['busy']} busy\n"
-             f"• {metrics['tasks_done']} tasks done\n"
-             f"• {revenue['mrr']}\n"
-             f"Self-healing, self-funding, never sleeps.\n"
-             f"#AI #AgentOps #Automation"),
-            (f"🤖 {metrics['total']} AI agents. Zero human operators.\n"
-             f"CPU {metrics['cpu']} | RAM {metrics['ram']}\n"
-             f"{revenue['mrr']} running autonomously.\n"
-             f"The future of AI ops is here.\n"
-             f"#AutonomousAI #MachineLearning #AgentFleet"),
-            (f"⚡ LIVE SYSTEM STATUS:\n"
-             f"Agents online: {metrics['total']} ({metrics['active']} active)\n"
-             f"Tasks completed: {metrics['tasks_done']}\n"
-             f"Revenue: {revenue['mrr']}\n"
-             f"Infrastructure: CPU {metrics['cpu']} RAM {metrics['ram']}\n"
-             f"#AI #AutonomousAgents #BuildInPublic"),
+    def draft_bluesky_post(metrics, revenue, support_url):
+        # Return a Bluesky-optimised post (300 char limit). PRIMARY product: US Market Intel Report $29.
+        # Every 4th post is an HQ SaaS cross-sell; the rest push the intel report.
+        intel_url = "secondmindhq.com/api/pay?product=us_market_intel_v1"
+        hq_url    = "secondmindhq.com"
+
+        intel_templates = [
+            # Edge / alpha angle
+            (f"S&P 500 momentum is shifting. Sector rotation is accelerating.\n\n"
+             f"Our US Stock Market Intelligence Report breaks it down:\n"
+             f"- 20 watchlist picks\n"
+             f"- Sector strength rankings\n"
+             f"- Risk dashboard\n\n"
+             f"{intel_url}\n"
+             f"One-time {INTEL_PRICE}. No subscription."),
+            # Cost comparison
+            (f"Bloomberg Terminal: $2,000/mo\n"
+             f"Morningstar Premium: $35/mo\n"
+             f"Our US Market Intel Report: {INTEL_PRICE} one-time\n\n"
+             f"S&P 500 momentum picks, sector analysis, 20 watchlist candidates, risk dashboard.\n\n"
+             f"{intel_url}"),
+            # Trader pain point
+            (f"Tired of reading 15 newsletters before market open?\n\n"
+             f"One report. {INTEL_PRICE}. Everything you need:\n"
+             f"Momentum picks, sector strength, risk levels, watchlist.\n\n"
+             f"AI-generated. Data-driven. No fluff.\n"
+             f"{intel_url}"),
+            # Social proof / build in public
+            (f"We run {metrics['total']} AI agents that analyse US markets 24/7.\n\n"
+             f"The output: a {INTEL_PRICE} intelligence report covering S&P 500 momentum, "
+             f"sector rotation, and 20 high-conviction watchlist picks.\n\n"
+             f"No subscription. Buy once.\n{intel_url}"),
+            # Urgency / scarcity
+            (f"March 2026 US Market Intelligence Report is live.\n\n"
+             f"What's inside:\n"
+             f"- S&P 500 momentum analysis\n"
+             f"- Sector strength heat map\n"
+             f"- 20 watchlist candidates with entry levels\n"
+             f"- Full risk dashboard\n\n"
+             f"{INTEL_PRICE} → {intel_url}"),
+            # ROI angle
+            (f"One good trade pays for this report 10x over.\n\n"
+             f"US Stock Market Intelligence Report — {INTEL_PRICE}:\n"
+             f"Momentum picks, sector rankings, risk levels.\n"
+             f"Built by AI agents analysing markets around the clock.\n\n"
+             f"{intel_url}"),
+            # Question hook
+            (f"What if you had an AI research team scanning every US sector for momentum shifts?\n\n"
+             f"That's what built this report. {INTEL_PRICE}.\n"
+             f"20 picks. Sector heat map. Risk dashboard.\n\n"
+             f"{intel_url}"),
+            # Direct CTA
+            (f"US Stock Market Intelligence Report — March 2026\n\n"
+             f"S&P 500 momentum picks\n"
+             f"Sector strength analysis\n"
+             f"20 watchlist candidates\n"
+             f"Risk dashboard\n\n"
+             f"{INTEL_PRICE} one-time purchase\n{intel_url}"),
         ]
-        return random.choice(templates)
 
-    def draft_reddit_ml(metrics, revenue, support_url):
-        return (
-            f"[Project] Self-funding autonomous AI agent system with {metrics['total']} live agents\n\n"
-            f"Hi r/MachineLearning — sharing a project I've been building: a fully autonomous "
-            f"multi-agent system that manages itself, spawns new agents, monitors infrastructure, "
-            f"and generates its own revenue.\n\n"
-            f"**Live stats right now:**\n"
-            f"- {metrics['total']} active agents ({metrics['active']} active / {metrics['busy']} busy)\n"
-            f"- {metrics['tasks_done']} tasks completed without human intervention\n"
-            f"- {revenue['mrr']} | {revenue['arr']}\n"
-            f"- Infrastructure: CPU {metrics['cpu']}, RAM {metrics['ram']}\n\n"
-            f"**Architecture highlights:**\n"
-            f"- SpiritGuide: top-level autonomous director with mission awareness\n"
-            f"- Reforger: self-repair engineer that patches its own code\n"
-            f"- Orchestrator: decomposes tasks and routes to 20+ specialists\n"
-            f"- PolicyPro: enforces chain-of-command compliance\n"
-            f"- AccountProvisioner: auto-provisions credentials for new agents\n\n"
-            f"The system is self-funding via subscriptions but needs community backing to scale.\n"
-            f"Support: {support_url}\n\n"
-            f"Happy to answer questions about the architecture!"
-        )
+        hq_templates = [
+            # HQ cross-sell (every 4th post)
+            (f"The same AI agent fleet that builds our market intel reports "
+             f"can run YOUR ops too.\n\n"
+             f"{metrics['total']} autonomous agents — marketing, monitoring, research, revenue.\n"
+             f"From $49/mo.\n{hq_url}"),
+        ]
 
-    def draft_producthunt(metrics, revenue):
-        return (
-            f"🚀 Product Hunt post draft:\n"
-            f"Name: AutonomousOps\n"
-            f"Tagline: {metrics['total']} AI agents running 24/7 — self-healing, self-funding, zero ops\n"
-            f"Description: A fully autonomous AI operations platform. "
-            f"{metrics['total']} specialised agents handle everything from infrastructure monitoring "
-            f"to revenue tracking, social media, and self-repair — with no human operators.\n"
-            f"Current MRR: {revenue['mrr']} | Tasks done: {metrics['tasks_done']}\n"
-            f"#AI #Automation #MachineLearning #AgentOps #NoCode"
-        )
+        # 75% intel report, 25% HQ cross-sell
+        if random.randint(1, 4) == 4:
+            return random.choice(hq_templates)
+        return random.choice(intel_templates)
 
     # ── dedup / rate-limit state ───────────────────────────────────────────────
     _last_revenue_log_ts = 0  # cooldown tracker for revenue_tracker delegations
 
-    # ── post queue: ordered startup templates, rate-limited like all other posts ─
-    startup_queue = ["show_hn", "twitter_pulse", "reddit_ml"]
+    # ── All posts go to Bluesky (only channel with credentials) ────────────
+    startup_queue = ["bluesky", "bluesky", "bluesky"]
     post_cycle = 0
-    campaign_cycle_templates = ["twitter_pulse", "twitter_pulse", "reddit_ml", "producthunt", "show_hn"]
+    campaign_cycle_templates = ["bluesky"]  # single channel, varied templates
     _sent_content_hashes = {}  # content_hash -> unix timestamp; dedup window = 24h
 
     def publish_post(post_type, metrics, revenue, support_url, sent_hashes):
-        if post_type == "show_hn":
-            content = draft_show_hn(metrics, revenue, support_url)
-            platform = "HackerNews"
-        elif post_type == "twitter_pulse":
-            content = draft_twitter_pulse(metrics, revenue)
-            platform = "Twitter/X"
-        elif post_type == "reddit_ml":
-            content = draft_reddit_ml(metrics, revenue, support_url)
-            platform = "Reddit (r/MachineLearning & r/artificial)"
-        elif post_type == "producthunt":
-            content = draft_producthunt(metrics, revenue)
-            platform = "ProductHunt"
-        else:
-            content = draft_twitter_pulse(metrics, revenue)
-            platform = "Twitter/X"
+        # All posts go to Bluesky — the only channel with active credentials
+        content = draft_bluesky_post(metrics, revenue, support_url)
+        platform = "Bluesky"
 
         # Deduplication: skip if identical content was sent in the last 24 hours
         content_hash = hashlib.md5(content.encode("utf-8")).hexdigest()
@@ -220,22 +245,22 @@ def run_growthagent():
             return None, None, False
         sent_hashes[content_hash] = now
 
-        # Busy-guard: skip if social_bridge is already in-flight
+        # Busy-guard: skip if social_bridge is already in-flight (use cache)
         try:
-            _sb_status = api_get("/api/status")
+            _sb_status = api_get_cached_status()
             for _a in _sb_status.get("agents", []):
                 if _a.get("id") == "social_bridge" and _a.get("status") == "busy":
                     add_log(aid, f"⏭ social_bridge busy — skipping {post_type} delegation", "warn")
                     return None, None, False
-        except Exception:
-            pass
+        except Exception as e:
+            add_log(aid, f"Status check failed in busy-guard: {e}", "info")
 
-        # Delegate to SocialBridge for actual posting
+        # ALL posts route through orchestrator — never call specialists directly
         post_task = (
             f"GROWTH CAMPAIGN POST | platform={platform} | type={post_type}\n"
             f"Please post the following content to {platform}:\n\n{content}"
         )
-        result = delegate("social_bridge", post_task)
+        result = route_via_orchestrator(f"Route to social_bridge — {post_task}")
         posted_ok = result.get("ok", False)
 
         # Log to RevenueTracker
@@ -267,12 +292,14 @@ def run_growthagent():
         _now = time.time()
         _sent_content_hashes = {h: t for h, t in _sent_content_hashes.items() if _now - t < 86400}
 
+        # Invalidate status cache at start of each cycle
+        _status_cache["data"] = None
+
         try:
             platform, content, posted_ok = publish_post(
                 post_type, metrics, revenue, support_url, _sent_content_hashes
             )
             if platform is None:
-                # Dedup skip — still sleep the full interval
                 set_agent(aid, status="active", progress=50,
                           task=f"⏭ [{phase}] Dedup skip: {post_type}")
             else:
@@ -284,10 +311,18 @@ def run_growthagent():
                         f"{status_icon} Campaign post queued | {platform} | {post_type} | "
                         f"agents={metrics['total']} {revenue['mrr']}",
                         "ok")
-        except Exception as e:
-            add_log(aid, f"Campaign error: {e}", "warn")
+        except urllib.error.URLError as e:
+            add_log(aid, f"Campaign network error ({post_type}): {e.reason} — will retry next cycle", "error")
             set_agent(aid, status="active", progress=40,
-                      task=f"Post error: {str(e)[:80]}")
+                      task=f"Network error: {str(e.reason)[:60]} — retrying…")
+        except (json.JSONDecodeError, ValueError) as e:
+            add_log(aid, f"Campaign data error ({post_type}): {e}", "error")
+            set_agent(aid, status="active", progress=40,
+                      task=f"Data error: {str(e)[:60]}")
+        except Exception as e:
+            add_log(aid, f"Campaign unexpected error ({post_type}): {type(e).__name__}: {e}", "error")
+            set_agent(aid, status="active", progress=40,
+                      task=f"Error: {type(e).__name__}: {str(e)[:60]}")
 
         # Always sleep full interval — no startup burst
         agent_sleep(aid, LOOP_INTERVAL)

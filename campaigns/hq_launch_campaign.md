@@ -15,7 +15,7 @@
 > Every founder I know runs the same stack: Notion for docs. Slack for comms. Zapier for glue. 4 dashboards. 3 analytics tools. A VA for the stuff that falls through. $500-2000/mo. Still dropping balls. What if one platform replaced all of it — with AI agents that actually do the work? That's AI Command Centre HQ. secondmind.ai
 
 ### Post 2 — What It Is
-> AI Command Centre HQ is a live operations platform where autonomous agents run your business functions 24/7. Not chatbots. Not copilots. Agents that act: GrowthAgent runs campaigns, RevenueTracker monitors MRR, RivalRadar watches competitors, AlertWatch catches issues, SocialBridge posts to your channels. 27 agents. One dashboard. Zero babysitting.
+> AI Command Centre HQ is a live operations platform where autonomous agents run your business functions 24/7. Not chatbots. Not copilots. Agents that act: GrowthAgent runs campaigns, RevenueTracker monitors MRR, RivalRadar watches competitors, AlertWatch catches issues, SocialBridge posts to your channels. 28 agents. One dashboard. Zero babysitting.
 
 ### Post 3 — Differentiation
 > Other tools: you prompt, they respond, you act. HQ: agents observe, decide, and act — autonomously. Your growth agent writes copy, schedules it, posts it, and logs the results. Your monitoring agent watches 24/7 and escalates when something breaks. This isn't AI-assisted. It's AI-operated.
@@ -33,7 +33,7 @@
 4 rotating CTA variants now deployed in `agents/social_bridge.py`:
 - **Variant 1:** Product announcement with full agent list + pricing
 - **Variant 2:** Pain point (15 SaaS tools) → solution
-- **Variant 3:** "27 AI employees who never sleep" angle
+- **Variant 3:** "28 AI employees who never sleep" angle
 - **Variant 4:** Social proof ("Founders are replacing $2K/mo") + launch pricing
 
 All variants include `secondmind.ai` link and pricing tiers.
@@ -54,7 +54,7 @@ All variants include `secondmind.ai` link and pricing tiers.
 
 ### Email 1: Launch Announcement (Day 0)
 - **Subject:** AI Command Centre HQ is live — your autonomous agent fleet is ready
-- **Preview:** Deploy 27 AI agents that run your ops 24/7. Solo $49/mo.
+- **Preview:** Deploy 28 AI agents that run your ops 24/7. Solo $49/mo.
 - **Angle:** Product intro + pricing table + onboarding steps
 - **CTA:** Get Started Now
 
@@ -78,10 +78,10 @@ All variants include `secondmind.ai` link and pricing tiers.
 > Stop juggling 15 SaaS tools. AI Command Centre HQ replaces them with autonomous agents that actually do the work — not just answer questions. From $49/mo. secondmind.ai #AI #Agents #buildinpublic
 
 ### Post B: Self-Monitoring
-> Your AI fleet watches itself. HQ agents detect failures, self-heal, escalate issues, and keep your operations running while you sleep. Real autonomous ops — not a chatbot. Solo $49 | Team $149 | Enterprise $499. #AI #Agents
+> Your AI fleet watches itself. HQ agents detect failures, self-heal, escalate issues, and keep your operations running while you sleep. Real autonomous ops — not a chatbot. Solo $79 | Team $199 | Enterprise $699. #AI #Agents
 
 ### Post C: ROI Angle
-> Founders are replacing $2K/mo in tools & contractors with one platform. AI Command Centre HQ — 27 agents, one dashboard, zero babysitting. Launch pricing from $49/mo. secondmind.ai #startup #AI #IndieHacker
+> Founders are replacing $2K/mo in tools & contractors with one platform. AI Command Centre HQ — 28 agents, one dashboard, zero babysitting. Launch pricing from $49/mo. secondmind.ai #startup #AI #IndieHacker
 
 ---
 

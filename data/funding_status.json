@@ -1,0 +1,28 @@
+{
+  "status": "early-revenue",
+  "mrr": 49.0,
+  "arr": 588.0,
+  "subscribers": 1,
+  "total_monthly_cost": 110.39,
+  "fixed_costs": 108.67,
+  "stripe_fees": 1.72,
+  "net_position": -61.39,
+  "burn_rate": 61.39,
+  "runway_months": 0.4,
+  "treasury_balance": 49.0,
+  "total_revenue": 297.0,
+  "currency": "usd",
+  "cost_breakdown": {
+    "render_hosting": 7.0,
+    "anthropic_api": 100.0,
+    "squarespace_domain": 1.67,
+    "stripe_fees": 0.0
+  },
+  "breakeven_mrr": 110.39,
+  "pct_to_breakeven": 44.4,
+  "subs_to_breakeven": 2,
+  "daily_rev_rate": 14.85,
+  "days_to_breakeven": 7,
+  "updated": "2026-03-20T19:51:24",
+  "cycle": 2
+}

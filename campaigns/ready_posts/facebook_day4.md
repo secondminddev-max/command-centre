@@ -12,7 +12,7 @@ This is what an AI workforce looks like.
 
 Every dot is an agent. Every agent has a job. They don't stop.
 
-Command Centre — try it now: https://command-centre.onrender.com
+Command Centre — try it now: https://hq.secondmindhq.com
 ```
 
 **Attach:** Screenshot of office-floor dashboard with multiple agents active at their desks.

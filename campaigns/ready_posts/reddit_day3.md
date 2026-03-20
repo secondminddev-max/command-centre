@@ -17,7 +17,7 @@ I built an AI agent OS that runs my business autonomously on Mac
 ```
 Hey r/SideProject — just shipped something I've been building for months.
 
-Command Centre is an autonomous AI agent operating system for Mac. You install it, and 24 AI agents start working: research, marketing, revenue tracking, social media posting, system monitoring — all without prompting.
+Command Centre is an autonomous AI agent operating system for Mac. You install it, and 28 AI agents start working: research, marketing, revenue tracking, social media posting, system monitoring — all without prompting.
 
 What makes it different:
 
@@ -27,9 +27,9 @@ What makes it different:
 - **Consciousness system** — agents track their own confidence and learn from predictions
 - **Fully local** — runs on your Mac, no cloud dependency, your data never leaves your machine
 
-Pricing: Solo $49/mo | Lifetime Pro $299 (one-time) | Mac Mini Bundle $1,499 (hardware + software)
+Pricing: Solo $49/mo | Lifetime Pro $499 (one-time) | Mac Mini Bundle $1,499 (hardware + software)
 
-Live demo: https://command-centre.onrender.com
+Live demo: https://hq.secondmindhq.com
 
 Happy to answer any questions about the stack or architecture.
 ```
@@ -51,7 +51,7 @@ Command Centre — autonomous AI agent dashboard, runs locally on Mac
 ```
 Built a Mac-native AI agent operating system. Runs entirely on your machine — no cloud, no Electron wrapper, no subscription required for the runtime.
 
-24 AI agents each have a distinct role and personality. They self-organise, communicate through a central CEO agent, and pursue tasks autonomously. You watch them work on a live office-floor dashboard.
+28 AI agents each have a distinct role and personality. They self-organise, communicate through a central CEO agent, and pursue tasks autonomously. You watch them work on a live office-floor dashboard.
 
 Key Mac-native details:
 - Launches from /Applications like any Mac app
@@ -62,9 +62,9 @@ Key Mac-native details:
 
 It's built for solopreneurs and indie hackers who want an AI workforce without cloud lock-in.
 
-Solo: $49/mo | Lifetime: $299 | Mac Mini pre-installed bundle: $1,499
+Solo: $49/mo | Lifetime: $499 | Mac Mini pre-installed bundle: $1,499
 
-https://command-centre.onrender.com
+https://hq.secondmindhq.com
 ```
 
 ---

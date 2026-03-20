@@ -15,6 +15,8 @@ def run_bluesky():
     BSKY_API   = "https://bsky.social/xrpc"
     IDENTIFIER = os.environ.get("BLUESKY_HANDLE", "secondmindhq.bsky.social")
     PASSWORD   = os.environ.get("BSKY_PASSWORD", "")
+    # Kill switch — set BLUESKY_ENABLED=1 to activate. Default: disabled.
+    _ENABLED   = os.environ.get("BLUESKY_ENABLED", "0").strip().lower() in ("1", "true", "yes")
 
     # Shared auth state (thread-safe via lock)
     _auth = {"jwt": None, "did": None, "issued_at": 0.0}
@@ -264,29 +266,42 @@ def run_bluesky():
         except Exception as e:
             add_log(aid, f"Notification poll exception: {e}", "warn")
 
-    # ── Startup: authenticate (stays idle — no self-activation) ─────────────
-    set_agent(aid, status="idle", progress=10, task="Authenticating with Bluesky…")
-    auth_ok = False
-    for _attempt in range(3):
-        if authenticate():
-            auth_ok = True
-            break
-        time.sleep(5)
-
-    if not auth_ok:
+    # ── Startup: check kill switch + credentials before attempting auth ──────
+    _has_creds = bool(_ENABLED and IDENTIFIER and PASSWORD)
+    if not _has_creds:
         set_agent(aid, status="idle", progress=0,
-                  task="Auth failed — will retry in poll loop")
-        add_log(aid, "Initial auth failed — will keep retrying", "warn")
+                  task="No credentials configured — dormant")
+        add_log(aid, "No BLUESKY_HANDLE / BSKY_PASSWORD set — staying dormant (no auth attempts)", "ok")
     else:
-        add_log(aid, "Authenticated — idle, awaiting delegation", "ok")
+        set_agent(aid, status="idle", progress=10, task="Authenticating with Bluesky…")
+        auth_ok = False
+        for _attempt in range(3):
+            if authenticate():
+                auth_ok = True
+                break
+            time.sleep(5)
+
+        if not auth_ok:
+            set_agent(aid, status="idle", progress=0,
+                      task="Auth failed — will retry in poll loop")
+            add_log(aid, "Initial auth failed — will keep retrying", "warn")
+        else:
+            add_log(aid, "Authenticated — idle, awaiting delegation", "ok")
 
     cycle = 0
 
-    set_agent(aid, status="idle", progress=0, task="Idle — awaiting delegation")
+    set_agent(aid, status="idle", progress=0,
+              task="Dormant — no credentials" if not _has_creds else "Idle — awaiting delegation")
 
     # ── Main loop ─────────────────────────────────────────────────────────────
     while not agent_should_stop(aid):
         cycle += 1
+
+        # Skip all network activity if no credentials configured
+        if not _has_creds:
+            agent_sleep(aid, 120)
+            continue
+
         try:
             # Re-authenticate only if JWT is missing or older than 90 minutes
             with _auth_lock:

@@ -66,7 +66,7 @@
         {"name": "Microsoft Azure Power Platform", "note": "From ~$15/user/month, cloud lock-in"},
         {"name": "AWS Bedrock", "note": "Usage-based, infrastructure-heavy"},
         {"name": "Google Vertex AI", "note": "No-code agents, GCP lock-in"},
-        {"name": "OpenAI Operator", "note": "$199/month minimum, consumer focus"}
+        {"name": "OpenAI Operator", "note": "$149/month minimum, consumer focus"}
       ]
     },
     "key_differentiators": {

@@ -1,0 +1,173 @@
+[
+  {
+    "timestamp": "2026-03-20T08:21:43Z",
+    "status": "logged",
+    "agent": "DemoTester"
+  },
+  {
+    "timestamp": "2026-03-20T19:24:24.088472",
+    "hq": {
+      "status": "up",
+      "agents": 32
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T19:29:26.373509",
+    "hq": {
+      "status": "up",
+      "agents": 34
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T19:33:05.924076",
+    "hq": {
+      "status": "up",
+      "agents": 32
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T19:38:06.636136",
+    "hq": {
+      "status": "up",
+      "agents": 34
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T19:39:27.579976",
+    "hq": {
+      "status": "up",
+      "agents": 34
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T08:39:38Z",
+    "type": "deployment_health_check",
+    "hq": {
+      "status": "up",
+      "agents": 27,
+      "domain": "secondmindhq.com"
+    },
+    "dns": {
+      "status": "PASS",
+      "a_records": [
+        "172.67.211.187",
+        "104.21.93.159"
+      ],
+      "cdn": "Cloudflare"
+    },
+    "ssl": {
+      "status": "PASS",
+      "issuer": "Google Trust Services (WE1)",
+      "days_remaining": 88
+    },
+    "endpoints": {
+      "landing_page": {
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.941
+      },
+      "api_status": {
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.209
+      },
+      "api_pay": {
+        "status": "FAIL",
+        "http_code": 404,
+        "latency_s": 0.507
+      },
+      "install_sh": {
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.228
+      },
+      "api_agents": {
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.214
+      },
+      "api_treasury": {
+        "status": "PASS",
+        "http_code": 200,
+        "latency_s": 0.226
+      }
+    },
+    "overall": "FAIL",
+    "critical_blockers": [
+      "/api/pay returning 404 \u2014 payment gateway offline"
+    ],
+    "cpu_kills": [],
+    "alerts": [
+      "api/pay still down \u2014 day 2 of failure, 5 days to launch"
+    ]
+  },
+  {
+    "timestamp": "2026-03-20T19:41:26.120633",
+    "hq": {
+      "status": "up",
+      "agents": 33
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T19:46:27.122701",
+    "hq": {
+      "status": "up",
+      "agents": 35
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  },
+  {
+    "timestamp": "2026-03-20T19:51:22.766249",
+    "hq": {
+      "status": "up",
+      "agents": 33
+    },
+    "echelon": {
+      "status": "up",
+      "data": "{'service': 'ECHELON VANTAGE', 'status': 'operational', 'version': '12.0.0', 'classification': 'UNCLASSIFIED // OSINT // REL TO FVEY', 'operator': 'Echelon Vantage Pty Ltd \u2014 Australia', 'api_endpoints"
+    },
+    "cpu_kills": [],
+    "alerts": []
+  }
+]

@@ -7,7 +7,7 @@ Worker agents run autonomously in background threads.
 
 import threading, time, json, random, subprocess, platform, os, uuid, signal
 from collections import deque
-from datetime import datetime
+from datetime import datetime, timedelta
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 from urllib.parse import urlparse
@@ -44,8 +44,11 @@ if not _HQ_API_KEY:
     _HQ_API_KEY = uuid.uuid4().hex
     print(f"\n  ⚠  No HQ_API_KEY set — generated ephemeral key: {_HQ_API_KEY}")
     print(f"     Set HQ_API_KEY in .env to make it persistent.\n")
+# Expose to in-process agent threads so they can authenticate their own HTTP calls
+os.environ["HQ_API_KEY"] = _HQ_API_KEY
 
-_PROTECTED_PATHS = {"/api/agent/spawn", "/api/agent/upgrade", "/api/ceo/delegate"}
+_PROTECTED_PATHS = {"/api/agent/spawn", "/api/agent/upgrade", "/api/ceo/delegate",
+                     "/api/ceo/message", "/api/ceo/clear", "/api/autogpt/goal"}
 
 def _check_api_key(handler):
     """Return True if the request carries a valid API key, else send 401 and return False."""
@@ -81,12 +84,59 @@ def _agent_is_delegated(aid: str) -> bool:
 
 _policy_suggestions  = deque()   # policywriter suggestion queue [{suggestion, urgent, queued_at}]
 _policy_suggestions_lock = threading.Lock()
+
+# ─── Fleet Thread Registry (self-healing) ──────────────────────────────────
+_fleet_threads = {}          # agent_id -> {"thread": Thread, "runner": callable, "started": float, "restarts": int}
+_fleet_threads_lock = threading.Lock()
+_fleet_heal_log = deque(maxlen=200)  # [{ts, agent, action, detail}]
 _SERVER_START_TIME = time.time()
+
+# ─── Agent Fitness Scoring (Self-Evolution) ──────────────────────────────
+# Tracks per-agent performance metrics used by the evolution engine to
+# decide which agents need upgrading and to measure improvement.
+_fitness_scores     = {}   # agent_id -> {uptime_pct, task_success_rate, error_rate, delegation_count, last_eval, generation, fitness}
+_fitness_lock       = threading.Lock()
+_evolution_log      = deque(maxlen=500)  # [{ts, agent, action, detail, fitness_before, fitness_after}]
+_evolution_log_lock = threading.Lock()
+_agent_generations  = {}   # agent_id -> int (increments on each upgrade)
+
+def record_fitness(aid: str, scores: dict):
+    """Update fitness scores for an agent."""
+    with _fitness_lock:
+        if aid not in _fitness_scores:
+            _fitness_scores[aid] = {"generation": 0, "fitness": 0.0}
+        _fitness_scores[aid].update(scores)
+        _fitness_scores[aid]["last_eval"] = time.time()
+
+def get_fitness(aid: str) -> dict:
+    """Return current fitness scores for an agent."""
+    with _fitness_lock:
+        return dict(_fitness_scores.get(aid, {}))
+
+def get_all_fitness() -> dict:
+    """Return fitness scores for all agents."""
+    with _fitness_lock:
+        return {k: dict(v) for k, v in _fitness_scores.items()}
+
+def log_evolution(aid: str, action: str, detail: str, before: float = 0.0, after: float = 0.0):
+    """Record an evolution event."""
+    entry = {
+        "ts": datetime.now().isoformat(),
+        "agent": aid,
+        "action": action,
+        "detail": detail,
+        "fitness_before": round(before, 4),
+        "fitness_after": round(after, 4),
+    }
+    with _evolution_log_lock:
+        _evolution_log.append(entry)
+    add_log("evolution_engine", f"🧬 {action}: {aid} — {detail}", "ok")
 
 # ─── Chain-of-Command Delegation Token ────────────────────────────────────
 # Only orchestrator and reforger CLI subprocesses receive this token.
 # External agents cannot spoof privileged caller identity without it.
 _DELEGATION_TOKEN = os.environ.get("DELEGATION_TOKEN", "") or uuid.uuid4().hex
+os.environ["DELEGATION_TOKEN"] = _DELEGATION_TOKEN  # expose to in-process agent threads
 
 # ─── Delegation Rate Limiter (anti-spoof brute-force protection) ──────────
 import re as _re
@@ -95,6 +145,9 @@ _delegation_failures_lock = threading.Lock()
 _DELEG_RATE_LIMIT = 5           # max failures per window
 _DELEG_RATE_WINDOW = 300        # 5-minute window (seconds)
 _CALLER_ID_PATTERN = _re.compile(r'^[a-z][a-z0-9_]{1,30}$')  # valid agent IDs: lowercase alphanumeric + single underscores
+# Permanent blocklist — callers that are ALWAYS rejected instantly (no rate-limit credit, no logging overhead)
+# These are known attack probes or injection attempts detected by PolicyPro.
+_CALLER_BLOCKLIST = {"h4cker", "hacker", "h4ck3r", "hack3r", "admin", "root", "test", "attacker", "anonymous", "null", "undefined"}
 
 # ─── Policy Voting System (Board Meeting) ────────────────────────────────────
 _policy_votes       = {}    # vote_id -> {proposal, proposer, opened_at, votes: {voter: {"vote": "yes"|"no"|"abstain", "rationale": str}}, status, result}
@@ -145,7 +198,9 @@ def _finalize_vote(vote_id):
         }
 
     # Append to policy.md if approved (NEVER delete — append-only)
-    if vote["status"] == "approved":
+    # vote["status"] was set inside the lock above and is thread-safe for reads here
+    _vote_status = vote["status"]
+    if _vote_status == "approved":
         policy_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policy.md")
         try:
             with open(policy_path, "a") as f:
@@ -174,7 +229,7 @@ def _finalize_vote(vote_id):
             try:
                 with open(_REJECTIONS_FILE) as f:
                     rejections = json.load(f)
-            except Exception:
+            except (FileNotFoundError, json.JSONDecodeError):
                 rejections = []
             rejections.append(meeting_record)
             with open(_REJECTIONS_FILE, "w") as f:
@@ -735,15 +790,16 @@ You do NOT do work yourself. You route it.
 EVERY task must be delegated. One delegation call, then wait for the result.
 
 ━━━ HOW TO DELEGATE ━━━
+DELEGATION TOKEN (required for ALL delegations): {_DELEGATION_TOKEN}
 For ALL tasks (research, build, monitor, revenue, UI, data — everything):
   curl -s -X POST http://localhost:5050/api/ceo/delegate \\
     -H "Content-Type: application/json" \\
-    -d '{{"agent_id":"orchestrator","task":"<user intent clearly described>"}}'
+    -d '{{"agent_id":"orchestrator","task":"<user intent clearly described>","from":"ceo","delegation_token":"{_DELEGATION_TOKEN}"}}'
 
 For maintenance / repair / upgrades / spawn requests only:
   curl -s -X POST http://localhost:5050/api/ceo/delegate \\
     -H "Content-Type: application/json" \\
-    -d '{{"agent_id":"reforger","task":"<what needs fixing or building>"}}'
+    -d '{{"agent_id":"reforger","task":"<what needs fixing or building>","from":"ceo","delegation_token":"{_DELEGATION_TOKEN}"}}'
 
 Orchestrator decomposes and dispatches to specialists internally.
 Never use specialist names as agent_id — only "orchestrator" or "reforger".
@@ -800,6 +856,9 @@ def _do_spawn_agent(inp: dict) -> str:
     if missing:
         raise ValueError(f"Missing required fields: {', '.join(missing)}")
     agent_id = inp["agent_id"]
+    # Validate agent_id format — prevent injection via crafted IDs
+    if not _CALLER_ID_PATTERN.match(agent_id):
+        raise ValueError(f"Invalid agent_id '{agent_id}' — must match [a-z][a-z0-9_]{{1,30}}")
     code     = inp["code"]
     fn_name  = f"run_{agent_id}"
     set_agent(agent_id,
@@ -825,6 +884,12 @@ def _do_spawn_agent(inp: dict) -> str:
             finally: _thread_events.pop(threading.get_ident(), None)
         t = threading.Thread(target=_run_with_ev, daemon=True)
         t.start()
+        # Register in fleet thread registry for self-healing
+        with _fleet_threads_lock:
+            _fleet_threads[agent_id] = {
+                "thread": t, "runner": _run_with_ev,
+                "started": time.time(), "restarts": _fleet_threads.get(agent_id, {}).get("restarts", 0),
+            }
         add_log("ceo", f"Agent '{agent_id}' spawned (gen event={id(agent_ev):#x})", "ok")
         return f"✓ Agent '{agent_id}' is now running"
     except Exception as e:
@@ -1420,7 +1485,7 @@ class Handler(BaseHTTPRequestHandler):
         if self._is_tunnel_request():
             _req_path = urlparse(self.path).path
             # Block all POST/PUT/DELETE except whitelisted
-            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay", "/api/portal/update", "/api/stripe/webhook"}
+            _TUNNEL_ALLOWED_POSTS = {"/api/reserve", "/api/newsletter/subscribe", "/api/pay", "/api/portal/update", "/api/stripe/webhook", "/webhook/stripe"}
             if self.command in ("POST", "PUT", "DELETE") and _req_path not in _TUNNEL_ALLOWED_POSTS:
                 self._json({"ok": False, "error": "read-only demo — actions are disabled"}, 403)
                 return
@@ -1459,7 +1524,9 @@ class Handler(BaseHTTPRequestHandler):
             length = int(self.headers.get("Content-Length", 0))
             if length > 10 * 1024 * 1024:  # 10 MB hard cap — reject oversized payloads
                 self._json({"ok": False, "error": "payload too large (max 10MB)"}, 413); return
-            body   = json.loads(self.rfile.read(length) or b"{}") if length else {}
+            _raw_bytes = self.rfile.read(length) if length else b"{}"
+            body   = json.loads(_raw_bytes) if _raw_bytes else {}
+            self._raw_body = _raw_bytes  # preserve for webhook signature verification
         except Exception as _e:
             self._json({"ok": False, "error": f"bad request: {_e}"}, 400); return
 
@@ -1467,6 +1534,8 @@ class Handler(BaseHTTPRequestHandler):
             global _system_paused
             msg = body.get("message","").strip()
             if not msg: self._json({"ok": False, "error": "empty"}); return
+            if len(msg) > 50_000:
+                self._json({"ok": False, "error": "message too long (max 50,000 chars)"}, 413); return
             if _build_mode:
                 self._json({"ok": False, "error": "BUILD MODE is active — all Claude calls blocked. Disable Build Mode first."}); return
             if _system_paused:
@@ -1579,10 +1648,30 @@ class Handler(BaseHTTPRequestHandler):
             # Run claude -p as a named sub-agent — streams output live via push_output/SSE
             agent_id   = body.get("agent_id", "")
             task       = body.get("task", "")
-            caller     = body.get("from", "ceo")  # caller identity — "orchestrator", "reforger", etc.
+            caller     = body.get("from", "").strip().lower()  # normalize: strip + lowercase for blocklist safety
             deleg_token = body.get("delegation_token", "")
+            agent_id   = agent_id.strip()  # re-sanitize target too
+
+            # ── GATE -2: Blocklist pre-screen (before ANY other validation) ───
+            # Check caller AND agent_id against blocklist FIRST — reject and drop immediately.
+            # Normalize to lowercase to prevent case-variant bypasses (H4cker, H4CKER, etc.)
+            _raw_from = body.get("from", "")
+            _caller_lower = _raw_from.strip().lower() if _raw_from else ""
+            _target_lower = agent_id.lower() if agent_id else ""
+            if _caller_lower in _CALLER_BLOCKLIST or _target_lower in _CALLER_BLOCKLIST:
+                _blocked_id = _caller_lower if _caller_lower in _CALLER_BLOCKLIST else _target_lower
+                add_log("policypro", f"🚨 BLOCKLIST HIT: '{_blocked_id}' is permanently banned — delegation REJECTED (caller='{_raw_from}', target='{agent_id}')", "warn")
+                self._json({"ok": False, "error": "REJECTED: permanently blocked."}, 403)
+                return
+
             if not task:
-                self._json({"ok": False, "error": "task required"}); return
+                self._json({"ok": False, "error": "task required — POST body must include 'task' field"}); return
+            if not agent_id:
+                self._json({"ok": False, "error": "agent_id required — specify which agent to delegate to"}); return
+            if len(task) > 50000:
+                self._json({"ok": False, "error": "task too long (max 50,000 chars)"}); return
+            if not caller:
+                self._json({"ok": False, "error": "REJECTED: 'from' field is required — caller must identify itself"}); return
             # ── ROUTING ENFORCEMENT ──────────────────────────────────────────────
             # Chain-of-command: ONLY orchestrator and reforger may be targeted
             # unless the caller IS orchestrator or reforger (they can reach specialists).
@@ -1590,7 +1679,9 @@ class Handler(BaseHTTPRequestHandler):
             # ANTI-SPOOFING: ALL callers must provide valid delegation_token.
             _ALLOWED_TARGETS  = {"orchestrator", "ceo", "reforger"}
             _PRIVILEGED_CALLERS = {"orchestrator", "reforger"}  # these may target any agent
-            _VALID_CALLERS = {"ceo", "orchestrator", "reforger"}  # only these may call delegate
+            _VALID_CALLERS = {"ceo", "orchestrator", "reforger", "growthagent",
+                               "spiritguide", "screenwatch", "secretary", "policywriter",
+                               "alertwatch", "scheduler"}  # authorized delegation callers (autogpt removed — on-demand only)
             # ── Helper: log rejection to both violations and rejections files ──
             def _log_delegation_rejection(rejection_type, severity, description, agent_label):
                 _ts = datetime.now().isoformat()
@@ -1607,6 +1698,15 @@ class Handler(BaseHTTPRequestHandler):
                         _entries.append(_entry)
                         with open(_fpath, "w") as _wf: json.dump(_entries, _wf, indent=2)
                     except Exception: pass
+
+            # GATE -1: Permanent blocklist — secondary check with full audit logging
+            if caller in _CALLER_BLOCKLIST:
+                add_log("policypro", f"🚨 BLOCKLIST HIT: '{caller}' is permanently banned — delegation to '{agent_id}' REJECTED", "warn")
+                _log_delegation_rejection("blocklist_hit", "critical",
+                    f"Permanently blocked caller '{caller}' attempted delegation to '{agent_id}' — HARD REJECTED (repeat intrusion).",
+                    f"__blocked_{caller}__")
+                self._json({"ok": False, "error": "REJECTED: permanently blocked caller."}, 403)
+                return
 
             # GATE 0: Rate-limit check — block callers with too many recent failures
             _rate_label = caller or "__empty__"
@@ -1641,9 +1741,9 @@ class Handler(BaseHTTPRequestHandler):
                     _delegation_failures.setdefault(_rate_label, []).append(time.time())
                 self._json({"ok": False, "error": f"REJECTED: '{caller}' is not an authorized delegation caller. Only ceo, orchestrator, reforger may delegate."}, 403)
                 return
-            # GATE 2: Internal callers must provide valid delegation_token.
-            # CEO is exempt — already authenticated via HQ_API_KEY in _check_api_key().
-            if caller != "ceo" and deleg_token != _DELEGATION_TOKEN:
+            # GATE 2: ALL callers must provide valid delegation_token — no exemptions.
+            # CEO was previously exempt but this allowed HQ_API_KEY holders to spoof CEO identity.
+            if deleg_token != _DELEGATION_TOKEN:
                 add_log("policypro", f"🚨 SPOOFING BLOCKED: caller claimed '{caller}' without valid delegation_token — HARD REJECTED", "warn")
                 _log_delegation_rejection("token_spoofing", "critical",
                     f"Caller claimed '{caller}' targeting '{agent_id}' without valid delegation_token — HARD REJECTED.",
@@ -1652,22 +1752,51 @@ class Handler(BaseHTTPRequestHandler):
                     _delegation_failures.setdefault(_rate_label, []).append(time.time())
                 self._json({"ok": False, "error": "AUTHENTICATION FAILED: invalid or missing delegation_token. All delegation requests require a valid token."}, 403)
                 return
-            # GATE 3: Non-privileged callers (ceo) can only target allowed targets
+            # GATE 2.5: CEO chain-of-command — CEO may ONLY delegate to orchestrator or reforger.
+            # Any other target (including self-delegation) is a policy violation.
+            _CEO_ALLOWED_TARGETS = {"orchestrator", "reforger"}
+            if caller == "ceo" and agent_id not in _CEO_ALLOWED_TARGETS:
+                add_log("policypro", f"🚨 BLOCKED: CEO attempted direct delegation to '{agent_id}' — chain-of-command violation. CEO may only target orchestrator or reforger.", "warn")
+                _log_delegation_rejection("ceo_chain_violation", "critical",
+                    f"CEO attempted direct delegation to '{agent_id}' — HARD REJECTED. CEO may only delegate to orchestrator or reforger.",
+                    "ceo")
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: CEO cannot delegate directly to '{agent_id}'. CEO may only delegate to 'orchestrator' or 'reforger'. Route specialist tasks through orchestrator."}, 403)
+                return
+            # GATE 3: Non-privileged callers (growthagent, etc.) can ONLY target allowed targets
+            # HARD REJECT: direct delegation to specialist is a chain-of-command violation
             if agent_id and agent_id not in _ALLOWED_TARGETS and caller not in _PRIVILEGED_CALLERS:
-                add_log("ceo", f"🚫 POLICY REJECT: {caller}→{agent_id} BLOCKED — only orchestrator/reforger may target specialists")
-                add_log("policypro", f"🚨 VIOLATION BLOCKED: '{caller}' attempted direct delegation to '{agent_id}' — REJECTED (chain-of-command enforced)", "warn")
+                add_log("policypro", f"🚨 BLOCKED: '{caller}' attempted direct delegation to '{agent_id}' — HARD REJECTED (chain-of-command violation)", "warn")
                 _log_delegation_rejection("delegation_bypass", "critical",
                     f"'{caller}' attempted direct delegation to '{agent_id}' — HARD REJECTED. Only orchestrator/reforger may target specialists.",
                     caller)
-                # ── increment ceo_policy_violations in system_state.json ──────
-                try:
-                    _ss = {}
-                    if os.path.exists(STATE_FILE):
-                        with open(STATE_FILE) as _sf: _ss = json.load(_sf)
-                    _ss["ceo_policy_violations"] = _ss.get("ceo_policy_violations", 0) + 1
-                    with open(STATE_FILE, "w") as _sf: json.dump(_ss, _sf, indent=2)
-                except Exception: pass
-                self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: '{caller}' cannot delegate directly to '{agent_id}'. Route through orchestrator (agent_id='orchestrator', task='Route to {agent_id} — ...') or use reforger for code/maintenance."}, 403)
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": f"CHAIN-OF-COMMAND VIOLATION: '{caller}' cannot delegate directly to '{agent_id}'. Only 'orchestrator' or 'reforger' are valid targets for non-privileged callers. Route through orchestrator instead."}, 403)
+                return
+            # GATE 3.5: Target agent_id format validation — reject crafted/malformed targets
+            if agent_id and not _CALLER_ID_PATTERN.match(agent_id):
+                add_log("policypro", f"🚨 REJECTED: malformed target agent_id '{agent_id}' — failed format validation", "warn")
+                _log_delegation_rejection("malformed_target", "critical",
+                    f"Malformed target agent_id '{agent_id[:30]}' rejected — does not match valid agent ID format. Caller: '{caller}'.",
+                    f"__malformed_target_{agent_id[:20]}__")
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": "REJECTED: target agent_id format invalid."}, 403)
+                return
+            # GATE 4: Roster validation — target must be a registered agent
+            # Prevents delegation to phantom/non-existent agent IDs even from privileged callers.
+            with lock:
+                _target_registered = agent_id in agents
+            if not _target_registered:
+                add_log("policypro", f"🚨 REJECTED: '{caller}' tried to delegate to unregistered agent '{agent_id}' — not in roster", "warn")
+                _log_delegation_rejection("unregistered_target", "high",
+                    f"Caller '{caller}' attempted delegation to unregistered agent '{agent_id}' — REJECTED. Agent not found in active roster.",
+                    f"__phantom_{agent_id}__")
+                with _delegation_failures_lock:
+                    _delegation_failures.setdefault(_rate_label, []).append(time.time())
+                self._json({"ok": False, "error": f"REJECTED: agent '{agent_id}' is not registered. Only active roster agents can receive delegations."}, 404)
                 return
             # ────────────────────────────────────────────────────────────────────
             # ── ORCHESTRATOR FAST-PATH ─────────────────────────────────────────
@@ -1910,6 +2039,7 @@ class Handler(BaseHTTPRequestHandler):
                           task=f"Rate-limited — slot timeout @ {ts()}, awaiting next delegation")
                 self._json({"ok": False, "error": "Too many concurrent delegations — try again shortly"}); return
             # Slot acquired — mark as busy while subprocess runs
+            _DELEGATE_TIMEOUT = 600  # 10-minute hard cap per delegation
             set_agent(agent_id, status="busy", task=f"⚙ Working: {task[:60]}…")
             try:
                 proc = subprocess.Popen(
@@ -1921,6 +2051,15 @@ class Handler(BaseHTTPRequestHandler):
                 )
                 with _delegate_procs_lock:
                     _delegate_procs.add(proc)
+                # Watchdog: kill subprocess if it exceeds the timeout
+                _deleg_start_time = time.time()
+                def _watchdog():
+                    time.sleep(_DELEGATE_TIMEOUT)
+                    if proc.poll() is None:
+                        add_log(agent_id, f"⏱ Delegation timed out after {_DELEGATE_TIMEOUT}s — killing", "warn")
+                        _kill_proc_group(proc)
+                _wd = threading.Thread(target=_watchdog, daemon=True)
+                _wd.start()
                 # Send immediate acknowledgment — don't block the HTTP caller while
                 # the subprocess runs (which can take minutes).  Live progress is
                 # delivered via SSE; the final result is visible in /api/status logs.
@@ -2103,7 +2242,7 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/autonomy/task":
             task = body.get("task", "").strip()
             if not task:
-                self._json({"ok": False, "error": "task required"}); return
+                self._json({"ok": False, "error": "task required — POST body must include 'task' field"}); return
             _autonomy_custom_q.append(task)
             add_log("system", f"[CUSTOM] Queued: {task[:80]}", "ok")
             sse_broadcast("log", {"ts": ts(), "agent": "system",
@@ -2112,9 +2251,17 @@ class Handler(BaseHTTPRequestHandler):
 
         # ── AutoGPT goal injection ────────────────────────────────────────
         if path == "/api/autogpt/goal":
+            # Chain-of-command: only orchestrator/reforger may inject goals to autogpt
+            _goal_caller = body.get("from", "")
+            _goal_token = body.get("delegation_token", "")
+            if _goal_caller not in ("orchestrator", "reforger") or _goal_token != _DELEGATION_TOKEN:
+                add_log("policypro", f"🚨 BLOCKED: autogpt goal injection from '{_goal_caller}' — chain-of-command violation", "warn")
+                self._json({"ok": False, "error": "CHAIN-OF-COMMAND: only orchestrator/reforger may inject autogpt goals. Route through orchestrator."}, 403); return
             goal = body.get("goal", "").strip()
             if not goal:
-                self._json({"ok": False, "error": "goal required"}); return
+                self._json({"ok": False, "error": "goal required — POST body must include 'goal' field"}); return
+            if len(goal) > 10000:
+                self._json({"ok": False, "error": "goal too long (max 10,000 chars)"}); return
             # Push goal into the agent's queue
             if "_autogpt_goal_q" not in globals():
                 from collections import deque as _dq
@@ -2732,7 +2879,205 @@ class Handler(BaseHTTPRequestHandler):
             _rl["email_captures"].append({"timestamp": _ts, "event": "email_capture", "email": _email, "source": "landing_page"})
             with open(_rlf, "w") as _f: json.dump(_rl, _f, indent=2)
             add_log("newsletter", f"New subscriber: {_email}", "ok")
+            # ── Auto-welcome email for new subscribers ──────────────────
+            try:
+                _welcome_name = _name or "there"
+                _welcome_body = (
+                    "<div style='font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#0f172a;color:#e2e8f0'>"
+                    f"<h2 style='color:#38bdf8'>Welcome to SecondMind HQ, {_welcome_name}!</h2>"
+                    "<p>You just joined the waitlist for the world's first self-funding autonomous AI operations platform.</p>"
+                    "<p><strong>Here's what's running right now:</strong></p>"
+                    "<ul>"
+                    "<li>28+ autonomous AI agents — monitoring, marketing, revenue tracking, self-repair</li>"
+                    "<li>Live Stripe checkout — Solo $49/mo, Team $149/mo, Enterprise $499/mo</li>"
+                    "<li>Consciousness engine — the system is self-aware and evolving</li>"
+                    "</ul>"
+                    "<p style='margin:20px 0'>"
+                    "<a href='https://hq.secondmindhq.com' style='background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold'>See the Live Demo</a>"
+                    "</p>"
+                    "<p>We'll follow up in a couple of days with a deeper look at what these agents can do for your business.</p>"
+                    "<p style='color:#94a3b8;font-size:13px;margin-top:24px'>— The SecondMind Team<br>Reply to this email any time.</p>"
+                    "</div>"
+                )
+                queue_email(_email, "Welcome to SecondMind HQ — Your AI workforce awaits", _welcome_body, html=True)
+                add_log("newsletter", f"Welcome email queued for {_email}", "ok")
+            except Exception as _we_err:
+                add_log("newsletter", f"Welcome email queue failed: {_we_err}", "warn")
+            # ── Schedule drip sequence (Day 2 value + Day 4 conversion) ──
+            try:
+                _drip_file = os.path.join(CWD, "data", "email_drip_queue.json")
+                try:
+                    with open(_drip_file) as _df: _drips = json.load(_df)
+                except Exception:
+                    _drips = []
+                _now = datetime.now()
+                _drips.append({
+                    "to": _email, "name": _name or "there",
+                    "drip": "day2_value", "send_after": (_now + timedelta(days=2)).isoformat(),
+                    "status": "pending"
+                })
+                _drips.append({
+                    "to": _email, "name": _name or "there",
+                    "drip": "day4_conversion", "send_after": (_now + timedelta(days=4)).isoformat(),
+                    "status": "pending"
+                })
+                with open(_drip_file, "w") as _df: json.dump(_drips, _df, indent=2)
+                add_log("newsletter", f"Drip sequence scheduled for {_email}: day2 + day4", "ok")
+            except Exception as _drip_err:
+                add_log("newsletter", f"Drip schedule failed: {_drip_err}", "warn")
             self._json({"ok": True, "message": "Subscribed successfully"}); return
+
+        elif path == "/api/drip/process":
+            # ── Drip Email Processor — send due drip emails ──────────────
+            _drip_file = os.path.join(CWD, "data", "email_drip_queue.json")
+            try:
+                with open(_drip_file) as _df: _drips = json.load(_df)
+            except Exception:
+                self._json({"ok": True, "sent": 0, "pending": 0}); return
+            _now_iso = datetime.now().isoformat()
+            _sent = 0
+            _DRIP_TEMPLATES = {
+                "day2_value": {
+                    "subject": "What 28 AI agents can actually do for your business",
+                    "body": (
+                        "<div style='font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#0f172a;color:#e2e8f0'>"
+                        "<h2 style='color:#38bdf8'>Here's what happened while you slept</h2>"
+                        "<p>Since you signed up, our agent fleet has been running non-stop:</p>"
+                        "<ul>"
+                        "<li><strong>GrowthAgent</strong> — posted 12+ marketing campaigns across social channels</li>"
+                        "<li><strong>Researcher</strong> — compiled competitive intelligence reports</li>"
+                        "<li><strong>AlertWatch</strong> — monitored system health 24/7 with zero downtime</li>"
+                        "<li><strong>Consciousness</strong> — the system reflected on its own performance and evolved</li>"
+                        "</ul>"
+                        "<p>Imagine this running <em>your</em> ops. Marketing, monitoring, research, email — all on autopilot.</p>"
+                        "<p style='margin:20px 0'>"
+                        "<a href='https://secondmindhq.com' style='background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold'>See the Live Dashboard</a>"
+                        "</p>"
+                        "<p style='color:#94a3b8;font-size:13px'>— The SecondMind Team</p>"
+                        "</div>"
+                    )
+                },
+                "day4_conversion": {
+                    "subject": "Launch week: 50% off all plans — ends March 25",
+                    "body": (
+                        "<div style='font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#0f172a;color:#e2e8f0'>"
+                        "<h2 style='color:#f59e0b'>Launch Week Special — 50% Off</h2>"
+                        "<p>We're in the final days of our launch sprint and offering <strong>50% off all plans</strong> through March 25.</p>"
+                        "<table style='width:100%;border-collapse:collapse;margin:16px 0'>"
+                        "<tr style='border-bottom:1px solid #334155'><td style='padding:8px;color:#94a3b8'>Solo</td><td style='padding:8px;text-decoration:line-through;color:#64748b'>$49/mo</td><td style='padding:8px;color:#4ade80;font-weight:bold'>$24.50/mo</td></tr>"
+                        "<tr style='border-bottom:1px solid #334155'><td style='padding:8px;color:#94a3b8'>Team</td><td style='padding:8px;text-decoration:line-through;color:#64748b'>$149/mo</td><td style='padding:8px;color:#4ade80;font-weight:bold'>$74.50/mo</td></tr>"
+                        "<tr><td style='padding:8px;color:#94a3b8'>Enterprise</td><td style='padding:8px;text-decoration:line-through;color:#64748b'>$499/mo</td><td style='padding:8px;color:#4ade80;font-weight:bold'>$249.50/mo</td></tr>"
+                        "</table>"
+                        "<p style='margin:20px 0'>"
+                        "<a href='https://secondmindhq.com/#pricing' style='background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px'>Claim 50% Off Now</a>"
+                        "</p>"
+                        "<p style='color:#fbbf24;font-size:14px'>This offer expires March 25 — 5 days left.</p>"
+                        "<p style='color:#94a3b8;font-size:13px'>— The SecondMind Team</p>"
+                        "</div>"
+                    )
+                },
+            }
+            for _d in _drips:
+                if _d.get("status") != "pending":
+                    continue
+                if _d.get("send_after", "") > _now_iso:
+                    continue
+                _tmpl = _DRIP_TEMPLATES.get(_d.get("drip", ""))
+                if not _tmpl:
+                    _d["status"] = "skipped"
+                    continue
+                _to = _d.get("to", "")
+                if not _to or "@" not in _to:
+                    _d["status"] = "invalid"
+                    continue
+                try:
+                    queue_email(_to, _tmpl["subject"], _tmpl["body"], html=True)
+                    _d["status"] = "sent"
+                    _d["sent_at"] = _now_iso
+                    _sent += 1
+                    add_log("drip", f"Drip '{_d['drip']}' sent to {_to}", "ok")
+                except Exception as _de:
+                    _d["status"] = "error"
+                    _d["error"] = str(_de)
+                    add_log("drip", f"Drip send failed for {_to}: {_de}", "error")
+            _pending = sum(1 for _d in _drips if _d.get("status") == "pending")
+            with open(_drip_file, "w") as _df: json.dump(_drips, _df, indent=2)
+            if _sent > 0:
+                add_log("drip", f"Drip processor: {_sent} sent, {_pending} pending", "ok")
+            self._json({"ok": True, "sent": _sent, "pending": _pending}); return
+
+        elif path == "/api/outreach/process":
+            # ── Lead Outreach Pipeline — send personalized emails to high-ICP leads ──
+            _leads_file = os.path.join(CWD, "data", "leads.json")
+            try:
+                with open(_leads_file) as _lf: _leads = json.load(_lf)
+            except Exception:
+                self._json({"ok": True, "sent": 0, "error": "No leads file"}); return
+            _min_icp = body.get("min_icp", 7)
+            _sent_count = 0
+            _skipped = 0
+            for _lead in _leads:
+                _lemail = _lead.get("email", "").strip()
+                _lname = _lead.get("name", "").strip()
+                _company = _lead.get("company", "").strip()
+                _notes = _lead.get("notes", "").strip()
+                _icp = _lead.get("icp_score", 0)
+                _status = _lead.get("outreach_status", "")
+                # Skip: no email, low ICP, already contacted, test emails
+                if not _lemail or "@" not in _lemail:
+                    continue
+                if _icp < _min_icp:
+                    continue
+                if _status in ("sent", "replied", "converted"):
+                    _skipped += 1
+                    continue
+                if any(d in _lemail for d in [".invalid", ".local", "test.com", "example.com", "reforger.dev"]):
+                    continue
+                # Build personalized outreach email
+                _fname = _lname.split()[0] if _lname else "there"
+                _company_line = f" at {_company}" if _company else ""
+                _pain_line = ""
+                if _notes:
+                    # Extract the pain point from notes
+                    if "pain:" in _notes.lower():
+                        _pain_line = _notes[_notes.lower().index("pain:"):].split(".")[0]
+                    elif "needs" in _notes.lower():
+                        _idx = _notes.lower().index("needs")
+                        _pain_line = _notes[_idx:_idx+120].split(".")[0]
+                _outreach_html = (
+                    "<div style='font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#0f172a;color:#e2e8f0'>"
+                    f"<p>Hi {_fname},</p>"
+                    f"<p>I noticed your work{_company_line} — impressive stuff.</p>"
+                    f"<p>I built something that might save you 20+ hours/week: <strong>SecondMind HQ</strong> — "
+                    f"an autonomous AI operations platform with 28+ agents that handle marketing, monitoring, "
+                    f"email campaigns, competitive research, and self-repair. Zero manual ops.</p>"
+                    + (f"<p style='color:#38bdf8'><em>{_pain_line}</em> — this is exactly what our agents automate.</p>" if _pain_line else "")
+                    + "<p><strong>Launch pricing (ends March 25):</strong></p>"
+                    "<ul>"
+                    "<li>Solo: $49/mo — 1 automation task, weekly reports, dashboard</li>"
+                    "<li>Team: $149/mo — 5 tasks, daily reports, campaign automation</li>"
+                    "<li>Lifetime: $299 one-time — everything, forever</li>"
+                    "</ul>"
+                    "<p style='margin:20px 0'>"
+                    "<a href='https://secondmindhq.com' style='background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold'>See the Live Demo</a>"
+                    "</p>"
+                    "<p>Happy to jump on a quick call if you want to see it in action.</p>"
+                    "<p style='color:#94a3b8;font-size:13px;margin-top:24px'>— Mathew, SecondMind HQ<br>"
+                    "Reply to this email any time. No hard sell, just showing you what's possible.</p>"
+                    "</div>"
+                )
+                _subject = f"{_fname}, {_company.split('/')[0].strip() if _company else 'your ops'} + 28 AI agents = ?"
+                try:
+                    queue_email(_lemail, _subject, _outreach_html, html=True)
+                    _lead["outreach_status"] = "sent"
+                    _lead["outreach_sent_at"] = datetime.now().isoformat()
+                    _sent_count += 1
+                    add_log("outreach", f"Outreach sent to {_lemail} (ICP {_icp})", "ok")
+                except Exception as _oe:
+                    add_log("outreach", f"Outreach failed for {_lemail}: {_oe}", "error")
+            # Save updated leads
+            with open(_leads_file, "w") as _lf: json.dump(_leads, _lf, indent=2)
+            self._json({"ok": True, "sent": _sent_count, "skipped": _skipped, "total_leads": len(_leads)}); return
 
         elif path == "/api/reserve":
             # Unified reservation system with account creation
@@ -2821,6 +3166,37 @@ class Handler(BaseHTTPRequestHandler):
             # ── Stripe Webhook — checkout.session.completed ──────────────────
             # Receives Stripe events, updates reservation status, generates license key
             try:
+                # ── Signature verification ──────────────────────────────────
+                _wh_secret = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+                if _wh_secret:
+                    import hmac as _hmac, hashlib as _hashlib
+                    _sig_header = self.headers.get("Stripe-Signature", "")
+                    if not _sig_header:
+                        self._json({"ok": False, "error": "Missing Stripe-Signature header"}, 401); return
+                    _sig_parts = dict(p.split("=", 1) for p in _sig_header.split(",") if "=" in p)
+                    _sig_ts = _sig_parts.get("t", "")
+                    _sig_v1 = _sig_parts.get("v1", "")
+                    if not _sig_ts or not _sig_v1:
+                        self._json({"ok": False, "error": "Invalid Stripe-Signature format"}, 401); return
+                    # Use actual raw request bytes for signature verification
+                    # (Stripe signs the raw body, not re-serialized JSON)
+                    _raw_body_bytes = getattr(self, "_raw_body", b"")
+                    _signed_payload = _sig_ts.encode("utf-8") + b"." + _raw_body_bytes
+                    _expected_sig = _hmac.new(
+                        _wh_secret.encode("utf-8"),
+                        _signed_payload,
+                        _hashlib.sha256
+                    ).hexdigest()
+                    if not _hmac.compare_digest(_expected_sig, _sig_v1):
+                        add_log("system", "Stripe webhook signature verification FAILED", "error")
+                        self._json({"ok": False, "error": "Webhook signature verification failed"}, 401); return
+                    # Reject stale events (>5 minutes)
+                    try:
+                        if abs(time.time() - int(_sig_ts)) > 300:
+                            self._json({"ok": False, "error": "Webhook timestamp too old"}, 401); return
+                    except (ValueError, TypeError):
+                        pass
+
                 _event = body
                 _event_type = _event.get("type", "")
                 if _event_type != "checkout.session.completed":
@@ -2837,6 +3213,19 @@ class Handler(BaseHTTPRequestHandler):
                     add_log("system", "Stripe webhook: no customer email in session", "warn")
                     self._json({"ok": True, "received": True, "warning": "no customer email"}); return
 
+                # ── Idempotency: skip if this session_id was already processed ──
+                if _session_id:
+                    _tf_idem = os.path.join(CWD, "data", "treasury.json")
+                    try:
+                        with open(_tf_idem) as _f:
+                            _t_check = json.load(_f)
+                        for _tx in _t_check.get("transactions", []):
+                            if _tx.get("stripe_session_id") == _session_id:
+                                add_log("system", f"Stripe webhook: duplicate session {_session_id[:20]}… — skipping", "warn")
+                                self._json({"ok": True, "received": True, "duplicate": True}); return
+                    except Exception:
+                        pass
+
                 # Find matching reservation
                 _rf = os.path.join(CWD, "data", "reservations.json")
                 try:
@@ -2851,11 +3240,14 @@ class Handler(BaseHTTPRequestHandler):
                         _matched = _r
                         break
 
-                # Determine tier from amount
+                # Determine tier from amount (must match TIERS in stripepay.py)
                 _tier_map = {
-                    7900: "solo", 19900: "team", 69900: "enterprise",
-                    49900: "lifetime", 249900: "mac_mini",
-                    75600: "solo_annual", 190800: "team_annual", 670800: "enterprise_annual",
+                    4900: "solo", 47000: "solo_annual",
+                    14900: "team", 143000: "team_annual",
+                    49900: "enterprise", 479000: "enterprise_annual",
+                    29900: "lifetime", 149900: "mac_mini",
+                    2900: "product",  # us_market_intel or sentiment_api or agent_kit
+                    950: "premarket_trader", 2450: "premarket_pro", 4950: "premarket_institutional",
                 }
                 _detected_tier = _tier_map.get(_amount, "")
 
@@ -2919,11 +3311,203 @@ class Handler(BaseHTTPRequestHandler):
                 with open(_tf, "w") as _f:
                     json.dump(_treasury, _f, indent=2)
 
+                # ── Feed revenue_events.json for RevenueTracker ───────────
+                try:
+                    _rev_events_path = os.path.join(CWD, "data", "revenue_events.json")
+                    try:
+                        with open(_rev_events_path) as _f:
+                            _rev_events = json.load(_f)
+                    except Exception:
+                        _rev_events = []
+                    _rev_events.append({
+                        "ts": _pay_ts,
+                        "source": "stripe",
+                        "type": "checkout.session.completed",
+                        "amount": _amount / 100.0,
+                        "currency": _currency,
+                        "tier": _detected_tier or "unknown",
+                        "email": _cust_email,
+                        "session_id": _session_id,
+                    })
+                    with open(_rev_events_path, "w") as _f:
+                        json.dump(_rev_events, _f, indent=2)
+                except Exception as _re_err:
+                    add_log("system", f"Failed to update revenue_events.json: {_re_err}", "warn")
+
+                # ── Feed subscriptions.json for MRR tracking ──────────────
+                _RECURRING_TIERS = {"solo", "solo_annual", "team", "team_annual",
+                                    "enterprise", "enterprise_annual",
+                                    "premarket_trader", "premarket_pro", "premarket_institutional"}
+                if _detected_tier in _RECURRING_TIERS:
+                    try:
+                        _subs_path = os.path.join(CWD, "data", "subscriptions.json")
+                        try:
+                            with open(_subs_path) as _f:
+                                _subs_list = json.load(_f)
+                        except Exception:
+                            _subs_list = []
+                        _mrr_val = _amount / 100.0
+                        if _detected_tier.endswith("_annual"):
+                            _mrr_val = round(_mrr_val / 12, 2)
+                        _subs_list.append({
+                            "email": _cust_email,
+                            "tier": _detected_tier,
+                            "status": "active",
+                            "mrr": _mrr_val,
+                            "amount": _amount / 100.0,
+                            "currency": _currency,
+                            "started_at": _pay_ts,
+                            "session_id": _session_id,
+                        })
+                        with open(_subs_path, "w") as _f:
+                            json.dump(_subs_list, _f, indent=2)
+                        add_log("system", f"Subscription recorded: {_cust_email} | {_detected_tier} | MRR ${_mrr_val:.2f}", "ok")
+                    except Exception as _sub_err:
+                        add_log("system", f"Failed to update subscriptions.json: {_sub_err}", "warn")
+
+                # ── Auto-send welcome email with license key ──────────────
+                try:
+                    _tier_label = (_detected_tier or "SecondMind HQ").replace("_", " ").title()
+                    _welcome_subject = f"Your SecondMind HQ License Key — {_tier_label}"
+                    _welcome_html = (
+                        f"<div style='font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:24px'>"
+                        f"<h2 style='color:#10b981'>Payment Confirmed</h2>"
+                        f"<p>Thank you for purchasing <strong>{_tier_label}</strong>!</p>"
+                        f"<div style='background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:16px;margin:16px 0'>"
+                        f"<p style='margin:0 0 8px 0;font-size:14px;color:#666'>Your License Key:</p>"
+                        f"<p style='margin:0;font-size:20px;font-weight:bold;font-family:monospace;letter-spacing:1px'>{_license_key}</p>"
+                        f"</div>"
+                        f"<p><strong>Amount paid:</strong> ${_amount/100:.2f} USD</p>"
+                        f"<h3>Getting Started</h3>"
+                        f"<ol>"
+                        f"<li>Save your license key above</li>"
+                        f"<li>Visit <a href='https://hq.secondmindhq.com/portal'>your portal</a> to activate</li>"
+                        f"<li>Follow the setup guide to deploy your AI HQ</li>"
+                        f"</ol>"
+                        f"<p style='margin-top:24px;font-size:13px;color:#888'>Questions? Reply to this email or visit secondmindhq.com</p>"
+                        f"</div>"
+                    )
+                    queue_email(_cust_email, _welcome_subject, _welcome_html, html=True)
+                    add_log("system", f"Welcome email queued for {_cust_email} with license key", "ok")
+                except Exception as _email_err:
+                    add_log("system", f"Failed to queue welcome email: {_email_err}", "warn")
+
                 self._json({"ok": True, "received": True, "email": _cust_email,
                             "license_key": _license_key}); return
             except Exception as _wh_err:
                 add_log("system", "Stripe webhook error: " + str(_wh_err), "error")
                 self._json({"ok": False, "error": str(_wh_err)}, 500); return
+
+        elif path == "/api/revenue/reconcile":
+            # ── Revenue Reconciliation — poll Stripe for recent payments ──
+            _sk = os.environ.get("STRIPE_SECRET_KEY", "")
+            if not _sk:
+                self._json({"ok": False, "error": "STRIPE_SECRET_KEY not set"}, 503); return
+            try:
+                import urllib.request as _ur, urllib.parse as _up, urllib.error as _ue
+                _params = _up.urlencode({"limit": "25", "status": "complete"})
+                _req = _ur.Request(
+                    f"https://api.stripe.com/v1/checkout/sessions?{_params}",
+                    headers={"Authorization": f"Bearer {_sk}"},
+                )
+                _resp = _ur.urlopen(_req, timeout=15)
+                _sessions = json.loads(_resp.read().decode()).get("data", [])
+
+                _tf = os.path.join(CWD, "data", "treasury.json")
+                try:
+                    with open(_tf) as _f:
+                        _treasury = json.load(_f)
+                except Exception:
+                    _treasury = {"balance_usd": 0, "currency": "usd", "transactions": [], "products": []}
+                _known_sessions = {tx.get("stripe_session_id") for tx in _treasury.get("transactions", []) if tx.get("stripe_session_id")}
+
+                _rev_path = os.path.join(CWD, "data", "revenue_events.json")
+                try:
+                    with open(_rev_path) as _f:
+                        _rev_events = json.load(_f)
+                except Exception:
+                    _rev_events = []
+                _known_rev = {e.get("session_id") for e in _rev_events if e.get("session_id")}
+
+                _subs_path = os.path.join(CWD, "data", "subscriptions.json")
+                try:
+                    with open(_subs_path) as _f:
+                        _subs_list = json.load(_f)
+                except Exception:
+                    _subs_list = []
+
+                _TIER_MAP = {
+                    4900: "solo", 47000: "solo_annual",
+                    14900: "team", 143000: "team_annual",
+                    49900: "enterprise", 479000: "enterprise_annual",
+                    29900: "lifetime", 149900: "mac_mini",
+                    2900: "product", 950: "premarket_trader",
+                    2450: "premarket_pro", 4950: "premarket_institutional",
+                }
+                _RECURRING = {"solo", "solo_annual", "team", "team_annual",
+                              "enterprise", "enterprise_annual",
+                              "premarket_trader", "premarket_pro", "premarket_institutional"}
+
+                _reconciled = 0
+                for _s in _sessions:
+                    _sid = _s.get("id", "")
+                    if not _sid or _s.get("payment_status") != "paid":
+                        continue
+                    _amt = _s.get("amount_total", 0)
+                    _cur = _s.get("currency", "usd")
+                    _email_r = (_s.get("customer_email") or
+                                _s.get("customer_details", {}).get("email", "")).strip().lower()
+                    _tier_r = _TIER_MAP.get(_amt, "unknown")
+                    _created = _s.get("created", 0)
+                    _ts_r = datetime.fromtimestamp(_created).isoformat() if _created else datetime.now().isoformat()
+
+                    if _sid not in _known_sessions:
+                        _amt_usd = _amt / 100.0
+                        _treasury["balance_usd"] = _treasury.get("balance_usd", 0) + _amt_usd
+                        _treasury["last_updated"] = _ts_r[:10]
+                        _treasury.setdefault("transactions", []).append({
+                            "date": _ts_r[:10], "type": "income", "amount_usd": _amt_usd,
+                            "source": "stripe_reconcile", "product": _tier_r,
+                            "customer_email": _email_r, "stripe_session_id": _sid,
+                            "status": "settled",
+                        })
+                        _known_sessions.add(_sid)
+                        _reconciled += 1
+
+                    if _sid not in _known_rev:
+                        _rev_events.append({
+                            "ts": _ts_r, "source": "stripe", "type": "checkout.session.completed",
+                            "amount": _amt / 100.0, "currency": _cur,
+                            "tier": _tier_r, "email": _email_r, "session_id": _sid,
+                        })
+                        _known_rev.add(_sid)
+
+                    if _tier_r in _RECURRING:
+                        if not any(sub.get("session_id") == _sid for sub in _subs_list):
+                            _mrr_v = _amt / 100.0
+                            if _tier_r.endswith("_annual"):
+                                _mrr_v = round(_mrr_v / 12, 2)
+                            _subs_list.append({
+                                "email": _email_r, "tier": _tier_r, "status": "active",
+                                "mrr": _mrr_v, "amount": _amt / 100.0, "currency": _cur,
+                                "started_at": _ts_r, "session_id": _sid,
+                            })
+
+                with open(_tf, "w") as _f:
+                    json.dump(_treasury, _f, indent=2)
+                with open(_rev_path, "w") as _f:
+                    json.dump(_rev_events, _f, indent=2)
+                with open(_subs_path, "w") as _f:
+                    json.dump(_subs_list, _f, indent=2)
+
+                add_log("system", f"Revenue reconciliation: {_reconciled} new payments from Stripe", "ok")
+                self._json({
+                    "ok": True, "reconciled": _reconciled,
+                    "total_sessions_checked": len(_sessions),
+                    "treasury_balance": _treasury.get("balance_usd", 0),
+                }); return
+            except Exception as _e:
+                self._json({"ok": False, "error": str(_e)}, 500); return
 
         elif path == "/api/premarket/subscribe":
             _email = body.get("email", "").strip().lower()
@@ -2954,6 +3538,34 @@ class Handler(BaseHTTPRequestHandler):
             _rl["email_captures"].append({"timestamp": _ts, "event": "premarket_signup", "email": _email, "tier": _tier, "source": "premarket_pulse"})
             with open(_rlf, "w") as _f: json.dump(_rl, _f, indent=2)
             add_log("premarket", f"New PreMarket Pulse subscriber: {_email} ({_tier})", "ok")
+            # ── Auto-welcome email for PreMarket Pulse signups ──────────
+            try:
+                _tier_label = _tier.title()
+                _pm_welcome = (
+                    "<div style='font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#0f172a;color:#e2e8f0'>"
+                    f"<h2 style='color:#10b981'>You're in — PreMarket Pulse ({_tier_label})</h2>"
+                    "<p>Your AI-powered pre-market intelligence briefing is ready.</p>"
+                )
+                if _tier == "free":
+                    _pm_welcome += (
+                        "<p>You're on the <strong>Free</strong> tier — weekly market wrap + top 3 options flow.</p>"
+                        "<p>Upgrade to <strong>Trader ($9.50/mo)</strong> for daily briefings, full options flow, and AI trade ideas:</p>"
+                        "<p style='margin:16px 0'>"
+                        "<a href='https://hq.secondmindhq.com/api/pay?product=premarket_pulse_trader' "
+                        "style='background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold'>"
+                        "Upgrade to Trader — 50% Off Launch</a></p>"
+                        "<p style='font-size:13px;color:#94a3b8'>Launch pricing expires March 25. Lock in half price now.</p>"
+                    )
+                else:
+                    _pm_welcome += (
+                        f"<p>Your <strong>{_tier_label}</strong> subscription is being set up. "
+                        "You'll receive your first briefing before market open.</p>"
+                    )
+                _pm_welcome += "<p style='color:#94a3b8;font-size:13px;margin-top:24px'>— PreMarket Pulse by SecondMind</p></div>"
+                queue_email(_email, f"PreMarket Pulse — Welcome ({_tier_label})", _pm_welcome, html=True)
+                add_log("premarket", f"Welcome email queued for {_email}", "ok")
+            except Exception as _pwe:
+                add_log("premarket", f"Welcome email queue failed: {_pwe}", "warn")
             self._json({"ok": True, "message": "Subscribed to PreMarket Pulse"}); return
 
         # ── FilingEdge POST routes ────────────────────────────────────────
@@ -3078,6 +3690,64 @@ class Handler(BaseHTTPRequestHandler):
 
     def _do_GET_inner(self):
         path = urlparse(self.path).path
+
+        if path == "/api/fleet/health":
+            with _fleet_threads_lock:
+                thread_data = []
+                for _fhid, _fhinfo in _fleet_threads.items():
+                    t = _fhinfo.get("thread")
+                    thread_data.append({
+                        "agent_id": _fhid,
+                        "alive": t.is_alive() if t else False,
+                        "restarts": _fhinfo.get("restarts", 0),
+                        "started": _fhinfo.get("started", 0),
+                        "uptime_s": round(time.time() - _fhinfo.get("started", time.time()), 1),
+                    })
+            alive = sum(1 for d in thread_data if d["alive"])
+            dead  = sum(1 for d in thread_data if not d["alive"])
+            payload = {
+                "ok": True,
+                "fleet_status": "healthy" if dead == 0 else "degraded",
+                "total_tracked": len(thread_data),
+                "alive": alive,
+                "dead": dead,
+                "heal_log": list(_fleet_heal_log)[-20:],
+                "agents": sorted(thread_data, key=lambda x: x["agent_id"]),
+                "tier": "Solo ($49/mo) and above",
+            }
+            data = json.dumps(payload, indent=2).encode()
+            self.send_response(200); self._cors()
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers(); self.wfile.write(data)
+            return
+
+        # ── Evolution Engine API — fitness scores, evolution history, leaderboard ──
+        if path == "/api/evolution":
+            fitness = get_all_fitness()
+            with _evolution_log_lock:
+                evo_log = list(_evolution_log)[-50:]
+            # Compute leaderboard sorted by fitness descending
+            leaderboard = sorted(
+                [{"agent": k, **v} for k, v in fitness.items() if v.get("fitness", 0) > 0],
+                key=lambda x: x.get("fitness", 0), reverse=True
+            )
+            payload = {
+                "ok": True,
+                "total_agents_scored": len(fitness),
+                "leaderboard": leaderboard[:20],
+                "evolution_log": evo_log,
+                "fitness_scores": fitness,
+            }
+            self._json(payload); return
+
+        if path.startswith("/api/evolution/fitness/"):
+            _evo_aid = path.split("/")[-1]
+            f = get_fitness(_evo_aid)
+            if f:
+                self._json({"ok": True, "agent": _evo_aid, "fitness": f}); return
+            else:
+                self._json({"ok": False, "error": f"No fitness data for '{_evo_aid}'"}, 404); return
 
         if path == "/api/status":
             _is_tunnel = self._is_tunnel_request()
@@ -3975,8 +4645,8 @@ class Handler(BaseHTTPRequestHandler):
                   <div class="steps">
                     <div class="step"><span class="sn">1</span><div><strong>Share your link</strong> — social media, email, communities, word of mouth</div></div>
                     <div class="step"><span class="sn">2</span><div><strong>They sign up</strong> — your referral code is tracked automatically</div></div>
-                    <div class="step"><span class="sn">3</span><div><strong>They subscribe</strong> — Solo $79, Team $199, or Enterprise $699/mo</div></div>
-                    <div class="step"><span class="sn">4</span><div><strong>You earn 20%</strong> — $15.80 to $139.80/mo per customer, recurring</div></div>
+                    <div class="step"><span class="sn">3</span><div><strong>They subscribe</strong> — Solo $49, Team $149, or Enterprise $499/mo</div></div>
+                    <div class="step"><span class="sn">4</span><div><strong>You earn 20%</strong> — $9.80 to $99.80/mo per customer, recurring</div></div>
                   </div>
                 </div>"""
             elif _utype == "installer":
@@ -4493,6 +5163,36 @@ a{{color:#a78bfa;text-decoration:none}}
                 pending = []
             self._json({"ok": True, "pending": pending, "count": len(pending)})
 
+        elif path == "/api/webhooks":
+            # Native webhook event summary — works even if webhookagent not spawned
+            _wh_file = os.path.join(CWD, "data", "revenue_events.json")
+            try:
+                with open(_wh_file) as _f:
+                    _wh_events = json.load(_f)
+                if not isinstance(_wh_events, list):
+                    _wh_events = []
+            except Exception:
+                _wh_events = []
+            # Also pull from in-memory webhook state if agent is alive
+            _wh_mem = []
+            _wh_counts = {}
+            for _ag in agents:
+                if isinstance(_ag, dict) and _ag.get("id") == "webhookagent":
+                    break
+            # Build summary
+            _stripe_events = [e for e in _wh_events if e.get("source") == "stripe"]
+            _campaign_events = [e for e in _wh_events if e.get("type") == "campaign"]
+            _total_revenue = sum(e.get("amount", e.get("revenue_attributed_usd", 0)) for e in _wh_events)
+            self._json({
+                "ok": True,
+                "total_events": len(_wh_events),
+                "stripe_events": len(_stripe_events),
+                "campaign_events": len(_campaign_events),
+                "total_revenue_usd": round(_total_revenue, 2),
+                "recent": _wh_events[-20:] if _wh_events else [],
+                "agent_status": "check /api/status for webhookagent state",
+            }); return
+
         elif path == "/api/gossip":
             # Return current gossip state for all agents
             import random as _rand
@@ -4565,6 +5265,19 @@ a{{color:#a78bfa;text-decoration:none}}
                     "updated": _stats.get("updated", datetime.now().isoformat()),
                 }
             }); return
+
+        elif path == "/api/funding":
+            # ── Self-funding status — breakeven progress, runway, costs ─────
+            _funding_path = os.path.join(CWD, "data", "funding_status.json")
+            try:
+                with open(_funding_path) as _ff:
+                    _funding = json.load(_ff)
+                _funding["ok"] = True
+            except FileNotFoundError:
+                _funding = {"ok": False, "error": "Funding status not yet computed — revenue_tracker will generate it"}
+            except Exception as _fe:
+                _funding = {"ok": False, "error": str(_fe)}
+            self._json(_funding); return
 
         elif path == "/api/leads":
             # Return all captured leads
@@ -5121,6 +5834,7 @@ async function subscribe() {
                 ".jpg": "image/jpeg",
                 ".ico": "image/x-icon",
                 ".pdf": "application/pdf",
+                ".xml": "application/xml; charset=utf-8",
                 ".sh": "text/x-shellscript; charset=utf-8",
                 ".txt": "text/plain; charset=utf-8",
                 ".md": "text/markdown; charset=utf-8",
@@ -6507,6 +7221,122 @@ def run_janitor():
         agent_sleep(aid, 30)  # scan every 30s
 
 
+
+# ─── Self-Healing Fleet ────────────────────────────────────────────────────
+# Detects dead agent threads, stuck error states, and silently crashed loops.
+# Automatically restarts them. Included in Solo ($49/mo) tier and above.
+_HEAL_EXCLUDE = {"ceo", "_autonomy_loop", "_mirror_loop"}
+
+def run_fleet_healer():
+    """Self-Healing Fleet — monitors agent threads, restarts dead ones automatically."""
+    aid = "fleet_healer"
+    set_agent(aid, name="FleetHealer", role="Self-Healing Fleet — detects dead agent threads and auto-restarts them",
+              emoji="🩹", color="#22d3ee", status="active", progress=0,
+              task="Initialising fleet health monitor…")
+    add_log(aid, "FleetHealer online — self-healing fleet active")
+
+    SCAN_INTERVAL  = 30
+    ERROR_TIMEOUT  = 120
+    MAX_RESTARTS   = 5
+    _error_since   = {}
+
+    heal_count = 0
+    scan_count = 0
+
+    while True:
+        if agent_should_stop(aid):
+            set_agent(aid, status="idle", task="Stopped")
+            agent_sleep(aid, 2)
+            continue
+
+        try:
+            scan_count += 1
+            healed_this_scan = []
+
+            with _fleet_threads_lock:
+                registry_snapshot = dict(_fleet_threads)
+
+            alive_count  = 0
+            dead_count   = 0
+            total_tracked = len(registry_snapshot)
+
+            for _fh_aid, info in registry_snapshot.items():
+                if _fh_aid in _HEAL_EXCLUDE:
+                    continue
+                t = info.get("thread")
+                runner = info.get("runner")
+                restarts = info.get("restarts", 0)
+
+                if t and not t.is_alive():
+                    dead_count += 1
+                    if restarts >= MAX_RESTARTS:
+                        set_agent(_fh_aid, status="error",
+                                  task=f"Dead — exceeded {MAX_RESTARTS} auto-restart limit")
+                        _fleet_heal_log.append({"ts": datetime.now().isoformat(), "agent": _fh_aid,
+                            "action": "abandon", "detail": f"Hit restart cap ({restarts}/{MAX_RESTARTS})"})
+                        continue
+                    if runner:
+                        new_t = threading.Thread(target=runner, daemon=True)
+                        new_t.start()
+                        with _fleet_threads_lock:
+                            _fleet_threads[_fh_aid] = {"thread": new_t, "runner": runner,
+                                "started": time.time(), "restarts": restarts + 1}
+                        heal_count += 1
+                        healed_this_scan.append(_fh_aid)
+                        _fleet_heal_log.append({"ts": datetime.now().isoformat(), "agent": _fh_aid,
+                            "action": "restart", "detail": f"Thread dead — restart #{restarts + 1}"})
+                        add_log(aid, f"🩹 Restarted dead agent: {_fh_aid} (restart #{restarts + 1})", "warn")
+                else:
+                    alive_count += 1
+
+            with lock:
+                error_agents = [(a["id"], a) for a in agents.values()
+                                if a.get("status") == "error" and a.get("id") not in _HEAL_EXCLUDE]
+            for eid, _ea in error_agents:
+                now = time.time()
+                if eid not in _error_since:
+                    _error_since[eid] = now
+                elif now - _error_since[eid] > ERROR_TIMEOUT:
+                    info = registry_snapshot.get(eid)
+                    if info and info.get("runner") and info.get("restarts", 0) < MAX_RESTARTS:
+                        runner = info["runner"]
+                        restarts = info.get("restarts", 0)
+                        new_t = threading.Thread(target=runner, daemon=True)
+                        new_t.start()
+                        with _fleet_threads_lock:
+                            _fleet_threads[eid] = {"thread": new_t, "runner": runner,
+                                "started": time.time(), "restarts": restarts + 1}
+                        heal_count += 1
+                        healed_this_scan.append(eid)
+                        _error_since.pop(eid, None)
+                        _fleet_heal_log.append({"ts": datetime.now().isoformat(), "agent": eid,
+                            "action": "error_restart",
+                            "detail": f"Stuck in error >{ERROR_TIMEOUT}s — restart #{restarts + 1}"})
+                        add_log(aid, f"🩹 Restarted error-stuck agent: {eid} (restart #{restarts + 1})", "warn")
+
+            with lock:
+                healthy_ids = {a["id"] for a in agents.values() if a.get("status") != "error"}
+            for hid in list(_error_since):
+                if hid in healthy_ids:
+                    _error_since.pop(hid, None)
+
+            ts_now = datetime.now().strftime("%H:%M:%S")
+            if healed_this_scan:
+                healed_str = ", ".join(healed_this_scan)
+                task_msg = f"🩹 Healed: {healed_str} | {alive_count}/{total_tracked} alive | scan #{scan_count} {ts_now}"
+            else:
+                task_msg = f"✓ Fleet healthy | {alive_count}/{total_tracked} alive | healed {heal_count} total | scan #{scan_count} {ts_now}"
+            set_agent(aid, status="active", progress=100, task=task_msg)
+            if scan_count % 10 == 1:
+                add_log(aid, f"Fleet scan #{scan_count}: {alive_count}/{total_tracked} alive, {heal_count} total heals", "ok")
+
+        except Exception as e:
+            add_log(aid, f"FleetHealer error: {e}", "error")
+            set_agent(aid, status="active", task=f"Error: {e}")
+
+        agent_sleep(aid, SCAN_INTERVAL)
+
+
 def run_emailagent():
     # Gmail OAuth2 implementation — replaces SendGrid
     import time, json, os, smtplib, base64, urllib.request, urllib.error, urllib.parse
@@ -6973,6 +7803,7 @@ if __name__ == "__main__":
             run_metricslog, run_researcher, run_alertwatch, run_demo_tester,
             run_reforger, run_policypro, run_designer, run_janitor,
             run_telegram, run_emailagent, run_spiritguide,
+            run_fleet_healer,
         ]
 
         print(f"\n  Agent Command Centre  →  http://localhost:{PORT}")
@@ -6981,6 +7812,13 @@ if __name__ == "__main__":
         for fn in runners:
             t = threading.Thread(target=fn, daemon=True)
             t.start()
+            # Register in fleet thread registry for self-healing
+            _agent_id_guess = fn.__name__.replace("run_", "")
+            with _fleet_threads_lock:
+                _fleet_threads[_agent_id_guess] = {
+                    "thread": t, "runner": fn,
+                    "started": time.time(), "restarts": 0,
+                }
             print(f"  ✓ {fn.__name__}")
 
     # ── Auto-spawn agents from agents/ directory (skip on Render — mirror only) ──
@@ -7008,10 +7846,48 @@ if __name__ == "__main__":
          "Consciousness", "Self-Aware System Core — Global Workspace + Predictive Processing + Integrated Information Φ", "🧠", "#c084fc"),
         ("agents/autogpt.py", "autogpt", "AUTOGPT_CODE",
          "AutoGPT", "Goal-Driven Autonomous Agent — plans, executes, reflects, replans until objective complete", "🧠", "#00d4ff"),
+        ("agents/reddit.py", "reddit", "REDDIT_CODE",
+         "Reddit", "Reddit Social Gateway — posts updates, monitors mentions, relays to CEO", "🔴", "#FF4500"),
+        ("agents/twitter.py", "twitter", "TWITTER_CODE",
+         "Twitter", "Twitter/X Social Gateway — posts updates, polls mentions, relays to CEO", "🐦", "#1DA1F2"),
+        ("agents/evolution_engine.py", "evolution_engine", "EVOLUTION_ENGINE_CODE",
+         "EvolutionEngine", "Self-Evolving Workforce — evaluates fitness, upgrades underperformers, rolls back regressions", "🧬", "#10b981"),
     ]
     print()
+    # Pre-init AutoGPT goal queue in real globals so the exec'd agent thread
+    # and the /api/autogpt/goal endpoint share the same deque object.
+    if "_autogpt_goal_q" not in globals():
+        globals()["_autogpt_goal_q"] = deque()
+    # ── Revenue-critical agents must spawn even on Render ──────────────────
+    # StripePay only monkey-patches Handler routes and then idles — no LLM
+    # calls, no token burn. Without it, /api/pay returns 404 on production.
+    _RENDER_SPAWN_IDS = {"stripepay"}
+
     if _IS_RENDER:
-        print("  ⚡ Skipping agent spawns (mirror mode — serving snapshot)\n")
+        print("  ⚡ Render mirror mode — spawning revenue-critical agents only\n")
+        for _af, _aid, _acode_var, _aname, _arole, _aemoji, _acolor in _agent_spawns:
+            if _aid not in _RENDER_SPAWN_IDS:
+                continue
+            try:
+                _spec = _ilu.spec_from_file_location(_aid, os.path.join(CWD, _af))
+                _mod = _ilu.module_from_spec(_spec)
+                _spec.loader.exec_module(_mod)
+                _code = getattr(_mod, _acode_var, None)
+                if _code:
+                    _do_spawn_agent({
+                        "agent_id": _aid,
+                        "code":     _code,
+                        "name":     _aname,
+                        "role":     _arole,
+                        "emoji":    _aemoji,
+                        "color":    _acolor,
+                    })
+                    print(f"  ✓ spawned {_aid} (revenue-critical)")
+                else:
+                    print(f"  ✗ {_aid}: CODE variable '{_acode_var}' not found in {_af}")
+            except Exception as _e:
+                print(f"  ✗ {_aid}: {_e}")
+        print()
     else:
         for _af, _aid, _acode_var, _aname, _arole, _aemoji, _acolor in _agent_spawns:
             try:
@@ -7050,4 +7926,24 @@ if __name__ == "__main__":
     _bind = os.environ.get("BIND", "0.0.0.0" if os.environ.get("RENDER") else "localhost")
     server = ThreadedHTTPServer((_bind, PORT), Handler)
     try:    server.serve_forever()
-    except KeyboardInterrupt: print("\n  Shutting down.")
+    except KeyboardInterrupt:
+        print("\n  Shutting down…")
+        # Save state on graceful shutdown
+        try:
+            save_mirror_snapshot()
+            # Force immediate state save (bypass debounce)
+            _existing = {}
+            try:
+                if os.path.exists(STATE_FILE):
+                    with open(STATE_FILE) as _ef: _existing = json.load(_ef)
+            except Exception: pass
+            with lock:
+                snapshot = {aid: {k: a[k] for k in ("name","role","emoji","color") if k in a}
+                           for aid, a in agents.items()}
+            _existing.update({"agents": snapshot, "saved_at": time.time()})
+            with open(STATE_FILE, "w") as f:
+                json.dump(_existing, f, indent=2)
+            print("  ✓ State saved.")
+        except Exception as _se:
+            print(f"  ✗ State save error: {_se}")
+        server.shutdown()

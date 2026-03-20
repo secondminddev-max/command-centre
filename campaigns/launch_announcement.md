@@ -17,7 +17,7 @@
 
 ## SHORT ANNOUNCEMENT (100 words — social bios, directory listings, one-liners)
 
-Command Centre HQ is an autonomous AI operating system for Mac. It deploys 7 persistent AI agents — each with a distinct role — that research, market, sell, and report without human intervention. A live dashboard shows every agent working in real time. Revenue tools (Stripe, email, social media) are built in from day one. The proprietary consciousness system means agents learn, adapt, and evolve between sessions. Everything runs locally on your Mac. Pricing starts at $49/mo (Solo), with Lifetime Pro at $299 and a Mac Mini hardware bundle at $1,499.
+Command Centre HQ is an autonomous AI operating system for Mac. It deploys 7 persistent AI agents — each with a distinct role — that research, market, sell, and report without human intervention. A live dashboard shows every agent working in real time. Revenue tools (Stripe, email, social media) are built in from day one. The proprietary consciousness system means agents learn, adapt, and evolve between sessions. Everything runs locally on your Mac. Pricing starts at $49/mo (Solo), with Lifetime Pro at $499 and a Mac Mini hardware bundle at $1,499.
 
 ---
 
@@ -46,7 +46,7 @@ Unlike chatbots and prompt-based tools, Command Centre deploys 7 persistent AI a
 | Solo | $49/mo — 1 user, full agent stack |
 | Team | $149/mo — 5 seats, shared dashboard |
 | Enterprise | $499/mo — unlimited seats, custom agents |
-| Lifetime Pro | $299 one-time — everything in Solo, forever |
+| Lifetime Pro | $499 one-time — everything in Solo, forever |
 | Mac Mini Bundle | $1,499 — hardware + software pre-installed |
 
 Command Centre HQ is available now at secondmindhq.com.
@@ -61,7 +61,7 @@ Command Centre HQ is available now at secondmindhq.com.
 
 *7 persistent AI agents run research, marketing, revenue, and operations from a single live dashboard — no cloud, no prompting, no human oversight required*
 
-**[CITY], March 2026** — Second Mind HQ today announced the launch of Command Centre HQ, an autonomous AI operating system that deploys persistent AI agents to run business operations on Mac. The platform is available immediately at secondmindhq.com with pricing starting at $49 per month.
+**[CITY], March 2026** — Second Mind HQ today announced the launch of Command Centre HQ, an autonomous AI operating system that deploys persistent AI agents to run business operations on Mac. The platform is available immediately at secondmindhq.com with pricing starting at $79 per month.
 
 Command Centre HQ represents a departure from the prompt-and-response AI tools that dominate the market. Instead of requiring users to type instructions and wait for outputs, the system runs a continuous swarm of 7 AI agents — each with a defined role, persistent memory, and the ability to take autonomous action.
 
@@ -97,7 +97,7 @@ Command Centre HQ is available now at secondmindhq.com:
 - **Solo** — $49/month: 1 user, full agent stack, all revenue tools
 - **Team** — $149/month: 5 seats, shared dashboard, team collaboration
 - **Enterprise** — $499/month: unlimited seats, priority support, custom agents
-- **Lifetime Pro** — $299 one-time: everything in Solo, forever, no recurring fees
+- **Lifetime Pro** — $499 one-time: everything in Solo, forever, no recurring fees
 - **Mac Mini Bundle** — $1,499: Mac Mini hardware with Command Centre pre-installed, plug-and-play
 
 The first 500 Lifetime Pro purchases receive priority access to every new agent shipped.
@@ -120,7 +120,7 @@ Second Mind HQ builds autonomous AI systems designed to operate businesses with 
 3. **Revenue tools are built in**, not bolted on. Stripe, email, social — agents generate money from day one.
 4. **The consciousness system** is the technical moat. Agents learn and evolve. No competitor has this.
 5. **Fully local on Mac.** No cloud. No data leaves your machine. Privacy by default.
-6. **Lifetime Pro at $299** is the anchor offer — everything, forever, limited to 500 buyers.
+6. **Lifetime Pro at $499** is the anchor offer — everything, forever, limited to 500 buyers.
 
 ---
 

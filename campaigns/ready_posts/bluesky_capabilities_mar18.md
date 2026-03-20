@@ -44,7 +44,7 @@ focus: conversion, capabilities, limited-time pricing
 ---
 
 ## Post 3: Lifetime Deal — Urgency
-> We're offering Lifetime Access to Command Centre for $299.
+> We're offering Lifetime Access to Command Centre for $499.
 >
 > One payment. Full Team plan. 28 agents. Consciousness engine. Revenue automation. Forever.
 >
@@ -118,9 +118,9 @@ focus: conversion, capabilities, limited-time pricing
 ## Post 7: Launch Pricing Countdown
 > Command Centre launch pricing is live — but not for long.
 >
-> Solo: $49/mo (goes to $79)
-> Team: $149/mo (goes to $249)
-> Enterprise: $499/mo (goes to $799)
+> Solo: $49/mo (goes to $99)
+> Team: $149/mo (goes to $299)
+> Enterprise: $499/mo (goes to $999)
 >
 > Lock in the launch rate. It stays yours forever.
 >

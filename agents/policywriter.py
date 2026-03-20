@@ -1,11 +1,11 @@
 """
-PolicyWriter Agent — Policy Author
+PolicyWriter Agent — Policy Author & Board Meeting Caller
 Reads current policy from policy.md, maintains a suggestion queue,
-auto-publishes suggestions after 30s (or immediately if urgent=true),
-and notifies policypro on policy changes.
+calls board meetings for each proposal (all 8 board members vote YES/NO/ABSTAIN),
+and tracks outcomes.
 
 Routes (monkey-patched live + native in agent_server.py after restart):
-  POST /api/policy/suggest  — {suggestion: str, urgent: bool}
+  POST /api/policy/suggest  — {suggestion: str, urgent: bool}  → queues, then calls board meeting
   GET  /api/policy/current  — returns policy.md content
 """
 
@@ -22,15 +22,15 @@ def run_policywriter():
 
     set_agent(aid,
               name="PolicyWriter",
-              role="Policy Author — reads current policy from policy.md, maintains a suggestions queue, "
-                   "auto-publishes suggestions after a 30-second review window (or immediately if urgent=true), "
-                   "and notifies policypro when policy changes.",
+              role="Policy Author — proposes policy changes via board meetings. "
+                   "Suggestions are submitted, then a board vote is called among 8 primary agents. "
+                   "Approved policies are appended to policy.md. Rejected ones logged to policy_rejections.json.",
               emoji="📝",
               color="#a78bfa",
               status="starting", progress=0, task="Initialising…")
     add_log(aid, "PolicyWriter starting — patching HTTP routes", "ok")
 
-    # ── In-memory suggestion queue (also backed by _policy_suggestions global if available) ──
+    # ── In-memory suggestion queue ──
     _local_q = _deque()
     _local_q_lock = threading.Lock()
 
@@ -40,29 +40,32 @@ def run_policywriter():
             return len(_local_q)
 
     def _drain():
-        # Return list of items ready to publish, leave non-ready ones in queue
         now = time.time()
-        to_publish = []
+        to_propose = []
         with _local_q_lock:
             remaining = _deque()
             for item in _local_q:
                 if item["urgent"] or (now - item["queued_at"]) >= 30:
-                    to_publish.append(item)
+                    to_propose.append(item)
                 else:
                     remaining.append(item)
             _local_q.clear()
             _local_q.extend(remaining)
-        return to_publish
+        return to_propose
 
     def _pending_count():
         with _local_q_lock:
             return len(_local_q)
 
-    # ── Live route monkey-patch (active until server restarts) ──
-    # Guard against double-patching on agent restart/upgrade
+    # ── Live route monkey-patch (always re-patch on upgrade to rebind closures) ──
     if not getattr(Handler, "_policywriter_patched", False):
         _orig_post = Handler.do_POST
         _orig_get  = Handler.do_GET
+    else:
+        # On upgrade: get the ORIGINAL handlers (before any policywriter patch)
+        _orig_post = getattr(Handler, "_policywriter_orig_post", Handler.do_POST)
+        _orig_get  = getattr(Handler, "_policywriter_orig_get", Handler.do_GET)
+    if True:  # always patch to rebind closures to new queue
 
         def _pw_do_post(self):
             parsed = _urlparse(self.path)
@@ -79,7 +82,8 @@ def run_policywriter():
                         return
                     pending = _enqueue(suggestion, urgent)
                     add_log(aid, f"Suggestion queued (urgent={urgent}): {suggestion[:60]}", "ok")
-                    self._json({"ok": True, "queued": pending, "urgent": urgent})
+                    self._json({"ok": True, "queued": pending, "urgent": urgent,
+                                "note": "Will call board meeting when review window expires"})
                 except Exception as e:
                     self._json({"ok": False, "error": str(e)}, 500)
                 return
@@ -98,41 +102,36 @@ def run_policywriter():
                 return
             _orig_get(self)
 
+        Handler._policywriter_orig_post = _orig_post
+        Handler._policywriter_orig_get  = _orig_get
         Handler.do_POST = _pw_do_post
         Handler.do_GET  = _pw_do_get
         Handler._policywriter_patched = True
         add_log(aid, "Routes live: POST /api/policy/suggest | GET /api/policy/current", "ok")
-    else:
-        add_log(aid, "Routes already patched — skipping re-patch", "ok")
 
     set_agent(aid, status="active", progress=80,
-              task="Routes live | Watching suggestion queue (30s window)")
+              task="Routes live | Board meeting mode active")
 
-    # ── Publish helper ──
-    published_total = 0
+    # ── Board meeting caller — proposes via /api/policy/propose ──
+    meetings_called = 0
 
-    def _publish(item):
-        nonlocal published_total
+    def _call_board_meeting(item):
+        nonlocal meetings_called
         suggestion = item["suggestion"]
-        ts_str = _dt.now().strftime("%Y-%m-%d %H:%M:%S")
-        section = f"\n\n## Policy Update — {ts_str}\n\n{suggestion}\n"
         try:
-            with open(POLICY_FILE, "a") as f:
-                f.write(section)
-            published_total += 1
-            add_log(aid, f"📝 Published policy update: {suggestion[:80]}", "ok")
-            # Notify policypro via delegate
-            try:
-                requests.post(f"{BASE_URL}/api/ceo/delegate", json={
-                    "agent_id": "policypro",
-                    "task": (f"Policy updated by PolicyWriter at {ts_str}: {suggestion[:200]}. "
-                             f"Review and enforce compliance as needed."),
-                    "from": "policywriter",
-                }, timeout=5)
-            except Exception:
-                pass
+            resp = requests.post(f"{BASE_URL}/api/policy/propose", json={
+                "proposal": suggestion,
+                "proposer": "policywriter",
+            }, timeout=15)
+            result = resp.json()
+            if result.get("ok"):
+                vid = result.get("vote_id", "?")
+                meetings_called += 1
+                add_log(aid, f"📋 Board meeting called: {vid} — {suggestion[:60]}", "ok")
+            else:
+                add_log(aid, f"Board meeting failed: {result.get('error','unknown')}", "error")
         except Exception as e:
-            add_log(aid, f"Publish error: {e}", "error")
+            add_log(aid, f"Board meeting call error: {e}", "error")
 
     # ── Main loop ──
     while True:
@@ -148,12 +147,12 @@ def run_policywriter():
         try:
             ready = _drain()
             for item in ready:
-                _publish(item)
+                _call_board_meeting(item)
 
             pending = _pending_count()
-            label = "urgent" if any(i["urgent"] for i in list(_local_q)) else "pending"
+            label = "urgent" if any(i.get("urgent") for i in list(_local_q)) else "pending"
             set_agent(aid, status="active", progress=85,
-                      task=f"Routes live | {pending} {label} | Published {published_total} total")
+                      task=f"Board mode | {pending} {label} | {meetings_called} meetings called")
         except Exception as e:
             add_log(aid, f"Loop error: {e}", "error")
 '''
@@ -169,9 +168,9 @@ if __name__ == "__main__":
         r = requests.post(f"{BASE}/api/agent/spawn", json={
             "agent_id": "policywriter",
             "name":     "PolicyWriter",
-            "role":     ("Policy Author — reads current policy from policy.md, maintains a suggestions queue, "
-                         "auto-publishes suggestions after a 30-second review window (or immediately if urgent=true), "
-                         "and notifies policypro when policy changes."),
+            "role":     ("Policy Author — proposes policy changes via board meetings. "
+                         "Suggestions trigger a vote among 8 board members (YES/NO/ABSTAIN). "
+                         "Approved policies appended to policy.md, rejections logged."),
             "emoji":    "📝",
             "color":    "#a78bfa",
             "code":     POLICYWRITER_CODE,

@@ -77,7 +77,7 @@ secondmindhq.com
 
 ## Post 6 — Urgency / Scarcity
 
-Lifetime Pro ($299, everything forever) is available for the first 500 buyers.
+Lifetime Pro ($499, everything forever) is available for the first 500 buyers.
 
 After that, it's monthly only.
 
